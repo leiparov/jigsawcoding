@@ -53,7 +53,7 @@ public class Problemas extends Controller{
      *            Filter applied on Problema names
      */
     public static Result list(int page, String sortBy, String order, String filter) {
-        return ok(listaProblemas.render(problemaService.page(page, 10, sortBy, order, filter), sortBy, order, filter));
+        return ok(listaProblemas.render(problemaService.page(getDocente(), page, 10, sortBy, order, filter), sortBy, order, filter));
     }
 	
 	

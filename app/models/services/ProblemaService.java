@@ -12,5 +12,7 @@ public interface ProblemaService {
 	public Problema obtenerProblema(int idProblema);
 	
 	public Page<Problema> page(int page, int pageSize, String sortBy, String order, String filter);
+	
+	public Page<Problema> page(Docente docente, int page, int pageSize, String sortBy, String order, String filter);
 
 }
