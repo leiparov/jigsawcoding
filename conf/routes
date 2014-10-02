@@ -20,6 +20,11 @@ GET    /perfil                          controllers.Application.interfazPerfilUs
 #POST   /docentes/actualizar             controllers.Docentes.actualizarDocente()
 #GET    /docentes/eliminar               controllers.Docentes.eliminarDocente()
 
+
+GET /problemas/nuevo 		controllers.Problemas.interfazNuevo()
+
+
+
 GET    /alumnos                         controllers.Alumnos.index()
 #GET    /alumnos/nuevo                   controllers.Alumnos.interfazNuevo()
 #POST   /alumnos/registrar               controllers.Alumnos.registrarAlumno()

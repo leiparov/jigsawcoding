@@ -84,7 +84,7 @@ public class Login {
 		}
 	}
 
-	static String CLAVE_ARGS = "examenesonline-login";
+	static String CLAVE_ARGS = "jigsawcoding-login";
 
 	private String dni;
 	private String nombre;
@@ -150,7 +150,7 @@ public class Login {
 	public void logearSesion(Usuario u) {
 		ctx.session().clear();
 		ctx.session().put("dni", Integer.toString(u.getDNI()));
-		ctx.session().put("nombre", u.getNombre() + " " + u.getApellido());
+		ctx.session().put("nombre", u.getNombreCompleto());
 		ctx.session().put("sexo", u.getSexo().equals(Sexo.MASCULINO) + "");
 		ctx.session().put("tipo", u.getClass().getName());
 	}

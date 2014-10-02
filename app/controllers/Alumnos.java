@@ -32,7 +32,8 @@ public class Alumnos extends Controller {
 
    public static class AlumnoForm {
       public String nombre;
-      public String apellidos;
+      public String apellidoPaterno;
+      public String apellidoMaterno;
       public String dni;
       public Sexo sexo;
       public String email;
@@ -43,8 +44,9 @@ public class Alumnos extends Controller {
       public Alumno entidad() {
          Alumno nuevo = new Alumno();
          nuevo.setPassword(contrasena);
-         nuevo.setNombre(nombre);
-         nuevo.setApellido(apellidos);
+         nuevo.setNombres(nombre);
+         nuevo.setApellidoPaterno(apellidoPaterno);
+         nuevo.setApellidoMaterno(apellidoMaterno);
          nuevo.setDNI(Integer.parseInt(dni));
          nuevo.setSexo(sexo);
          nuevo.setEmail(email);

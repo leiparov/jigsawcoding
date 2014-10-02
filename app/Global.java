@@ -27,10 +27,8 @@ public class Global extends GlobalSettings {
                         Ebean.saveManyToManyAssociations(g, "alumnos");
                 }*/
             }
-            udao.cambiarPassword(10001000, "1234");
-            udao.cambiarPassword(10002000, "1234");
-            udao.cambiarPassword(44441000, "abcd");
-            udao.cambiarPassword(44442000, "abcd");
+            udao.cambiarPassword(45407679, "1234");
+            udao.cambiarPassword(47614910, "1234");
         }
     }
 }

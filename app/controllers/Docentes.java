@@ -202,7 +202,8 @@ public class Docentes extends Controller{
       public int dni;
       public String email;
       public String nombre;
-      public String apellido;
+      public String apellidoPaterno;
+      public String apellidoMaterno;
       public Sexo sexo;
       public String contrasena;
       public String contrasena2;
@@ -211,16 +212,18 @@ public class Docentes extends Controller{
          Docente docente = new Docente();
          docente.setDNI(dni);
          docente.setEmail(email);
-         docente.setNombre(nombre);
-         docente.setApellido(apellido);
+         docente.setNombres(nombre);
+         docente.setApellidoPaterno(apellidoPaterno);
+         docente.setApellidoMaterno(apellidoMaterno);
          docente.setSexo(sexo);
          docente.setPassword(contrasena);
          return docente;
       }
       public void entidadModificada(Docente docente){
          docente.setEmail(email);
-         docente.setNombre(nombre);
-         docente.setApellido(apellido);
+         docente.setNombres(nombre);
+         docente.setApellidoPaterno(apellidoPaterno);
+         docente.setApellidoMaterno(apellidoMaterno);
          docente.setSexo(sexo);
       }
    }
