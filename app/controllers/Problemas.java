@@ -10,6 +10,7 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import utils.Login;
+import views.html.problemas.indexProblemas;
 import views.html.problemas.nuevoProblema;
 
 @Login.Requiere
@@ -38,7 +39,7 @@ public class Problemas extends Controller{
     }
 	
 	public static Result index(){
-		return interfazNuevo();
+		return ok(indexProblemas.render());
 	}
 	public static Result interfazNuevo(){
 		return ok(nuevoProblema.render());

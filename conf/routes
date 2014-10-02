@@ -22,7 +22,7 @@ GET    /perfil                          controllers.Application.interfazPerfilUs
 
 
 
-GET /preguntas	controllers.Problemas.index()
+GET /problemas	controllers.Problemas.index()
 GET /problemas/nuevo 		controllers.Problemas.interfazNuevo()
 POST /problemas/registrar               controllers.Problemas.registrarProblema()
 
