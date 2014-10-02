@@ -1,0 +1,38 @@
+#Usuarios
+
+- &silvana !!models.entities.Alumno
+     DNI:       47614910
+     email:     helway.sm@gmail.com
+     nombre:    Silvana
+     apellido:  Malpica
+     sexo:      FEMENINO
+     
+- &juan !!models.entities.Alumno
+     DNI:       44441000
+     email:     alu1@gmail.com
+     nombre:    Juan
+     apellido:  Guerrero
+     sexo:      MASCULINO
+
+- &marisol !!models.entities.Alumno
+     DNI:       44442000
+     email:     alu2@gmail.com
+     nombre:    Marisol
+     apellido:  Ramirez
+     sexo:      FEMENINO
+
+#Docentes
+
+- !!models.entities.Docente
+     DNI:       10001000
+     email:     doc1@gmail.com
+     nombre:    Pedro
+     apellido:  Peralta
+     sexo:      MASCULINO
+
+- !!models.entities.Docente
+     DNI:       10002000
+     email:     doc2@gmail.com
+     nombre:    Maria
+     apellido:  Mori
+     sexo:      FEMENINO

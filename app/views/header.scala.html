@@ -1,0 +1,21 @@
+@loginData = @{utils.Login.obtener(Http.Context.current()).getHeaderData}
+<div class="pull-left">
+	<a href="@routes.Application.index"><h1>Jigsaw Coding</h1></a>
+</div>
+<div class="pull-right">
+	<span class="user-greet">Bienvenido,<br />
+	<strong>@loginData.nombre</strong></span>
+	<div class="btn-group">
+		<button type="button" class="btn btn-default dropdown-toggle"
+			data-toggle="dropdown">
+			@if(loginData.isMan){ 
+				<img src="@routes.Assets.at("images/male_user_small.png")" alt="Imagen del usuario"> 
+			}else{
+				<img src="@routes.Assets.at("images/female_user_small.png")" alt="Imagen del usuario"> 
+			} 
+			<span class="caret"></span>
+		</button>
+		@menuLogin()
+	</div>
+</div>
+

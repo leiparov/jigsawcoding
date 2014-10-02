@@ -1,0 +1,36 @@
+import java.util.List;
+
+import models.daos.UsuarioDAO;
+import models.daos.impl.UsuarioDAOImpl;
+import models.entities.Usuario;
+import play.Application;
+import play.GlobalSettings;
+import play.libs.Yaml;
+
+import com.avaje.ebean.Ebean;
+
+
+public class Global extends GlobalSettings {
+    @Override
+    public void onStart(Application app) {
+        
+        UsuarioDAO udao = new UsuarioDAOImpl();
+        
+        // Check if the database is empty
+        if (Ebean.find(Usuario.class).findList().size() == 0) {
+            List<?> lista = (List<?>) Yaml.load("bootstrap-data.yml");
+            for(Object o : lista){
+                Ebean.save(o);
+                /*if(o instanceof Docente){
+                    Docente d = (Docente)o;
+                    if(d.getGrupos() != null) for(Grupo g : d.getGrupos())
+                        Ebean.saveManyToManyAssociations(g, "alumnos");
+                }*/
+            }
+            udao.cambiarPassword(10001000, "1234");
+            udao.cambiarPassword(10002000, "1234");
+            udao.cambiarPassword(44441000, "abcd");
+            udao.cambiarPassword(44442000, "abcd");
+        }
+    }
+}

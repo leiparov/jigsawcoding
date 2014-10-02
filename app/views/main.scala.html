@@ -1,0 +1,35 @@
+@(menuNav: Html, titlePrefix: String = "")(body: Html)
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>@{if(titlePrefix.length != 0) titlePrefix + " - " else ""}Jigsaw Coding</title>
+        
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("css/main.min.css")">
+        <link rel="stylesheet" media="all" href="@routes.Assets.at("css/prettify.css")">
+	    <link rel="stylesheet" media="all" href="@routes.Assets.at("css/bootstrap-duallistbox.css")">
+	    <link rel="stylesheet" media="all" href="@routes.Assets.at("css/bootstrap-datepicker.css")">
+	    <link rel="stylesheet" media="all" href="@routes.Assets.at("css/bootstrap-timepicker.min.css")">
+
+        <script src="@routes.Application.jsRoutes()" type="text/javascript"></script>
+        <script src="@routes.Assets.at("js/jquery-1.9.0.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("js/bootstrap.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("js/modernizr-custom.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("js/prettify.js")" type="text/javascript"></script>
+        
+        	
+
+    </head>
+    <body>
+        <header>
+            @header()
+        </header>
+        <nav role="navigation" class="navbar navbar-default">
+            @menuNav
+        </nav>
+        <main>
+            @body
+        </main>
+    </body>
+</html>

@@ -1,0 +1,14 @@
+@(name: String, value: Date)
+<div class="input-group bootstrap-timepicker">
+	<input type="input" @if(value != null){value="@value.format(FormatoFechaHora.timeFormat12)"} 
+		class="form-control" name="@name" >
+	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+</div>
+<script>
+$(function(){
+	$('input[name="@name"]').timepicker({
+		minuteStep: 1,
+		defaultTime: false
+	});
+});
+</script>

@@ -1,0 +1,22 @@
+@(name: String, value: Integer)
+@horas(value: Integer) = @{
+	if(value == null) "" else value / 60
+}
+@minutos(value: Integer) = @{
+	if(value == null) "" else value % 60
+}
+
+<div class="row">
+	<div class="col-xs-4">
+		<input type="number" name="@{name}Horas" min="0" class="form-control" value="@horas(value)"/>
+	</div>
+	<div class="col-xs-2">
+	horas
+	</div>
+	<div class="col-xs-4">
+		<input type="number" name="@{name}Minutos" min="0" class="form-control" value="@minutos(value)" />
+	</div>
+	<div class="col-xs-2">
+	minutos
+	</div>
+</div>

@@ -1,0 +1,15 @@
+@(name: String, value: Date)
+<div class="input-group date" >
+    <input name="@name" class="form-control" type="text" @if(value != null){value="@value.format(FormatoFechaHora.dateFormat)"} />
+    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+</div>
+<script>
+$(function() {
+	$('[name="@name"]').parent().datepicker({
+		format: 'dd/mm/yyyy',
+		autoclose : true,
+		language: 'es',
+		startDate : 'today'
+	});
+});
+</script>

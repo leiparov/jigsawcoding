@@ -1,0 +1,150 @@
+//Importar Bootstrap
+@import "bootstrap/bootstrap.less";
+
+//Elementos propios
+header {
+    .clearfix();
+    padding: 10px 10px 10px 15px;
+    
+    .user-greet {
+        display: inline-block;
+        text-align: right;
+        vertical-align: middle;
+    }
+}
+
+main {
+    padding: 0px @navbar-margin-bottom;
+}
+
+//Preguntas
+
+.pregunta {
+    text-align: justify;
+    margin-bottom: 20px;
+    
+    .form-control.inline {
+        width: inherit;
+        display: inline-block;
+    }
+    
+    ol.emparejamiento-respuesta {
+        padding: 0px;
+        list-style: none;
+        li {
+            margin-bottom: 10px;
+        }
+    }
+    
+}
+
+.pregunta-contenedor-edicion {
+    padding: 20px;
+
+    button.pregunta-agregar {
+        display: none;
+    }
+    
+    .pregunta {
+        margin-right: @grid-gutter-width;
+        margin-left: @grid-gutter-width/2;
+    }
+
+    .pregunta-opciones, button.close {
+        display: none;
+    }
+    
+    &:hover{
+        border:solid @panel-primary-border 1px;
+        border-radius: 20px;
+        padding: 19px;
+        cursor: pointer;
+    }
+
+    &.pregunta-por-agregar {
+
+        button.pregunta-agregar {
+            display: inherit;
+        }
+
+        div.pregunta-opciones-puntaje {
+            visibility: hidden;
+        }
+        
+        .conteo-nota {
+            display: none;
+        }
+
+        &:hover {
+            cursor: inherit;
+        }
+
+        .pregunta-opciones, button.close {
+            display: inherit;
+        }
+    }
+}
+
+@ancho-caja-busqueda: 340px;
+@limite-caja-busqueda: 450px;
+
+#limite-panel-general {
+    min-height: @limite-caja-busqueda + 100px;
+}
+
+#examen-contenedor {
+
+    margin-left: @ancho-caja-busqueda + @grid-gutter-width/2;
+
+    input.titulo {
+        text-align: center;
+        font-size: 22px;
+    }
+    
+    .conteo-nota {
+        font-style: italic;
+        color: lighten(@text-color, 25%);
+        
+        &.danger {
+            color: @brand-danger;
+        }
+        
+        &.success {
+            color: @brand-success;
+        }
+    }
+    
+    .examen-opciones {
+        text-align: center;
+        .submit {
+            width: 10em;
+        }
+    }
+}
+
+#busqueda-preguntas {
+
+    position: absolute;
+    width: @ancho-caja-busqueda;
+
+    &.affix {
+        position: fixed;
+        top: 10px;
+    }
+    
+    .busqueda-resultados {
+        max-height: @limite-caja-busqueda;
+        overflow: auto;
+    }
+
+    .resultado-busqueda.inactive {
+        color: @gray-light;
+        h4 {
+            color: @gray-light;
+        }
+        &:hover{
+            background-color: inherit;
+        }
+    }
+
+}
