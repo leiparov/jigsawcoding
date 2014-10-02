@@ -1,5 +1,50 @@
-@main(menuDocente()) {
-    <!-- Contenido del cuerpo -->
-    Crear nuevo problem
-    
+@main(menuDocente()) { 
+	@inputs.panel("Nuevo Problema", true){
+		@if(flash.containsKey("success")){
+		<div class="alert alert-success alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-hidden="true">&times;</button>
+			<span class="glyphicon glyphicon-ok-sign"></span> @flash.get("success")
+		</div>
+		} 
+		@if(flash.containsKey("error")){
+		<div class="alert alert-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-hidden="true">&times;</button>
+			<span class="glyphicon glyphicon-remove-sign"></span>
+			@flash().get("error")
+		</div>
+		} 
+		
+		<div class="col-md-6">
+			@helper.form(routes.Problemas.registrarProblema, 'class -> "form-horizontal"){
+				<div class="col-md-12">					
+					<div class="form-group">
+                    	<label class="col-sm-2 control-label" for="titulo">Titulo</label>
+                     	<div class="col-sm-8">
+                        	<input type="text" class="form-control" id="titulo"
+                               name="titulo" required>
+                    	</div>
+                  	</div>
+                  	<div class="form-group">
+                    	<label class="col-sm-2 control-label" for="enunciado">Enunciado</label>
+                     	<div class="col-sm-10">
+                            <textarea class="form-control" rows="5" id="enunciado"
+                            name="enunciado" required="true"></textarea>
+                    	</div>
+                  	</div>
+                  	<div class="form-group">
+					    <div class="col-sm-offset-2 col-sm-8">
+					      <button type="submit" class="btn btn-default">Guardar</button>
+					    </div>
+				  	</div>					
+				</div>
+			
+			}
+		
+		</div>
+		
+		
+		
+	} 
 }

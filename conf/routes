@@ -21,8 +21,10 @@ GET    /perfil                          controllers.Application.interfazPerfilUs
 #GET    /docentes/eliminar               controllers.Docentes.eliminarDocente()
 
 
-GET /problemas/nuevo 		controllers.Problemas.interfazNuevo()
 
+GET /preguntas	controllers.Problemas.index()
+GET /problemas/nuevo 		controllers.Problemas.interfazNuevo()
+POST /problemas/registrar               controllers.Problemas.registrarProblema()
 
 
 GET    /alumnos                         controllers.Alumnos.index()

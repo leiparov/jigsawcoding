@@ -6,6 +6,7 @@ import models.services.ProblemaService;
 import models.services.UsuarioService;
 import models.services.impl.ProblemaServiceImpl;
 import models.services.impl.UsuarioServiceImpl;
+import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import utils.Login;
@@ -36,8 +37,25 @@ public class Problemas extends Controller{
         return usuarioService.obtener(Login.obtener(ctx()).getDNI(), Docente.class);
     }
 	
+	public static Result index(){
+		return interfazNuevo();
+	}
 	public static Result interfazNuevo(){
 		return ok(nuevoProblema.render());
+	}
+	
+	public static Result registrarProblema(){
+		try {
+			Form<ProblemaForm> form = Form.form(ProblemaForm.class).bindFromRequest();
+			Problema problema = form.get().entidad();
+			problemaService.guardarProblema(getDocente(), problema);
+			flash("success", "Problema registrado con éxito");
+			return redirect(routes.Problemas.index());
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return noContent();
 	}
 	
 }
