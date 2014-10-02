@@ -3,15 +3,15 @@
 # ~~~~
 
 # Login
-GET    /login                           controllers.Application.interfazLogin()
-POST   /login                           controllers.Application.autenticar()
-GET    /registrese                      controllers.Docentes.interfazNuevo()
-GET    /logout                          controllers.Application.logout()
-GET    /recuperarContrasenia            controllers.Application.recuperarContrasenia()
+GET    /login                       controllers.Application.interfazLogin()
+POST   /login                       controllers.Application.autenticar()
+GET    /registrese                  controllers.Docentes.interfazNuevo()
+GET    /logout                      controllers.Application.logout()
+GET    /recuperarContrasenia        controllers.Application.recuperarContrasenia()
 
 # Home page
-GET    /                                controllers.Application.index()
-GET    /perfil                          controllers.Application.interfazPerfilUsuario()
+GET    /                            controllers.Application.index()
+GET    /perfil                      controllers.Application.interfazPerfilUsuario()
 #GET    /perfil/editar                   controllers.Application.interfazModificarUsuario()
 #GET    /perfil/cambiarContrasenia       controllers.Application.interfazCambiarContrasenia()
 
@@ -22,20 +22,24 @@ GET    /perfil                          controllers.Application.interfazPerfilUs
 
 
 
-GET /problemas	controllers.Problemas.index()
-GET /problemas/nuevo 		controllers.Problemas.interfazNuevo()
-POST /problemas/registrar               controllers.Problemas.registrarProblema()
+#GET    /problemas                   controllers.Problemas.index()
+GET    /problemas                   controllers.Problemas.list(p:Int ?= 0, s ?= "problemaId", o ?= "asc", f ?= "")
+GET    /problemas/nuevo             controllers.Problemas.interfazNuevo()
+POST   /problemas/registrar         controllers.Problemas.registrarProblema()
+GET    /problemas/:id               controllers.Problemas.editarProblema(id:Long)
+POST   /problemas/:id               controllers.Problemas.actualizarProblema(id:Long)
+POST   /problemas/:id/delete        controllers.Problemas.eliminarProblema(id:Long)
 
 
-GET    /alumnos                         controllers.Alumnos.index()
+GET    /alumnos                     controllers.Alumnos.index()
 #GET    /alumnos/nuevo                   controllers.Alumnos.interfazNuevo()
 #POST   /alumnos/registrar               controllers.Alumnos.registrarAlumno()
 #POST   /alumnos/actualizar              controllers.Alumnos.actualizarAlumno()
 #GET    /alumnos/nuevo/lista             controllers.Alumnos.interfazNuevosXLista()
 #GET    /alumnos/:dni/estadisticas       controllers.Alumnos.interfazEstadisticas(dni: Long)
-GET    /alumnos/buscar                  controllers.Alumnos.buscarAlumnos(q: String)
+GET    /alumnos/buscar              controllers.Alumnos.buscarAlumnos(q: String)
 #POST   /perfil/cambiarContrasenia       controllers.Alumnos.cambiarContrasenia()
 
 # Map static resources from the /public folder to the /assets URL path
-GET    /assets/javascripts/routes       controllers.Application.jsRoutes()
-GET    /assets/*file                    controllers.Assets.at(path="/public", file)
+GET    /assets/javascripts/routes   controllers.Application.jsRoutes()
+GET    /assets/*file                controllers.Assets.at(path="/public", file)

@@ -1,5 +1,6 @@
-@main(menuDocente()) { 
-	@inputs.panel("Nuevo Problema", true){
+@* nuevo Template File *@
+@main(menuDocente()){
+	@inputs.panel("NUEVO PROBLEMA", true){
 		@if(flash.containsKey("success")){
 		<div class="alert alert-success alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert"
@@ -35,7 +36,7 @@
                   	</div>
                   	<div class="form-group">
 					    <div class="col-sm-offset-2 col-sm-8">
-					      <button type="submit" class="btn btn-default">Guardar</button>
+					      <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
 					    </div>
 				  	</div>					
 				</div>

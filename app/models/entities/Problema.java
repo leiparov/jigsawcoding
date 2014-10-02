@@ -18,6 +18,7 @@ public class Problema {
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Docente docente;
+	
 
 	/*Getters and Setters*/
 	

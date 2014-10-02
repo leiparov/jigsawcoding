@@ -1,5 +1,7 @@
 package models.services.impl;
 
+import com.avaje.ebean.Page;
+
 import models.daos.ProblemaDAO;
 import models.daos.UsuarioDAO;
 import models.daos.impl.ProblemaDAOImp;
@@ -33,6 +35,13 @@ public class ProblemaServiceImpl implements ProblemaService {
 	@Override
 	public Problema obtenerProblema(int idProblema) {
 		return problemaDAO.obtenerProblema(idProblema);
+	}
+
+
+	@Override
+	public Page<Problema> page(int page, int pageSize, String sortBy,
+			String order, String filter) {		
+		return problemaDAO.page(page, pageSize, sortBy, order, filter);
 	}
 
 }
