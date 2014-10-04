@@ -1,22 +1,19 @@
 package controllers;
-import play.mvc.Controller;
-import play.mvc.Result;
-import play.mvc.Http.MultipartFormData;
-import play.mvc.Http.MultipartFormData.FilePart;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import javax.persistence.PersistenceException;
-import models.daos.DAOException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+
 import models.entities.Docente;
 import models.entities.Sexo;
-import models.entities.Usuario;
 import models.services.DocenteService;
 import models.services.UsuarioService;
 import models.services.impl.DocenteServiceImpl;
 import models.services.impl.UsuarioServiceImpl;
-import play.data.Form;
+import play.mvc.Controller;
+import play.mvc.Http.MultipartFormData;
+import play.mvc.Http.MultipartFormData.FilePart;
+import play.mvc.Result;
 /*import views.html.docentes.nuevoDocente;
 import views.html.usuarios.actualizarDocente;*/
 import utils.Login;
@@ -31,7 +28,7 @@ public class Docentes extends Controller{
    
    public static Result interfazNuevo() {
       //return ok(nuevoDocente.render());
-	   return noContent();
+	   return TODO;
    }
    
    /*public static Result registrarDocente(){

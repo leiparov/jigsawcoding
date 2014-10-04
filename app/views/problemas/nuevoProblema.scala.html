@@ -1,4 +1,5 @@
 @* nuevo Template File *@
+@(problemaForm: play.data.Form[models.entities.Problema])
 @main(menuDocente()){
 	@inputs.panel("NUEVO PROBLEMA", true){
 		@if(flash.containsKey("success")){

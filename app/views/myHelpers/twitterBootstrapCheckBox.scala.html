@@ -1,0 +1,10 @@
+@(elements: helper.FieldElements)
+
+@***************************************************
+* Generate input according twitter bootstrap rules *
+***************************************************@
+<label class="checkbox-inline @if(elements.hasErrors) {error}">
+	@elements.input
+	@elements.label      
+</label>
+

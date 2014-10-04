@@ -8,8 +8,10 @@ import com.avaje.ebean.Page;
 public interface ProblemaService {
 	
 	public void guardarProblema (Docente docente, Problema problema);
+	public void actualizarProblema (Docente docente, Problema problema);
+	public void eliminarProblema(Long id);
 	
-	public Problema obtenerProblema(int idProblema);
+	public Problema obtenerProblema(Long idProblema);
 	
 	public Page<Problema> page(int page, int pageSize, String sortBy, String order, String filter);
 	

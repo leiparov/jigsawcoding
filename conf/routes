@@ -35,8 +35,6 @@ GET    /alumnos                     controllers.Alumnos.index()
 #GET    /alumnos/nuevo                   controllers.Alumnos.interfazNuevo()
 #POST   /alumnos/registrar               controllers.Alumnos.registrarAlumno()
 #POST   /alumnos/actualizar              controllers.Alumnos.actualizarAlumno()
-#GET    /alumnos/nuevo/lista             controllers.Alumnos.interfazNuevosXLista()
-#GET    /alumnos/:dni/estadisticas       controllers.Alumnos.interfazEstadisticas(dni: Long)
 GET    /alumnos/buscar              controllers.Alumnos.buscarAlumnos(q: String)
 #POST   /perfil/cambiarContrasenia       controllers.Alumnos.cambiarContrasenia()
 

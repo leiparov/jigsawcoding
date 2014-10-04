@@ -63,6 +63,13 @@ public class Problema {
 	public void setDocente(Docente docente) {
 		this.docente = docente;
 	}
+
+	@Override
+	public String toString() {
+		return "Problema [problemaId=" + problemaId + ", titulo=" + titulo
+				+ ", enunciado=" + enunciado + ", fechaCreacion="
+				+ fechaCreacion + ", docente=" + docente.getDNI() + "]";
+	}
 	
 	
 	

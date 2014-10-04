@@ -93,14 +93,6 @@ public class Alumnos extends Controller {
       return ok(nuevoAlumno.render(usuario));
    }*/
 
-   public static Result interfazNuevosXLista() {
-      return noContent();
-   }
-
-   public static Result interfazEstadisticas(Long dni) {
-      return noContent();
-   }
-
    /*public static Result registrarAlumno() {
       try{
          Form<AlumnoForm> form = Form.form(AlumnoForm.class).bindFromRequest();

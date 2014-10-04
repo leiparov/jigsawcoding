@@ -27,9 +27,21 @@ public class ProblemaServiceImpl implements ProblemaService {
 		}
 		usuarioDAO.guardar(docente);
 	}
+	@Override
+	public void actualizarProblema(Docente docente, Problema problema) {
+		/* Agrega nueva pregunta o actualiza la pregunta en la lista del docente */
+		problemaDAO.actualizarProblema(problema);
+		int indiceActual = docente.getProblemas().indexOf(problema);
+		if (indiceActual == -1) {
+			docente.getProblemas().add(problema);
+		} else {
+			docente.getProblemas().set(indiceActual, problema);
+		}
+		usuarioDAO.guardar(docente);
+	}
 
 	@Override
-	public Problema obtenerProblema(int idProblema) {
+	public Problema obtenerProblema(Long idProblema) {
 		return problemaDAO.obtenerProblema(idProblema);
 	}
 
@@ -43,6 +55,10 @@ public class ProblemaServiceImpl implements ProblemaService {
 	public Page<Problema> page(Docente docente, int page, int pageSize,
 			String sortBy, String order, String filter) {
 		return problemaDAO.page(docente, page, pageSize, sortBy, order, filter);
+	}
+	@Override
+	public void eliminarProblema(Long id) {
+		problemaDAO.eliminarProblema(id);
 	}
 
 }

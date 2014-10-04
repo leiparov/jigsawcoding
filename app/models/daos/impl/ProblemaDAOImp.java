@@ -19,9 +19,14 @@ public class ProblemaDAOImp implements ProblemaDAO {
 		Ebean.save(problema);
 
 	}
+	@Override
+	public void actualizarProblema(Problema problema) {
+		Ebean.update(problema);
+
+	}
 
 	@Override
-	public Problema obtenerProblema(int idProblema) {
+	public Problema obtenerProblema(Long idProblema) {
 		return EbeanUtils.findOrException(Problema.class, idProblema);
 	}
 
@@ -39,6 +44,10 @@ public class ProblemaDAOImp implements ProblemaDAO {
 		return find.where().eq("docente_dni", docente.getDNI()).ilike("titulo", "%" + filter + "%")
 				.orderBy(sortBy + " " + order)
 				.findPagingList(pageSize).setFetchAhead(false).getPage(page);
+	}
+	@Override
+	public void eliminarProblema(Long id) {
+		Ebean.delete(obtenerProblema(id));		
 	}
 
 }

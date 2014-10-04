@@ -6,6 +6,7 @@ import models.services.ProblemaService;
 import models.services.UsuarioService;
 import models.services.impl.ProblemaServiceImpl;
 import models.services.impl.UsuarioServiceImpl;
+import static play.data.Form.*;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -13,6 +14,7 @@ import utils.Login;
 import views.html.problemas.indexProblemas;
 import views.html.problemas.nuevoProblema;
 import views.html.problemas.listaProblemas;
+import views.html.problemas.editarProblema;
 
 @Login.Requiere
 public class Problemas extends Controller{
@@ -62,13 +64,21 @@ public class Problemas extends Controller{
 		return GO_HOME;
 	}
 	public static Result interfazNuevo(){
-		return ok(nuevoProblema.render());
+		Form<Problema> problemaForm = form(Problema.class).bindFromRequest();
+		return ok(nuevoProblema.render(problemaForm));
 	}
 	
 	public static Result registrarProblema(){
+		Form<Problema> problemaForm = form(Problema.class).bindFromRequest();
+		if(problemaForm.hasErrors()){
+			return badRequest(nuevoProblema.render(problemaForm));
+		}
 		try {
-			Form<ProblemaForm> form = Form.form(ProblemaForm.class).bindFromRequest();
-			Problema problema = form.get().entidad();
+			//Form<ProblemaForm> form = Form.form(ProblemaForm.class).bindFromRequest();
+			
+			//Problema problema = form.get().entidad();
+			Problema problema = problemaForm.get();
+			problema.setDocente(getDocente());
 			problemaService.guardarProblema(getDocente(), problema);
 			flash("success", "Problema registrado con éxito");
 			return GO_HOME;
@@ -82,16 +92,37 @@ public class Problemas extends Controller{
 	}
 	
 	public static Result editarProblema(Long id){
-		return TODO;
+		Form<Problema> problemaForm = form(Problema.class).fill(problemaService.obtenerProblema(id));
+		return ok(editarProblema.render(id, problemaForm));
 	}
 	
 	public static Result actualizarProblema(Long id){
-		//metodo que guardara la edicion del problema en la BD
-		return noContent();
+		Form<Problema> problemaForm = form(Problema.class).bindFromRequest();
+		if(problemaForm.hasErrors()){
+			return badRequest(editarProblema.render(id, problemaForm));
+		}
+		try {
+			//Form<ProblemaForm> form = Form.form(ProblemaForm.class).bindFromRequest();			
+			//Problema problema = form.get().entidad();
+			Problema problema = problemaForm.get();
+			problema.setDocente(getDocente());
+			problema.setProblemaId(id);
+			System.out.println(problema.toString());
+			problemaService.actualizarProblema(getDocente(), problema);
+			flash("success", "Problema actualizado con éxito");
+			return GO_HOME;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			flash("error", "No se pudo actualizar el Problema");
+			return redirect(routes.Application.index());
+		}
+		//return noContent();
 	}
 	
 	public static Result eliminarProblema(Long id){
-		flash("success", "Implementar Eliminar problema");
+		problemaService.eliminarProblema(id);
+		flash("success", "Problema borrado con éxito");		
 		return GO_HOME;
 	}
 	
