@@ -2,6 +2,7 @@ package models.daos;
 
 public class DAOException extends RuntimeException {
 	
+
 	public static class FalloLoginException extends DAOException {
         public FalloLoginException() {
             super("Usuario o contraseña incorrectos");

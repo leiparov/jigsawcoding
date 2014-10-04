@@ -20,7 +20,7 @@ GET    /perfil                      controllers.Application.interfazPerfilUsuari
 #POST   /docentes/actualizar             controllers.Docentes.actualizarDocente()
 #GET    /docentes/eliminar               controllers.Docentes.eliminarDocente()
 
-
+POST   /docentes/nuevo              controllers.Docentes.registrarDocente()
 
 #GET    /problemas                   controllers.Problemas.index()
 GET    /problemas                   controllers.Problemas.list(p:Int ?= 0, s ?= "problemaId", o ?= "asc", f ?= "")

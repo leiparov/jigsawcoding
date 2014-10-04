@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>JIGSAW CODING</title>
+         <link rel="stylesheet" media="screen" href="@routes.Assets.at("css/login.min.css")">
+         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+   </head>
+   <body>
+      <header class="navbar navbar-default navbar-fixed-top" role="banner">
+         @helper.form(routes.Application.interfazLogin){
+            <p class="navbar-text navbar-right">
+               ¿Ya tienes una cuenta?
+               <button class="btn btn-primary btn-large navbar-btn">Login</button>
+            </p>
+         }
+      </header>
+      <div class="container" style="margin-top:1%"> 
+         <div class="panel panel-default">
+            <div class="panel-heading"><b>NUEVO DOCENTE</b></div>
+            <div class="panel-body">
+               @helper.form(action = routes.Docentes.registrarDocente){
+                  <div class="col-md-6">
+                     @if(flash.containsKey("error")){
+                        <div class="alert alert-danger">
+                           <span class="glyphicon glyphicon-remove-sign"></span>@flash.get("error")
+                        </div>
+                     }
+                     <div class="form-docente row">
+                        <label class="col-sm-4" for="nombreDocente">Nombres</label>
+                        <div class="col-sm-8">
+                           <input type="text" class="form-control" id="nombreDocente"
+                              name="nombre" placeholder="Ingrese su nombre" required>
+                        </div>
+                     </div>
+                     <br>
+                     <div class="form-docente row">
+                        <label class="col-sm-4" for="apellidoPaterno">Apellido Paterno</label>
+                        <div class="col-sm-8">
+                           <input type="text" class="form-control" id="apellidoPaterno"
+                              name="apellidoPaterno" placeholder="Ingrese su apellido materno" required>
+                        </div>
+                     </div>
+                     <br>
+                     <div class="form-docente row">
+                        <label class="col-sm-4" for="apellidoMaterno">Apellido Materno</label>
+                        <div class="col-sm-8">
+                           <input type="text" class="form-control" id="apellidoMaterno"
+                              name="apellidoMaterno" placeholder="Ingrese su apellido materno" required>
+                        </div>
+                     </div>
+                     <br>
+                     <div class="form-docente row">
+                        <label class="col-sm-4" for="dniDocente">DNI</label>
+                        <div class="col-sm-8">
+                           <input type="text" class="form-control" id="dniDocente"
+                              name="dni" placeholder="Ingrese su DNI" required>
+                        </div>
+                     </div>
+                     <br>
+                     <div class="form-docente row">
+                        <label class="col-sm-4" for="sexoDocente">Sexo</label>
+                        <div class="col-sm-8">
+                           <input id="sexoDoc1" type="radio" name="sexo" value="MASCULINO" required>Masculino
+                           <input id="sexoDoc2" type="radio" name="sexo" value="FEMENINO">Femenino
+                        </div>
+                     </div>                     
+                  </div>
+                  <div class="col-md-6">
+                  	<div class="form-docente row">
+                        <label class="col-sm-4" for="emailDocente">Email</label>
+                        <div class="col-sm-8">
+                           <input type="email" class="form-control" id="emailDocente"
+                              name="email" placeholder="Ingrese su email" required>
+                        </div>
+                     </div>
+                     <br>
+                     <div class="form-docente row">
+                        <label class="col-sm-4" for="passwordDocente">Contraseña</label>
+                        <div class="col-sm-8">
+                           <input type="password" class="form-control" id="passwordDocente"
+                              name="contrasena" placeholder="Ingrese su contraseña" required>
+                        </div>
+                     </div>
+                     <br>
+                     <div class="form-docente row">
+                        <label class="col-sm-4" for="passwordDocente">Confirmar Contraseña</label>
+                        <div class="col-sm-8">
+                           <input type="password" class="form-control" id="password2Docente"
+                              name="contrasena2" placeholder="Repita su contraseña" required>
+                        </div>
+                     </div>
+                     <br><br>
+                     <button type="submit" class="btn btn-primary">Registrar</button>
+                  </div>                  
+               }
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

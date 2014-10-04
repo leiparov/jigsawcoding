@@ -4,18 +4,22 @@ import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
+import javax.persistence.PersistenceException;
+
+import models.daos.DAOException;
 import models.entities.Docente;
 import models.entities.Sexo;
 import models.services.DocenteService;
 import models.services.UsuarioService;
 import models.services.impl.DocenteServiceImpl;
 import models.services.impl.UsuarioServiceImpl;
+import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
-/*import views.html.docentes.nuevoDocente;
-import views.html.usuarios.actualizarDocente;*/
+import views.html.docentes.nuevoDocente;
+//import views.html.usuarios.actualizarDocente;
 import utils.Login;
 
 public class Docentes extends Controller{   
@@ -27,11 +31,11 @@ public class Docentes extends Controller{
    private static final String ruta = "public/photos/";
    
    public static Result interfazNuevo() {
-      //return ok(nuevoDocente.render());
-	   return TODO;
+	   return ok(nuevoDocente.render());
+	   //return TODO;
    }
    
-   /*public static Result registrarDocente(){
+   public static Result registrarDocente(){
       try{
          Form<DocenteForm> form = Form.form(DocenteForm.class).bindFromRequest();
          Docente docente = form.get().entidadNueva();
@@ -47,10 +51,7 @@ public class Docentes extends Controller{
          }
          try{
             usuarioService.obtener(docente.getEmail());
-         }catch(DAOException e){
-            if(guardarFoto(docente.getDNI())){
-               docente.setFoto(true);
-            }
+         }catch(DAOException e){            
             docenteService.guardar(docente);
             flash("success", "Su cuenta ha sido creada correctamente.");
             return redirect(routes.Application.interfazLogin());
@@ -70,7 +71,7 @@ public class Docentes extends Controller{
          flash("error", "Error desconocido: Posiblemente datos no validos.");
          return redirect(routes.Docentes.interfazNuevo());
       }
-   }*/
+   }
    /*@Login.Requiere
    public static Result actualizarDocente(){
       try{

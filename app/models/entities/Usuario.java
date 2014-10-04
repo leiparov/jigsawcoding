@@ -1,8 +1,12 @@
 package models.entities;
 
-import javax.persistence.*;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
-import play.data.validation.*;
+import play.data.validation.Constraints;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -12,8 +16,7 @@ public class Usuario {
 	@Id
 	private int DNI;
 	@Constraints.Required
-	private String email;
-	@SuppressWarnings("unused")
+	private String email;	
 	private String password;
 	private boolean inhabilitado = false;
 	private String nombres;
