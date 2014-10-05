@@ -1,6 +1,4 @@
-package models.daos.impl;
-
-import models.daos.DAOException;
+package models.daos;
 
 import com.avaje.ebean.Ebean;
 

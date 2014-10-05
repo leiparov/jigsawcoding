@@ -1,19 +1,74 @@
 package models.daos;
 
-import models.entities.*;
+import java.util.List;
 
-public interface UsuarioDAO {
+import models.entities.Usuario;
 
-	public abstract void guardar(Usuario u);
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.SqlQuery;
+import com.avaje.ebean.SqlRow;
+import com.avaje.ebean.SqlUpdate;
 
-	public abstract int obtener(String email); 
-	
-	public abstract void cambiarPassword(int DNI, String nuevoPass);
+public class UsuarioDAO {
 
-	public abstract Usuario obtenerLogin(String email, String password);
+	public void guardar(Usuario u) {
+		Ebean.save(u);
+	}
 
-	public abstract Usuario obtener(int DNI);
+	public Usuario obtener(int DNI) {
+		Usuario resultado = Ebean.find(Usuario.class, DNI);
+		if (resultado != null)
+			return resultado;
+		else
+			throw new DAOException("Usuario no encontrado");
+	}
 
-	public <T extends Usuario> T obtener(int dni, Class<T> claseUsuario);
-	
+	public Usuario obtenerLogin(String email, String password) {
+		SqlQuery sql = Ebean
+				.createSqlQuery("select dni from usuario where email like :email and password like :password");
+		sql.setParameter("email", email);
+		sql.setParameter("password", password);
+
+		SqlRow resultado = sql.findUnique();
+		if (resultado == null)
+			throw new DAOException.FalloLoginException();
+		else
+			return obtener(resultado.getInteger("dni"));
+	}
+
+	public void cambiarPassword(int DNI, String nuevoPass) {
+		SqlUpdate sql = Ebean
+				.createSqlUpdate("update usuario set password = :password where dni = :dni");
+		sql.setParameter("dni", DNI);
+		sql.setParameter("password", nuevoPass);
+
+		int cuenta = sql.execute();
+
+		if (cuenta == 0)
+			throw new DAOException("Usuario no encontrado");
+	}
+
+	public <T extends Usuario> T obtener(int dni, Class<T> claseUsuario) {
+		T resultado = Ebean.find(claseUsuario, dni);
+		if (resultado != null)
+			return resultado;
+		else
+			throw new DAOException.NoEncontradoException(claseUsuario);
+	}
+
+	public int obtener(String email) {
+		int dni = 0;
+		SqlQuery sql = Ebean
+				.createSqlQuery("select dni from usuario where email like :email");
+		sql.setParameter("email", email);
+		List<SqlRow> resultado = sql.findList();
+		if (resultado == null || resultado.isEmpty()) {
+			throw new DAOException("Email no encontrado");
+		} else {
+			for (SqlRow row : resultado) {
+				dni = row.getInteger("dni");
+			}
+		}
+		return dni;
+	}
 }

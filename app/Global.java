@@ -1,7 +1,6 @@
 import java.util.List;
 
 import models.daos.UsuarioDAO;
-import models.daos.impl.UsuarioDAOImpl;
 import models.entities.Usuario;
 import play.Application;
 import play.GlobalSettings;
@@ -14,7 +13,7 @@ public class Global extends GlobalSettings {
     @Override
     public void onStart(Application app) {
         
-        UsuarioDAO udao = new UsuarioDAOImpl();
+        UsuarioDAO udao = new UsuarioDAO();
         
         // Check if the database is empty
         if (Ebean.find(Usuario.class).findList().size() == 0) {

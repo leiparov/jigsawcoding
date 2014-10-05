@@ -1,20 +1,22 @@
 package controllers;
 
 import models.daos.DAOException;
-import models.entities.*;
+import models.entities.Alumno;
+import models.entities.Usuario;
 import models.services.UsuarioService;
-import models.services.impl.UsuarioServiceImpl;
 import play.Routes;
-import play.mvc.*;
-import play.data.*;
-import views.html.*;
+import play.data.Form;
+import play.mvc.Controller;
+import play.mvc.Result;
 //import views.html.usuarios.*;
 import utils.Login;
-import models.daos.impl.UsuarioDAOImpl;
+import views.html.indexAlumno;
+import views.html.indexDocente;
+import views.html.login;
 
 public class Application extends Controller {
 
-    private static UsuarioService usuarioService = new UsuarioServiceImpl();
+    private static UsuarioService usuarioService = new UsuarioService();
 
     @Login.Requiere
     public static Result index() {

@@ -11,21 +11,19 @@ import models.entities.Docente;
 import models.entities.Sexo;
 import models.services.DocenteService;
 import models.services.UsuarioService;
-import models.services.impl.DocenteServiceImpl;
-import models.services.impl.UsuarioServiceImpl;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
-import views.html.docentes.nuevoDocente;
 //import views.html.usuarios.actualizarDocente;
 import utils.Login;
+import views.html.docentes.nuevoDocente;
 
 public class Docentes extends Controller{   
    
-   private static DocenteService docenteService = new DocenteServiceImpl();
-   private static UsuarioService usuarioService = new UsuarioServiceImpl();
+   private static DocenteService docenteService = new DocenteService();
+   private static UsuarioService usuarioService = new UsuarioService();
    private static final String carInvalidos = "|1234567890'!\"#$%&/()=?\\"
                                              +"@+{},.-<>;:_[]*^`~";
    private static final String ruta = "public/photos/";

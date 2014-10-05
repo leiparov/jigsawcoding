@@ -1,25 +1,23 @@
 package controllers;
 
+import static play.data.Form.form;
 import models.entities.Docente;
 import models.entities.GrupoExperto;
 import models.services.GrupoExpertoService;
 import models.services.UsuarioService;
-import models.services.impl.GrupoExpertoServiceImpl;
-import models.services.impl.UsuarioServiceImpl;
-import static play.data.Form.*;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import utils.Login;
-import views.html.gruposexpertos.nuevoGrupoExperto;
-import views.html.gruposexpertos.listaGruposExpertos;
 import views.html.gruposexpertos.editarGrupoExperto;
+import views.html.gruposexpertos.listaGruposExpertos;
+import views.html.gruposexpertos.nuevoGrupoExperto;
 
 @Login.Requiere
 public class GruposExpertos extends Controller {
 
-	private static UsuarioService usuarioService = new UsuarioServiceImpl();
-	private static GrupoExpertoService grupoExpertoService = new GrupoExpertoServiceImpl();
+	private static UsuarioService usuarioService = new UsuarioService();
+	private static GrupoExpertoService grupoExpertoService = new GrupoExpertoService();
 
 	private static Docente getDocente() {
 		return usuarioService.obtener(Login.obtener(ctx()).getDNI(),

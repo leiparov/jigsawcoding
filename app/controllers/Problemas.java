@@ -1,25 +1,23 @@
 package controllers;
 
+import static play.data.Form.form;
 import models.entities.Docente;
 import models.entities.Problema;
 import models.services.ProblemaService;
 import models.services.UsuarioService;
-import models.services.impl.ProblemaServiceImpl;
-import models.services.impl.UsuarioServiceImpl;
-import static play.data.Form.*;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import utils.Login;
-import views.html.problemas.nuevoProblema;
-import views.html.problemas.listaProblemas;
 import views.html.problemas.editarProblema;
+import views.html.problemas.listaProblemas;
+import views.html.problemas.nuevoProblema;
 
 @Login.Requiere
 public class Problemas extends Controller {
 
-	private static UsuarioService usuarioService = new UsuarioServiceImpl();
-	private static ProblemaService problemaService = new ProblemaServiceImpl();
+	private static UsuarioService usuarioService = new UsuarioService();
+	private static ProblemaService problemaService = new ProblemaService();
 
 	private static Docente getDocente() {
 		return usuarioService.obtener(Login.obtener(ctx()).getDNI(),

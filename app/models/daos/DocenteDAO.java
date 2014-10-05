@@ -2,8 +2,21 @@ package models.daos;
 
 import models.entities.Docente;
 
-public interface DocenteDAO {
-   public abstract Docente obtener(int dni);
-   public abstract void guardar(Docente docente);
-   public abstract void eliminar(Docente docente);
+import com.avaje.ebean.Ebean;
+
+public class DocenteDAO {
+	public static UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+	public Docente obtener(int dni) {
+		return usuarioDAO.obtener(dni, Docente.class);
+	}
+
+	public void guardar(Docente docente) {
+		Ebean.save(docente);
+	}
+
+	public void eliminar(Docente docente) {
+		docente.setInhabilitado(true);
+		guardar(docente);
+	}
 }

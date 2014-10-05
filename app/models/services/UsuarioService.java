@@ -1,18 +1,57 @@
 package models.services;
 
-import models.entities.*;
+import java.util.Random;
 
-public interface UsuarioService {
+import models.daos.UsuarioDAO;
+import models.entities.Usuario;
+import utils.Mail;
 
-    public abstract Usuario obtenerLogin(String email, String password);
+public class UsuarioService {
 
-    public abstract <T extends Usuario> T obtener(int dni, Class<T> claseUsuario);
+	private static UsuarioDAO usuarioDAO = new UsuarioDAO();
+	private static Mail mail = new Mail();
 
-	public abstract void recuperarContrasenia(String email);
+	public Usuario obtenerLogin(String email, String password) {
+		return usuarioDAO.obtenerLogin(email, password);
+	}
 
-	public abstract Usuario obtener(int dni);
+	public <T extends Usuario> T obtener(int dni, Class<T> claseUsuario) {
+		return usuarioDAO.obtener(dni, claseUsuario);
+	}
 
-	public abstract void cambiarContrasenia(int dni, String nuevo);
-    
-        public abstract int obtener(String email);
+	public void recuperarContrasenia(String email) {
+		String nuevaContrasenia = generarContrasenia();
+		usuarioDAO.cambiarPassword(usuarioDAO.obtener(email), nuevaContrasenia);
+		mail.enviarContrasenia(email, nuevaContrasenia);
+	}
+
+	public Usuario obtener(int dni) {
+		return usuarioDAO.obtener(dni);
+	}
+
+	private String generarContrasenia() {
+		Random rnd = new Random();
+		int numero;
+		char caracter;
+		String nuevocontrasenia = "";
+
+		for (int i = 0; i < 8; i++) {
+			if ((int) (rnd.nextDouble() * 2.0) == 0) {
+				numero = (int) (rnd.nextDouble() * 10.0);
+				nuevocontrasenia = nuevocontrasenia + numero;
+			} else {
+				caracter = (char) (rnd.nextDouble() * 25.0 + 97);
+				nuevocontrasenia = nuevocontrasenia + caracter;
+			}
+		}
+		return nuevocontrasenia;
+	}
+
+	public void cambiarContrasenia(int dni, String nuevo) {
+		usuarioDAO.cambiarPassword(dni, nuevo);
+	}
+
+	public int obtener(String email) {
+		return usuarioDAO.obtener(email);
+	}
 }

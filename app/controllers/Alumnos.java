@@ -1,31 +1,27 @@
 package controllers;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.List;
-import java.util.LinkedList;
 
-import models.daos.DAOException;
-import models.entities.*;
-import models.services.*;
-import models.services.impl.*;
-import play.data.Form;
+import models.entities.Alumno;
+import models.entities.Docente;
+import models.entities.Sexo;
+import models.services.AlumnoService;
+import models.services.DocenteService;
+import models.services.UsuarioService;
 import play.libs.Json;
 import play.mvc.Controller;
-import play.mvc.Result;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
-import scala.Tuple2;
+import play.mvc.Result;
 import utils.Login;
 /*import views.html.alumnos.indexAlumnos;
 import views.html.alumnos.nuevoAlumno;*/
 
 import com.fasterxml.jackson.databind.JsonNode;
-
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-
-import javax.persistence.PersistenceException;
 
 @Login.Requiere
 public class Alumnos extends Controller {
@@ -70,9 +66,9 @@ public class Alumnos extends Controller {
       public String nombre;
    }
 
-   private static AlumnoService alumnoService = new AlumnoServiceImpl();
-   private static DocenteService docenteService = new DocenteServiceImpl();
-   private static UsuarioService usuarioService = new UsuarioServiceImpl();
+   private static AlumnoService alumnoService = new AlumnoService();
+   private static DocenteService docenteService = new DocenteService();
+   private static UsuarioService usuarioService = new UsuarioService();
    
    private static final String carInvalidos = "|1234567890'!\"#$%&/()=?\\"
                                              +"@+{},.-<>;:_[]*^`~";

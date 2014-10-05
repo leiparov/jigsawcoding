@@ -2,22 +2,47 @@ package models.daos;
 
 import models.entities.Docente;
 import models.entities.GrupoExperto;
+import play.db.ebean.Model.Finder;
 
+import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Page;
 
-public interface GrupoExpertoDAO {
-	
-	void guardarGrupoExperto(GrupoExperto grupoExperto);
-	
-	void actualizarGrupoExperto(GrupoExperto grupoExperto);
+public class GrupoExpertoDAO {
 
-	GrupoExperto obtenerGrupoExperto(Long idGrupoExperto);
+	public static Finder<Integer, GrupoExperto> find = new Finder<Integer, GrupoExperto>(
+			Integer.class, GrupoExperto.class);
 
-	Page<GrupoExperto> page(int page, int pageSize, String sortBy, String order,
-			String filter);
-	
-	Page<GrupoExperto> page(Docente docente, int page, int pageSize, String sortBy, String order,
-			String filter);
+	public void guardarGrupoExperto(GrupoExperto grupoExperto) {
+		Ebean.save(grupoExperto);
 
-	void eliminarGrupoExperto(Long id);
+	}
+
+	public void actualizarGrupoExperto(GrupoExperto grupoExperto) {
+		Ebean.update(grupoExperto);
+
+	}
+
+	public GrupoExperto obtenerGrupoExperto(Long idGrupoExperto) {
+		return EbeanUtils.findOrException(GrupoExperto.class, idGrupoExperto);
+	}
+
+	public Page<GrupoExperto> page(int page, int pageSize, String sortBy,
+			String order, String filter) {
+		return find.where().ilike("nombre", "%" + filter + "%")
+				.orderBy(sortBy + " " + order).findPagingList(pageSize)
+				.setFetchAhead(false).getPage(page);
+	}
+
+	public Page<GrupoExperto> page(Docente docente, int page, int pageSize,
+			String sortBy, String order, String filter) {
+		return find.where().eq("docente_dni", docente.getDNI())
+				.ilike("nombre", "%" + filter + "%")
+				.orderBy(sortBy + " " + order).findPagingList(pageSize)
+				.setFetchAhead(false).getPage(page);
+	}
+
+	public void eliminarGrupoExperto(Long id) {
+		Ebean.delete(obtenerGrupoExperto(id));
+	}
+
 }

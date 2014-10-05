@@ -4,12 +4,34 @@ import java.util.List;
 
 import models.entities.Alumno;
 
-public interface AlumnoDAO {
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
+import com.avaje.ebean.Query;
 
-    public abstract Alumno obtener(int dni);
+public class AlumnoDAO {
+    
+    public static UsuarioDAO usuarioDAO = new UsuarioDAO();
+    
 
-    public abstract List<Alumno> buscarAlumno(String criterio, int max);
+    public Alumno obtener(int dni){
+        return usuarioDAO.obtener(dni, Alumno.class);
+    }
+    
 
-    public abstract void guardar(Alumno alumno);
+    public List<Alumno> buscarAlumno(String criterio, int max){
+        criterio = criterio.toUpperCase();
+        Query<Alumno> query = 
+                Ebean.find(Alumno.class).where().
+                    disjunction().
+                        add(Expr.like("upper(nombre)", criterio + '%')).
+                        add(Expr.like("upper(nombre)", "% " + criterio + '%')).
+                        add(Expr.like("upper(apellido)", criterio + '%')).
+                        add(Expr.like("upper(apellido)", "% "+ criterio + '%')).
+                    setMaxRows(max);
+        return query.findList();
+    }
 
+    public void guardar(Alumno alumno) {
+        Ebean.save(alumno);
+    }
 }
