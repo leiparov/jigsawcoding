@@ -13,6 +13,9 @@ public class Docente extends Usuario {
 	
 	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<Problema> problemas;
+	
+	@OneToMany(cascade = CascadeType.PERSIST)
+	private List<GrupoExperto> gruposExpertos;
     
 	@Override
 	public String toString() {
@@ -26,6 +29,14 @@ public class Docente extends Usuario {
 
 	public void setProblemas(List<Problema> problemas) {
 		this.problemas = problemas;
+	}
+
+	public List<GrupoExperto> getGruposExpertos() {
+		return gruposExpertos;
+	}
+
+	public void setGruposExpertos(List<GrupoExperto> gruposExpertos) {
+		this.gruposExpertos = gruposExpertos;
 	}
 	
 	

@@ -38,6 +38,16 @@ GET    /alumnos                     controllers.Alumnos.index()
 GET    /alumnos/buscar              controllers.Alumnos.buscarAlumnos(q: String)
 #POST   /perfil/cambiarContrasenia       controllers.Alumnos.cambiarContrasenia()
 
+GET    /gruposexpertos                   controllers.GruposExpertos.list(p:Int ?= 0, s ?= "grupoExpertoId", o ?= "asc", f ?= "")
+GET    /gruposexpertos/nuevo             controllers.GruposExpertos.interfazNuevo()
+POST   /gruposexpertos/registrar         controllers.GruposExpertos.registrarGrupoExperto()
+GET    /gruposexpertos/:id               controllers.GruposExpertos.editarGrupoExperto(id:Long)
+POST   /gruposexpertos/:id               controllers.GruposExpertos.actualizarGrupoExperto(id:Long)
+POST   /gruposexpertos/:id/delete        controllers.GruposExpertos.eliminarGrupoExperto(id:Long)
+
+
+
+
 # Map static resources from the /public folder to the /assets URL path
 GET    /assets/javascripts/routes   controllers.Application.jsRoutes()
 GET    /assets/*file                controllers.Assets.at(path="/public", file)

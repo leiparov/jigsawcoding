@@ -1,0 +1,137 @@
+@(currentPage: com.avaje.ebean.Page[models.entities.GrupoExperto], currentSortBy: String, currentOrder: String, currentFilter: String)
+
+@****************************************
+* Helper generating navigation links    *
+****************************************@
+@link(newPage:Int, newSortBy:String) = @{
+    
+    var sortBy = currentSortBy
+    var order = currentOrder
+    
+    if(newSortBy != null) {
+        sortBy = newSortBy
+        if(currentSortBy == newSortBy) {
+            if(currentOrder == "asc") {
+                order = "desc"
+            } else {
+                order = "asc"
+            }
+        } else {
+            order = "asc"
+        }
+    }
+    
+    // Generate the link
+    routes.GruposExpertos.list(newPage, sortBy, order, currentFilter)
+    
+}
+
+@**********************************
+* Helper generating table headers *
+***********************************@
+@header(key:String, title:String) = {
+    <th class="@key.replace(".","_") header @if(currentSortBy == key) @{if(currentOrder == "asc") "headerSortDown" else "headerSortUp"}">
+        <a href="@link(0, key)">@title</a>
+    </th>
+}
+
+@main(menuDocente()) {
+    
+    <h1 id="homeTitle">@Messages("gruposexpertos.list.title", currentPage.getTotalRowCount)</h1>
+
+    @if(flash.containsKey("success")) {
+    	<div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <span class="glyphicon glyphicon-ok-sign"></span><strong>Listo!</strong>@flash.get("success")
+        </div>
+    } 
+
+    <div id="actions" class="row">
+        <div class="pull-left">
+	        <form action="@link(0, "grupoExpertoId")" method="GET" class="form-inline" role="form">            
+	            <div class="form-group">
+	            	<input class="form-control" type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Buscar...">
+				</div>
+				<button type="submit" class="btn btn-primary" id="searchsubmit">Buscar</button>
+	        </form>
+        </div>
+        
+        <div class="pull-right">
+        	<a class="pull-rigth btn btn btn-success" id="add" href="@routes.GruposExpertos.interfazNuevo()">Nuevo Grupo Experto</a>
+        </div>       
+        
+    </div>
+    <div class="row">
+    @if(currentPage.getTotalRowCount == 0) {
+        
+        <div class="well">
+            <em>Nada para mostrar</em>
+        </div>
+        
+    } else {
+      <div class="col-md-12"><br></div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    @header("grupoExpertoId", "ID")
+                    @header("nombre", "Grupo Experto")
+                </tr>
+            </thead>
+            <tbody>
+                
+                @for(grupoexperto <- currentPage.getList) {
+                    <tr>
+                        
+                        <td>
+                            @if(grupoexperto.getGrupoExpertoId() == null) {
+                                <em>-</em>
+                            } else {
+                                @grupoexperto.getGrupoExpertoId()
+                            }
+                        </td>
+                        <td>
+                            @if(grupoexperto.getNombre() == null) {
+                                <em>-</em>
+                            } else {
+                                @grupoexperto.getNombre()
+                            }
+                        </td>
+                        
+                        <td><a href="@routes.GruposExpertos.editarGrupoExperto(grupoexperto.getGrupoExpertoId())"><span class="glyphicon glyphicon-pencil"></a></td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+		
+        <div id="pagination" class="col-md-12">
+            <ul class="pager">
+                @if(currentPage.hasPrev) {
+                    <li class="previous">
+                        <a href="@link(currentPage.getPageIndex - 1, null)">&larr; Anterior</a>
+                    </li>
+                } else {
+                    <li class="previous disabled">
+                        <a>&larr; Anterior</a>
+                    </li>
+                }
+                <li class="active">
+                    <a>Mostrando @currentPage.getDisplayXtoYofZ(" - "," de ")</a>
+                </li>
+                @if(currentPage.hasNext) {
+                    <li class="next">
+                        <a href="@link(currentPage.getPageIndex + 1, null)">Siguiente &rarr;</a>
+                    </li>
+                } else {
+                    <li class="next disabled">
+                        <a>Siguiente &rarr;</a>
+                    </li>
+                }
+            </ul>
+        </div>
+        
+    }
+    </div>   
+}
+
+            

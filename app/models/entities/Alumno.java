@@ -6,9 +6,6 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("ALUMNO")
 public class Alumno extends Usuario {  
-
-    
-
     
 
 }

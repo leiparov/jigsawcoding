@@ -1,0 +1,48 @@
+@* nuevo Template File *@
+@(grupoExpertoForm: play.data.Form[models.entities.GrupoExperto])
+@main(menuDocente()){
+	@inputs.panel("NUEVO GRUPO EXPERTO", true){
+		@if(flash.containsKey("success")){
+		<div class="alert alert-success alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-hidden="true">&times;</button>
+			<span class="glyphicon glyphicon-ok-sign"></span> @flash.get("success")
+		</div>
+		} 
+		@if(flash.containsKey("error")){
+		<div class="alert alert-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-hidden="true">&times;</button>
+			<span class="glyphicon glyphicon-remove-sign"></span>
+			@flash().get("error")
+		</div>
+		} 
+		
+		<div class="col-md-6">
+			@helper.form(routes.GruposExpertos.registrarGrupoExperto, 'class -> "form-horizontal"){
+				<div class="col-md-12">					
+					<div class="form-group">
+                    	<label class="col-sm-2 control-label" for="nombre">Nombre</label>
+                     	<div class="col-sm-8">
+                        	<input type="text" class="form-control" id="nombre"
+                               name="nombre" required>
+                    	</div>
+                  	</div>
+                  	<div class="form-group">
+                    	<label class="col-sm-2 control-label" for="maximoIntegrantes">Maximo Integrantes</label>
+                     	<div class="col-sm-10">
+                            
+                            
+                    	</div>
+                  	</div>
+                  	<div class="form-group">
+					    <div class="col-sm-offset-2 col-sm-8">
+					      <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
+					    </div>
+				  	</div>					
+				</div>
+			
+			}		
+		</div>
+	} 
+}

@@ -3,6 +3,14 @@
 
 # --- !Ups
 
+create table grupo_experto (
+  grupo_experto_id          bigint auto_increment not null,
+  nombre                    varchar(255),
+  maximo_integrantes        integer,
+  docente_dni               integer,
+  constraint pk_grupo_experto primary key (grupo_experto_id))
+;
+
 create table problema (
   problema_id               bigint auto_increment not null,
   titulo                    varchar(255),
@@ -26,14 +34,30 @@ create table usuario (
   constraint pk_usuario primary key (dni))
 ;
 
-alter table problema add constraint fk_problema_docente_1 foreign key (docente_dni) references usuario (dni) on delete restrict on update restrict;
-create index ix_problema_docente_1 on problema (docente_dni);
+
+create table grupo_experto_usuario (
+  grupo_experto_grupo_experto_id bigint not null,
+  usuario_dni                    integer not null,
+  constraint pk_grupo_experto_usuario primary key (grupo_experto_grupo_experto_id, usuario_dni))
+;
+alter table grupo_experto add constraint fk_grupo_experto_docente_1 foreign key (docente_dni) references usuario (dni) on delete restrict on update restrict;
+create index ix_grupo_experto_docente_1 on grupo_experto (docente_dni);
+alter table problema add constraint fk_problema_docente_2 foreign key (docente_dni) references usuario (dni) on delete restrict on update restrict;
+create index ix_problema_docente_2 on problema (docente_dni);
 
 
+
+alter table grupo_experto_usuario add constraint fk_grupo_experto_usuario_grupo_experto_01 foreign key (grupo_experto_grupo_experto_id) references grupo_experto (grupo_experto_id) on delete restrict on update restrict;
+
+alter table grupo_experto_usuario add constraint fk_grupo_experto_usuario_usuario_02 foreign key (usuario_dni) references usuario (dni) on delete restrict on update restrict;
 
 # --- !Downs
 
 SET FOREIGN_KEY_CHECKS=0;
+
+drop table grupo_experto;
+
+drop table grupo_experto_usuario;
 
 drop table problema;
 
