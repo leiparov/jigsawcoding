@@ -96,7 +96,8 @@ public class Application extends Controller {
     public static Result jsRoutes(){
         response().setContentType("text/javascript");
         return ok(Routes.javascriptRouter("jsRoutes", 
-                    controllers.routes.javascript.Alumnos.buscarAlumnos()
+                    controllers.routes.javascript.Alumnos.buscarAlumnos(),
+                    controllers.routes.javascript.Alumnos.listaDeAlumnos()
                 ));
     }
 

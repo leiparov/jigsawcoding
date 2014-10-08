@@ -6,7 +6,8 @@
 create table grupo_experto (
   grupo_experto_id          bigint auto_increment not null,
   nombre                    varchar(255),
-  maximo_integrantes        integer,
+  descripcion               varchar(255),
+  maximo_alumnos            integer,
   docente_dni               integer,
   constraint pk_grupo_experto primary key (grupo_experto_id))
 ;

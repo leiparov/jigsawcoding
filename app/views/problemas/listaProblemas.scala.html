@@ -79,35 +79,16 @@
                 </tr>
             </thead>
             <tbody>
-                
-                @for(problema <- currentPage.getList) {
-                    <tr>
-                        
-                        <td>
-                            @if(problema.getProblemaId() == null) {
-                                <em>-</em>
-                            } else {
-                                @problema.getProblemaId()
-                            }
-                        </td>
-                        <td>
-                            @if(problema.getTitulo() == null) {
-                                <em>-</em>
-                            } else {
-                                @problema.getTitulo()
-                            }
-                        </td>
-                        <td>
-                            @if(problema.getEnunciado() == null) {
-                                <em>-</em>
-                            } else {
-                                @problema.getEnunciado()
-                            }
-                        </td>
-                        <td><a href="@routes.Problemas.editarProblema(problema.getProblemaId())"><span class="glyphicon glyphicon-pencil"></a></td>
-                    </tr>
-                }
-
+            @currentPage.getList.map { problema =>
+           	<tr>
+            	<td>@problema.getProblemaId()</td>
+                <td>@problema.getTitulo()</td>
+                <td>@problema.getEnunciado()</td>
+                <td><a href="@routes.Problemas.editarProblema(problema.getProblemaId())">
+                	<span class="glyphicon glyphicon-pencil"></a>
+                </td>
+           	</tr>
+           	}      
             </tbody>
         </table>
 		

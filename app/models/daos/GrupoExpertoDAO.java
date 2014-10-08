@@ -14,6 +14,7 @@ public class GrupoExpertoDAO {
 
 	public void guardarGrupoExperto(GrupoExperto grupoExperto) {
 		Ebean.save(grupoExperto);
+		guardarAlumnos(grupoExperto);
 
 	}
 
@@ -44,5 +45,10 @@ public class GrupoExpertoDAO {
 	public void eliminarGrupoExperto(Long id) {
 		Ebean.delete(obtenerGrupoExperto(id));
 	}
+
+	public void guardarAlumnos(GrupoExperto grupo) {
+		Ebean.saveManyToManyAssociations(grupo, "alumnos");		
+	}
+	
 
 }

@@ -22,6 +22,8 @@ public class UsuarioDAO {
 		else
 			throw new DAOException("Usuario no encontrado");
 	}
+	
+	
 
 	public Usuario obtenerLogin(String email, String password) {
 		SqlQuery sql = Ebean
@@ -55,6 +57,16 @@ public class UsuarioDAO {
 		else
 			throw new DAOException.NoEncontradoException(claseUsuario);
 	}
+	
+	public <T extends Usuario> List<T> obtener(Class<T> claseUsuario) {
+		@SuppressWarnings("unchecked")
+		List<T> resultado = (List<T>)Ebean.find(claseUsuario);
+		if (resultado != null)
+			return resultado;
+		else
+			throw new DAOException.NoEncontradoException(claseUsuario);
+	}
+	
 
 	public int obtener(String email) {
 		int dni = 0;
@@ -71,4 +83,5 @@ public class UsuarioDAO {
 		}
 		return dni;
 	}
+	
 }

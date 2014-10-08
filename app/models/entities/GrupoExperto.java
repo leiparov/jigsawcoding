@@ -13,21 +13,19 @@ public class GrupoExperto {
 	@Id
 	private Long grupoExpertoId;
 	private String nombre;
-	private Integer maximoIntegrantes;
-	
+	private String descripcion;
+	private Integer maximoAlumnos;
+
 	@ManyToMany(cascade = CascadeType.ALL)
-	private List<Alumno> integrantes;
-	
+	private List<Alumno> alumnos;
+
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Docente docente;
 
-	
-	/*Getters and Setters*/
-	
-	
+	/* Getters and Setters */
 
 	public String getNombre() {
-		return nombre;
+		return nombre.toUpperCase();
 	}
 
 	public Long getGrupoExpertoId() {
@@ -39,23 +37,23 @@ public class GrupoExperto {
 	}
 
 	public void setNombre(String nombre) {
-		this.nombre = nombre;
+		this.nombre = nombre.toUpperCase();
 	}
 
-	public Integer getMaximoIntegrantes() {
-		return maximoIntegrantes;
+	public Integer getMaximoAlumnos() {
+		return maximoAlumnos;
 	}
 
-	public void setMaximoIntegrantes(Integer maximoIntegrantes) {
-		this.maximoIntegrantes = maximoIntegrantes;
+	public void setMaximoAlumnos(Integer maximoAlumnos) {
+		this.maximoAlumnos = maximoAlumnos;
 	}
 
-	public List<Alumno> getIntegrantes() {
-		return integrantes;
+	public List<Alumno> getAlumnos() {
+		return alumnos;
 	}
 
-	public void setIntegrantes(List<Alumno> integrantes) {
-		this.integrantes = integrantes;
+	public void setAlumnos(List<Alumno> alumnos) {
+		this.alumnos = alumnos;
 	}
 
 	public Docente getDocente() {
@@ -65,7 +63,21 @@ public class GrupoExperto {
 	public void setDocente(Docente docente) {
 		this.docente = docente;
 	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 	
-	
-	
+	public String integrantes (){
+		String cad = "";
+		for (Alumno alumno: alumnos){
+			cad += "* " + alumno.getNombres() + "\n";			
+		}
+		return cad;
+	}
+
 }

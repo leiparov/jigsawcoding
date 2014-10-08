@@ -22,22 +22,29 @@
 			@helper.form(routes.GruposExpertos.registrarGrupoExperto, 'class -> "form-horizontal"){
 				<div class="col-md-12">					
 					<div class="form-group">
-                    	<label class="col-sm-2 control-label" for="nombre">Nombre</label>
-                     	<div class="col-sm-8">
+                    	<label class="col-sm-4 control-label" for="nombre">Nombre</label>
+                     	<div class="col-sm-6">
                         	<input type="text" class="form-control" id="nombre"
                                name="nombre" required>
                     	</div>
                   	</div>
                   	<div class="form-group">
-                    	<label class="col-sm-2 control-label" for="maximoIntegrantes">Maximo Integrantes</label>
-                     	<div class="col-sm-10">
-                            
-                            
+						<label class="col-sm-4 control-label" for="descripcion">Descripción</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="descripcion" name="descripcion">
+						</div>
+					</div>
+                  	<div class="form-group">
+                    	<label class="col-sm-4 control-label" for="maximoAlumnos">Maximo Alumnos</label>
+                     	<div class="col-sm-3">
+                            <input type="number" class="form-control" id="maximoAlumnos"
+                               name="maximoAlumnos" required>                            
                     	</div>
                   	</div>
                   	<div class="form-group">
-					    <div class="col-sm-offset-2 col-sm-8">
-					      <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
+					    <div class="col-sm-offset-4 col-sm-8">
+					      <button type="submit" class="btn btn-primary">Guardar</button>
+					      <a class="btn btn-default" href="@routes.GruposExpertos.index">Cancelar</a>
 					    </div>
 				  	</div>					
 				</div>

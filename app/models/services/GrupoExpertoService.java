@@ -1,7 +1,12 @@
 package models.services;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import models.daos.AlumnoDAO;
 import models.daos.GrupoExpertoDAO;
 import models.daos.UsuarioDAO;
+import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.GrupoExperto;
 
@@ -11,6 +16,7 @@ public class GrupoExpertoService  {
 
 	private static GrupoExpertoDAO grupoExpertoDAO = new GrupoExpertoDAO();
 	private static UsuarioDAO usuarioDAO = new UsuarioDAO();
+	private static AlumnoDAO alumnoDAO = new AlumnoDAO();
 
 	
 	public void guardarGrupoExperto(Docente docente, GrupoExperto grupoExperto) {
@@ -57,5 +63,14 @@ public class GrupoExpertoService  {
 	public void eliminarGrupoExperto(Long id) {
 		grupoExpertoDAO.eliminarGrupoExperto(id);
 	}
+	
+    public void actualizarAlumnos(GrupoExperto grupo, List<Integer> dnialumnos) {
+        List<Alumno> alumnosFuturos = new LinkedList<Alumno>();        
+        for(Integer dniAlumno : dnialumnos){
+            alumnosFuturos.add(alumnoDAO.obtener(dniAlumno));
+        }        
+        grupo.setAlumnos(alumnosFuturos);
+        grupoExpertoDAO.guardarAlumnos(grupo);
+    }
 
 }

@@ -75,34 +75,25 @@
                 <tr>
                     @header("grupoExpertoId", "ID")
                     @header("nombre", "Grupo Experto")
+                    @header("grupoExpertoId", "Integrantes")
                 </tr>
             </thead>
-            <tbody>
-                
-                @for(grupoexperto <- currentPage.getList) {
-                    <tr>
-                        
-                        <td>
-                            @if(grupoexperto.getGrupoExpertoId() == null) {
-                                <em>-</em>
-                            } else {
-                                @grupoexperto.getGrupoExpertoId()
-                            }
-                        </td>
-                        <td>
-                            @if(grupoexperto.getNombre() == null) {
-                                <em>-</em>
-                            } else {
-                                @grupoexperto.getNombre()
-                            }
-                        </td>
-                        
-                        <td><a href="@routes.GruposExpertos.editarGrupoExperto(grupoexperto.getGrupoExpertoId())"><span class="glyphicon glyphicon-pencil"></a></td>
-                    </tr>
-                }
-
+            <tbody> 
+            @currentPage.getList.map { grupoexperto =>
+           	<tr>
+            	<td>@grupoexperto.getGrupoExpertoId()</td>
+                <td>@grupoexperto.getNombre()</td>
+                <td>@grupoexperto.integrantes</td>
+                <td>
+                	<a href="@routes.GruposExpertos.interfazAsignar(grupoexperto.getGrupoExpertoId())">Editar miembros</a> 
+                </td>
+                <td><a href="@routes.GruposExpertos.editarGrupoExperto(grupoexperto.getGrupoExpertoId())"><span class="glyphicon glyphicon-pencil"></a></td>
+           	</tr>
+           	}               
             </tbody>
         </table>
+        
+        
 		
         <div id="pagination" class="col-md-12">
             <ul class="pager">

@@ -34,13 +34,24 @@
 	}
 	
 	function obtenerResultados(){
-		if(inputBuscar.val().length == 0) return avisar("Escriba para buscar");
-		var call = jsRoutes.controllers.Alumnos.buscarAlumnos(inputBuscar.val());
-		$.ajax({
-			url: call.url,
-			type: call.type,
-			success: mostrarResultadosBusqueda
-		});
+		if(inputBuscar.val().length == 0) {
+			/*var call = jsRoutes.controllers.Alumnos.listaDeAlumnos();
+			$.ajax({
+				url: call.url,
+				type: call.type,
+				success: mostrarResultadosBusqueda
+			});*/
+			return avisar("Escriba para buscar");
+		}else{
+			var call = jsRoutes.controllers.Alumnos.buscarAlumnos(inputBuscar.val());
+			$.ajax({
+				url: call.url,
+				type: call.type,
+				success: mostrarResultadosBusqueda
+			});
+		}
+		
+		
 	}
 	
 	(function(){

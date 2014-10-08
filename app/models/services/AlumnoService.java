@@ -25,6 +25,10 @@ public class AlumnoService {
 			return alumnoDAO.buscarAlumno(texto, MAX_BUSQUEDA);
 		}
 	}
+	
+	public List<Alumno> listaDeAlumnos(){
+		return alumnoDAO.listaDeAlumnos();
+	}
 
 	public void guardarAlumno(Alumno alumno) {
 		alumnoDAO.guardar(alumno);

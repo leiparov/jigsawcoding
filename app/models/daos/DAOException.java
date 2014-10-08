@@ -3,15 +3,29 @@ package models.daos;
 public class DAOException extends RuntimeException {
 	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public static class FalloLoginException extends DAOException {
-        public FalloLoginException() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public FalloLoginException() {
             super("Usuario o contraseña incorrectos");
         }
     }
 
     public static class NoEncontradoException extends DAOException {
 
-        private Class<?> clase;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private Class<?> clase;
 
         public NoEncontradoException(Class<?> clase) {
             super("No se encuentra el objeto " + clase.getName());

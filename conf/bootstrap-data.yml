@@ -7,7 +7,22 @@
      apellidoPaterno:  Malpica
      apellidoMaterno: Martínez
      sexo:      FEMENINO
-     
+
+- &martin !!models.entities.Alumno
+     DNI:       12345678
+     email:     alu1@gmail.com
+     nombres:    Martin
+     apellidoPaterno:  Rojas
+     apellidoMaterno: Bustamante
+     sexo:      MASCULINO
+
+- &leo !!models.entities.Alumno
+     DNI:       23456789
+     email:     alu2@gmail.com
+     nombres:    Leo
+     apellidoPaterno:  Escribo
+     apellidoMaterno: Hablo
+     sexo:      MASCULINO     
 #Docentes
 
 - !!models.entities.Docente

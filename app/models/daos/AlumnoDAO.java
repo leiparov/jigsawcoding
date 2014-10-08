@@ -9,29 +9,29 @@ import com.avaje.ebean.Expr;
 import com.avaje.ebean.Query;
 
 public class AlumnoDAO {
-    
-    public static UsuarioDAO usuarioDAO = new UsuarioDAO();
-    
 
-    public Alumno obtener(int dni){
-        return usuarioDAO.obtener(dni, Alumno.class);
-    }
-    
+	public static UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-    public List<Alumno> buscarAlumno(String criterio, int max){
-        criterio = criterio.toUpperCase();
-        Query<Alumno> query = 
-                Ebean.find(Alumno.class).where().
-                    disjunction().
-                        add(Expr.like("upper(nombre)", criterio + '%')).
-                        add(Expr.like("upper(nombre)", "% " + criterio + '%')).
-                        add(Expr.like("upper(apellido)", criterio + '%')).
-                        add(Expr.like("upper(apellido)", "% "+ criterio + '%')).
-                    setMaxRows(max);
-        return query.findList();
-    }
+	public Alumno obtener(int dni) {
+		return usuarioDAO.obtener(dni, Alumno.class);
+	}
 
-    public void guardar(Alumno alumno) {
-        Ebean.save(alumno);
-    }
+	public List<Alumno> buscarAlumno(String criterio, int max) {
+		criterio = criterio.toUpperCase();
+		Query<Alumno> query = Ebean.find(Alumno.class).where().disjunction()
+				.add(Expr.like("upper(nombres)", criterio + '%'))
+				.add(Expr.like("upper(nombres)", "% " + criterio + '%'))
+				.add(Expr.like("upper(apellidoPaterno)", criterio + '%'))
+				.add(Expr.like("upper(apellidoMaterno)", "% " + criterio + '%'))
+				.setMaxRows(max);
+		return query.findList();
+	}
+
+	public void guardar(Alumno alumno) {
+		Ebean.save(alumno);
+	}
+
+	public List<Alumno> listaDeAlumnos() {
+		return usuarioDAO.obtener(Alumno.class);
+	}
 }
