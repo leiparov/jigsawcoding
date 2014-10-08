@@ -36,7 +36,7 @@ GET    /alumnos                             controllers.Alumnos.index()
 #POST   /alumnos/registrar               controllers.Alumnos.registrarAlumno()
 #POST   /alumnos/actualizar              controllers.Alumnos.actualizarAlumno()
 GET    /alumnos/buscar                      controllers.Alumnos.buscarAlumnos(q: String)
-GET    /alumnos/lista                       controllers.Alumnos.listaDeAlumnos()
+GET    /alumnos/lista                       controllers.Alumnos.disponibles()
 #POST   /perfil/cambiarContrasenia       controllers.Alumnos.cambiarContrasenia()
 
 GET    /gruposexpertos/index                controllers.GruposExpertos.index()

@@ -83,11 +83,15 @@
            	<tr>
             	<td>@grupoexperto.getGrupoExpertoId()</td>
                 <td>@grupoexperto.getNombre()</td>
-                <td>@grupoexperto.integrantes</td>
+                <td>@grupoexperto.integrantes()</td>
                 <td>
-                	<a href="@routes.GruposExpertos.interfazAsignar(grupoexperto.getGrupoExpertoId())">Editar miembros</a> 
+                	<a href="@routes.GruposExpertos.interfazAsignar(grupoexperto.getGrupoExpertoId())">Editar integrantes</a> 
                 </td>
-                <td><a href="@routes.GruposExpertos.editarGrupoExperto(grupoexperto.getGrupoExpertoId())"><span class="glyphicon glyphicon-pencil"></a></td>
+                <td>
+                	<a href="@routes.GruposExpertos.editarGrupoExperto(grupoexperto.getGrupoExpertoId())">
+                		<span class="glyphicon glyphicon-pencil">
+                	</a>
+                </td>
            	</tr>
            	}               
             </tbody>

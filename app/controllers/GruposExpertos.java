@@ -86,6 +86,10 @@ public class GruposExpertos extends Controller {
         Form<AsignarAlumnosForm> form = Form.form(AsignarAlumnosForm.class).bindFromRequest();
         GrupoExperto grupo = grupoExpertoService.obtenerGrupoExperto(id);
         List<Integer> dnialumnos = form.get().alumnos;
+        if(grupo.getMaximoAlumnos() < dnialumnos.size()){
+        	flash("error", "El grupo experto debe tener " + grupo.getMaximoAlumnos() + " integrantes");
+        	return redirect(routes.GruposExpertos.interfazAsignar(id));
+        }	
         grupoExpertoService.actualizarAlumnos(grupo, dnialumnos);
         flash("success", "Alumnos asignados con éxito");
         return redirect(routes.GruposExpertos.index());

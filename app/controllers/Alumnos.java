@@ -153,8 +153,9 @@ public class Alumnos extends Controller {
 		return ok(respuesta);
 	}
 
-	public static Result listaDeAlumnos() {
-		List<Alumno> alumnos = alumnoService.listaDeAlumnos();
+	public static Result disponibles() {
+		/*Alumnos disponibles que aun no han sido asignados a un grupo experto*/
+		List<Alumno> alumnos = alumnoService.disponibles();
 		JsonNode respuesta = convertirListaAlumnosAJson(alumnos);
 		return ok(respuesta);
 	}

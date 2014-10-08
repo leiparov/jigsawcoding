@@ -26,8 +26,8 @@ public class AlumnoService {
 		}
 	}
 	
-	public List<Alumno> listaDeAlumnos(){
-		return alumnoDAO.listaDeAlumnos();
+	public List<Alumno> disponibles(){
+		return alumnoDAO.disponibles();
 	}
 
 	public void guardarAlumno(Alumno alumno) {

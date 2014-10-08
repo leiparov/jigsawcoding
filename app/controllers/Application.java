@@ -10,9 +10,6 @@ import play.mvc.Controller;
 import play.mvc.Result;
 //import views.html.usuarios.*;
 import utils.Login;
-import views.html.indexAlumno;
-import views.html.indexDocente;
-import views.html.login;
 
 public class Application extends Controller {
 
@@ -22,14 +19,14 @@ public class Application extends Controller {
     public static Result index() {
         Login login = Login.obtener(ctx());
         if (login.isTipo(Alumno.class)) {
-            return ok(indexAlumno.render());
+            return ok(views.html.indexAlumno.render());
         } else {
-            return ok(indexDocente.render());
+            return ok(views.html.indexDocente.render());
         }
     }
 
     public static Result interfazLogin() {
-        return ok(login.render());
+        return ok(views.html.login.render());
     }
 
     @Login.Requiere
@@ -72,7 +69,7 @@ public class Application extends Controller {
             return redirect(routes.Application.index());
         } catch (DAOException.FalloLoginException e) {
             flash("error", "Usuario o contraseña incorrecta");
-            return badRequest(login.render());
+            return badRequest(views.html.login.render());
         }
     }
     
@@ -90,14 +87,14 @@ public class Application extends Controller {
     	else{
     		flash("errorRecuperar", "No ha ingresado su correo para recuperar su contraseña.");
     	}
-        return ok(login.render());
+        return ok(views.html.login.render());
     }
     
     public static Result jsRoutes(){
         response().setContentType("text/javascript");
         return ok(Routes.javascriptRouter("jsRoutes", 
                     controllers.routes.javascript.Alumnos.buscarAlumnos(),
-                    controllers.routes.javascript.Alumnos.listaDeAlumnos()
+                    controllers.routes.javascript.Alumnos.disponibles()
                 ));
     }
 

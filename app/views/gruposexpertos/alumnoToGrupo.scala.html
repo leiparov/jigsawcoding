@@ -2,7 +2,7 @@
 @main(menuDocente()) {
     <div class="container"> 
         <div class="panel panel-default">
-        <div class="panel-heading">Alumnos - GrupoExperto</div>
+        <div class="panel-heading">ASIGNAR ALUMNOS A GRUPO EXPERTO</div>
 	        <div class="panel-body">
 	     	@if(flash.containsKey("error")){
 	     		<div class="alert alert-danger alert-dismissable">
@@ -11,22 +11,27 @@
 				</div>
 	     	}
 	        <div class="col-md-8">
-	        <h2>@grupoExperto.getNombre</h2>
-	        <hr />
+	        
 	        @helper.form(routes.GruposExpertos.definirAlumnos(grupoExperto.getGrupoExpertoId())){
 	            <div class="form-group">
 	                <div class="row">
 	                    <div class="col-md-6">
+	                    	<button class="btn btn-default" type="button" 
+		                        id="boton-buscar-all" >Ver alumnos disponibles</button>
 	                        <div class="input-group">
-	                        <input type="text" class="form-control" id="input-buscar" placeholder="Buscar nombre/DNI" />
-	                        <span class="input-group-btn">
-	                            <button class="btn btn-default" type="button" id="boton-buscar"> 
-	                                <span class="glyphicon glyphicon-search"></span>
-	                             </button>
-	                        </span>
+		                        <!--  
+		                        <input type="text" class="form-control" id="input-buscar" placeholder="Buscar nombre/DNI" />
+		                        <span class="input-group-btn">
+		                            <button class="btn btn-default" type="button" id="boton-buscar"> 
+		                                <span class="glyphicon glyphicon-search"></span>
+		                             </button>
+		                        </span>
+		                        -->
+		                         		                                                
 	                        </div>
 	                    </div>
 	                </div>
+	                
 	            </div>
 	            <div class="form-group">
 	                <select multiple="multiple" size="10" name="alumnos[]" class="demo">
@@ -36,13 +41,9 @@
 	                </select>
 	                <script>
 	                    $(function(){ 
-		                    /*$('[name="alumnos[]"]').bootstrapDualListbox({
-	                    		nonSelectedListLabel: 'Alumnos',
-	                    		selectedListLabel: 'Integrantes del GrupoExperto'
-		                    });*/ 
 		                    var demo = $('.demo').bootstrapDualListbox({
 		                    	nonselectedlistlabel: 'ALUMNOS DISPONIBLES',
-	                    		selectedlistlabel: 'GRUPO EXPERTO'
+	                    		selectedlistlabel: 'GRUPO EXPERTO :  @grupoExperto.getNombre '
 		                    });
 	                    });
 	                </script>
