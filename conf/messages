@@ -1,5 +1,6 @@
 # Messages
 
-problemas.list.title={0,choice,0#No existen problemas|1#Un problema |1<{0,number,integer} problemas} encontrados
-gruposexpertos.list.title={0,choice,0#No existen GruposExpertos|1#Un Grupo Experto |1<{0,number,integer} Grupos Expertos} encontrados
-alumnos.list.title={0,choice,0#No existen alumnos|1#Un alumno |1<{0,number,integer} alumnos} encontrados
+problemas.list.title={0,choice,0#No existen Problemas|1#Un problema |1<{0,number,integer} problemas} encontrados
+gruposexpertos.list.title={0,choice,0#No existen Grupos Expertos|1#Un Grupo Experto |1<{0,number,integer} Grupos Expertos} encontrados
+alumnos.list.title={0,choice,0#No existen Alumnos|1#Un alumno |1<{0,number,integer} alumnos} encontrados
+sesionesJigsaw.list.title={0,choice,0#No existen Sesiones Jigsaw|1#Una Sesion Jigsaw |1<{0,number,integer} Sesiones Jigsaw} encontradas

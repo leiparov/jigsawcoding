@@ -2,22 +2,7 @@
 @(problemaForm: play.data.Form[models.entities.Problema])
 @main(menuDocente()){
 	@inputs.panel("NUEVO PROBLEMA", true){
-		@if(flash.containsKey("success")){
-		<div class="alert alert-success alert-dismissable">
-			<button type="button" class="close" data-dismiss="alert"
-				aria-hidden="true">&times;</button>
-			<span class="glyphicon glyphicon-ok-sign"></span> @flash.get("success")
-		</div>
-		} 
-		@if(flash.containsKey("error")){
-		<div class="alert alert-danger alert-dismissable">
-			<button type="button" class="close" data-dismiss="alert"
-				aria-hidden="true">&times;</button>
-			<span class="glyphicon glyphicon-remove-sign"></span>
-			@flash().get("error")
-		</div>
-		} 
-		
+		@inputs.flashSuccessError()		
 		<div class="col-md-6">
 			@helper.form(routes.Problemas.registrarProblema, 'class -> "form-horizontal"){
 				<div class="col-md-12">					

@@ -51,10 +51,10 @@ POST   /gruposexpertos/:id/delete           controllers.GruposExpertos.eliminarG
 GET    /gruposexpertos/:id/asignarAlumnos   controllers.GruposExpertos.interfazAsignar(id: Long)
 POST   /gruposexpertos/:id/setAlumnos       controllers.GruposExpertos.definirAlumnos(id: Long)
 
-#GET    /grupos                          controllers.Grupos.index()
-#GET    /grupos/registrar                controllers.Grupos.interfazNuevo()
-
-
+GET    /sesionesjigsaw/index                controllers.SesionesJigsaw.index()
+GET    /sesionesjigsaw                      controllers.SesionesJigsaw.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")
+GET    /sesionesjigsaw/nuevo                controllers.SesionesJigsaw.interfazNuevo()
+POST   /sesionesjigsaw/registrar            controllers.SesionesJigsaw.registrarSesionJigsaw()
 
 # Map static resources from the /public folder to the /assets URL path
 GET    /assets/javascripts/routes           controllers.Application.jsRoutes()

@@ -11,5 +11,4 @@ import javax.persistence.ManyToMany;
 public class Alumno extends Usuario {
 	@ManyToMany(mappedBy = "alumnos")
 	private List<GrupoExperto> gruposExpertos;
-
 }
