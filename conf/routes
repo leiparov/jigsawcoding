@@ -22,7 +22,7 @@ GET    /perfil                              controllers.Application.interfazPerf
 
 POST   /docentes/nuevo                      controllers.Docentes.registrarDocente()
 
-#GET    /problemas                   controllers.Problemas.index()
+GET    /problemas/index                     controllers.Problemas.index()
 GET    /problemas                           controllers.Problemas.list(p:Int ?= 0, s ?= "problemaId", o ?= "asc", f ?= "")
 GET    /problemas/nuevo                     controllers.Problemas.interfazNuevo()
 POST   /problemas/registrar                 controllers.Problemas.registrarProblema()
@@ -31,12 +31,14 @@ POST   /problemas/:id                       controllers.Problemas.actualizarProb
 POST   /problemas/:id/delete                controllers.Problemas.eliminarProblema(id:Long)
 
 
-GET    /alumnos                             controllers.Alumnos.index()
-#GET    /alumnos/nuevo                   controllers.Alumnos.interfazNuevo()
-#POST   /alumnos/registrar               controllers.Alumnos.registrarAlumno()
-#POST   /alumnos/actualizar              controllers.Alumnos.actualizarAlumno()
+GET    /alumnos/index                       controllers.Alumnos.index()
+GET    /alumnos                             controllers.Alumnos.list(p:Integer ?= 0, s ?= "dni", o ?= "asc", f ?= "")
+GET    /alumnos/nuevo                       controllers.Alumnos.interfazNuevo()
+POST   /alumnos/registrar                   controllers.Alumnos.registrarAlumno()
+GET    /alumnos/:id                         controllers.Alumnos.editarAlumno(id:Integer)
+POST   /alumnos/actualizar                  controllers.Alumnos.actualizarAlumno(id:Integer)
 GET    /alumnos/buscar                      controllers.Alumnos.buscarAlumnos(q: String)
-GET    /alumnos/lista                       controllers.Alumnos.disponibles()
+GET    /alumnos/ajax/disponibles            controllers.Alumnos.disponibles()
 #POST   /perfil/cambiarContrasenia       controllers.Alumnos.cambiarContrasenia()
 
 GET    /gruposexpertos/index                controllers.GruposExpertos.index()

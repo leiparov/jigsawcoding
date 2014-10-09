@@ -3,10 +3,13 @@ package models.daos;
 import java.util.ArrayList;
 import java.util.List;
 
+import play.db.ebean.Model.Finder;
 import models.entities.Alumno;
+import models.entities.Problema;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
+import com.avaje.ebean.Page;
 import com.avaje.ebean.Query;
 import com.avaje.ebean.RawSql;
 import com.avaje.ebean.RawSqlBuilder;
@@ -52,10 +55,27 @@ public class AlumnoDAO {
 		} else {
 			for (SqlRow row : resultado) {
 				dni = row.getInteger("dni");
+				System.out.println(obtener(dni).getNombreCompleto());
 				alumnosDisponibles.add(obtener(dni));
 			}
 		}
 		System.out.println(alumnosDisponibles);
 		return alumnosDisponibles;
 	}
+
+	private static Finder<Integer, Alumno> find = new Finder<Integer, Alumno>(
+			Integer.class, Alumno.class);
+
+	public Page<Alumno> page(int page, int pageSize, String sortBy,
+			String order, String filter) {
+		return find.where()
+				.disjunction()
+				.add(Expr.ilike("dni", "%" + filter + "%"))
+				.add(Expr.ilike("nombres", "%" + filter + "%"))
+				.add(Expr.ilike("apellido_paterno", "%" + filter + "%"))
+				.add(Expr.ilike("apellido_materno", "%" + filter + "%"))
+				.orderBy(sortBy + " " + order).findPagingList(pageSize)
+				.setFetchAhead(false).getPage(page);
+	}
+
 }

@@ -9,7 +9,7 @@ import com.avaje.ebean.Page;
 
 public class ProblemaDAO  {
 
-	public static Finder<Integer, Problema> find = new Finder<Integer, Problema>(
+	private static Finder<Integer, Problema> find = new Finder<Integer, Problema>(
 			Integer.class, Problema.class);
 
 

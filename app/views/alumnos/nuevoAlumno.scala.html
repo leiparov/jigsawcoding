@@ -1,0 +1,89 @@
+@(docente: models.entities.Docente)
+@main(menuDocente()) {
+   <div class="container"> 
+      <div class="panel panel-default">
+         <div class="panel-heading"><b>Nuevo Alumno</b></div>
+         <div class="panel-body">
+            @helper.form(action = routes.Alumnos.registrarAlumno){
+            	<div class="col-md-12">
+            	@if(flash.containsKey("error")){
+                     <div class="alert alert-danger">
+                        <span class="glyphicon glyphicon-remove-sign"></span>@flash.get("error")
+                     </div>
+                  }
+            	</div>
+               <div class="col-md-6">
+                  
+                  <div class="form-alumno row">
+                     <label class="col-sm-4" for="nombres">Nombres</label>
+                     <div class="col-sm-8">
+                        <input type="text" class="form-control" id="nombres"
+                               name="nombres" placeholder="Ingrese su nombre" required>
+                     </div>
+                  </div>
+                  <br>
+                  <div class="form-alumno row">
+                     <label class="col-sm-4" for="apellidoPaterno">Apellido Paterno</label>
+                     <div class="col-sm-8">
+                        <input type="text" class="form-control" id="apellidoPaterno"
+                               name="apellidoPaterno" placeholder="Ingrese su apellido paterno" required>
+                     </div>
+                  </div>
+                  <br>
+                  <div class="form-alumno row">
+                     <label class="col-sm-4" for="apellidoMaterno">Apellido Materno</label>
+                     <div class="col-sm-8">
+                        <input type="text" class="form-control" id="apellidoMaterno"
+                               name="apellidoMaterno" placeholder="Ingrese su apellido materno" required>
+                     </div>
+                  </div>
+                  <br>
+                  <div class="form-alumno row">
+                     <label class="col-sm-4" for="dniAlumno">DNI</label>
+                     <div class="col-sm-8">
+                        <input type="text" class="form-control" id="dniAlumno"
+                               name="dni" placeholder="Ingrese su DNI" required>
+                     </div>
+                  </div>
+                  <br>
+                  <div class="form-alumno row">
+                     <label class="col-sm-4" for="sexoAlumno">Sexo</label>
+                     <div class="col-sm-8">
+                        <input id="sexoAlu1" type="radio" name="sexo" value="MASCULINO" required>Masculino
+                        <input id="sexoAlu2" type="radio" name="sexo" value="FEMENINO">Femenino
+                     </div>
+                  </div>                  
+               </div>
+               <div class="col-md-6">
+               		<div class="form-alumno row">
+	                     <label class="col-sm-4" for="emailAlumno">Email</label>
+	                     <div class="col-sm-8">
+	                        <input type="email" class="form-control" id="emailAlumno"
+	                               name="email" placeholder="Ingrese su email" required>
+	                     </div>
+	                </div>
+                  <br>
+                  <div class="form-alumno row">
+                     <label class="col-sm-4" for="passwordAlumno">Password</label>
+                     <div class="col-sm-8">
+                        <input type="password" class="form-control" id="contrasena"
+                               name="contrasena" placeholder="Ingrese su contraseña" required>
+                     </div>
+                  </div>
+                  <br>
+                  <div class="form-alumno row">
+                     <label class="col-sm-4" for="passwordDocente">Confirmar password</label>
+                     <div class="col-sm-8">
+                        <input type="password" class="form-control" id="repcontrasena"
+                               name="repcontrasena" placeholder="Repita su contraseña" required>
+                     </div>
+                  </div>
+                  <br>
+                  <button type="submit" class="btn btn-primary">Registrar</button>
+               </div>
+            }
+         </div>
+      </div>
+   </div>
+}
+

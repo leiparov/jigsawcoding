@@ -4,6 +4,7 @@
      DNI:       47614910
      email:     helway.sm@gmail.com
      nombres:    Silvana
+     password:   1234
      apellidoPaterno:  Malpica
      apellidoMaterno: Martínez
      sexo:      FEMENINO
@@ -12,6 +13,7 @@
      DNI:       12345678
      email:     alu1@gmail.com
      nombres:    Martin
+     password:   1234
      apellidoPaterno:  Rojas
      apellidoMaterno: Bustamante
      sexo:      MASCULINO
@@ -20,6 +22,7 @@
      DNI:       23456789
      email:     alu2@gmail.com
      nombres:    Leo
+     password:   1234
      apellidoPaterno:  Escribo
      apellidoMaterno: Hablo
      sexo:      MASCULINO     

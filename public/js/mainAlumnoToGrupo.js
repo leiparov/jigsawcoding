@@ -5,6 +5,7 @@
 	var botonBuscarAll = $('#boton-buscar-all');
 
 	var dualListbox = $('[name="alumnos[]"]');
+	//var dualListbox = $('.demo');
 
 	function avisar(mensaje) {
 		inputBuscar.attr('data-content', mensaje);
@@ -31,7 +32,7 @@
 		dualListbox.children(':not(:selected)').remove();
 		for (i in dataMenosPresentes) {
 			dualListbox.append($("<option></option>").val(data[i].dni).text(
-					data[i].nombre));
+					data[i].nombreCompleto));
 		}
 		dualListbox.trigger('bootstrapduallistbox.refresh');
 	}
@@ -47,6 +48,7 @@
 			success : mostrarResultadosBusqueda
 		});
 	}
+	
 	function disponibles() {
 		var call2 = jsRoutes.controllers.Alumnos.disponibles();
 		$.ajax({

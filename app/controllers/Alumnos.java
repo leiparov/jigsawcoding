@@ -1,25 +1,31 @@
 package controllers;
 
+import static play.data.Form.form;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.List;
 
+/*import views.html.alumnos.indexAlumnos;
+ import views.html.alumnos.nuevoAlumno;*/
+import javax.persistence.PersistenceException;
+
+import models.daos.DAOException;
 import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.Sexo;
 import models.services.AlumnoService;
 import models.services.DocenteService;
 import models.services.UsuarioService;
+import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import utils.Login;
-/*import views.html.alumnos.indexAlumnos;
- import views.html.alumnos.nuevoAlumno;*/
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -27,7 +33,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 public class Alumnos extends Controller {
 
 	public static class AlumnoForm {
-		public String nombre;
+		public String nombres;
 		public String apellidoPaterno;
 		public String apellidoMaterno;
 		public String dni;
@@ -40,7 +46,7 @@ public class Alumnos extends Controller {
 		public Alumno entidad() {
 			Alumno nuevo = new Alumno();
 			nuevo.setPassword(contrasena);
-			nuevo.setNombres(nombre);
+			nuevo.setNombres(nombres);
 			nuevo.setApellidoPaterno(apellidoPaterno);
 			nuevo.setApellidoMaterno(apellidoMaterno);
 			nuevo.setDNI(Integer.parseInt(dni));
@@ -63,7 +69,7 @@ public class Alumnos extends Controller {
 
 	private static class ResultadoBusqueda {
 		public int dni;
-		public String nombre;
+		public String nombreCompleto;
 	}
 
 	private static AlumnoService alumnoService = new AlumnoService();
@@ -74,73 +80,109 @@ public class Alumnos extends Controller {
 			+ "@+{},.-<>;:_[]*^`~";
 	private static final String ruta = "public/photos/";
 
-	// Para Profesor
+	/* Metodos para el docente */
+	public static Result GO_HOME = redirect(routes.Alumnos.list(0, "dni",
+			"asc", ""));
+
+	public static Result list(int page, String sortBy, String order,
+			String filter) {
+		return ok(views.html.alumnos.listaAlumnos.render(
+				alumnoService.page(page, 10, sortBy, order, filter), sortBy,
+				order, filter));
+	}
 	public static Result index() {
+		Login login = Login.obtener(ctx());
+		Docente usuario = docenteService.obtener(login.getDNI());		
+		return GO_HOME;
+	}
+
+	// Para Profesor
+	/*public static Result index() {
 		Login login = Login.obtener(ctx());
 		Docente usuario = docenteService.obtener(login.getDNI());
 		// List<Tuple2<Alumno, List<Grupo>>> alumnos =
 		// docenteService.obtenerAlumnosDeSusGrupos(usuario);
 		// return ok(indexAlumnos.render(alumnos));
 		return noContent();
+	}*/
+
+	public static Result interfazNuevo() {
+		Login login = Login.obtener(ctx());
+		Docente usuario = docenteService.obtener(login.getDNI());
+		return ok(views.html.alumnos.nuevoAlumno.render(usuario));
+		//return TODO;
 	}
 
-	/*
-	 * public static Result interfazNuevo() { Login login =
-	 * Login.obtener(ctx()); Docente usuario =
-	 * docenteService.obtener(login.getDNI()); return
-	 * ok(nuevoAlumno.render(usuario)); }
-	 */
+	public static Result registrarAlumno() {
+		try {
+			Form<AlumnoForm> form = Form.form(AlumnoForm.class)
+					.bindFromRequest();
+			Alumno nuevoa = form.get().entidad();
 
-	/*
-	 * public static Result registrarAlumno() { try{ Form<AlumnoForm> form =
-	 * Form.form(AlumnoForm.class).bindFromRequest(); Alumno nuevoa =
-	 * form.get().entidad();
-	 * 
-	 * if(!validarNombre(nuevoa.getNombreCompleto())){ throw new
-	 * DAOException("Caracteres inválidos en Nombres y/o Apellidos."); }
-	 * if((nuevoa.getDNI()+"").length() != 8){ throw new
-	 * NumberFormatException(); }
-	 * if(!nuevoa.getPassword().equals(form.get().repcontrasena)){ throw new
-	 * DAOException("Las contraseñas no coinciden."); } try{
-	 * usuarioService.obtener(nuevoa.getEmail()); }catch(DAOException daoe){
-	 * if(form.get().grupo != -1){ List grupos = new LinkedList();
-	 * grupos.add(grupoService.obtener(form.get().grupo));
-	 * nuevoa.setGrupos(grupos); } if (guardarFoto(nuevoa.getDNI())) {
-	 * nuevoa.setFoto(true); } alumnoService.guardarAlumno(nuevoa);
-	 * flash("success", "El alumno fue creado correctamente"); return
-	 * redirect(routes.Alumnos.index()); } throw new
-	 * DAOException("Email ya registrado, porfavor ingrese otro.");
-	 * }catch(DAOException daoe){ flash("error", "Error al registrar: " +
-	 * daoe.getMessage()); return redirect(routes.Alumnos.interfazNuevo());
-	 * }catch(NumberFormatException nfe){ flash("error",
-	 * "Error en DNI: Por favor ingrese 8 digitos."); return
-	 * redirect(routes.Alumnos.interfazNuevo()); }catch(PersistenceException
-	 * pe){ flash("error", "Error al registrar: DNI ya existente."); return
-	 * redirect(routes.Alumnos.interfazNuevo()); }catch(Exception e){
-	 * e.printStackTrace(); flash("error", "Error desconocido: " +
-	 * e.getMessage()); return redirect(routes.Alumnos.interfazNuevo()); } }
-	 */
+			if (!validarNombre(nuevoa.getNombreCompleto())) {
+				throw new DAOException(
+						"Caracteres inválidos en Nombres y/o Apellidos.");
+			}
+			if ((nuevoa.getDNI() + "").length() != 8) {
+				throw new NumberFormatException();
+			}
+			if (!nuevoa.getPassword().equals(form.get().repcontrasena)) {
+				throw new DAOException("Las contraseñas no coinciden.");
+			}
+			try {
+				usuarioService.obtener(nuevoa.getEmail());
+			} catch (DAOException daoe) {
+				alumnoService.guardarAlumno(nuevoa);
+				flash("success", "El alumno fue creado correctamente");
+				return redirect(routes.Alumnos.index());
+			}
+			throw new DAOException(
+					"Email ya registrado, porfavor ingrese otro.");
+		} catch (DAOException daoe) {
+			flash("error", "Error al registrar: " + daoe.getMessage());
+			return redirect(routes.Alumnos.interfazNuevo());
+		} catch (NumberFormatException nfe) {
+			flash("error", "Error en DNI: Por favor ingrese 8 digitos.");
+			return redirect(routes.Alumnos.interfazNuevo());
+		} catch (PersistenceException pe) {
+			flash("error", "Error al registrar: DNI ya existente.");
+			return redirect(routes.Alumnos.interfazNuevo());
+		} catch (Exception e) {
+			e.printStackTrace();
+			flash("error", "Error desconocido: " + e.getMessage());
+			return redirect(routes.Alumnos.interfazNuevo());
+		}
+	}
+	
+	public static Result editarAlumno(int dni) {
+		Form<Alumno> alumnoForm = form(Alumno.class).fill(
+				alumnoService.obtener(dni));
+		//return ok(editarAlumno.render(dni, alumnoForm));
+		return TODO;
+	}
 
-	/*
-	 * public static Result actualizarAlumno() { try{ Form<AlumnoForm> form =
-	 * Form.form(AlumnoForm.class).bindFromRequest(); Alumno alumno =
-	 * getAlumno(); String emailAntiguo = alumno.getEmail();
-	 * 
-	 * form.get().entidadModificada(alumno); try{
-	 * if(emailAntiguo.equals(alumno.getEmail())){ throw new DAOException(); }
-	 * usuarioService.obtener(alumno.getEmail()); }catch(DAOException daoe){ if
-	 * (guardarFoto(alumno.getDNI())) { alumno.setFoto(true); }
-	 * alumnoService.guardarAlumno(alumno);
-	 * Login.obtener(ctx()).logearSesion(alumno); return
-	 * redirect(routes.Application.index()); } throw new
-	 * DAOException("Email ya registrado, por favor ingrese otro.");
-	 * }catch(DAOException daoe){ flash("error", "Error al registrar: " +
-	 * daoe.getMessage()); return
-	 * redirect(routes.Application.interfazModificarUsuario()); }catch(Exception
-	 * e){ e.printStackTrace(); flash("error", "Error desconocido: " +
-	 * e.getMessage()); return
-	 * redirect(routes.Application.interfazModificarUsuario()); } }
-	 */
+	public static Result actualizarAlumno(int dni) {
+		/*Form<Alumno> problemaForm = form(Alumno.class).bindFromRequest();
+		if (problemaForm.hasErrors()) {
+			return badRequest(editarAlumno.render(id, problemaForm));
+		}
+		try {
+			Alumno problema = problemaForm.get();
+			problema.setDocente(getDocente());
+			problema.setAlumnoId(id);
+			System.out.println(problema.toString());
+			problemaService.actualizarAlumno(getDocente(), problema);
+			flash("success", "Alumno actualizado con éxito");
+			return GO_HOME;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			flash("error", "No se pudo actualizar el Alumno");
+			return redirect(routes.Application.index());
+		}*/
+		return TODO;
+	}
+	
 
 	private static Alumno getAlumno() {
 		return usuarioService.obtener(Login.obtener(ctx()).getDNI(),
@@ -154,9 +196,12 @@ public class Alumnos extends Controller {
 	}
 
 	public static Result disponibles() {
-		/*Alumnos disponibles que aun no han sido asignados a un grupo experto*/
+		/* Alumnos disponibles que aun no han sido asignados a un grupo experto */
 		List<Alumno> alumnos = alumnoService.disponibles();
+		play.Logger.debug("asdasdas");
 		JsonNode respuesta = convertirListaAlumnosAJson(alumnos);
+		System.out.println(respuesta);
+		play.Logger.debug(respuesta.asText());
 		return ok(respuesta);
 	}
 
@@ -166,7 +211,7 @@ public class Alumnos extends Controller {
 		for (Alumno alumno : lista) {
 			ResultadoBusqueda resultado = new ResultadoBusqueda();
 			resultado.dni = alumno.getDNI();
-			resultado.nombre = alumno.getNombreCompleto();
+			resultado.nombreCompleto = alumno.getNombreCompleto();
 			array[i++] = resultado;
 		}
 		return Json.toJson(array);

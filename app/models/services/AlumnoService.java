@@ -3,8 +3,11 @@ package models.services;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.avaje.ebean.Page;
+
 import models.daos.AlumnoDAO;
 import models.entities.Alumno;
+import models.entities.Problema;
 
 public class AlumnoService {
 
@@ -33,5 +36,11 @@ public class AlumnoService {
 	public void guardarAlumno(Alumno alumno) {
 		alumnoDAO.guardar(alumno);
 	}
+	
+	public Page<Alumno> page(int page, int pageSize, String sortBy,
+			String order, String filter) {
+		return alumnoDAO.page(page, pageSize, sortBy, order, filter);
+	}
+	
 
 }

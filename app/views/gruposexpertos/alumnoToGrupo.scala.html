@@ -16,6 +16,7 @@
 	            <div class="form-group">
 	                <div class="row">
 	                    <div class="col-md-6">
+	                    	<div id="input-buscar"></div>
 	                    	<button class="btn btn-default" type="button" 
 		                        id="boton-buscar-all" >Ver alumnos disponibles</button>
 	                        <div class="input-group">
@@ -41,7 +42,7 @@
 	                </select>
 	                <script>
 	                    $(function(){ 
-		                    var demo = $('.demo').bootstrapDualListbox({
+		                    var demo = $('[name="alumnos[]"]').bootstrapDualListbox({
 		                    	nonselectedlistlabel: 'ALUMNOS DISPONIBLES',
 	                    		selectedlistlabel: 'GRUPO EXPERTO :  @grupoExperto.getNombre '
 		                    });
