@@ -14,24 +14,21 @@ public class SesionJigsaw {
 
 	@Id
 	private int id;
-	
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	private Curso curso;
-	
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	private Tema tema;
 
-	@Formats.DateTime(pattern = "yyyy-MM-dd")
+	private String tema;
+	
 	private Date inicioReunionExpertos;
-	private int duracionReunionExpertos;
-	@Formats.DateTime(pattern = "yyyy-MM-dd")
-	private Date inicioReunionJigsaw;
-	private int duracionReunionJigsaw;
-
-	private int totalGruposExpertos;
-
+	private Integer duracionReunionExpertos;
 	
-	/*Getters and Setters*/
+	private Date inicioReunionJigsaw;
+	private Integer duracionReunionJigsaw;
+
+	private Integer totalGruposExpertos;
+	
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	private Docente docente;
+
+	/* Getters and Setters */
 	public int getId() {
 		return id;
 	}
@@ -39,20 +36,12 @@ public class SesionJigsaw {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public Curso getCurso() {
-		return curso;
-	}
-
-	public void setCurso(Curso curso) {
-		this.curso = curso;
-	}
-
-	public Tema getTema() {
+	
+	public String getTema() {
 		return tema;
 	}
 
-	public void setTema(Tema tema) {
+	public void setTema(String tema) {
 		this.tema = tema;
 	}
 
@@ -64,11 +53,11 @@ public class SesionJigsaw {
 		this.inicioReunionExpertos = inicioReunionExpertos;
 	}
 
-	public int getDuracionReunionExpertos() {
+	public Integer getDuracionReunionExpertos() {
 		return duracionReunionExpertos;
 	}
 
-	public void setDuracionReunionExpertos(int duracionReunionExpertos) {
+	public void setDuracionReunionExpertos(Integer duracionReunionExpertos) {
 		this.duracionReunionExpertos = duracionReunionExpertos;
 	}
 
@@ -80,20 +69,28 @@ public class SesionJigsaw {
 		this.inicioReunionJigsaw = inicioReunionJigsaw;
 	}
 
-	public int getDuracionReunionJigsaw() {
+	public Integer getDuracionReunionJigsaw() {
 		return duracionReunionJigsaw;
 	}
 
-	public void setDuracionReunionJigsaw(int duracionReunionJigsaw) {
+	public void setDuracionReunionJigsaw(Integer duracionReunionJigsaw) {
 		this.duracionReunionJigsaw = duracionReunionJigsaw;
 	}
 
-	public int getTotalGruposExpertos() {
+	public Integer getTotalGruposExpertos() {
 		return totalGruposExpertos;
 	}
 
-	public void setTotalGruposExpertos(int totalGruposExpertos) {
+	public void setTotalGruposExpertos(Integer totalGruposExpertos) {
 		this.totalGruposExpertos = totalGruposExpertos;
+	}
+
+	public Docente getDocente() {
+		return docente;
+	}
+
+	public void setDocente(Docente docente) {
+		this.docente = docente;
 	}
 
 }

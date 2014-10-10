@@ -55,6 +55,9 @@ GET    /sesionesjigsaw/index                controllers.SesionesJigsaw.index()
 GET    /sesionesjigsaw                      controllers.SesionesJigsaw.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")
 GET    /sesionesjigsaw/nuevo                controllers.SesionesJigsaw.interfazNuevo()
 POST   /sesionesjigsaw/registrar            controllers.SesionesJigsaw.registrarSesionJigsaw()
+GET    /sesionesjigsaw/:id                  controllers.SesionesJigsaw.editarSesionJigsaw(id:Integer)
+POST   /sesionesjigsaw/:id                  controllers.SesionesJigsaw.actualizarSesionJigsaw(id:Integer)
+POST   /sesionesjigsaw/:id/delete           controllers.SesionesJigsaw.eliminarSesionJigsaw(id:Integer)
 
 # Map static resources from the /public folder to the /assets URL path
 GET    /assets/javascripts/routes           controllers.Application.jsRoutes()

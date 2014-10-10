@@ -35,3 +35,9 @@
      apellidoPaterno:  Rojas
      apellidoMaterno: Bustamante
      sexo:      MASCULINO
+
+- !!models.entities.Curso
+     nombre: Algoritmos I
+
+- !!models.entities.Curso
+     nombre: Algoritmos II

@@ -29,14 +29,13 @@ create table problema (
 
 create table sesion_jigsaw (
   id                        integer auto_increment not null,
-  docente_dni               integer not null,
-  curso_codigo              integer,
-  tema_codigo               integer,
+  tema                      varchar(255),
   inicio_reunion_expertos   datetime,
   duracion_reunion_expertos integer,
   inicio_reunion_jigsaw     datetime,
   duracion_reunion_jigsaw   integer,
   total_grupos_expertos     integer,
+  docente_dni               integer,
   constraint pk_sesion_jigsaw primary key (id))
 ;
 
@@ -71,14 +70,10 @@ alter table grupo_experto add constraint fk_grupo_experto_docente_1 foreign key 
 create index ix_grupo_experto_docente_1 on grupo_experto (docente_dni);
 alter table problema add constraint fk_problema_docente_2 foreign key (docente_dni) references usuario (dni) on delete restrict on update restrict;
 create index ix_problema_docente_2 on problema (docente_dni);
-alter table sesion_jigsaw add constraint fk_sesion_jigsaw_usuario_3 foreign key (docente_dni) references usuario (dni) on delete restrict on update restrict;
-create index ix_sesion_jigsaw_usuario_3 on sesion_jigsaw (docente_dni);
-alter table sesion_jigsaw add constraint fk_sesion_jigsaw_curso_4 foreign key (curso_codigo) references curso (codigo) on delete restrict on update restrict;
-create index ix_sesion_jigsaw_curso_4 on sesion_jigsaw (curso_codigo);
-alter table sesion_jigsaw add constraint fk_sesion_jigsaw_tema_5 foreign key (tema_codigo) references tema (codigo) on delete restrict on update restrict;
-create index ix_sesion_jigsaw_tema_5 on sesion_jigsaw (tema_codigo);
-alter table tema add constraint fk_tema_curso_6 foreign key (curso_codigo) references curso (codigo) on delete restrict on update restrict;
-create index ix_tema_curso_6 on tema (curso_codigo);
+alter table sesion_jigsaw add constraint fk_sesion_jigsaw_docente_3 foreign key (docente_dni) references usuario (dni) on delete restrict on update restrict;
+create index ix_sesion_jigsaw_docente_3 on sesion_jigsaw (docente_dni);
+alter table tema add constraint fk_tema_curso_4 foreign key (curso_codigo) references curso (codigo) on delete restrict on update restrict;
+create index ix_tema_curso_4 on tema (curso_codigo);
 
 
 

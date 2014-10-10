@@ -34,12 +34,7 @@
 }
 @main(menuDocente()){
 	<h1 id="homeTitle">@Messages("sesionesJigsaw.list.title", currentPage.getTotalRowCount)</h1>
-	@if(flash.containsKey("success")) {
-    	<div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <span class="glyphicon glyphicon-ok-sign"></span><strong>Listo!</strong>@flash.get("success")
-        </div>
-    }
+	@inputs.flashSuccessError()
     <div id="actions" class="row">
         <div class="pull-left">
 	        <form action="@link(0, "id")" method="GET" class="form-inline" role="form">            
@@ -50,7 +45,7 @@
 	        </form>
         </div>        
         <div class="pull-right">
-        	<a class="pull-rigth btn btn btn-success" id="add" href="@routes.SesionesJigsaw.interfazNuevo()">Nuevo Sesion Jigsaw</a>
+        	<a class="pull-rigth btn btn btn-success" id="add" href="@routes.SesionesJigsaw.interfazNuevo()">Nueva Sesion Jigsaw</a>
         </div> 
     </div>
     <br>
@@ -67,20 +62,31 @@
             <thead>
                 <tr>
                     @header("id", "Sesion ID")                    
-                    @header("curso.nombre", "Curso")
-                    @header("tema.nombre", "Tema")
+                    @header("tema", "Tema")
                     @header("inicioReunionExpertos", "Inicio Reunion Expertos")
-                    @header("inicioReunionExpertos", "Duración Reunión Expertos")
+                    @header("duracionReunionExpertos", "Duración Reunión Expertos")
                     @header("inicioReunionJigsaw", "Inicio Reunión Jigsaw")
                     @header("duracionReunionJigsaw", "Duración Reunión Jigsaw")
+                    @header("totalGruposExpertos", "Total Grupos Expertos")
                 </tr>
             </thead>
             <tbody>
             @currentPage.getList.map { sesionJigsaw =>
            	<tr>
             	<td>@sesionJigsaw.getId()</td>
-            	<td>@sesionJigsaw.getCurso().getNombre()</td>
-                
+            	
+            	<td>@sesionJigsaw.getTema()</td>	
+
+            	<td>@sesionJigsaw.getInicioReunionExpertos().format("yyyy-MM-dd  hh:mm:ss a")</td>
+            	<td>@sesionJigsaw.getDuracionReunionExpertos()</td>
+            	<td>@sesionJigsaw.getInicioReunionJigsaw().format("yyyy-MM-dd hh:mm:ss a")</td>
+            	<td>@sesionJigsaw.getDuracionReunionJigsaw()</td>
+            	<td>@sesionJigsaw.getTotalGruposExpertos()</td>
+                <td>
+                	<a href="@routes.SesionesJigsaw.editarSesionJigsaw(sesionJigsaw.getId())">
+                		<span class="glyphicon glyphicon-pencil">
+                	</a>
+                </td>
            	</tr>
            	}      
             </tbody>
@@ -110,8 +116,7 @@
                     </li>
                 }
             </ul>
-        </div>
-        
+        </div>        
     }
     </div> 
 }
