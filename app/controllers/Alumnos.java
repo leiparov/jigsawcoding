@@ -9,7 +9,6 @@ import java.io.FileOutputStream;
 import java.util.List;
 
 
-
 /*import views.html.alumnos.indexAlumnos;
  import views.html.alumnos.nuevoAlumno;*/
 import javax.persistence.PersistenceException;
@@ -17,6 +16,7 @@ import javax.persistence.PersistenceException;
 import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.Sexo;
+import models.entities.Usuario;
 import models.services.AlumnoService;
 import models.services.DocenteService;
 import models.services.Login;
@@ -93,27 +93,27 @@ public class Alumnos extends Controller {
 				alumnoService.page(page, 10, sortBy, order, filter), sortBy,
 				order, filter));
 	}
+
 	public static Result index() {
 		Login login = Login.obtener(ctx());
-		Docente usuario = docenteService.obtener(login.getDNI());		
+		Docente usuario = docenteService.obtener(login.getDNI());
 		return GO_HOME;
 	}
 
 	// Para Profesor
-	/*public static Result index() {
-		Login login = Login.obtener(ctx());
-		Docente usuario = docenteService.obtener(login.getDNI());
-		// List<Tuple2<Alumno, List<Grupo>>> alumnos =
-		// docenteService.obtenerAlumnosDeSusGrupos(usuario);
-		// return ok(indexAlumnos.render(alumnos));
-		return noContent();
-	}*/
+	/*
+	 * public static Result index() { Login login = Login.obtener(ctx());
+	 * Docente usuario = docenteService.obtener(login.getDNI()); //
+	 * List<Tuple2<Alumno, List<Grupo>>> alumnos = //
+	 * docenteService.obtenerAlumnosDeSusGrupos(usuario); // return
+	 * ok(indexAlumnos.render(alumnos)); return noContent(); }
+	 */
 
 	public static Result interfazNuevo() {
 		Login login = Login.obtener(ctx());
 		Docente usuario = docenteService.obtener(login.getDNI());
 		return ok(views.html.alumnos.nuevoAlumno.render(usuario));
-		//return TODO;
+		// return TODO;
 	}
 
 	public static Result registrarAlumno() {
@@ -156,36 +156,30 @@ public class Alumnos extends Controller {
 			return redirect(routes.Alumnos.interfazNuevo());
 		}
 	}
-	
+
 	public static Result editarAlumno(int dni) {
 		Form<Alumno> alumnoForm = form(Alumno.class).fill(
 				alumnoService.obtener(dni));
-		//return ok(editarAlumno.render(dni, alumnoForm));
+		// return ok(editarAlumno.render(dni, alumnoForm));
 		return TODO;
 	}
 
 	public static Result actualizarAlumno(int dni) {
-		/*Form<Alumno> problemaForm = form(Alumno.class).bindFromRequest();
-		if (problemaForm.hasErrors()) {
-			return badRequest(editarAlumno.render(id, problemaForm));
-		}
-		try {
-			Alumno problema = problemaForm.get();
-			problema.setDocente(getDocente());
-			problema.setAlumnoId(id);
-			System.out.println(problema.toString());
-			problemaService.actualizarAlumno(getDocente(), problema);
-			flash("success", "Alumno actualizado con éxito");
-			return GO_HOME;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			flash("error", "No se pudo actualizar el Alumno");
-			return redirect(routes.Application.index());
-		}*/
+		/*
+		 * Form<Alumno> problemaForm = form(Alumno.class).bindFromRequest(); if
+		 * (problemaForm.hasErrors()) { return
+		 * badRequest(editarAlumno.render(id, problemaForm)); } try { Alumno
+		 * problema = problemaForm.get(); problema.setDocente(getDocente());
+		 * problema.setAlumnoId(id); System.out.println(problema.toString());
+		 * problemaService.actualizarAlumno(getDocente(), problema);
+		 * flash("success", "Alumno actualizado con éxito"); return GO_HOME;
+		 * 
+		 * } catch (Exception e) { e.printStackTrace(); flash("error",
+		 * "No se pudo actualizar el Alumno"); return
+		 * redirect(routes.Application.index()); }
+		 */
 		return TODO;
 	}
-	
 
 	private static Alumno getAlumno() {
 		return usuarioService.obtener(Login.obtener(ctx()).getDNI(),
@@ -262,20 +256,29 @@ public class Alumnos extends Controller {
 		return true;
 	}
 
-	/*
-	 * public static Result cambiarContrasenia() { try {
-	 * Form<nuevaContraseniaForm> form = Form.form(nuevaContraseniaForm.class)
-	 * .bindFromRequest(); if
-	 * ((form.get().nuevo).equals(form.get().repitenuevo)) { Login login =
-	 * Login.obtener(ctx()); Usuario usuario =
-	 * usuarioService.obtener(login.getDNI()); if
-	 * (usuario.getPassword().equals(form.get().actual)) {
-	 * usuarioService.cambiarContrasenia(usuario.getDNI(), form.get().nuevo);
-	 * flash("success", "Su contraseña ha sido cambiada correctamente."); } else
-	 * { flash("error", "Su contraseña actual no es correcta."); } } else {
-	 * flash("error", "La contraseña nueva no coincide en ambos campos."); } }
-	 * catch (Exception e) { flash("error", "Error desconocido: " +
-	 * e.getMessage()); } return
-	 * redirect(routes.Application.interfazCambiarContrasenia()); }
-	 */
+	public static Result cambiarContrasenia() {
+		try {
+			Form<nuevaContraseniaForm> form = Form.form(
+					nuevaContraseniaForm.class).bindFromRequest();
+			if ((form.get().nuevo).equals(form.get().repitenuevo)) {
+				Login login = Login.obtener(ctx());
+				Usuario usuario = usuarioService.obtener(login.getDNI());
+				if (usuario.getPassword().equals(form.get().actual)) {
+					usuarioService.cambiarContrasenia(usuario.getDNI(),
+							form.get().nuevo);
+					flash("success",
+							"Su contraseña ha sido cambiada correctamente.");
+				} else {
+					flash("error", "Su contraseña actual no es correcta.");
+				}
+			} else {
+				flash("error",
+						"La contraseña nueva no coincide en ambos campos.");
+			}
+		} catch (Exception e) {
+			flash("error", "Error desconocido: " + e.getMessage());
+		}
+		return redirect(routes.Application.interfazCambiarContrasenia());
+	}
+
 }

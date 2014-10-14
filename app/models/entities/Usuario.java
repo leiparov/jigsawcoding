@@ -1,5 +1,6 @@
 package models.entities;
 
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,6 +11,7 @@ import play.data.validation.Constraints;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="tipo")
 @DiscriminatorValue("USUARIO")
 public class Usuario {
 
@@ -91,4 +93,7 @@ public class Usuario {
 	public void setPassword(String psw) {
 		this.password = psw;
 	}
+
+	
+	
 }

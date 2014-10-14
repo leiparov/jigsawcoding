@@ -48,13 +48,12 @@ public class Application extends Controller {
         }
     }*/
 
-    public static Result interfazCambiarPassword() {
+    public static Result interfazCambiarContrasenia() {
     	Login login = Login.obtener(ctx());
         if (login.isTipo(Alumno.class))
-            //return ok(cambiarContraseniaAlumno.render());
-        	return TODO;
+            return ok(views.html.alumnos.cambiarContrasenia.render());
         else 
-            return ok(views.html.docentes.cambiarPassword.render());
+            return ok(views.html.docentes.cambiarContrasenia.render());
     }
 
     public static Result logout() {
@@ -69,7 +68,7 @@ public class Application extends Controller {
             Login.obtener(ctx()).logearSesion(logueado);
             return redirect(routes.Application.index());
         } catch (DAOException.FalloLoginException e) {
-            flash("error", "Usuario o Password incorrectos");
+            flash("error", "Usuario y/o Password incorrectos");
             return badRequest(views.html.login.render());
         }
     }

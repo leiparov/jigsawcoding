@@ -173,7 +173,7 @@ public class Docentes extends Controller{
    }
    
    @Login.Requiere
-   public static Result cambiarPassword() {
+   public static Result cambiarContrasenia() {
       try {
          Form<nuevaContraseniaForm> form = Form.form(nuevaContraseniaForm.class)
                  .bindFromRequest();
@@ -182,17 +182,17 @@ public class Docentes extends Controller{
             Usuario usuario = usuarioService.obtener(login.getDNI());
             if (usuario.getPassword().equals(form.get().actual)) {
                usuarioService.cambiarContrasenia(usuario.getDNI(), form.get().nuevo);
-               flash("success", "Su password ha sido cambiado correctamente.");
+               flash("success", "Su contraseña ha sido cambiada correctamente.");
             } else {
-               flash("error", "Su password actual no es correcta.");
+               flash("error", "Su contraseña actual no es correcta.");
             }
          } else {
-            flash("error", "El nuevo password no coincide en ambos campos.");
+            flash("error", "La nueva contraseña no coincide en ambos campos.");
          }
       }catch(Exception e){
          flash("error", "Error desconocido: " + e.getMessage());
       }
-      return redirect(routes.Application.interfazCambiarPassword());
+      return redirect(routes.Application.interfazCambiarContrasenia());
    }
    
    //clases estaticas para los formularios

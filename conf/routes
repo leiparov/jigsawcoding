@@ -13,14 +13,15 @@ GET    /recuperarContrasenia                controllers.Application.recuperarCon
 GET    /                                    controllers.Application.index()
 GET    /perfil                              controllers.Application.interfazPerfilUsuario()
 #GET    /perfil/editar                   controllers.Application.interfazModificarUsuario()
-GET    /perfil/cambiarPassword       controllers.Application.interfazCambiarPassword()
+GET    /perfil/cambiarContrasenia           controllers.Application.interfazCambiarContrasenia()
 
-POST   /perfil/cambiarPassword       controllers.Docentes.cambiarPassword()
+
 #POST   /docentes/nuevo                  controllers.Docentes.registrarDocente()
 #POST   /docentes/actualizar             controllers.Docentes.actualizarDocente()
 #GET    /docentes/eliminar               controllers.Docentes.eliminarDocente()
 
 POST   /docentes/nuevo                      controllers.Docentes.registrarDocente()
+POST   /docentes/cambiarContrasenia         controllers.Docentes.cambiarContrasenia()
 
 GET    /problemas/index                     controllers.Problemas.index()
 GET    /problemas                           controllers.Problemas.list(p:Int ?= 0, s ?= "problemaId", o ?= "asc", f ?= "")
@@ -39,7 +40,7 @@ GET    /alumnos/:id                         controllers.Alumnos.editarAlumno(id:
 POST   /alumnos/actualizar                  controllers.Alumnos.actualizarAlumno(id:Integer)
 GET    /alumnos/buscar                      controllers.Alumnos.buscarAlumnos(q: String)
 GET    /alumnos/ajax/disponibles            controllers.Alumnos.disponibles()
-#POST   /perfil/cambiarContrasenia       controllers.Alumnos.cambiarContrasenia()
+POST   /alumnos/cambiarContrasenia          controllers.Alumnos.cambiarContrasenia()
 
 GET    /gruposexpertos/index                controllers.GruposExpertos.index()
 GET    /gruposexpertos                      controllers.GruposExpertos.list(p:Int ?= 0, s ?= "grupoExpertoId", o ?= "asc", f ?= "")

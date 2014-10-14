@@ -1,13 +1,13 @@
 package models.entities;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
-import play.data.format.Formats;
+import javax.persistence.OneToMany;
 
 @Entity
 public class SesionJigsaw {
@@ -27,6 +27,9 @@ public class SesionJigsaw {
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Docente docente;
+	
+	@OneToMany(cascade = CascadeType.PERSIST)
+	private List<ParGrupoExpertoProblema> pares;
 
 	/* Getters and Setters */
 	public int getId() {
@@ -91,6 +94,14 @@ public class SesionJigsaw {
 
 	public void setDocente(Docente docente) {
 		this.docente = docente;
+	}
+
+	public List<ParGrupoExpertoProblema> getPares() {
+		return pares;
+	}
+
+	public void setPares(List<ParGrupoExpertoProblema> pares) {
+		this.pares = pares;
 	}
 
 }
