@@ -5,16 +5,16 @@ import static play.data.Form.form;
 import java.util.LinkedList;
 import java.util.List;
 
-import models.daos.DAOException;
+import exceptions.DAOException;
 import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.GrupoExperto;
 import models.services.GrupoExpertoService;
+import models.services.Login;
 import models.services.UsuarioService;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import utils.Login;
 import views.html.gruposexpertos.*;
 
 @Login.Requiere

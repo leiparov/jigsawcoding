@@ -8,16 +8,18 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.List;
 
+
+
 /*import views.html.alumnos.indexAlumnos;
  import views.html.alumnos.nuevoAlumno;*/
 import javax.persistence.PersistenceException;
 
-import models.daos.DAOException;
 import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.Sexo;
 import models.services.AlumnoService;
 import models.services.DocenteService;
+import models.services.Login;
 import models.services.UsuarioService;
 import play.data.Form;
 import play.libs.Json;
@@ -25,9 +27,10 @@ import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
-import utils.Login;
 
 import com.fasterxml.jackson.databind.JsonNode;
+
+import exceptions.DAOException;
 
 @Login.Requiere
 public class Alumnos extends Controller {

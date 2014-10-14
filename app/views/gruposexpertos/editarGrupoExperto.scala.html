@@ -1,7 +1,5 @@
 @* editarGrupoExperto Template File *@
 @(id: Long, grupoExpertoForm: play.data.Form[models.entities.GrupoExperto])
-@import myHelpers._
-@implicitFieldConstructor = @{ views.html.helper.FieldConstructor(twitterBootstrapInput.render) } 
 @main(menuDocente()){
 	@inputs.panel("EDITAR PROBLEMA", true){
 		@helper.form(routes.GruposExpertos.actualizarGrupoExperto(id), 'class -> "form-horizontal"){

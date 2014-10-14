@@ -2,6 +2,8 @@ package models.daos;
 
 import com.avaje.ebean.Ebean;
 
+import exceptions.DAOException;
+
 public class EbeanUtils {
     
     public static <T> T findOrException(Class<T> beanType, Object id){

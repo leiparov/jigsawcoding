@@ -16,6 +16,8 @@ import com.avaje.ebean.RawSqlBuilder;
 import com.avaje.ebean.SqlQuery;
 import com.avaje.ebean.SqlRow;
 
+import exceptions.DAOException;
+
 public class AlumnoDAO {
 
 	public static UsuarioDAO usuarioDAO = new UsuarioDAO();

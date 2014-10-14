@@ -1,4 +1,4 @@
-package utils;
+package models.services;
 
 import play.libs.F;
 import play.mvc.*;

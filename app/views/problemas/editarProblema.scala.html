@@ -1,7 +1,5 @@
 @* editarProblema Template File *@
 @(id: Long, problemaForm: play.data.Form[models.entities.Problema])
-@import myHelpers._
-@implicitFieldConstructor = @{ views.html.helper.FieldConstructor(twitterBootstrapInput.render) } 
 @main(menuDocente()){
 	@inputs.panel("EDITAR PROBLEMA", true){
 		@helper.form(routes.Problemas.actualizarProblema(id), 'class -> "form-horizontal"){

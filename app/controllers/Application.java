@@ -1,15 +1,15 @@
 package controllers;
 
-import models.daos.DAOException;
+import exceptions.DAOException;
 import models.entities.Alumno;
 import models.entities.Usuario;
+import models.services.Login;
 import models.services.UsuarioService;
 import play.Routes;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 //import views.html.usuarios.*;
-import utils.Login;
 
 public class Application extends Controller {
 
@@ -48,13 +48,14 @@ public class Application extends Controller {
         }
     }*/
 
-    /*public static Result interfazCambiarContrasenia() {
+    public static Result interfazCambiarPassword() {
     	Login login = Login.obtener(ctx());
         if (login.isTipo(Alumno.class))
-            return ok(cambiarContraseniaAlumno.render());
+            //return ok(cambiarContraseniaAlumno.render());
+        	return TODO;
         else 
-            return ok(cambiarContraseniaDocente.render());
-    }*/
+            return ok(views.html.docentes.cambiarPassword.render());
+    }
 
     public static Result logout() {
         Login.obtener(ctx()).deslogearSesion();
@@ -68,7 +69,7 @@ public class Application extends Controller {
             Login.obtener(ctx()).logearSesion(logueado);
             return redirect(routes.Application.index());
         } catch (DAOException.FalloLoginException e) {
-            flash("error", "Usuario o contraseña incorrecta");
+            flash("error", "Usuario o Password incorrectos");
             return badRequest(views.html.login.render());
         }
     }

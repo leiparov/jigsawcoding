@@ -9,6 +9,8 @@ import com.avaje.ebean.SqlQuery;
 import com.avaje.ebean.SqlRow;
 import com.avaje.ebean.SqlUpdate;
 
+import exceptions.DAOException;
+
 public class UsuarioDAO {
 
 	public void guardar(Usuario u) {

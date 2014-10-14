@@ -6,10 +6,12 @@ import java.io.FileOutputStream;
 
 import javax.persistence.PersistenceException;
 
-import models.daos.DAOException;
+import exceptions.DAOException;
 import models.entities.Docente;
 import models.entities.Sexo;
+import models.entities.Usuario;
 import models.services.DocenteService;
+import models.services.Login;
 import models.services.UsuarioService;
 import play.data.Form;
 import play.mvc.Controller;
@@ -17,7 +19,6 @@ import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 //import views.html.usuarios.actualizarDocente;
-import utils.Login;
 import views.html.docentes.nuevoDocente;
 
 public class Docentes extends Controller{   
@@ -170,8 +171,9 @@ public class Docentes extends Controller{
    private static Docente getDocente(){
       return usuarioService.obtener(Login.obtener(ctx()).getDNI(), Docente.class);
    }
-   /*@Login.Requiere
-   public static Result cambiarContrasenia() {
+   
+   @Login.Requiere
+   public static Result cambiarPassword() {
       try {
          Form<nuevaContraseniaForm> form = Form.form(nuevaContraseniaForm.class)
                  .bindFromRequest();
@@ -180,18 +182,18 @@ public class Docentes extends Controller{
             Usuario usuario = usuarioService.obtener(login.getDNI());
             if (usuario.getPassword().equals(form.get().actual)) {
                usuarioService.cambiarContrasenia(usuario.getDNI(), form.get().nuevo);
-               flash("success", "Su contraseña ha sido cambiada correctamente.");
+               flash("success", "Su password ha sido cambiado correctamente.");
             } else {
-               flash("error", "Su contraseña actual no es correcta.");
+               flash("error", "Su password actual no es correcta.");
             }
          } else {
-            flash("error", "La contraseña nueva no coincide en ambos campos.");
+            flash("error", "El nuevo password no coincide en ambos campos.");
          }
       }catch(Exception e){
          flash("error", "Error desconocido: " + e.getMessage());
       }
-      return redirect(routes.Application.interfazCambiarContrasenia());
-   }*/
+      return redirect(routes.Application.interfazCambiarPassword());
+   }
    
    //clases estaticas para los formularios
    public static class DocenteForm{

@@ -1,4 +1,4 @@
-@loginData = @{utils.Login.obtener(Http.Context.current()).getHeaderData}
+@loginData = @{models.services.Login.obtener(Http.Context.current()).getHeaderData}
 <div class="pull-left">
 	<a href="@routes.Application.index"><h1>JIGSAW CODING</h1></a>
 </div>

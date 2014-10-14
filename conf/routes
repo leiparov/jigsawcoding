@@ -13,9 +13,9 @@ GET    /recuperarContrasenia                controllers.Application.recuperarCon
 GET    /                                    controllers.Application.index()
 GET    /perfil                              controllers.Application.interfazPerfilUsuario()
 #GET    /perfil/editar                   controllers.Application.interfazModificarUsuario()
-#GET    /perfil/cambiarContrasenia       controllers.Application.interfazCambiarContrasenia()
+GET    /perfil/cambiarPassword       controllers.Application.interfazCambiarPassword()
 
-#POST   /perfil/cambiarContrasenia       controllers.Docentes.cambiarContrasenia()
+POST   /perfil/cambiarPassword       controllers.Docentes.cambiarPassword()
 #POST   /docentes/nuevo                  controllers.Docentes.registrarDocente()
 #POST   /docentes/actualizar             controllers.Docentes.actualizarDocente()
 #GET    /docentes/eliminar               controllers.Docentes.eliminarDocente()

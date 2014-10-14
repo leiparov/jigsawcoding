@@ -2,6 +2,7 @@ package controllers;
 
 import models.entities.Docente;
 import models.entities.SesionJigsaw;
+import models.services.Login;
 import models.services.SesionJigsawService;
 import models.services.UsuarioService;
 
@@ -14,7 +15,6 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import utils.ExpresionDuracion;
 import utils.FormatoFechaHora;
-import utils.Login;
 import controllers.SesionesJigsaw.SesionJigsawForm;
 
 @Login.Requiere
