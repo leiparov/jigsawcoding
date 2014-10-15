@@ -7,6 +7,7 @@ public class FormatoFechaHora {
     public static String dateFormat = "dd/MM/yyyy";
     public static String timeFormat12 = "hh:mm a";
     public static String timeFormat24 = "HH:mm";
+    public static String dateTimeFormat12 = "dd/MM/yyyy hh:mm:ss a";
     public static DateTimeZone ZONA_PERU = DateTimeZone.forOffsetHours(-5); 
 
     private static DateTimeFormatter dateFormatter = DateTimeFormat.forPattern(dateFormat);

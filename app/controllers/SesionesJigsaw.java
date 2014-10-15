@@ -15,7 +15,6 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import utils.ExpresionDuracion;
 import utils.FormatoFechaHora;
-import controllers.SesionesJigsaw.SesionJigsawForm;
 
 @Login.Requiere
 public class SesionesJigsaw extends Controller {
@@ -61,6 +60,7 @@ public class SesionesJigsaw extends Controller {
 				sesionJigsawService.guardarSesionJigsaw(getDocente(), s);
 				flash("success", "SesionJigsaw registrada con éxito");
 				return GO_HOME;
+				//return asignarProblemas(id)
 			}
 
 		} catch (Exception e) {
@@ -68,6 +68,11 @@ public class SesionesJigsaw extends Controller {
 			flash("error", "No se pudo guardar la Sesión Jigsaw");
 			return redirect(routes.SesionesJigsaw.index());
 		}
+	}
+	
+	public static Result asignarProblemas (Integer id){
+		SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
+		return ok(views.html.sesionesjigsaw.asignarProblemas.render(id, s));
 	}
 
 	public static Result editarSesionJigsaw(Integer id) {
@@ -138,20 +143,16 @@ public class SesionesJigsaw extends Controller {
 
 			if (existenDatosFechaRE() && existenDatosFechaRJ()
 					&& expRE.toMinutos() != 0 && expRJ.toMinutos() != 0) {
-				LocalDate fechaBase_RE = FormatoFechaHora
-						.obtenerFecha(fechaInicioRE);
-				LocalTime horaInicio_RE = FormatoFechaHora
-						.obtenerHora(horaInicioRE);
+				LocalDate fechaBase_RE = FormatoFechaHora.obtenerFecha(fechaInicioRE);
+				LocalTime horaInicio_RE = FormatoFechaHora.obtenerHora(horaInicioRE);
 				DateTime tiempoAbsoluto_RE = fechaBase_RE.toDateTime(
 						horaInicio_RE, FormatoFechaHora.ZONA_PERU);
 				s.setInicioReunionExpertos(tiempoAbsoluto_RE.toDate());
 				s.setDuracionReunionExpertos(expRE.toMinutos());
 
-				LocalDate fechaBase_RJ = FormatoFechaHora
-						.obtenerFecha(fechaInicioRJ);
-				LocalTime horaInicio_RJ = FormatoFechaHora
-						.obtenerHora(horaInicioRJ);
-				DateTime tiempoAbsoluto_RJ = fechaBase_RE.toDateTime(
+				LocalDate fechaBase_RJ = FormatoFechaHora.obtenerFecha(fechaInicioRJ);
+				LocalTime horaInicio_RJ = FormatoFechaHora.obtenerHora(horaInicioRJ);
+				DateTime tiempoAbsoluto_RJ = fechaBase_RJ.toDateTime(
 						horaInicio_RJ, FormatoFechaHora.ZONA_PERU);
 				s.setInicioReunionJigsaw(tiempoAbsoluto_RJ.toDate());
 				s.setDuracionReunionJigsaw(expRJ.toMinutos());

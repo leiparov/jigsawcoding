@@ -1,4 +1,4 @@
-package utils;
+package models.services;
 
 import java.util.Properties;
 
@@ -17,8 +17,8 @@ public class Mail{
 
     public Mail(){
     	host = "smtp.gmail.com";
-    	email_emisor = "examenesonlineperu";
-    	contrasenia = "sylplagji";
+    	email_emisor = "jigsawcoding";
+    	contrasenia = "programacion++";
     }
     
     public void enviarContrasenia(String email, String nuevaContrasenia){

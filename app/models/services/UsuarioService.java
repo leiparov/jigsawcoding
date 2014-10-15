@@ -4,7 +4,6 @@ import java.util.Random;
 
 import models.daos.UsuarioDAO;
 import models.entities.Usuario;
-import utils.Mail;
 
 public class UsuarioService {
 

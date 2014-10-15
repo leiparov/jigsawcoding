@@ -48,7 +48,7 @@ public class AlumnoDAO {
 		int dni = 0;
 		String sql = "select u.dni from usuario u "
 				+ "left join grupo_experto_usuario g on u.dni = g.usuario_dni "
-				+ "where g.usuario_dni is null and dtype = 'ALUMNO' ";
+				+ "where g.usuario_dni is null and tipo = 'ALUMNO' ";
 		SqlQuery sqlQuery = Ebean.createSqlQuery(sql);
 		List<Alumno> alumnosDisponibles = new ArrayList<>();
 		List<SqlRow> resultado = sqlQuery.findList();

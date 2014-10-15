@@ -77,11 +77,16 @@
             	
             	<td>@sesionJigsaw.getTema()</td>	
 
-            	<td>@sesionJigsaw.getInicioReunionExpertos().format("yyyy-MM-dd  hh:mm:ss a")</td>
+            	<td>@sesionJigsaw.getInicioReunionExpertos().format(FormatoFechaHora.dateTimeFormat12)</td>
             	<td>@sesionJigsaw.getDuracionReunionExpertos()</td>
-            	<td>@sesionJigsaw.getInicioReunionJigsaw().format("yyyy-MM-dd hh:mm:ss a")</td>
+            	<td>@sesionJigsaw.getInicioReunionJigsaw().format(FormatoFechaHora.dateTimeFormat12)</td>
             	<td>@sesionJigsaw.getDuracionReunionJigsaw()</td>
             	<td>@sesionJigsaw.getTotalGruposExpertos()</td>
+            	<td>
+                	<a href="@routes.SesionesJigsaw.asignarProblemas(sesionJigsaw.getId())">
+                		<span>Asignar problemas</span>
+                	</a>
+                </td>
                 <td>
                 	<a href="@routes.SesionesJigsaw.editarSesionJigsaw(sesionJigsaw.getId())">
                 		<span class="glyphicon glyphicon-pencil">

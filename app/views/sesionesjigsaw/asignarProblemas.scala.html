@@ -1,0 +1,44 @@
+@* asignarProblemas Template File *@
+@(id:Integer, sesionJigsaw: models.entities.SesionJigsaw)
+@main(menuDocente()){
+	
+	@inputs.panel("Asignar Problemas a Grupos Expertos", true){
+		<p class="bg-info">Seleccione el Grupo Experto y asigne el problema que dicho grupo deberá desarrollar</p>
+		@for( i<-1 to sesionJigsaw.getTotalGruposExpertos()){
+				<table class="table">
+					<tr>
+						<td>
+							<div class="col-md-12 form-group ">								
+								<label class="col-sm-4 control-label" for="selectGrupos">GrupoExperto @i</label>
+								<div class="col-sm-6">								
+									<select class="form-control" name="grupos[]" id="selectGrupos">
+									<option value="-1">Seleccione GrupoExperto</option>
+									@sesionJigsaw.getDocente().getGruposExpertos().map{ grupo => 
+										<option value="@grupo.getGrupoExpertoId()">@grupo.getNombre()</option>
+									}
+									</select>
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="col-md-12 form-group">								
+								<label class="col-sm-4 control-label" for="selectProblemas">Problema @i</label>
+								<div class="col-sm-6">								
+									<select class="form-control" name="problemas[]" id="selectProblemas">
+									<option value="-1">Seleccione Problema</option>
+									@sesionJigsaw.getDocente().getProblemas().map{ problema => 
+										<option value="@problema.getProblemaId()">@problema.getTitulo()</option>
+									}
+									</select>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr></tr>
+					
+				</table>
+			
+		}
+	}
+	
+}
