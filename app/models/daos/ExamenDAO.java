@@ -1,10 +1,12 @@
 package models.daos;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import models.entities.Docente;
 import models.entities.Examen;
+import models.entities.ProblemaExamen;
 import play.db.ebean.Model.Finder;
 
 import com.avaje.ebean.Ebean;
@@ -33,8 +35,29 @@ public class ExamenDAO {
 	}
 
 	public void modificar(Examen e) {
-
+		Examen examenExistente = obtener(e.getId());
+		 //Modificados
+        for(ProblemaExamen pregunta : e.getProblemas()){
+        	ProblemaExamen relacionExistente = buscarEn(examenExistente.getProblemas(), pregunta.getProblema().getProblemaId());
+            if(relacionExistente != null){
+                pregunta.setGenId(relacionExistente.getGenId());
+                Ebean.update(pregunta);
+            }
+        }
+        //Eliminados
+        for(ProblemaExamen existente : examenExistente.getProblemas()){
+        	ProblemaExamen relacionActual = buscarEn(e.getProblemas(), existente.getProblema().getProblemaId());
+            if(relacionActual == null){
+                Ebean.delete(existente);
+            }
+        }
 	}
+	private ProblemaExamen buscarEn(List<ProblemaExamen> lista, Long idPregunta){
+        for(ProblemaExamen pe : lista){
+            if(pe.getProblema().getProblemaId() == idPregunta) return pe;
+        }
+        return null;
+    }
 
 	public void eliminar(Long id) {
 		Ebean.delete(obtener(id));
