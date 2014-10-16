@@ -1,0 +1,52 @@
+@* nuevoExamen Template File *@
+@(examen: models.entities.Examen)
+@esNuevoExamen = @{examen == null}
+@main(menuDocente()){
+	@inputs.panel("Nuevo examen", true){
+		<div id="limite-panel-general">
+			<div id="busqueda-preguntas" data-spy="affix" data-offset-top="210">
+		      @inputs.panel() {
+		        <div class="caption">
+		          <div class="input-group">
+		            <input type="text" class="form-control" id="input-buscar" placeholder="Buscar">
+		            <span class="input-group-btn">
+		                <button class="btn btn-default" type="button" id="boton-buscar"> 
+		                    <span class="glyphicon glyphicon-search"></span>
+		                 </button>
+		            </span>
+		          </div>
+		          </br>
+		          <div class="list-group busqueda-resultados">
+		          </div>
+		        </div>
+		      }
+		    </div>
+		    
+		    <div id="examen-contenedor">
+		      @inputs.panel() {
+			      	@helper.form(if(esNuevoExamen) routes.Examenes.crearExamen 
+			      		else routes.Examenes.guardarExamen(examen.getId) ) {
+				        <div class="form-group">
+				            <input type="text" class="form-control titulo input-lg" name="titulo" 
+				                value="@if(esNuevoExamen){Examen}else{@examen.getTitulo}"/>
+				        </div>
+				        <p class="conteo-nota"></p>
+				        <div class="examen-preguntas form-group">
+				        	<!-- Preguntas -->
+				        	@if(!esNuevoExamen){
+				        		@examen.getProblemas().map { problemaExamen =>
+				        			@examenes.contenedorPreguntaEdicion(problemaExamen)
+				        		}
+				        	}
+				        </div>
+				        <div class="examen-opciones form-group">
+				            <button type="submit" class="btn btn-primary submit">¡Listo!</button>
+		                    <a href="@routes.Examenes.index" class="btn btn-default">Cancelar</a>
+				        </div>
+			        }
+		      }
+		    </div>
+		</div>
+	}
+	<script src="@routes.Assets.at("js/mainElaborarExamen.js")" type="text/javascript"></script>
+}

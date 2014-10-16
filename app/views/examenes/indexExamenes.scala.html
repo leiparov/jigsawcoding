@@ -1,0 +1,94 @@
+@* listaEvaluaciones Template File *@
+@(currentPage: com.avaje.ebean.Page[models.entities.Examen], currentSortBy: String, currentOrder: String, currentFilter: String)
+@****************************************
+* Helper generating navigation links    *
+****************************************@
+@link(newPage:Int, newSortBy:String) = @{
+    
+    var sortBy = currentSortBy
+    var order = currentOrder
+    
+    if(newSortBy != null) {
+        sortBy = newSortBy
+        if(currentSortBy == newSortBy) {
+            if(currentOrder == "asc") {
+                order = "desc"
+            } else {
+                order = "asc"
+            }
+        } else {
+            order = "asc"
+        }
+    }
+    
+    // Generate the link
+    routes.Examenes.list(newPage, sortBy, order, currentFilter)
+}
+@**********************************
+* Helper generating table headers *
+***********************************@
+@header(key:String, title:String) = {
+    <th class="@key.replace(".","_") header @if(currentSortBy == key) @{if(currentOrder == "asc") "headerSortDown" else "headerSortUp"}">
+        <a href="@link(0, key)">@title</a>
+    </th>
+}
+
+
+@formatDate(date: java.util.Date, f: String) = @{
+	if(date != null) date.format(f) else "--"
+}
+@main(menuDocente()){
+	<h1 id="homeTitle">@Messages("examenes.list.title", currentPage.getTotalRowCount)</h1>
+	@inputs.flashSuccessError()
+	<div id="actions" class="row">
+        <div class="pull-left">
+	        <form action="@link(0, "examenId")" method="GET" class="form-inline" role="form">            
+	            <div class="form-group">
+	            	<input class="form-control" type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Buscar...">
+				</div>
+				<button type="submit" class="btn btn-primary" id="searchsubmit">Buscar</button>
+	        </form>
+        </div>
+        
+        <div class="pull-right">
+        	<a class="pull-rigth btn btn btn-success" id="add" href="@routes.Examenes.interfazNuevo()">Nuevo Examen</a>
+        </div> 
+    </div>
+    <br>
+	
+	<div class="row">
+		@if(currentPage.getTotalRowCount == 0) {        
+	        <div class="well">
+	            <em>Nada para mostrar</em>
+	        </div>        
+    	}else{
+    		<div class="col-md-12"><br></div>
+    		<table class="table table-bordered">
+    			<thead>
+    				<tr>
+                        <th>Examen</th>
+                        <th>Hora de examen</th>
+                        <th>Fecha de examen</th>
+                        <th>Fecha de elaboración</th>
+                        <th>Acciones</th>
+                    </tr>
+    			</thead>
+    			<tbody>
+    			@currentPage.getList.map { examen =>
+    				<tr>
+    					<td>@examen.getTitulo()</td>
+    					<td>@formatDate(examen.getTiempoApertura, FormatoFechaHora.timeFormat12)</td>
+	                    <td>@formatDate(examen.getTiempoApertura, FormatoFechaHora.dateFormat)</td>
+	                    <td>@formatDate(examen.getTiempoCreacion, FormatoFechaHora.dateFormat)</td>
+    					<td>
+	                    	<a href="@routes.Examenes.interfazDefinirHorario(examen.getId)">Definir horario</a> /  
+	                        <a href="@routes.Examenes.interfazEditar(examen.getId)">Editar</a>
+	                    </td>
+    				</tr>
+    			}
+    			</tbody>
+    		</table>
+    	}
+	</div>
+	
+}

@@ -1,17 +1,23 @@
 package controllers;
 
 import static play.data.Form.form;
+
+import java.util.List;
+
 import models.entities.Docente;
 import models.entities.Problema;
 import models.services.Login;
 import models.services.ProblemaService;
 import models.services.UsuarioService;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.problemas.editarProblema;
 import views.html.problemas.listaProblemas;
 import views.html.problemas.nuevoProblema;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 @Login.Requiere
 public class Problemas extends Controller {
@@ -105,4 +111,18 @@ public class Problemas extends Controller {
 		flash("success", "Problema borrado con éxito");
 		return GO_HOME;
 	}
+	
+	public static Result buscarProblemas(String q){
+		List<Problema> problemas = problemaService.buscarPorTexto(q);
+		JsonNode respuesta = convertirListaPreguntasAJson(problemas);
+		return ok(respuesta);
+	}
+	private static JsonNode convertirListaPreguntasAJson(List<Problema> lista) {
+        String[] array = new String[lista.size()];
+        int i = 0;
+        for (Problema pregunta : lista) {
+            array[i++] = views.html.examenes.resultadoBusquedaPregunta.render(pregunta).body().trim();
+        }
+        return Json.toJson(array);
+    }
 }

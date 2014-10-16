@@ -1,11 +1,14 @@
 package models.daos;
 
+import java.util.List;
+
 import models.entities.Docente;
 import models.entities.Problema;
 import play.db.ebean.Model.Finder;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Page;
+import com.avaje.ebean.Query;
 
 public class ProblemaDAO  {
 
@@ -46,6 +49,13 @@ public class ProblemaDAO  {
 
 	public void eliminarProblema(Long id) {
 		Ebean.delete(obtenerProblema(id));		
+	}
+
+	public List<Problema> buscarProblema(String q, int maxPreguntasBusqueda) {
+		q = q.toUpperCase();
+        Query<Problema> consulta = Ebean.find(Problema.class).where()
+                .like("upper(titulo)", '%' + q + '%').query();
+        return consulta.findList();
 	}
 
 }

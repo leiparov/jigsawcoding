@@ -1,0 +1,30 @@
+@(problemaExamen: models.entities.ProblemaExamen)
+<div class="pregunta-contenedor-edicion">
+<input type="hidden" name="idPregunta[]" value="@problemaExamen.getProblema.getProblemaId()" />
+<button type="button" class="close" aria-hidden="true">&times;</button>
+@problemas.items.problemaEdicion(problemaExamen.getProblema)
+<p class="conteo-nota"></p>
+<div class="pregunta-opciones row">
+	<div class="pregunta-opciones-puntaje">
+	<div class="col-sm-4">
+		<div class="input-group">
+			<span class="input-group-addon">Correcta</span>
+			<input type="number" class="form-control" min="0" name="puntajeCorrecto[]" 
+                value="@problemaExamen.getPuntajeFavor" />
+			<span class="input-group-addon">pts</span>
+		</div>
+	</div>
+	<div class="col-sm-4">
+		<div class="input-group">
+			<span class="input-group-addon">Incorrecta</span>
+			<input type="number" class="form-control" max="0" name="puntajeIncorrecto[]" 
+                value="@problemaExamen.getPuntajeContra" />
+			<span class="input-group-addon">pts</span>
+		</div>
+	</div>
+	</div>
+	<div class="col-sm-4">
+		<button type="button" class="pregunta-agregar btn btn-primary btn-block" aria-hidden="true">Agregar pregunta</button>
+	</div>
+</div>
+</div>

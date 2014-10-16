@@ -94,7 +94,9 @@ public class Application extends Controller {
         response().setContentType("text/javascript");
         return ok(Routes.javascriptRouter("jsRoutes", 
                     controllers.routes.javascript.Alumnos.buscarAlumnos(),
-                    controllers.routes.javascript.Alumnos.disponibles()
+                    controllers.routes.javascript.Alumnos.disponibles(),
+                    controllers.routes.javascript.Problemas.buscarProblemas(),
+                    controllers.routes.javascript.Examenes.renderPreguntaEdicion()
                 ));
     }
 

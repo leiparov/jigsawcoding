@@ -1,0 +1,6 @@
+@* resultadoBusquedaPregunta Template File *@
+@(problema: models.entities.Problema)
+<a href="#" data-id-pregunta="@problema.getProblemaId()" class="resultado-busqueda list-group-item">
+    <h4 class="list-group-item-heading">@problema.getTitulo()</h4>
+    <p class="list-group-item-text">@problema.getEnunciado()</p>
+</a>

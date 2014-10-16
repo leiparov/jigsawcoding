@@ -1,5 +1,7 @@
 package models.services;
 
+import java.util.List;
+
 import models.daos.ProblemaDAO;
 import models.daos.UsuarioDAO;
 import models.entities.Docente;
@@ -11,6 +13,7 @@ public class ProblemaService {
 
 	private static ProblemaDAO problemaDAO = new ProblemaDAO();
 	private static UsuarioDAO usuarioDAO = new UsuarioDAO();
+	 private static final int MAX_PREGUNTAS_BUSQUEDA = 30;
 
 	public void guardarProblema(Docente docente, Problema problema) {
 		/* Agrega nueva pregunta o actualiza la pregunta en la lista del docente */
@@ -52,6 +55,10 @@ public class ProblemaService {
 
 	public void eliminarProblema(Long id) {
 		problemaDAO.eliminarProblema(id);
+	}
+
+	public List<Problema> buscarPorTexto(String q) {
+		return problemaDAO.buscarProblema(q, MAX_PREGUNTAS_BUSQUEDA);
 	}
 
 }

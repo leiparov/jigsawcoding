@@ -1,0 +1,10 @@
+@* problemaEdicion Template File *@
+@(problema: models.entities.Problema)
+<div class="pregunta">
+	<table class="table table-bordered">
+		<tbody>
+			<tr><td>TÍTULO</td><td>@problema.getTitulo()</td></tr>
+			<tr><td>ENUNCIADO</td><td>@problema.getEnunciado()</td></tr>
+		</tbody>
+	</table>
+</div>

@@ -56,7 +56,7 @@
     
     function obtenerResultados(){
         if(inputBuscar.val().length == 0) return avisar("Escriba para buscar");
-        var call = jsRoutes.controllers.Preguntas.buscarPreguntas(inputBuscar.val());
+        var call = jsRoutes.controllers.Problemas.buscarProblemas(inputBuscar.val());
         $.ajax({
             url: call.url,
             type: call.type,

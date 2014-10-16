@@ -30,7 +30,8 @@ POST   /problemas/registrar                   controllers.Problemas.registrarPro
 GET    /problemas/:id                         controllers.Problemas.editarProblema(id:Long)
 POST   /problemas/:id                         controllers.Problemas.actualizarProblema(id:Long)
 POST   /problemas/:id/delete                  controllers.Problemas.eliminarProblema(id:Long)
-
+GET    /problemas/ajax/buscar                 controllers.Problemas.buscarProblemas(q: String)
+POST   /problemas/render/edicion/:id          controllers.Examenes.renderPreguntaEdicion(id: Long)
 
 GET    /alumnos/index                         controllers.Alumnos.index()
 GET    /alumnos                               controllers.Alumnos.list(p:Integer ?= 0, s ?= "dni", o ?= "asc", f ?= "")
@@ -61,6 +62,21 @@ POST   /sesionesjigsaw/:id                    controllers.SesionesJigsaw.actuali
 POST   /sesionesjigsaw/:id/delete             controllers.SesionesJigsaw.eliminarSesionJigsaw(id:Integer)
 GET    /sesionesjigsaw/:id/asignarProblemas   controllers.SesionesJigsaw.asignarProblemas(id: Integer)
 POST   /sesionesjigsaw/:id/guardarProblemas   controllers.SesionesJigsaw.guardarProblemas(id:Integer)
+
+GET    /examenes/index                        controllers.Examenes.index()
+GET    /examenes                              controllers.Examenes.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")
+GET    /examenes/nuevo                        controllers.Examenes.interfazNuevo()
+POST   /examenes/registrar                    controllers.Examenes.crearExamen()
+GET    /examenes/:id/editar                   controllers.Examenes.interfazEditar(id: Long)
+POST   /examenes/:id/editar                   controllers.Examenes.guardarExamen(id: Long)
+GET    /examenes/:id/horario                  controllers.Examenes.interfazDefinirHorario(id: Long)
+
+#GET    /examenes/:id/rendir             controllers.Examenes.interfazRendir(id: Long)
+#GET    /examenes/:id/resultados         controllers.Examenes.interfazResultados(id: Long)
+#POST   /examenes/:id/horario            controllers.Examenes.definirHorario(id: Long)
+#POST   /examenes/registrar              controllers.Examenes.crearExamen()
+
+#POST   /examenes/:id/finalizarexamen    controllers.Examenes.finalizarExamen(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET    /assets/javascripts/routes             controllers.Application.jsRoutes()
