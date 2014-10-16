@@ -60,6 +60,7 @@ GET    /sesionesjigsaw/:id                    controllers.SesionesJigsaw.editarS
 POST   /sesionesjigsaw/:id                    controllers.SesionesJigsaw.actualizarSesionJigsaw(id:Integer)
 POST   /sesionesjigsaw/:id/delete             controllers.SesionesJigsaw.eliminarSesionJigsaw(id:Integer)
 GET    /sesionesjigsaw/:id/asignarProblemas   controllers.SesionesJigsaw.asignarProblemas(id: Integer)
+POST   /sesionesjigsaw/:id/guardarProblemas   controllers.SesionesJigsaw.guardarProblemas(id:Integer)
 
 # Map static resources from the /public folder to the /assets URL path
 GET    /assets/javascripts/routes             controllers.Application.jsRoutes()

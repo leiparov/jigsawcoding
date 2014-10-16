@@ -16,36 +16,40 @@
 	</header>
 	<main>
 	<div class="container">
+		
 		<div class="row">
 			<div class="title-container col-md-6">
 				<h1>JIGSAW CODING</h1>
-			</div>
-			<div class="form-container col-md-6">
+			</div>			
+			<div class="form-container col-md-4">
+				<div class="col-md-12">
 				@if(flash.containsKey("success")){
-				<div class="alert alert-success alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert"
-						aria-hidden="true">&times;</button>
-					<span class="glyphicon glyphicon-ok-sign"></span>@flash.get("success")
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert"
+							aria-hidden="true">&times;</button>
+						<span class="glyphicon glyphicon-ok-sign"></span>@flash.get("success")
+					</div>
+					} @if(flash.contains("error")) {
+					<div class="alert alert-danger">
+						<button type="button" class="close" data-dismiss="alert"
+							aria-hidden="true">&times;</button>
+						<span class="glyphicon glyphicon-remove-sign"></span>@flash.get("error")
+					</div>
+					} @if(flash.contains("errorRecuperar")){
+					<div class="alert alert-danger">
+						<button type="button" class="close" data-dismiss="alert"
+							aria-hidden="true">&times;</button>
+						<span class="glyphicon glyphicon-remove-sign"></span>@flash.get("errorRecuperar")
+					</div>
+					} @if(flash.contains("successRecuperar")){
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert"
+							aria-hidden="true">&times;</button>
+						<span class="glyphicon glyphicon-ok-sign"></span>@flash.get("successRecuperar")
+					</div>
+					}
 				</div>
-				} @if(flash.contains("error")) {
-				<div class="alert alert-danger">
-					<button type="button" class="close" data-dismiss="alert"
-						aria-hidden="true">&times;</button>
-					<span class="glyphicon glyphicon-remove-sign"></span>@flash.get("error")
-				</div>
-				} @if(flash.contains("errorRecuperar")){
-				<div class="alert alert-danger">
-					<button type="button" class="close" data-dismiss="alert"
-						aria-hidden="true">&times;</button>
-					<span class="glyphicon glyphicon-remove-sign"></span>@flash.get("errorRecuperar")
-				</div>
-				} @if(flash.contains("successRecuperar")){
-				<div class="alert alert-success alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert"
-						aria-hidden="true">&times;</button>
-					<span class="glyphicon glyphicon-ok-sign"></span>@flash.get("successRecuperar")
-				</div>
-				} @helper.form(routes.Application.autenticar) {
+				@helper.form(routes.Application.autenticar) {
 				<div class="form-group">
 					<div class="input-group">
 						<div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>

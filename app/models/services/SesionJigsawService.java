@@ -1,8 +1,11 @@
 package models.services;
 
+import java.util.List;
+
 import models.daos.SesionJigsawDAO;
 import models.daos.UsuarioDAO;
 import models.entities.Docente;
+import models.entities.ParGrupoExpertoProblema;
 import models.entities.SesionJigsaw;
 
 import com.avaje.ebean.Page;
@@ -26,6 +29,10 @@ public class SesionJigsawService {
 
 	public void actualizarSesionJigsaw(Docente docente,
 			SesionJigsaw sesionJigsaw) {
+		
+		if(sesionJigsaw.getTotalGruposExpertos() != sesionJigsaw.getPares().size()){
+			borrarPares(sesionJigsaw);
+		}
 
 		sesionJigsawDAO.actualizarSesionJigsaw(sesionJigsaw);
 		int indiceActual = docente.getSesionesJigsaw().indexOf(sesionJigsaw);
@@ -49,6 +56,21 @@ public class SesionJigsawService {
 
 	public void eliminarSesionJigsaw(int id) {
 		sesionJigsawDAO.eliminarSesionJigsaw(id);
+	}
+
+	public void guardarProblemas(SesionJigsaw s,
+			List<ParGrupoExpertoProblema> lista) {
+		
+		borrarPares(s);
+		s.setPares(lista);
+		
+		sesionJigsawDAO.guardarSesionJigsaw(s);
+
+	}
+	
+	private void borrarPares(SesionJigsaw s){
+		List<ParGrupoExpertoProblema> listaActual = s.getPares();
+		sesionJigsawDAO.borrarListaProblemasActual(listaActual);
 	}
 
 }

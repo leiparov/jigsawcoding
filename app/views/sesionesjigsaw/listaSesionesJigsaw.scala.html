@@ -68,6 +68,7 @@
                     @header("inicioReunionJigsaw", "Inicio Reunión Jigsaw")
                     @header("duracionReunionJigsaw", "Duración Reunión Jigsaw")
                     @header("totalGruposExpertos", "Total Grupos Expertos")
+                    @header("id", "Emparejamiento de Problemas")
                 </tr>
             </thead>
             <tbody>
@@ -83,9 +84,13 @@
             	<td>@sesionJigsaw.getDuracionReunionJigsaw()</td>
             	<td>@sesionJigsaw.getTotalGruposExpertos()</td>
             	<td>
+            		@if(sesionJigsaw.getPares().size() <= 0){
                 	<a href="@routes.SesionesJigsaw.asignarProblemas(sesionJigsaw.getId())">
                 		<span>Asignar problemas</span>
                 	</a>
+                	}else{
+                		<span>@sesionJigsaw.mostrarPares()</span>
+                	}
                 </td>
                 <td>
                 	<a href="@routes.SesionesJigsaw.editarSesionJigsaw(sesionJigsaw.getId())">

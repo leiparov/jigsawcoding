@@ -3,8 +3,11 @@
 @main(menuDocente()){
 	
 	@inputs.panel("Asignar Problemas a Grupos Expertos", true){
+		@inputs.flashSuccessError()
 		<p class="bg-info">Seleccione el Grupo Experto y asigne el problema que dicho grupo deberá desarrollar</p>
-		@for( i<-1 to sesionJigsaw.getTotalGruposExpertos()){
+		
+		@helper.form(routes.SesionesJigsaw.guardarProblemas(id)){
+			@for( i<-1 to sesionJigsaw.getTotalGruposExpertos()){
 				<table class="table">
 					<tr>
 						<td>
@@ -33,12 +36,15 @@
 								</div>
 							</div>
 						</td>
-					</tr>
-					<tr></tr>
-					
-				</table>
-			
-		}
-	}
-	
+					</tr>					
+				</table>			
+			}
+			<div class="form-group">
+            	<div class="col-sm-offset-5 col-sm-7">
+	                <button type="submit" class="btn btn-primary">Guardar</button>
+	                <a class="btn btn-default" href="@routes.SesionesJigsaw.index">Cancelar</a>
+                </div>
+            </div>
+		}		
+	}	
 }

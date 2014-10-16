@@ -1,6 +1,9 @@
 package models.daos;
 
+import java.util.List;
+
 import models.entities.Docente;
+import models.entities.ParGrupoExpertoProblema;
 import models.entities.SesionJigsaw;
 import play.db.ebean.Model.Finder;
 
@@ -32,6 +35,20 @@ public class SesionJigsawDAO {
 		return find.where().eq("docente_dni", docente.getDNI())
 				.orderBy(sortBy + " " + order).findPagingList(pageSize)
 				.setFetchAhead(false).getPage(page);
+	}
+
+	public void guardarProblemas(SesionJigsaw s,
+			List<ParGrupoExpertoProblema> lista) {
+		Ebean.saveAssociation(s, "pares");
+	}
+
+
+	public void borrarListaProblemasActual(
+			List<ParGrupoExpertoProblema> listaActual) {
+		for(ParGrupoExpertoProblema p : listaActual){
+			Ebean.delete(p);
+		}
+		
 	}
 
 }

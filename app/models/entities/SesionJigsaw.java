@@ -30,6 +30,16 @@ public class SesionJigsaw {
 	
 	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<ParGrupoExpertoProblema> pares;
+	
+	/**/
+	
+	public String mostrarPares(){
+		String cad = "";
+		for (ParGrupoExpertoProblema p : pares){
+			cad += p + " ";
+		}
+		return cad;
+	}
 
 	/* Getters and Setters */
 	public int getId() {

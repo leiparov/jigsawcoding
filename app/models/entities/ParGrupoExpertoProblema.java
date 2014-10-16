@@ -19,6 +19,12 @@ public class ParGrupoExpertoProblema {
 	private SesionJigsaw sesionJigsaw;
 
 	
+	
+	@Override
+	public String toString() {
+		return "(GE"+grupoExperto.getGrupoExpertoId() + ",P"+problema.getProblemaId()+")";
+	}
+
 	/*Getters and Setters*/
 	public Integer getParId() {
 		return parId;
