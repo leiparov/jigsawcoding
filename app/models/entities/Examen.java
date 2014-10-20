@@ -23,7 +23,7 @@ public class Examen {
 	@ManyToOne
 	private Docente docente;
 
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<ProblemaExamen> problemas;
 
 	public Long getId() {

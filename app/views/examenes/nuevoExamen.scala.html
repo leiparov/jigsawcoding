@@ -2,7 +2,7 @@
 @(examen: models.entities.Examen)
 @esNuevoExamen = @{examen == null}
 @main(menuDocente()){
-	@inputs.panel("Nuevo examen", true){
+	@inputs.panel("Examen", true){
 		<div id="limite-panel-general">
 			<div id="busqueda-preguntas" data-spy="affix" data-offset-top="210">
 		      @inputs.panel() {
@@ -42,9 +42,18 @@
 				        <div class="examen-opciones form-group">
 				            <button type="submit" class="btn btn-primary submit">¡Listo!</button>
 		                    <a href="@routes.Examenes.index" class="btn btn-default">Cancelar</a>
+		                    
 				        </div>
 			        }
 		      }
+		      @if(!esNuevoExamen){
+		      	@helper.form(routes.Examenes.eliminarExamen(examen.getId()), 'class -> "form-horizontal") {
+		        <input type="submit" value="Borrar examen" class="btn btn-danger">
+		    	}
+		      }
+		      <div>
+		      	
+		      </div>
 		    </div>
 		</div>
 	}

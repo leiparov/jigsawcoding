@@ -71,6 +71,7 @@ GET    /examenes/:id/editar                   controllers.Examenes.interfazEdita
 POST   /examenes/:id/editar                   controllers.Examenes.guardarExamen(id: Long)
 GET    /examenes/:id/horario                  controllers.Examenes.interfazDefinirHorario(id: Long)
 POST   /examenes/:id/horario                  controllers.Examenes.definirHorario(id: Long)
+POST   /examenes/:id/delete                   controllers.Examenes.eliminarExamen(id: Long)
 
 #GET    /examenes/:id/rendir             controllers.Examenes.interfazRendir(id: Long)
 #GET    /examenes/:id/resultados         controllers.Examenes.interfazResultados(id: Long)

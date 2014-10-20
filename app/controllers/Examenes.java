@@ -97,6 +97,13 @@ public class Examenes extends Controller {
 			return redirect(routes.Examenes.index());
 		}
 	}
+	
+	public static Result eliminarExamen(Long id){
+		examenService.eliminar(id);
+		flash("success", "Examen borrado con éxito");
+		return GO_HOME;
+	}
+	
 	public static Result renderPreguntaEdicion(Long idPregunta) {
 		Problema p = problemaService.obtenerProblema(idPregunta);
 		// Pregunta p = preguntaService.obtener(idPregunta);
