@@ -1,4 +1,4 @@
-@(examen: models.entities.Examen)
+@(examen: models.entities.Examen, sesionesJigsaw: List[models.entities.SesionJigsaw])
 
 @main(menuDocente()) {
 	<div class="container">
@@ -31,6 +31,24 @@
 							<label>Duración</label>
 							@inputs.durationinput(name="duracion", value=examen.getDuracion)
 						</div>
+						
+						<div class="form-group">
+							<label>Sesion Jigsaw</label> 
+							<select class="form-control" name="sesionJigsaw">
+								@defining(if(examen.getSesionJigsaw() == null) -1 else examen.getSesionJigsaw().getId()){ currentId =>
+									<option
+								  		@if(currentId == -1){selected="selected"}  
+										value="-1">Ninguno seleccionado</option>
+									@sesionesJigsaw.map { sesionJigsaw =>
+										<option 
+									  		@if(currentId == sesionJigsaw.getId){selected="selected"}  
+									  		value="@sesionJigsaw.getId">@sesionJigsaw.getNombre</option>								  	
+									}
+								}
+							</select>
+						</div>
+						
+						
 						<div class="form-group">
 						<button type="submit" class="btn btn-primary" >Guardar</button>
 						<a href="@routes.Examenes.index" class="btn btn-default" >Cancelar</a>

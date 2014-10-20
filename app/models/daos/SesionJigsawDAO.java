@@ -9,12 +9,20 @@ import play.db.ebean.Model.Finder;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Page;
+import com.avaje.ebean.SqlQuery;
+import com.avaje.ebean.SqlRow;
 
 public class SesionJigsawDAO {
 	public static Finder<Integer, SesionJigsaw> find = new Finder<Integer, SesionJigsaw>(
 			Integer.class, SesionJigsaw.class);
 
+	private Integer generarId(){
+		SqlQuery sql = Ebean.createSqlQuery("select case when max(id) is null then 0 else max(id) end as maxid from sesion_jigsaw");
+		SqlRow resultado = sql.findUnique();
+		return resultado.getInteger("maxid")+1;
+	}
 	public void guardarSesionJigsaw(SesionJigsaw sesionJigsaw) {
+		sesionJigsaw.setId(generarId());
 		Ebean.save(sesionJigsaw);
 	}
 

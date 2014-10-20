@@ -75,7 +75,7 @@ public class Problemas extends Controller {
 		} catch (Exception e) {
 			e.printStackTrace();
 			flash("error", "No se pudo guardar el Problema");
-			return redirect(routes.Application.index());
+			return redirect(routes.Problemas.index());
 		}
 	}
 
@@ -102,7 +102,7 @@ public class Problemas extends Controller {
 		} catch (Exception e) {
 			e.printStackTrace();
 			flash("error", "No se pudo actualizar el Problema");
-			return redirect(routes.Application.index());
+			return redirect(routes.Problemas.index());
 		}
 	}
 

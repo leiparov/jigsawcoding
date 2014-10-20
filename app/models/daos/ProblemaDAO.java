@@ -9,16 +9,23 @@ import play.db.ebean.Model.Finder;
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Page;
 import com.avaje.ebean.Query;
+import com.avaje.ebean.SqlQuery;
+import com.avaje.ebean.SqlRow;
 
-public class ProblemaDAO  {
+public class ProblemaDAO {
 
 	private static Finder<Integer, Problema> find = new Finder<Integer, Problema>(
 			Integer.class, Problema.class);
 
-
+	private Long generarId() {
+		SqlQuery sql = Ebean
+				.createSqlQuery("select case when max(problema_id) is null then 0 else max(problema_id) end as maxid from problema");
+		SqlRow resultado = sql.findUnique();
+		return resultado.getLong("maxid") + 1;
+	}
 	public void guardarProblema(Problema problema) {
+		problema.setProblemaId(generarId());
 		Ebean.save(problema);
-
 	}
 
 	public void actualizarProblema(Problema problema) {
@@ -26,36 +33,34 @@ public class ProblemaDAO  {
 
 	}
 
-
 	public Problema obtenerProblema(Long idProblema) {
 		return EbeanUtils.findOrException(Problema.class, idProblema);
 	}
 
-
 	public Page<Problema> page(int page, int pageSize, String sortBy,
 			String order, String filter) {
 		return find.where().ilike("titulo", "%" + filter + "%")
-				.orderBy(sortBy + " " + order)
-				.findPagingList(pageSize).setFetchAhead(false).getPage(page);
+				.orderBy(sortBy + " " + order).findPagingList(pageSize)
+				.setFetchAhead(false).getPage(page);
 	}
-
 
 	public Page<Problema> page(Docente docente, int page, int pageSize,
 			String sortBy, String order, String filter) {
-		return find.where().eq("docente_dni", docente.getDNI()).ilike("titulo", "%" + filter + "%")
-				.orderBy(sortBy + " " + order)
-				.findPagingList(pageSize).setFetchAhead(false).getPage(page);
+		return find.where().eq("docente_dni", docente.getDNI())
+				.ilike("titulo", "%" + filter + "%")
+				.orderBy(sortBy + " " + order).findPagingList(pageSize)
+				.setFetchAhead(false).getPage(page);
 	}
 
 	public void eliminarProblema(Long id) {
-		Ebean.delete(obtenerProblema(id));		
+		Ebean.delete(obtenerProblema(id));
 	}
 
 	public List<Problema> buscarProblema(String q, int maxPreguntasBusqueda) {
 		q = q.toUpperCase();
-        Query<Problema> consulta = Ebean.find(Problema.class).where()
-                .like("upper(titulo)", '%' + q + '%').query();
-        return consulta.findList();
+		Query<Problema> consulta = Ebean.find(Problema.class).where()
+				.like("upper(titulo)", '%' + q + '%').query();
+		return consulta.findList();
 	}
 
 }

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 @Entity
@@ -19,6 +20,9 @@ public class Examen {
 	private Date tiempoClausura;
 	private Date tiempoCreacion;
 	private Integer duracion;
+	
+	@OneToOne
+	private SesionJigsaw sesionJigsaw;
 
 	@ManyToOne
 	private Docente docente;
@@ -93,5 +97,14 @@ public class Examen {
     public int getDuracionEnSegundos(){
         return this.duracion * 60;
     }
+
+	public SesionJigsaw getSesionJigsaw() {
+		return sesionJigsaw;
+	}
+
+	public void setSesionJigsaw(SesionJigsaw sesionJigsaw) {
+		this.sesionJigsaw = sesionJigsaw;
+	}
+	
 
 }

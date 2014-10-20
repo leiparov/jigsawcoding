@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class SesionJigsaw {
@@ -30,6 +31,9 @@ public class SesionJigsaw {
 	
 	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<ParGrupoExpertoProblema> pares;
+	
+	@OneToOne
+	private Examen examen;
 	
 	/**/
 	
@@ -112,6 +116,18 @@ public class SesionJigsaw {
 
 	public void setPares(List<ParGrupoExpertoProblema> pares) {
 		this.pares = pares;
+	}
+
+	public Examen getExamen() {
+		return examen;
+	}
+
+	public void setExamen(Examen examen) {
+		this.examen = examen;
+	}
+	
+	public String getNombre(){
+		return "SesionJigsaw_"+this.id;
 	}
 
 }

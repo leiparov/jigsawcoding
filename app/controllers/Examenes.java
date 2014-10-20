@@ -7,10 +7,12 @@ import models.entities.Docente;
 import models.entities.Examen;
 import models.entities.Problema;
 import models.entities.ProblemaExamen;
+import models.entities.SesionJigsaw;
 import models.services.DocenteService;
 import models.services.ExamenService;
 import models.services.Login;
 import models.services.ProblemaService;
+import models.services.SesionJigsawService;
 import models.services.UsuarioService;
 
 import org.joda.time.DateTime;
@@ -29,6 +31,7 @@ public class Examenes extends Controller {
 	private static DocenteService docenteService = new DocenteService();
 	private static ExamenService examenService = new ExamenService();
 	private static ProblemaService problemaService = new ProblemaService();
+	private static SesionJigsawService sesionJigsawService = new SesionJigsawService();
 
 	private static Docente getDocente() {
 		return usuarioService.obtener(Login.obtener(ctx()).getDNI(),
@@ -55,7 +58,8 @@ public class Examenes extends Controller {
 	public static Result interfazDefinirHorario(Long id) {
 		Docente d = getDocente();
 		Examen e = examenService.obtener(id);
-		return ok(views.html.examenes.definirHorarioExamen.render(e));
+		List<SesionJigsaw> sesionesJigsaw = d.getSesionesJigsaw();
+		return ok(views.html.examenes.definirHorarioExamen.render(e, sesionesJigsaw));
 
 	}
 
@@ -187,6 +191,7 @@ public class Examenes extends Controller {
 		public String tiempoClausura;
 		public String duracionHoras;
 		public String duracionMinutos;
+		public Integer sesionJigsaw;
 
 		public Examen actualizar(Examen e) {
 			if (existenDatosFecha()) {
@@ -218,6 +223,13 @@ public class Examenes extends Controller {
 				e.setDuracion(exp.toMinutos());
 			} else {
 				e.setDuracion(null);
+			}
+			
+			if(sesionJigsaw != -1){
+				SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(sesionJigsaw);
+				e.setSesionJigsaw(s);
+			}else{
+				e.setSesionJigsaw(null);
 			}
 
 			return e;

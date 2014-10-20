@@ -29,8 +29,9 @@ public class SesionJigsawService {
 
 	public void actualizarSesionJigsaw(Docente docente,
 			SesionJigsaw sesionJigsaw) {
-		
-		if(sesionJigsaw.getTotalGruposExpertos() != sesionJigsaw.getPares().size()){
+
+		if (sesionJigsaw.getTotalGruposExpertos() != sesionJigsaw.getPares()
+				.size()) {
 			borrarPares(sesionJigsaw);
 		}
 
@@ -60,15 +61,15 @@ public class SesionJigsawService {
 
 	public void guardarProblemas(SesionJigsaw s,
 			List<ParGrupoExpertoProblema> lista) {
-		
+
 		borrarPares(s);
 		s.setPares(lista);
-		
+
 		sesionJigsawDAO.guardarSesionJigsaw(s);
 
 	}
-	
-	private void borrarPares(SesionJigsaw s){
+
+	private void borrarPares(SesionJigsaw s) {
 		List<ParGrupoExpertoProblema> listaActual = s.getPares();
 		sesionJigsawDAO.borrarListaProblemasActual(listaActual);
 	}
