@@ -70,6 +70,7 @@
                         <th>Hora de examen</th>
                         <th>Fecha de examen</th>
                         <th>Fecha de elaboración</th>
+                        <th>Duración</th>
                         <th>Acciones</th>
                     </tr>
     			</thead>
@@ -80,6 +81,7 @@
     					<td>@formatDate(examen.getTiempoApertura, FormatoFechaHora.timeFormat12)</td>
 	                    <td>@formatDate(examen.getTiempoApertura, FormatoFechaHora.dateFormat)</td>
 	                    <td>@formatDate(examen.getTiempoCreacion, FormatoFechaHora.dateFormat)</td>
+	                    <td>@examen.getDuracion() min</td>
     					<td>
 	                    	<a href="@routes.Examenes.interfazDefinirHorario(examen.getId)">Definir horario</a> /  
 	                        <a href="@routes.Examenes.interfazEditar(examen.getId)">Editar</a>
