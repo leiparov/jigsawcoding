@@ -21,7 +21,7 @@ public class Examen {
 	private Date tiempoCreacion;
 	private Integer duracion;
 	
-	@OneToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private SesionJigsaw sesionJigsaw;
 
 	@ManyToOne

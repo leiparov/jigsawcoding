@@ -25,7 +25,7 @@ public class ExamenDAO {
 		camposHorario.add("tiempoApertura");
 		camposHorario.add("tiempoClausura");
 		camposHorario.add("duracion");
-		camposHorario.add("grupo");
+		camposHorario.add("sesionJigsaw");
 
 		Ebean.update(examen, camposHorario);
 	}

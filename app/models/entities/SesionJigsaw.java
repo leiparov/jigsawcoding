@@ -30,16 +30,14 @@ public class SesionJigsaw {
 	private Docente docente;
 	
 	@OneToMany(cascade = CascadeType.PERSIST)
-	private List<ParGrupoExpertoProblema> pares;
+	private List<GrupoExpertoProblema> pares;
 	
-	@OneToOne
-	private Examen examen;
 	
 	/**/
 	
 	public String mostrarPares(){
 		String cad = "";
-		for (ParGrupoExpertoProblema p : pares){
+		for (GrupoExpertoProblema p : pares){
 			cad += p + " ";
 		}
 		return cad;
@@ -110,21 +108,15 @@ public class SesionJigsaw {
 		this.docente = docente;
 	}
 
-	public List<ParGrupoExpertoProblema> getPares() {
+	public List<GrupoExpertoProblema> getPares() {
 		return pares;
 	}
 
-	public void setPares(List<ParGrupoExpertoProblema> pares) {
+	public void setPares(List<GrupoExpertoProblema> pares) {
 		this.pares = pares;
 	}
 
-	public Examen getExamen() {
-		return examen;
-	}
-
-	public void setExamen(Examen examen) {
-		this.examen = examen;
-	}
+	
 	
 	public String getNombre(){
 		return "SesionJigsaw_"+this.id;

@@ -3,7 +3,7 @@ package models.daos;
 import java.util.List;
 
 import models.entities.Docente;
-import models.entities.ParGrupoExpertoProblema;
+import models.entities.GrupoExpertoProblema;
 import models.entities.SesionJigsaw;
 import play.db.ebean.Model.Finder;
 
@@ -48,16 +48,16 @@ public class SesionJigsawDAO {
 	public void guardarProblemas(SesionJigsaw s) {		
 		SesionJigsaw sesionExistente = obtenerSesionJigsaw(s.getId());
 		//Modificados
-		for (ParGrupoExpertoProblema par: s.getPares()){
-			ParGrupoExpertoProblema relacionExistente = buscarEn(sesionExistente.getPares(), par.getGrupoExperto().getGrupoExpertoId());
+		for (GrupoExpertoProblema par: s.getPares()){
+			GrupoExpertoProblema relacionExistente = buscarEn(sesionExistente.getPares(), par.getGrupoExperto().getGrupoExpertoId());
 			if (relacionExistente != null){
 				par.setParId(relacionExistente.getParId());
 				Ebean.update(par);
 			}
 		}
 		//Eliminados
-		for(ParGrupoExpertoProblema existente: sesionExistente.getPares()){
-			ParGrupoExpertoProblema relacionActual = buscarEn(s.getPares(), existente.getGrupoExperto().getGrupoExpertoId());
+		for(GrupoExpertoProblema existente: sesionExistente.getPares()){
+			GrupoExpertoProblema relacionActual = buscarEn(s.getPares(), existente.getGrupoExperto().getGrupoExpertoId());
 			if(relacionActual == null){
 				Ebean.delete(existente);
 			}
@@ -65,8 +65,8 @@ public class SesionJigsawDAO {
 		Ebean.update(s);
 		
 	}
-	private ParGrupoExpertoProblema buscarEn(List<ParGrupoExpertoProblema> lista, Long idGrupo){
-		for (ParGrupoExpertoProblema p: lista){
+	private GrupoExpertoProblema buscarEn(List<GrupoExpertoProblema> lista, Long idGrupo){
+		for (GrupoExpertoProblema p: lista){
 			if (p.getGrupoExperto().getGrupoExpertoId() == idGrupo) return p;
 		}
 		return null;
@@ -74,8 +74,8 @@ public class SesionJigsawDAO {
 
 
 	public void borrarListaProblemasActual(
-			List<ParGrupoExpertoProblema> listaActual) {
-		for(ParGrupoExpertoProblema p : listaActual){
+			List<GrupoExpertoProblema> listaActual) {
+		for(GrupoExpertoProblema p : listaActual){
 			Ebean.delete(p);
 		}
 		

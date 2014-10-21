@@ -5,7 +5,7 @@ import java.util.List;
 import models.daos.SesionJigsawDAO;
 import models.daos.UsuarioDAO;
 import models.entities.Docente;
-import models.entities.ParGrupoExpertoProblema;
+import models.entities.GrupoExpertoProblema;
 import models.entities.SesionJigsaw;
 
 import com.avaje.ebean.Page;
@@ -64,7 +64,7 @@ public class SesionJigsawService {
 	}
 
 	private void borrarPares(SesionJigsaw s) {
-		List<ParGrupoExpertoProblema> listaActual = s.getPares();
+		List<GrupoExpertoProblema> listaActual = s.getPares();
 		sesionJigsawDAO.borrarListaProblemasActual(listaActual);
 	}
 

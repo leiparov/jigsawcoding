@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class ParGrupoExpertoProblema {
+public class GrupoExpertoProblema {
 
 	@Id
 	private Integer parId;

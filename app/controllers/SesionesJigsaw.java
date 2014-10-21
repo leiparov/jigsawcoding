@@ -6,7 +6,7 @@ import java.util.List;
 
 import models.entities.Docente;
 import models.entities.GrupoExperto;
-import models.entities.ParGrupoExpertoProblema;
+import models.entities.GrupoExpertoProblema;
 import models.entities.Problema;
 import models.entities.SesionJigsaw;
 import models.services.GrupoExpertoService;
@@ -225,10 +225,10 @@ public class SesionesJigsaw extends Controller {
 			return s;			
 		}
 		
-		private List<ParGrupoExpertoProblema> getParesGruposProblemas(){
-			List<ParGrupoExpertoProblema> pares = new LinkedList<ParGrupoExpertoProblema>();
+		private List<GrupoExpertoProblema> getParesGruposProblemas(){
+			List<GrupoExpertoProblema> pares = new LinkedList<GrupoExpertoProblema>();
 			for (int i=0; i<grupos.size(); i++){
-				ParGrupoExpertoProblema par = new ParGrupoExpertoProblema();
+				GrupoExpertoProblema par = new GrupoExpertoProblema();
 				par.setGrupoExperto(getGrupoExperto(i));
 				par.setProblema(getProblema(i));
 				pares.add(par);
