@@ -1,31 +1,31 @@
 package models.entities;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class ProblemaExamen {
 
-    @Id
-    private long genId;
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private Problema problema;
-    // Hacer similar con Examen si se requiere relacion bidireccional
-    private int puntajeFavor;
-    private int puntajeContra;
-	public long getGenId() {
-		return genId;
-	}
-	public void setGenId(long genId) {
-		this.genId = genId;
-	}
+	@Id
+	private int id;
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	private Problema problema;
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	private Examen examen;
 	
+	private int puntajeFavor;
+	private int puntajeContra;
+	
+	
+
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public Problema getProblema() {
 		return problema;
 	}
@@ -44,13 +44,11 @@ public class ProblemaExamen {
 	public void setPuntajeContra(int puntajeContra) {
 		this.puntajeContra = puntajeContra;
 	}
-
-    
-
-   
-
-    
-
-    
+	public Examen getExamen() {
+		return examen;
+	}
+	public void setExamen(Examen examen) {
+		this.examen = examen;
+	}
 
 }

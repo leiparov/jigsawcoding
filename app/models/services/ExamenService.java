@@ -3,7 +3,6 @@ package models.services;
 import java.util.Date;
 
 import models.daos.ExamenDAO;
-import models.daos.ProblemaDAO;
 import models.entities.Docente;
 import models.entities.Examen;
 
@@ -12,9 +11,8 @@ import com.avaje.ebean.Page;
 public class ExamenService {
 
 	private static ExamenDAO examenDAO = new ExamenDAO();
-	private static ProblemaDAO problemaDAO = new ProblemaDAO();
 
-	public Examen obtener(Long id) {
+	public Examen obtener(Integer id) {
 		return examenDAO.obtener(id);
 	}
 	public void actualizarHorario(Examen examen) {
@@ -27,7 +25,7 @@ public class ExamenService {
 	public void modificar(Examen e) {
 		examenDAO.modificar(e);
 	}
-	public void eliminar(Long id) {
+	public void eliminar(Integer id) {
 		examenDAO.eliminar(id);
 	}
 

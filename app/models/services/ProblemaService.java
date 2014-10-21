@@ -39,7 +39,7 @@ public class ProblemaService {
 		usuarioDAO.guardar(docente);
 	}
 
-	public Problema obtenerProblema(Long idProblema) {
+	public Problema obtenerProblema(Integer idProblema) {
 		return problemaDAO.obtenerProblema(idProblema);
 	}
 
@@ -53,7 +53,7 @@ public class ProblemaService {
 		return problemaDAO.page(docente, page, pageSize, sortBy, order, filter);
 	}
 
-	public void eliminarProblema(Long id) {
+	public void eliminarProblema(Integer id) {
 		problemaDAO.eliminarProblema(id);
 	}
 

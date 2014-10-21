@@ -9,30 +9,28 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Problema {
-	
+
 	@Id
-	private Long problemaId;
+	private Integer id;
 	private String titulo;
 	private String enunciado;
 	private Date fechaCreacion;
-	
+
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Docente docente;
-	
-	/*Getters and Setters*/
-	
-	
+
+	/* Getters and Setters */
 
 	public String getTitulo() {
 		return titulo;
 	}
 
-	public Long getProblemaId() {
-		return problemaId;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setProblemaId(Long problemaId) {
-		this.problemaId = problemaId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public void setTitulo(String titulo) {
@@ -65,14 +63,9 @@ public class Problema {
 
 	@Override
 	public String toString() {
-		return "Problema [problemaId=" + problemaId + ", titulo=" + titulo
+		return "Problema [problemaId=" + id + ", titulo=" + titulo
 				+ ", enunciado=" + enunciado + ", fechaCreacion="
 				+ fechaCreacion + ", docente=" + docente.getDNI() + "]";
 	}
-	
-	
-	
-	
-	
-	
+
 }

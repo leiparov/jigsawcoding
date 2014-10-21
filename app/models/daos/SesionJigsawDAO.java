@@ -49,15 +49,15 @@ public class SesionJigsawDAO {
 		SesionJigsaw sesionExistente = obtenerSesionJigsaw(s.getId());
 		//Modificados
 		for (GrupoExpertoProblema par: s.getPares()){
-			GrupoExpertoProblema relacionExistente = buscarEn(sesionExistente.getPares(), par.getGrupoExperto().getGrupoExpertoId());
+			GrupoExpertoProblema relacionExistente = buscarEn(sesionExistente.getPares(), par.getGrupoExperto().getId());
 			if (relacionExistente != null){
-				par.setParId(relacionExistente.getParId());
+				par.setId(relacionExistente.getId());
 				Ebean.update(par);
 			}
 		}
 		//Eliminados
 		for(GrupoExpertoProblema existente: sesionExistente.getPares()){
-			GrupoExpertoProblema relacionActual = buscarEn(s.getPares(), existente.getGrupoExperto().getGrupoExpertoId());
+			GrupoExpertoProblema relacionActual = buscarEn(s.getPares(), existente.getGrupoExperto().getId());
 			if(relacionActual == null){
 				Ebean.delete(existente);
 			}
@@ -65,9 +65,9 @@ public class SesionJigsawDAO {
 		Ebean.update(s);
 		
 	}
-	private GrupoExpertoProblema buscarEn(List<GrupoExpertoProblema> lista, Long idGrupo){
+	private GrupoExpertoProblema buscarEn(List<GrupoExpertoProblema> lista, Integer idGrupo){
 		for (GrupoExpertoProblema p: lista){
-			if (p.getGrupoExperto().getGrupoExpertoId() == idGrupo) return p;
+			if (p.getGrupoExperto().getId() == idGrupo) return p;
 		}
 		return null;
 	}

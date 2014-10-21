@@ -14,10 +14,10 @@ import com.avaje.ebean.Page;
 
 public class ExamenDAO {
 
-	private static Finder<Long, Examen> find = new Finder<Long, Examen>(
-			Long.class, Examen.class);
-	public Examen obtener(Long id) {
-		return EbeanUtils.findOrException(Examen.class, id);
+	private static Finder<Integer, Examen> find = new Finder<Integer, Examen>(
+			Integer.class, Examen.class);
+	public Examen obtener(Integer integer) {
+		return EbeanUtils.findOrException(Examen.class, integer);
 	}
 	public void actualizarDatosHorario(Examen examen) {
 		Set<String> camposHorario = new HashSet<String>();
@@ -36,30 +36,35 @@ public class ExamenDAO {
 
 	public void modificar(Examen e) {
 		Examen examenExistente = obtener(e.getId());
-		 //Modificados
-        for(ProblemaExamen pregunta : e.getProblemas()){
-        	ProblemaExamen relacionExistente = buscarEn(examenExistente.getProblemas(), pregunta.getProblema().getProblemaId());
-            if(relacionExistente != null){
-                pregunta.setGenId(relacionExistente.getGenId());
-                Ebean.update(pregunta);
-            }
-        }
-        //Eliminados
-        for(ProblemaExamen existente : examenExistente.getProblemas()){
-        	ProblemaExamen relacionActual = buscarEn(e.getProblemas(), existente.getProblema().getProblemaId());
-            if(relacionActual == null){
-                Ebean.delete(existente);
-            }
-        }
+		// Modificados
+		for (ProblemaExamen pregunta : e.getProblemas()) {
+			ProblemaExamen relacionExistente = buscarEn(
+					examenExistente.getProblemas(), pregunta.getProblema()
+							.getId());
+			if (relacionExistente != null) {
+				pregunta.setId(relacionExistente.getId());
+				Ebean.update(pregunta);
+			}
+		}
+		// Eliminados
+		for (ProblemaExamen existente : examenExistente.getProblemas()) {
+			ProblemaExamen relacionActual = buscarEn(e.getProblemas(),
+					existente.getProblema().getId());
+			if (relacionActual == null) {
+				Ebean.delete(existente);
+			}
+		}
 	}
-	private ProblemaExamen buscarEn(List<ProblemaExamen> lista, Long idPregunta){
-        for(ProblemaExamen pe : lista){
-            if(pe.getProblema().getProblemaId() == idPregunta) return pe;
-        }
-        return null;
-    }
+	private ProblemaExamen buscarEn(List<ProblemaExamen> lista,
+			Integer idPregunta) {
+		for (ProblemaExamen pe : lista) {
+			if (pe.getProblema().getId() == idPregunta)
+				return pe;
+		}
+		return null;
+	}
 
-	public void eliminar(Long id) {
+	public void eliminar(Integer id) {
 		Ebean.delete(obtener(id));
 	}
 

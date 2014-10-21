@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class GrupoExperto {
 	@Id
-	private Long grupoExpertoId;
+	private Integer id;
 	private String nombre;
 	private String descripcion;
 	private Integer maximoAlumnos;
@@ -28,12 +28,12 @@ public class GrupoExperto {
 		return nombre.toUpperCase();
 	}
 
-	public Long getGrupoExpertoId() {
-		return grupoExpertoId;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setGrupoExpertoId(Long grupoExpertoId) {
-		this.grupoExpertoId = grupoExpertoId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public void setNombre(String nombre) {

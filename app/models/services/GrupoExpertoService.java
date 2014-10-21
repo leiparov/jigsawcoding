@@ -44,8 +44,8 @@ public class GrupoExpertoService  {
 	}
 
 	
-	public GrupoExperto obtenerGrupoExperto(Long idGrupoExperto) {
-		return grupoExpertoDAO.obtenerGrupoExperto(idGrupoExperto);
+	public GrupoExperto obtenerGrupoExperto(Integer id) {
+		return grupoExpertoDAO.obtenerGrupoExperto(id);
 	}
 
 	
@@ -60,7 +60,7 @@ public class GrupoExpertoService  {
 		return grupoExpertoDAO.page(docente, page, pageSize, sortBy, order, filter);
 	}
 	
-	public void eliminarGrupoExperto(Long id) {
+	public void eliminarGrupoExperto(Integer id) {
 		grupoExpertoDAO.eliminarGrupoExperto(id);
 	}
 	

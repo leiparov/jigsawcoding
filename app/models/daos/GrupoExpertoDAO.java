@@ -23,8 +23,8 @@ public class GrupoExpertoDAO {
 
 	}
 
-	public GrupoExperto obtenerGrupoExperto(Long idGrupoExperto) {
-		return EbeanUtils.findOrException(GrupoExperto.class, idGrupoExperto);
+	public GrupoExperto obtenerGrupoExperto(Integer id) {
+		return EbeanUtils.findOrException(GrupoExperto.class, id);
 	}
 
 	public Page<GrupoExperto> page(int page, int pageSize, String sortBy,
@@ -42,7 +42,7 @@ public class GrupoExpertoDAO {
 				.setFetchAhead(false).getPage(page);
 	}
 
-	public void eliminarGrupoExperto(Long id) {
+	public void eliminarGrupoExperto(Integer id) {
 		Ebean.delete(obtenerGrupoExperto(id));
 	}
 

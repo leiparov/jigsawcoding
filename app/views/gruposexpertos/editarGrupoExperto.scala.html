@@ -1,5 +1,5 @@
 @* editarGrupoExperto Template File *@
-@(id: Long, grupoExpertoForm: play.data.Form[models.entities.GrupoExperto])
+@(id: Integer, grupoExpertoForm: play.data.Form[models.entities.GrupoExperto])
 @main(menuDocente()){
 	@inputs.panel("EDITAR PROBLEMA", true){
 		@helper.form(routes.GruposExpertos.actualizarGrupoExperto(id), 'class -> "form-horizontal"){

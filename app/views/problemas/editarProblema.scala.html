@@ -1,5 +1,5 @@
 @* editarProblema Template File *@
-@(id: Long, problemaForm: play.data.Form[models.entities.Problema])
+@(id: Integer, problemaForm: play.data.Form[models.entities.Problema])
 @main(menuDocente()){
 	@inputs.panel("EDITAR PROBLEMA", true){
 		@helper.form(routes.Problemas.actualizarProblema(id), 'class -> "form-horizontal"){
@@ -20,7 +20,7 @@
                	</div>
                	<div class="form-group">
 				    <div class="col-sm-offset-2 col-sm-8">
-				      <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
+				      <button type="submit" class="btn btn-primary">Guardar</button>
 				      <a class="btn btn-default" href="/problemas">Cancelar</a>
 				    </div>
 				    

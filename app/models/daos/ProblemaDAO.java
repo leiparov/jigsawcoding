@@ -17,14 +17,14 @@ public class ProblemaDAO {
 	private static Finder<Integer, Problema> find = new Finder<Integer, Problema>(
 			Integer.class, Problema.class);
 
-	private Long generarId() {
+	private Integer generarId() {
 		SqlQuery sql = Ebean
-				.createSqlQuery("select case when max(problema_id) is null then 0 else max(problema_id) end as maxid from problema");
+				.createSqlQuery("select case when max(id) is null then 0 else max(id) end as maxid from problema");
 		SqlRow resultado = sql.findUnique();
-		return resultado.getLong("maxid") + 1;
+		return resultado.getInteger("maxid") + 1;
 	}
 	public void guardarProblema(Problema problema) {
-		problema.setProblemaId(generarId());
+		problema.setId(generarId());
 		Ebean.save(problema);
 	}
 
@@ -33,8 +33,8 @@ public class ProblemaDAO {
 
 	}
 
-	public Problema obtenerProblema(Long idProblema) {
-		return EbeanUtils.findOrException(Problema.class, idProblema);
+	public Problema obtenerProblema(Integer id) {
+		return EbeanUtils.findOrException(Problema.class, id);
 	}
 
 	public Page<Problema> page(int page, int pageSize, String sortBy,
@@ -52,7 +52,7 @@ public class ProblemaDAO {
 				.setFetchAhead(false).getPage(page);
 	}
 
-	public void eliminarProblema(Long id) {
+	public void eliminarProblema(Integer id) {
 		Ebean.delete(obtenerProblema(id));
 	}
 

@@ -48,7 +48,7 @@
 
     <div id="actions" class="row">
         <div class="pull-left">
-	        <form action="@link(0, "grupoExpertoId")" method="GET" class="form-inline" role="form">            
+	        <form action="@link(0, "id")" method="GET" class="form-inline" role="form">            
 	            <div class="form-group">
 	            	<input class="form-control" type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Buscar...">
 				</div>
@@ -74,22 +74,22 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    @header("grupoExpertoId", "ID")
+                    @header("id", "ID")
                     @header("nombre", "Grupo Experto")
-                    @header("grupoExpertoId", "Integrantes")
+                    @header("id", "Integrantes")
                 </tr>
             </thead>
             <tbody> 
             @currentPage.getList.map { grupoexperto =>
            	<tr>
-            	<td>@grupoexperto.getGrupoExpertoId()</td>
+            	<td>@grupoexperto.getId()</td>
                 <td>@grupoexperto.getNombre()</td>
                 <td>@grupoexperto.integrantes()</td>
                 <td>
-                	<a href="@routes.GruposExpertos.interfazAsignar(grupoexperto.getGrupoExpertoId())">Editar integrantes</a> 
+                	<a href="@routes.GruposExpertos.interfazAsignar(grupoexperto.getId())">Editar integrantes</a> 
                 </td>
                 <td>
-                	<a href="@routes.GruposExpertos.editarGrupoExperto(grupoexperto.getGrupoExpertoId())">
+                	<a href="@routes.GruposExpertos.interfazEditar(grupoexperto.getId())">
                 		<span class="glyphicon glyphicon-pencil">
                 	</a>
                 </td>

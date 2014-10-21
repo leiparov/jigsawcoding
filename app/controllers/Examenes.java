@@ -51,19 +51,20 @@ public class Examenes extends Controller {
 	public static Result interfazNuevo() {
 		return ok(views.html.examenes.nuevoExamen.render(null));
 	}
-	public static Result interfazEditar(Long id) {
+	public static Result interfazEditar(Integer id) {
 		Examen e = examenService.obtener(id);
 		return ok(views.html.examenes.nuevoExamen.render(e));
 	}
-	public static Result interfazDefinirHorario(Long id) {
+	public static Result interfazDefinirHorario(Integer id) {
 		Docente d = getDocente();
 		Examen e = examenService.obtener(id);
 		List<SesionJigsaw> sesionesJigsaw = d.getSesionesJigsaw();
-		return ok(views.html.examenes.definirHorarioExamen.render(e, sesionesJigsaw));
+		return ok(views.html.examenes.definirHorarioExamen.render(e,
+				sesionesJigsaw));
 
 	}
 
-	public static Result definirHorario(Long id) {
+	public static Result definirHorario(Integer id) {
 		Form<HorarioForm> form = Form.form(HorarioForm.class).bindFromRequest();
 		Examen e = examenService.obtener(id);
 		examenService.actualizarHorario(form.get().actualizar(e));
@@ -87,7 +88,7 @@ public class Examenes extends Controller {
 			return redirect(routes.Examenes.index());
 		}
 	}
-	public static Result guardarExamen(Long id) {
+	public static Result guardarExamen(Integer id) {
 		try {
 			Form<ExamenForm> form = Form.form(ExamenForm.class)
 					.bindFromRequest();
@@ -101,16 +102,15 @@ public class Examenes extends Controller {
 			return redirect(routes.Examenes.index());
 		}
 	}
-	
-	public static Result eliminarExamen(Long id){
+
+	public static Result eliminarExamen(Integer id) {
 		examenService.eliminar(id);
 		flash("success", "Examen borrado con éxito");
 		return GO_HOME;
 	}
-	
-	public static Result renderPreguntaEdicion(Long idPregunta) {
+
+	public static Result renderPreguntaEdicion(Integer idPregunta) {
 		Problema p = problemaService.obtenerProblema(idPregunta);
-		// Pregunta p = preguntaService.obtener(idPregunta);
 		ProblemaExamen pe = new ProblemaExamen();
 		pe.setProblema(p);
 		return ok(views.html.examenes.contenedorPreguntaEdicion.render(pe));
@@ -118,11 +118,15 @@ public class Examenes extends Controller {
 
 	public static class ExamenForm {
 		public String titulo;
-		public List<Long> idPregunta;// guarda los id de los problemas que son
+		public List<Integer> idPregunta;// guarda los id de los problemas que
+										// son
 										// asignados al examen
 		public List<Integer> puntajeCorrecto;
 		public List<Integer> puntajeIncorrecto;
 		public class Exception extends RuntimeException {
+
+			private static final long serialVersionUID = 1L;
+
 			public Exception(String message) {
 				super("Error al procesar: " + message);
 			}
@@ -150,7 +154,6 @@ public class Examenes extends Controller {
 		private List<ProblemaExamen> getProblemas() {
 			List<ProblemaExamen> preguntas = new LinkedList<ProblemaExamen>();
 			for (int i = 0; i < idPregunta.size(); i++) {
-				// TODO: lanzar excepcion si vacios
 				ProblemaExamen p = new ProblemaExamen();
 				p.setProblema(getProblema(i));
 
@@ -195,8 +198,6 @@ public class Examenes extends Controller {
 
 		public Examen actualizar(Examen e) {
 			if (existenDatosFecha()) {
-				// TODO: Refactorizar (tal vez un
-				// ExpresionFechaIntervalosHoras?)
 				LocalDate fechaBase = FormatoFechaHora.obtenerFecha(fecha);
 				LocalTime apertura = FormatoFechaHora
 						.obtenerHora(tiempoApertura);
@@ -224,11 +225,12 @@ public class Examenes extends Controller {
 			} else {
 				e.setDuracion(null);
 			}
-			
-			if(sesionJigsaw != -1){
-				SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(sesionJigsaw);
+
+			if (sesionJigsaw != -1) {
+				SesionJigsaw s = sesionJigsawService
+						.obtenerSesionJigsaw(sesionJigsaw);
 				e.setSesionJigsaw(s);
-			}else{
+			} else {
 				e.setSesionJigsaw(null);
 			}
 

@@ -8,19 +8,18 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 @Entity
 public class Examen {
 	@Id
-	private Long id;
+	private Integer id;
 	private String titulo;
 	private Date tiempoApertura;
 	private Date tiempoClausura;
 	private Date tiempoCreacion;
 	private Integer duracion;
-	
+
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private SesionJigsaw sesionJigsaw;
 
@@ -30,11 +29,11 @@ public class Examen {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<ProblemaExamen> problemas;
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -94,9 +93,9 @@ public class Examen {
 		this.problemas = problemas;
 	}
 	@Transient
-    public int getDuracionEnSegundos(){
-        return this.duracion * 60;
-    }
+	public int getDuracionEnSegundos() {
+		return this.duracion * 60;
+	}
 
 	public SesionJigsaw getSesionJigsaw() {
 		return sesionJigsaw;
@@ -105,6 +104,5 @@ public class Examen {
 	public void setSesionJigsaw(SesionJigsaw sesionJigsaw) {
 		this.sesionJigsaw = sesionJigsaw;
 	}
-	
 
 }

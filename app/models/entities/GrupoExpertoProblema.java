@@ -9,33 +9,32 @@ import javax.persistence.ManyToOne;
 public class GrupoExpertoProblema {
 
 	@Id
-	private Integer parId;
+	private Integer id;
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private GrupoExperto grupoExperto;
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Problema problema;
-	
+
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private SesionJigsaw sesionJigsaw;
 
-	
-	
 	@Override
 	public String toString() {
-		return "(GE"+grupoExperto.getGrupoExpertoId() + ",P"+problema.getProblemaId()+")";
+		return "(GE" + grupoExperto.getId() + ",P" + problema.getId() + ")";
 	}
 
-	/*Getters and Setters*/
-	public Integer getParId() {
-		return parId;
-	}
-
-	public void setParId(Integer parId) {
-		this.parId = parId;
-	}
+	/* Getters and Setters */
 
 	public GrupoExperto getGrupoExperto() {
 		return grupoExperto;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public void setGrupoExperto(GrupoExperto grupoExperto) {
@@ -57,7 +56,5 @@ public class GrupoExpertoProblema {
 	public void setSesionJigsaw(SesionJigsaw sesionJigsaw) {
 		this.sesionJigsaw = sesionJigsaw;
 	}
-	
-	
-	
+
 }

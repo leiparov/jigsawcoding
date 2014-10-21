@@ -53,4 +53,5 @@ public class UsuarioService {
 	public int obtener(String email) {
 		return usuarioDAO.obtener(email);
 	}
+	
 }

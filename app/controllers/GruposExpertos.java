@@ -29,20 +29,8 @@ public class GruposExpertos extends Controller {
 	}
 
 	public static Result GO_HOME = redirect(routes.GruposExpertos.list(0,
-			"grupoExpertoId", "asc", ""));
+			"id", "asc", ""));
 
-	/**
-	 * Display the paginated list of grupoExpertos.
-	 * 
-	 * @param page
-	 *            Current page number (starts from 0)
-	 * @param sortBy
-	 *            Column to be sorted
-	 * @param order
-	 *            Sort order (either asc or desc)
-	 * @param filter
-	 *            Filter applied on GrupoExperto names
-	 */
 	public static Result list(int page, String sortBy, String order,
 			String filter) {
 		return ok(listaGruposExpertos.render(grupoExpertoService.page(getDocente(),
@@ -58,12 +46,12 @@ public class GruposExpertos extends Controller {
 		return ok(nuevoGrupoExperto.render(grupoExpertoForm));
 	}
 	
-	public static Result interfazAsignar(Long id) {
+	public static Result interfazAsignar(Integer id) {
         GrupoExperto grupo = grupoExpertoService.obtenerGrupoExperto(id);        
         return ok(views.html.gruposexpertos.alumnoToGrupo.render(grupo));
     }
 	
-	public static Result definirAlumnos(Long id){
+	public static Result definirAlumnos(Integer id){
 		//return TODO;
         try {
             return tryDefinirAlumnos(id);
@@ -82,7 +70,7 @@ public class GruposExpertos extends Controller {
             return redirect(routes.GruposExpertos.interfazAsignar(id));
         }
     }
-	private static Result tryDefinirAlumnos(Long id) {
+	private static Result tryDefinirAlumnos(Integer id) {
         Form<AsignarAlumnosForm> form = Form.form(AsignarAlumnosForm.class).bindFromRequest();
         GrupoExperto grupo = grupoExpertoService.obtenerGrupoExperto(id);
         List<Integer> dnialumnos = form.get().alumnos;
@@ -114,13 +102,13 @@ public class GruposExpertos extends Controller {
 		}
 	}
 
-	public static Result editarGrupoExperto(Long id) {
+	public static Result interfazEditar(Integer id) {
 		Form<GrupoExperto> grupoExpertoForm = form(GrupoExperto.class).fill(
 				grupoExpertoService.obtenerGrupoExperto(id));
 		return ok(views.html.gruposexpertos.editarGrupoExperto.render(id, grupoExpertoForm));
 	}
 
-	public static Result actualizarGrupoExperto(Long id) {
+	public static Result actualizarGrupoExperto(Integer id) {
 		Form<GrupoExperto> grupoExpertoForm = form(GrupoExperto.class).bindFromRequest();
 		if (grupoExpertoForm.hasErrors()) {
 			return badRequest(editarGrupoExperto.render(id, grupoExpertoForm));
@@ -128,7 +116,7 @@ public class GruposExpertos extends Controller {
 		try {
 			GrupoExperto grupoExperto = grupoExpertoForm.get();
 			grupoExperto.setDocente(getDocente());
-			grupoExperto.setGrupoExpertoId(id);
+			grupoExperto.setId(id);
 			System.out.println(grupoExperto.toString());
 			grupoExpertoService.actualizarGrupoExperto(getDocente(), grupoExperto);
 			flash("success", "GrupoExperto actualizado con éxito");
@@ -141,7 +129,7 @@ public class GruposExpertos extends Controller {
 		}
 	}
 
-	public static Result eliminarGrupoExperto(Long id) {
+	public static Result eliminarGrupoExperto(Integer id) {
 		grupoExpertoService.eliminarGrupoExperto(id);
 		flash("success", "GrupoExperto borrado con éxito");
 		return GO_HOME;

@@ -1,6 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,10 +18,8 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
-import play.Logger;
 import play.data.Form;
 import play.mvc.Controller;
-import play.mvc.Http.Context;
 import play.mvc.Result;
 import utils.ExpresionDuracion;
 import utils.FormatoFechaHora;
@@ -217,8 +214,8 @@ public class SesionesJigsaw extends Controller {
 
 	public static class ParGrupoProblemaForm{
 		/*Lista de IDs de grupos y problemas*/
-		public List<Long> grupos;
-		public List<Long> problemas;
+		public List<Integer> grupos;
+		public List<Integer> problemas;
 		
 		public SesionJigsaw definirProblemas (SesionJigsaw s){			
 			s.setPares(getParesGruposProblemas());

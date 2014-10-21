@@ -14,7 +14,10 @@ public class IdeoneMain {
 					+ "return 0;\n"
 					+ "}";
 			//System.out.println(ideone.createSubmission(source, 1, "", true, false));
-			System.out.println(ideone.getSubmissionStatus("X8EzF3"));
+			//String link = "X8EzF3";
+			String link = "ueqZFx";
+			System.out.println(ideone.getSubmissionStatus(link));
+			System.out.println(ideone.getSubmissionDetails(link, true, true, true, true, true));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

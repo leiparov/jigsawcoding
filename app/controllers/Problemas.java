@@ -29,22 +29,9 @@ public class Problemas extends Controller {
 		return usuarioService.obtener(Login.obtener(ctx()).getDNI(),
 				Docente.class);
 	}
+	public static Result GO_HOME_PROBLEMAS = redirect(routes.Problemas.list(0,
+			"id", "asc", ""));
 
-	public static Result GO_HOME = redirect(routes.Problemas.list(0,
-			"problemaId", "asc", ""));
-
-	/**
-	 * Display the paginated list of problemas.
-	 * 
-	 * @param page
-	 *            Current page number (starts from 0)
-	 * @param sortBy
-	 *            Column to be sorted
-	 * @param order
-	 *            Sort order (either asc or desc)
-	 * @param filter
-	 *            Filter applied on Problema names
-	 */
 	public static Result list(int page, String sortBy, String order,
 			String filter) {
 		return ok(listaProblemas.render(problemaService.page(getDocente(),
@@ -52,7 +39,7 @@ public class Problemas extends Controller {
 	}
 
 	public static Result index() {
-		return GO_HOME;
+		return GO_HOME_PROBLEMAS;
 	}
 
 	public static Result interfazNuevo() {
@@ -70,7 +57,7 @@ public class Problemas extends Controller {
 			problema.setDocente(getDocente());
 			problemaService.guardarProblema(getDocente(), problema);
 			flash("success", "Problema registrado con éxito");
-			return GO_HOME;
+			return GO_HOME_PROBLEMAS;
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -79,13 +66,13 @@ public class Problemas extends Controller {
 		}
 	}
 
-	public static Result editarProblema(Long id) {
+	public static Result interfazEditar(Integer id) {
 		Form<Problema> problemaForm = form(Problema.class).fill(
 				problemaService.obtenerProblema(id));
 		return ok(editarProblema.render(id, problemaForm));
 	}
 
-	public static Result actualizarProblema(Long id) {
+	public static Result actualizarProblema(Integer id) {
 		Form<Problema> problemaForm = form(Problema.class).bindFromRequest();
 		if (problemaForm.hasErrors()) {
 			return badRequest(editarProblema.render(id, problemaForm));
@@ -93,11 +80,11 @@ public class Problemas extends Controller {
 		try {
 			Problema problema = problemaForm.get();
 			problema.setDocente(getDocente());
-			problema.setProblemaId(id);
+			problema.setId(id);
 			System.out.println(problema.toString());
 			problemaService.actualizarProblema(getDocente(), problema);
 			flash("success", "Problema actualizado con éxito");
-			return GO_HOME;
+			return GO_HOME_PROBLEMAS;
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -106,10 +93,10 @@ public class Problemas extends Controller {
 		}
 	}
 
-	public static Result eliminarProblema(Long id) {
+	public static Result eliminarProblema(Integer id) {
 		problemaService.eliminarProblema(id);
 		flash("success", "Problema borrado con éxito");
-		return GO_HOME;
+		return GO_HOME_PROBLEMAS;
 	}
 	
 	public static Result buscarProblemas(String q){

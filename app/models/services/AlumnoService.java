@@ -3,11 +3,10 @@ package models.services;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.avaje.ebean.Page;
-
 import models.daos.AlumnoDAO;
 import models.entities.Alumno;
-import models.entities.Problema;
+
+import com.avaje.ebean.Page;
 
 public class AlumnoService {
 

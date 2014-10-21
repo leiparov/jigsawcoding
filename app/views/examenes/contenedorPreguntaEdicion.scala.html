@@ -1,6 +1,6 @@
 @(problemaExamen: models.entities.ProblemaExamen)
 <div class="pregunta-contenedor-edicion">
-<input type="hidden" name="idPregunta[]" value="@problemaExamen.getProblema.getProblemaId()" />
+<input type="hidden" name="idPregunta[]" value="@problemaExamen.getProblema.getId()" />
 <button type="button" class="close" aria-hidden="true">&times;</button>
 @problemas.items.problemaEdicion(problemaExamen.getProblema)
 <p class="conteo-nota"></p>

@@ -1,11 +1,7 @@
 package models.services.ideone;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Map;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -13,9 +9,6 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 import org.xmlpull.v1.XmlPullParserException;
-
-import exceptions.AuthException;
-import exceptions.DataException;
 
 public class IdeoneService {
 
@@ -140,10 +133,8 @@ public class IdeoneService {
 
 	public IdeoneSubmissionDetails getSubmissionDetails(String link,
 			Boolean withSource, Boolean withInput, Boolean withOutput,
-			Boolean withStderr, Boolean withCmpinfo) throws AuthException {
-
-		IdeoneSubmissionDetails ret = null;
-		Hashtable data = new Hashtable();
+			Boolean withStderr, Boolean withCmpinfo) {		
+		Hashtable<String, Object> data = new Hashtable<>();
 
 		try {
 			HttpTransportSE transport = createTransport();
@@ -166,52 +157,37 @@ public class IdeoneService {
 			transport.call("getSubmissionDetails", envelope);
 			SoapObject so = (SoapObject) envelope.getResponse();
 
-			int count = so.getPropertyCount();
-			for (int i = 0; i < count; ++i) {
-				SoapObject item = (SoapObject) so.getProperty(i);
-				String key = (String) item.getProperty(0);
-				Object val = item.getProperty(1);
-				data.put(key, val);
-			}
-
-			String error = (String) data.get("error");
-			if (error.equals("AUTH_ERROR")) {
-				throw new AuthException();
-			} else if (!error.equals("OK")) {
-				throw new DataException(data.get("error").toString());
-			}
-
-			ret = new IdeoneSubmissionDetails();
-			ret.langId = (Integer) data.get("result");
-			ret.langName = (String) data.get("langName");
-			ret.langVersion = (String) data.get("langVersion");
-			ret.date = (String) data.get("date");
-			// ret.time = (Float) data.get("time"); // no support for Float on
-			// ME kSoap
-			ret.time = Float.valueOf(((SoapPrimitive) data.get("time"))
-					.toString());
-			ret.result = (Integer) data.get("result");
-			ret.status = (Integer) data.get("status");
-			ret.memory = (Integer) data.get("memory");
-			ret.signal = (Integer) data.get("signal");
-			ret.isPublic = (Boolean) data.get("public");
+			data = getData(so);
+			
+			IdeoneSubmissionDetails ret = new IdeoneSubmissionDetails();
+			ret.setError(data.get("error").toString());
+			ret.setLangId((Integer) data.get("langId"));
+			ret.setLangName(data.get("langName").toString());
+			ret.setLangVersion(data.get("langVersion").toString());
+			ret.setTime( Float.valueOf(((SoapPrimitive) data.get("time")).toString()));
+			ret.setDate(data.get("date").toString());
+			ret.setStatus((Integer)data.get("status"));
+			ret.setResult((Integer)data.get("result"));
+			ret.setMemory((Integer)data.get("memory"));
+			ret.setSignal((Integer)data.get("signal"));
+			ret.setIsPublic((Boolean) data.get("public"));
 
 			if (withSource.booleanValue()) {
-				ret.source = (String) data.get("source");
+				ret.setSource((String) data.get("source"));
 			}
 			if (withInput.booleanValue()) {
-				ret.input = (String) data.get("input");
+				ret.setInput((String) data.get("input"));
 			}
 			if (withOutput.booleanValue()) {
-				ret.output = (String) data.get("output");
+				ret.setOutput((String) data.get("output"));
 			}
 			if (withStderr.booleanValue()) {
-				ret.stderr = (String) data.get("stderr");
+				ret.setStderr((String) data.get("stderr"));
 			}
 			if (withCmpinfo.booleanValue()) {
-				ret.cmpinfo = (String) data.get("cmpinfo");
+				ret.setCmpinfo((String) data.get("cmpinfo"));
 			}
-
+			return ret;
 		} catch (IOException ex) {
 			System.out.println("IO Error");
 		} catch (NumberFormatException ex) {
@@ -220,7 +196,7 @@ public class IdeoneService {
 			System.out.println("Error");
 		}
 
-		return ret;
+		return null;
 	}
 
 	public Hashtable<Integer, Object> getLanguages() {
@@ -327,16 +303,5 @@ public class IdeoneService {
 		return "unknown result";
 	}
 
-	public ArrayList<String> getLangs() {
-		return this.langsList;
-	}
-
-	public Integer getLanguageIdByName(String name) {
-		for (Integer key : langs.keySet()) {
-			if (langs.get(key).equals(name)) {
-				return key;
-			}
-		}
-		return 1;
-	}
+	
 }

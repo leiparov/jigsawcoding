@@ -17,7 +17,7 @@
 									<select class="form-control" name="grupos[]" id="selectGrupos">
 									<option value="-1">Seleccione GrupoExperto</option>
 									@sesionJigsaw.getDocente().getGruposExpertos().map{ grupo => 
-										<option value="@grupo.getGrupoExpertoId()">@grupo.getNombre()</option>
+										<option value="@grupo.getId()">@grupo.getNombre()</option>
 									}
 									</select>
 								</div>
@@ -30,7 +30,7 @@
 									<select class="form-control" name="problemas[]" id="selectProblemas">
 									<option value="-1">Seleccione Problema</option>
 									@sesionJigsaw.getDocente().getProblemas().map{ problema => 
-										<option value="@problema.getProblemaId()">@problema.getTitulo()</option>
+										<option value="@problema.getId()">@problema.getTitulo()</option>
 									}
 									</select>
 								</div>

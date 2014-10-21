@@ -84,8 +84,9 @@ public class Alumnos extends Controller {
 	private static final String ruta = "public/photos/";
 
 	/* Metodos para el docente */
-	public static Result GO_HOME = redirect(routes.Alumnos.list(0, "dni",
+	public static Result GO_HOME_DOCENTE = redirect(routes.Alumnos.list(0, "dni",
 			"asc", ""));
+	public static Result GO_HOME_ALUMNO = ok(views.html.alumnos.indexAlumno.render());
 
 	public static Result list(int page, String sortBy, String order,
 			String filter) {
@@ -96,8 +97,15 @@ public class Alumnos extends Controller {
 
 	public static Result index() {
 		Login login = Login.obtener(ctx());
-		Docente usuario = docenteService.obtener(login.getDNI());
-		return GO_HOME;
+		if(login.isTipo(Alumno.class)){
+			return GO_HOME_ALUMNO;
+		}else if (login.isTipo(Docente.class)){
+			Docente usuario = docenteService.obtener(login.getDNI());
+			return GO_HOME_DOCENTE;
+		}else{
+			return redirect(routes.Application.interfazLogin());
+		}
+		
 	}
 
 	// Para Profesor
@@ -157,7 +165,7 @@ public class Alumnos extends Controller {
 		}
 	}
 
-	public static Result editarAlumno(int dni) {
+	public static Result interfazEditar(int dni) {
 		Form<Alumno> alumnoForm = form(Alumno.class).fill(
 				alumnoService.obtener(dni));
 		// return ok(editarAlumno.render(dni, alumnoForm));
