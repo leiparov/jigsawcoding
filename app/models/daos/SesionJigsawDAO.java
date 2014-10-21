@@ -45,9 +45,31 @@ public class SesionJigsawDAO {
 				.setFetchAhead(false).getPage(page);
 	}
 
-	public void guardarProblemas(SesionJigsaw s,
-			List<ParGrupoExpertoProblema> lista) {
-		Ebean.saveAssociation(s, "pares");
+	public void guardarProblemas(SesionJigsaw s) {		
+		SesionJigsaw sesionExistente = obtenerSesionJigsaw(s.getId());
+		//Modificados
+		for (ParGrupoExpertoProblema par: s.getPares()){
+			ParGrupoExpertoProblema relacionExistente = buscarEn(sesionExistente.getPares(), par.getGrupoExperto().getGrupoExpertoId());
+			if (relacionExistente != null){
+				par.setParId(relacionExistente.getParId());
+				Ebean.update(par);
+			}
+		}
+		//Eliminados
+		for(ParGrupoExpertoProblema existente: sesionExistente.getPares()){
+			ParGrupoExpertoProblema relacionActual = buscarEn(s.getPares(), existente.getGrupoExperto().getGrupoExpertoId());
+			if(relacionActual == null){
+				Ebean.delete(existente);
+			}
+		}
+		Ebean.update(s);
+		
+	}
+	private ParGrupoExpertoProblema buscarEn(List<ParGrupoExpertoProblema> lista, Long idGrupo){
+		for (ParGrupoExpertoProblema p: lista){
+			if (p.getGrupoExperto().getGrupoExpertoId() == idGrupo) return p;
+		}
+		return null;
 	}
 
 

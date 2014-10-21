@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import models.entities.Docente;
@@ -93,9 +94,10 @@ public class SesionesJigsaw extends Controller {
 		Form<ParGrupoProblemaForm> form = Form.form(ParGrupoProblemaForm.class).bindFromRequest();
 		try {
 			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
-			List<ParGrupoExpertoProblema> lista = form.get().getAsignacionProblemas(id);
+			//List<ParGrupoExpertoProblema> lista = form.get().getAsignacionProblemas(id);
 			//s.setPares(lista);
-			sesionJigsawService.guardarProblemas(s, lista);
+			s = form.get().definirProblemas(s);
+			sesionJigsawService.guardarProblemas(s);
 			//sesionJigsawService.actualizarSesionJigsaw(getDocente(), s);
 			flash("success", "Asignación de Problemas realizada con éxito");
 			return GO_HOME;
@@ -215,24 +217,29 @@ public class SesionesJigsaw extends Controller {
 
 	public static class ParGrupoProblemaForm{
 		/*Lista de IDs de grupos y problemas*/
-		public List<String> grupos;
-		public List<String> problemas;
+		public List<Long> grupos;
+		public List<Long> problemas;
 		
-		public List<ParGrupoExpertoProblema> getAsignacionProblemas (Integer id){
-			
-			List<ParGrupoExpertoProblema> lista = new ArrayList<>();
-			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
-			
+		public SesionJigsaw definirProblemas (SesionJigsaw s){			
+			s.setPares(getParesGruposProblemas());
+			return s;			
+		}
+		
+		private List<ParGrupoExpertoProblema> getParesGruposProblemas(){
+			List<ParGrupoExpertoProblema> pares = new LinkedList<ParGrupoExpertoProblema>();
 			for (int i=0; i<grupos.size(); i++){
 				ParGrupoExpertoProblema par = new ParGrupoExpertoProblema();
-				GrupoExperto ge = grupoExpertoService.obtenerGrupoExperto(Long.parseLong(grupos.get(i)));
-				Problema p = problemaService.obtenerProblema(Long.parseLong(problemas.get(i)));				
-				par.setGrupoExperto(ge);
-				par.setProblema(p);
-				par.setSesionJigsaw(s);
-				lista.add(par);
-			}			
-			return lista;			
+				par.setGrupoExperto(getGrupoExperto(i));
+				par.setProblema(getProblema(i));
+				pares.add(par);
+			}
+			return pares;			
+		}
+		private Problema getProblema(int i){
+			return problemaService.obtenerProblema(problemas.get(i));
+		}
+		private GrupoExperto getGrupoExperto(int i){
+			return grupoExpertoService.obtenerGrupoExperto(grupos.get(i));
 		}
 	}
 }

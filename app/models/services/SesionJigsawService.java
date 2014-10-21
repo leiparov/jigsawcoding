@@ -59,14 +59,8 @@ public class SesionJigsawService {
 		sesionJigsawDAO.eliminarSesionJigsaw(id);
 	}
 
-	public void guardarProblemas(SesionJigsaw s,
-			List<ParGrupoExpertoProblema> lista) {
-
-		borrarPares(s);
-		s.setPares(lista);
-
-		sesionJigsawDAO.guardarSesionJigsaw(s);
-
+	public void guardarProblemas(SesionJigsaw s) {
+		sesionJigsawDAO.guardarProblemas(s);
 	}
 
 	private void borrarPares(SesionJigsaw s) {
