@@ -16,27 +16,28 @@ public class SesionJigsaw {
 	private int id;
 
 	private String tema;
-	
+
 	private Date inicioReunionExpertos;
 	private Integer duracionReunionExpertos;
-	
+
 	private Date inicioReunionJigsaw;
 	private Integer duracionReunionJigsaw;
 
 	private Integer totalGruposExpertos;
-	
+
+	private String etapa;
+
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Docente docente;
-	
+
 	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<GrupoExpertoProblema> pares;
-	
-	
+
 	/**/
-	
-	public String mostrarPares(){
+
+	public String mostrarPares() {
 		String cad = "";
-		for (GrupoExpertoProblema p : pares){
+		for (GrupoExpertoProblema p : pares) {
 			cad += p + " ";
 		}
 		return cad;
@@ -50,7 +51,7 @@ public class SesionJigsaw {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public String getTema() {
 		return tema;
 	}
@@ -115,10 +116,16 @@ public class SesionJigsaw {
 		this.pares = pares;
 	}
 
-	
-	
-	public String getNombre(){
-		return "SesionJigsaw_"+this.id;
+	public String getNombre() {
+		return "SesionJigsaw_" + this.id;
+	}
+
+	public String getEtapa() {
+		return etapa;
+	}
+
+	public void setEtapa(String etapa) {
+		this.etapa = etapa;
 	}
 
 }

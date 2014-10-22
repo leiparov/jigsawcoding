@@ -16,10 +16,12 @@ public class SesionJigsawDAO {
 	public static Finder<Integer, SesionJigsaw> find = new Finder<Integer, SesionJigsaw>(
 			Integer.class, SesionJigsaw.class);
 
-	private Integer generarId(){
-		SqlQuery sql = Ebean.createSqlQuery("select case when max(id) is null then 0 else max(id) end as maxid from sesion_jigsaw");
+	private Integer generarId() {
+		SqlQuery sql = Ebean
+				.createSqlQuery("select case when max(id) is null then "
+						+ "0 else max(id) end as maxid from sesion_jigsaw");
 		SqlRow resultado = sql.findUnique();
-		return resultado.getInteger("maxid")+1;
+		return resultado.getInteger("maxid") + 1;
 	}
 	public void guardarSesionJigsaw(SesionJigsaw sesionJigsaw) {
 		sesionJigsaw.setId(generarId());
@@ -45,40 +47,43 @@ public class SesionJigsawDAO {
 				.setFetchAhead(false).getPage(page);
 	}
 
-	public void guardarProblemas(SesionJigsaw s) {		
+	public void guardarProblemas(SesionJigsaw s) {
 		SesionJigsaw sesionExistente = obtenerSesionJigsaw(s.getId());
-		//Modificados
-		for (GrupoExpertoProblema par: s.getPares()){
-			GrupoExpertoProblema relacionExistente = buscarEn(sesionExistente.getPares(), par.getGrupoExperto().getId());
-			if (relacionExistente != null){
+		// Modificados
+		for (GrupoExpertoProblema par : s.getPares()) {
+			GrupoExpertoProblema relacionExistente = buscarEn(
+					sesionExistente.getPares(), par.getGrupoExperto().getId());
+			if (relacionExistente != null) {
 				par.setId(relacionExistente.getId());
 				Ebean.update(par);
 			}
 		}
-		//Eliminados
-		for(GrupoExpertoProblema existente: sesionExistente.getPares()){
-			GrupoExpertoProblema relacionActual = buscarEn(s.getPares(), existente.getGrupoExperto().getId());
-			if(relacionActual == null){
+		// Eliminados
+		for (GrupoExpertoProblema existente : sesionExistente.getPares()) {
+			GrupoExpertoProblema relacionActual = buscarEn(s.getPares(),
+					existente.getGrupoExperto().getId());
+			if (relacionActual == null) {
 				Ebean.delete(existente);
 			}
 		}
 		Ebean.update(s);
-		
+
 	}
-	private GrupoExpertoProblema buscarEn(List<GrupoExpertoProblema> lista, Integer idGrupo){
-		for (GrupoExpertoProblema p: lista){
-			if (p.getGrupoExperto().getId() == idGrupo) return p;
+	private GrupoExpertoProblema buscarEn(List<GrupoExpertoProblema> lista,
+			Integer idGrupo) {
+		for (GrupoExpertoProblema p : lista) {
+			if (p.getGrupoExperto().getId() == idGrupo)
+				return p;
 		}
 		return null;
 	}
 
-
 	public void borrarListaProblemasActual(
 			List<GrupoExpertoProblema> listaActual) {
-		for(GrupoExpertoProblema p : listaActual){
+		for (GrupoExpertoProblema p : listaActual) {
 			Ebean.delete(p);
 		}
-		
+
 	}
 
 }

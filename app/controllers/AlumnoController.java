@@ -86,7 +86,6 @@ public class AlumnoController extends Controller {
 	/* Metodos para el docente */
 	public static Result GO_HOME_DOCENTE = redirect(routes.AlumnoController.list(0, "dni",
 			"asc", ""));
-	public static Result GO_HOME_ALUMNO = ok(views.html.indexAlumno.render());
 
 	public static Result list(int page, String sortBy, String order,
 			String filter) {
@@ -98,7 +97,7 @@ public class AlumnoController extends Controller {
 	public static Result index() {
 		Login login = Login.obtener(ctx());
 		if(login.isTipo(Alumno.class)){
-			return GO_HOME_ALUMNO;
+			return homeAlumno();
 		}else if (login.isTipo(Docente.class)){
 			return GO_HOME_DOCENTE;
 		}else{
@@ -288,4 +287,11 @@ public class AlumnoController extends Controller {
 		return redirect(routes.Application.interfazCambiarContrasenia());
 	}
 
+	/*Métodos para el Alumno*/
+	
+	public static Result homeAlumno (){
+		Alumno a = getAlumno();
+		//a.getGruposExpertos()
+		return noContent();
+	}
 }
