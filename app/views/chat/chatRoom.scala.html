@@ -1,23 +1,9 @@
 @(username: String)
-@main(username) {    
-    <div class="page-header">
-        <h1>Bienvenido <small> @username</small></h1>
-    </div>    
-    <div id="onError" class="alert-message error">
-        <p>
-            <strong>Oops!</strong> <span></span>
-        </p>
-    </div>    
-    <div id="onChat" class="row">
-        <div class="col-md-10 span10" id="main">
-            <div id="messages"></div>
-            <textarea id="talk" class="form-control"></textarea>
-        </div>
-        <div class="col-md-2 span4">
-            <h2>Usuarios</h2>
-            <ul id="members">
-            </ul>
-        </div>
-    </div>    
+@main(username) {      
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("css/chat-room.css")">
+    <div class="container">
+    	@views.html.interfazChat()
+    </div>
+        
     <script type="text/javascript" charset="utf-8" src="@routes.ChatController.chatRoomJs(username)"></script>    
 }

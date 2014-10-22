@@ -109,6 +109,7 @@ public class ChatRoom extends UntypedActor {
 			event.put("kind", kind);
 			event.put("user", user);
 			event.put("message", text);
+			event.put("icon", user.substring(0,2).toUpperCase());
 			ArrayNode m = event.putArray("members");
 			for (String u : members.keySet()) {
 				m.add(u);

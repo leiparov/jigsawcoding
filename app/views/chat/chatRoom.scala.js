@@ -25,11 +25,26 @@ $(function() {
         }
 
         // Create the message element
-        var el = $('<div class="message"><span></span><p></p></div>')
-        $("span", el).text(data.user)
+        var el = $('<li><span id="imagen"><img src="" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted"></div><p></p></div></li>')
+        $("strong", el).text(data.user)
         $("p", el).text(data.message)
-        $(el).addClass(data.kind)
-        if(data.user == '@username') $(el).addClass('me')
+        //$(el).addClass(data.kind)
+        if(data.kind == 'join' ){
+        	$("img", el).attr("src", "http://placehold.it/50/AAAAAA/fff&text=U")
+        	$("li", el).addClass('left clearfix')
+        	$("#imagen", el).addClass('chat-img pull-left')
+        }else{
+        	if(data.user == '@username') {        
+            	$("img", el).attr("src", "http://placehold.it/50/FA6F57/fff&text="+data.icon)
+            	$("li", el).addClass('right clearfix')
+            	$("#imagen", el).addClass('chat-img pull-right')
+            }else{
+            	$("img", el).attr("src", "http://placehold.it/50/55C1E7/fff&text="+data.icon)
+            	$("li", el).addClass('left clearfix')
+            	$("#imagen", el).addClass('chat-img pull-left')
+            }
+        }
+        
         $('#messages').append(el)
 
         // Update the members list
@@ -49,6 +64,9 @@ $(function() {
     }
 
     $("#talk").keypress(handleReturnKey)
+    $("#btn-chat").click(function(){
+    	sendMessage();
+    })
 
     chatSocket.onmessage = receiveEvent
 

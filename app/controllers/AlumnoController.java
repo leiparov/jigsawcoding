@@ -292,6 +292,6 @@ public class AlumnoController extends Controller {
 	public static Result homeAlumno (){
 		Alumno a = getAlumno();
 		//a.getGruposExpertos()
-		return noContent();
+		return ok(views.html.indexAlumno.render());
 	}
 }

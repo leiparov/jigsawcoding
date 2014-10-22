@@ -1,0 +1,35 @@
+@* interfazChat Template File *@
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("css/chat-room.css")">
+<div id="chat-room">
+    <div class="panel panel-primary">
+        <div class="panel-heading" id="accordion">
+            <span class="glyphicon glyphicon-comment"></span> Chat-Room
+            <div class="btn-group pull-right">
+                <a type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                    <span class="glyphicon glyphicon-chevron-down"></span>
+                </a>
+            </div>
+        </div>
+	    <div class="panel-collapse collapse" id="collapseOne">
+	        <div class="panel-body">
+	        	<div id="onChat">
+	              <ul class="chat" id="messages">
+	                  
+	              </ul>	                    
+	     	</div>
+	        </div>
+	        <div class="panel-footer">
+	            <div class="input-group">
+	                <input id="talk" type="text" class="form-control input-sm" 
+	                placeholder="Escriba su mensaje..." required />
+	                <span class="input-group-btn">
+	                    <button class="btn btn-warning btn-sm" id="btn-chat">
+	                        Enviar</button>
+	                </span>
+	            </div>
+	        </div>
+	    </div>
+    </div>
+</div>
+
+
