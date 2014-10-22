@@ -18,7 +18,7 @@
          <div class="panel panel-default">
             <div class="panel-heading"><b>NUEVO DOCENTE</b></div>
             <div class="panel-body">
-               @helper.form(action = routes.Docentes.registrarDocente){
+               @helper.form(action = routes.DocenteController.registrarDocente){
                   <div class="col-md-6">
                      @if(flash.containsKey("error")){
                         <div class="alert alert-danger">

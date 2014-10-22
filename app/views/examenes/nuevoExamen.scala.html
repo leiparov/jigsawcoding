@@ -24,8 +24,8 @@
 		    
 		    <div id="examen-contenedor">
 		      @inputs.panel() {
-			      	@helper.form(if(esNuevoExamen) routes.Examenes.crearExamen 
-			      		else routes.Examenes.guardarExamen(examen.getId) ) {
+			      	@helper.form(if(esNuevoExamen) routes.ExamenController.crearExamen 
+			      		else routes.ExamenController.guardarExamen(examen.getId) ) {
 				        <div class="form-group">
 				            <input type="text" class="form-control titulo input-lg" name="titulo" 
 				                value="@if(esNuevoExamen){Examen}else{@examen.getTitulo}"/>
@@ -41,13 +41,13 @@
 				        </div>
 				        <div class="examen-opciones form-group">
 				            <button type="submit" class="btn btn-primary submit">¡Listo!</button>
-		                    <a href="@routes.Examenes.index" class="btn btn-default">Cancelar</a>
+		                    <a href="@routes.ExamenController.index" class="btn btn-default">Cancelar</a>
 		                    
 				        </div>
 			        }
 		      }
 		      @if(!esNuevoExamen){
-		      	@helper.form(routes.Examenes.eliminarExamen(examen.getId()), 'class -> "form-horizontal") {
+		      	@helper.form(routes.ExamenController.eliminarExamen(examen.getId()), 'class -> "form-horizontal") {
 		        <input type="submit" value="Borrar examen" class="btn btn-danger">
 		    	}
 		      }

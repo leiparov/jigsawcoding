@@ -19,7 +19,8 @@ public class Application extends Controller {
     public static Result index() {
         Login login = Login.obtener(ctx());
         if (login.isTipo(Alumno.class)) {
-            return ok(views.html.indexAlumno.render());
+            //return ok(views.html.indexAlumno.render());
+        	return redirect(routes.AlumnoController.index());
         } else {
             return ok(views.html.indexDocente.render());
         }
@@ -93,10 +94,10 @@ public class Application extends Controller {
     public static Result jsRoutes(){
         response().setContentType("text/javascript");
         return ok(Routes.javascriptRouter("jsRoutes", 
-                    controllers.routes.javascript.Alumnos.buscarAlumnos(),
-                    controllers.routes.javascript.Alumnos.disponibles(),
-                    controllers.routes.javascript.Problemas.buscarProblemas(),
-                    controllers.routes.javascript.Examenes.renderPreguntaEdicion()
+                    controllers.routes.javascript.AlumnoController.buscarAlumnos(),
+                    controllers.routes.javascript.AlumnoController.disponibles(),
+                    controllers.routes.javascript.ProblemaController.buscarProblemas(),
+                    controllers.routes.javascript.ExamenController.renderPreguntaEdicion()
                 ));
     }
 

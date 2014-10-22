@@ -25,7 +25,7 @@ import utils.ExpresionDuracion;
 import utils.FormatoFechaHora;
 
 @Login.Requiere
-public class SesionesJigsaw extends Controller {
+public class SesionJigsawController extends Controller {
 
 	private static UsuarioService usuarioService = new UsuarioService();
 	private static SesionJigsawService sesionJigsawService = new SesionJigsawService();
@@ -37,7 +37,7 @@ public class SesionesJigsaw extends Controller {
 				Docente.class);
 	}
 
-	public static Result GO_HOME = redirect(routes.SesionesJigsaw.list(0, "id",
+	public static Result GO_HOME = redirect(routes.SesionJigsawController.list(0, "id",
 			"asc", ""));
 
 	public static Result list(int page, String sortBy, String order,
@@ -77,7 +77,7 @@ public class SesionesJigsaw extends Controller {
 		} catch (Exception e) {
 			e.printStackTrace();
 			flash("error", "No se pudo guardar la Sesión Jigsaw");
-			return redirect(routes.SesionesJigsaw.index());
+			return redirect(routes.SesionJigsawController.index());
 		}
 	}
 
@@ -101,7 +101,7 @@ public class SesionesJigsaw extends Controller {
 		} catch (Exception e) {
 			e.printStackTrace();
 			flash("error", "No se pudo guardar la Asignación de Problemas");
-			return redirect(routes.SesionesJigsaw.index());
+			return redirect(routes.SesionJigsawController.index());
 		}		
 	}
 
@@ -129,7 +129,7 @@ public class SesionesJigsaw extends Controller {
 		} catch (Exception e) {
 			e.printStackTrace();
 			flash("error", "No se pudo guardar la Sesión Jigsaw");
-			return redirect(routes.SesionesJigsaw.index());
+			return redirect(routes.SesionJigsawController.index());
 		}
 	}
 

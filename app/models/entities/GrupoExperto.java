@@ -16,7 +16,7 @@ public class GrupoExperto {
 	private String descripcion;
 	private Integer maximoAlumnos;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	private List<Alumno> alumnos;
 
 	@ManyToOne(cascade = CascadeType.PERSIST)

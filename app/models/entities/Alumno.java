@@ -10,6 +10,6 @@ import javax.persistence.ManyToMany;
 @Entity
 @DiscriminatorValue("ALUMNO")
 public class Alumno extends Usuario {
-	@ManyToMany(mappedBy = "alumnos", cascade=CascadeType.ALL)
+	@ManyToMany(mappedBy = "alumnos", cascade=CascadeType.PERSIST)
 	private List<GrupoExperto> gruposExpertos;
 }

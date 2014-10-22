@@ -20,8 +20,8 @@ import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 //import views.html.usuarios.actualizarDocente;
 import views.html.docentes.nuevoDocente;
-
-public class Docentes extends Controller{   
+@Login.Requiere
+public class DocenteController extends Controller{   
    
    private static DocenteService docenteService = new DocenteService();
    private static UsuarioService usuarioService = new UsuarioService();
@@ -58,17 +58,17 @@ public class Docentes extends Controller{
          throw new DAOException("Email ya registrado, por favor ingrese otro.");
       }catch(DAOException daoe){
          flash("error", daoe.getMessage());
-         return redirect(routes.Docentes.interfazNuevo());
+         return redirect(routes.DocenteController.interfazNuevo());
       }catch(PersistenceException pe){
          flash("error", "Error al registrar: DNI ya existente.");
-         return redirect(routes.Docentes.interfazNuevo());
+         return redirect(routes.DocenteController.interfazNuevo());
       }catch(IllegalStateException ise){
          flash("error", "Error en DNI: Por favor ingrese 8 digitos.");
-         return redirect(routes.Docentes.interfazNuevo());
+         return redirect(routes.DocenteController.interfazNuevo());
       }catch(Exception e){
          e.printStackTrace();
          flash("error", "Error desconocido: Posiblemente datos no validos.");
-         return redirect(routes.Docentes.interfazNuevo());
+         return redirect(routes.DocenteController.interfazNuevo());
       }
    }
    /*@Login.Requiere

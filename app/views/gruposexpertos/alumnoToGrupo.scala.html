@@ -4,15 +4,10 @@
         <div class="panel panel-default">
         <div class="panel-heading">ASIGNAR ALUMNOS A GRUPO EXPERTO</div>
 	        <div class="panel-body">
-	     	@if(flash.containsKey("error")){
-	     		<div class="alert alert-danger alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-					<span class="glyphicon glyphicon-remove-sign"></span> @flash().get("error")
-				</div>
-	     	}
+	     	@inputs.flashSuccessError()
 	        <div class="col-md-8">
 	        
-	        @helper.form(routes.GruposExpertos.definirAlumnos(grupoExperto.getId())){
+	        @helper.form(routes.GrupoExpertoController.definirAlumnos(grupoExperto.getId())){
 	            <div class="form-group">
 	                <div class="row">
 	                    <div class="col-md-6">
@@ -37,7 +32,7 @@
 	            <div class="form-group">
 	                <select multiple="multiple" size="10" name="alumnos[]" class="demo">
 	                	@grupoExperto.getAlumnos.map { alumno =>
-	                		<option value="@alumno.getDNI" selected="selected">@alumno.getNombreCompleto</option>
+	                		<option value="@alumno.getDNI()" selected="selected">@alumno.getNombreCompleto</option>
 	                	}
 	                </select>
 	                <script>
@@ -51,7 +46,7 @@
 	            </div>
 	            <div class="form-group">
 	                <button type="submit" class="btn btn-primary">Registrar alumnos</button>
-	                <a class="btn btn-default" href="@routes.GruposExpertos.index">Cancelar</a>
+	                <a class="btn btn-default" href="@routes.GrupoExpertoController.index">Cancelar</a>
 	            </div>
 	        }
 	        </div>

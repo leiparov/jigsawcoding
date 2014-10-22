@@ -33,7 +33,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import exceptions.DAOException;
 
 @Login.Requiere
-public class Alumnos extends Controller {
+public class AlumnoController extends Controller {
 
 	public static class AlumnoForm {
 		public String nombres;
@@ -84,9 +84,9 @@ public class Alumnos extends Controller {
 	private static final String ruta = "public/photos/";
 
 	/* Metodos para el docente */
-	public static Result GO_HOME_DOCENTE = redirect(routes.Alumnos.list(0, "dni",
+	public static Result GO_HOME_DOCENTE = redirect(routes.AlumnoController.list(0, "dni",
 			"asc", ""));
-	public static Result GO_HOME_ALUMNO = ok(views.html.alumnos.indexAlumno.render());
+	public static Result GO_HOME_ALUMNO = ok(views.html.indexAlumno.render());
 
 	public static Result list(int page, String sortBy, String order,
 			String filter) {
@@ -100,7 +100,6 @@ public class Alumnos extends Controller {
 		if(login.isTipo(Alumno.class)){
 			return GO_HOME_ALUMNO;
 		}else if (login.isTipo(Docente.class)){
-			Docente usuario = docenteService.obtener(login.getDNI());
 			return GO_HOME_DOCENTE;
 		}else{
 			return redirect(routes.Application.interfazLogin());
@@ -145,23 +144,23 @@ public class Alumnos extends Controller {
 			} catch (DAOException daoe) {
 				alumnoService.guardarAlumno(nuevoa);
 				flash("success", "El alumno fue creado correctamente");
-				return redirect(routes.Alumnos.index());
+				return redirect(routes.AlumnoController.index());
 			}
 			throw new DAOException(
 					"Email ya registrado, porfavor ingrese otro.");
 		} catch (DAOException daoe) {
 			flash("error", "Error al registrar: " + daoe.getMessage());
-			return redirect(routes.Alumnos.interfazNuevo());
+			return redirect(routes.AlumnoController.interfazNuevo());
 		} catch (NumberFormatException nfe) {
 			flash("error", "Error en DNI: Por favor ingrese 8 digitos.");
-			return redirect(routes.Alumnos.interfazNuevo());
+			return redirect(routes.AlumnoController.interfazNuevo());
 		} catch (PersistenceException pe) {
 			flash("error", "Error al registrar: DNI ya existente.");
-			return redirect(routes.Alumnos.interfazNuevo());
+			return redirect(routes.AlumnoController.interfazNuevo());
 		} catch (Exception e) {
 			e.printStackTrace();
 			flash("error", "Error desconocido: " + e.getMessage());
-			return redirect(routes.Alumnos.interfazNuevo());
+			return redirect(routes.AlumnoController.interfazNuevo());
 		}
 	}
 

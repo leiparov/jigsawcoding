@@ -4,7 +4,7 @@
 	@inputs.panel("NUEVO PROBLEMA", true){
 		@inputs.flashSuccessError()		
 		<div class="col-md-6">
-			@helper.form(routes.Problemas.registrarProblema, 'class -> "form-horizontal"){
+			@helper.form(routes.ProblemaController.registrarProblema, 'class -> "form-horizontal"){
 				<div class="col-md-12">					
 					<div class="form-group">
                     	<label class="col-sm-2 control-label" for="titulo">Titulo</label>

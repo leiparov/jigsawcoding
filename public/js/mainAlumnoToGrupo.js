@@ -41,7 +41,7 @@
 		if (inputBuscar.val().length == 0) {
 			return avisar("Escriba para buscar");
 		}
-		var call = jsRoutes.controllers.Alumnos.buscarAlumnos(inputBuscar.val());
+		var call = jsRoutes.controllers.AlumnoController.buscarAlumnos(inputBuscar.val());
 		$.ajax({
 			url : call.url,
 			type : call.type,
@@ -50,7 +50,7 @@
 	}
 	
 	function disponibles() {
-		var call2 = jsRoutes.controllers.Alumnos.disponibles();
+		var call2 = jsRoutes.controllers.AlumnoController.disponibles();
 		$.ajax({
 			url : call2.url,
 			type : call2.type,

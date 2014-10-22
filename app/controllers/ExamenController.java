@@ -24,8 +24,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import utils.ExpresionDuracion;
 import utils.FormatoFechaHora;
-
-public class Examenes extends Controller {
+@Login.Requiere
+public class ExamenController extends Controller {
 
 	private static UsuarioService usuarioService = new UsuarioService();
 	private static DocenteService docenteService = new DocenteService();
@@ -37,7 +37,7 @@ public class Examenes extends Controller {
 		return usuarioService.obtener(Login.obtener(ctx()).getDNI(),
 				Docente.class);
 	}
-	public static Result GO_HOME = redirect(routes.Examenes.list(0, "id",
+	public static Result GO_HOME = redirect(routes.ExamenController.list(0, "id",
 			"asc", ""));
 	public static Result list(int page, String sortBy, String order,
 			String filter) {
@@ -82,10 +82,10 @@ public class Examenes extends Controller {
 			e.setDocente(d);
 			examenService.crear(e);
 			flash("success", e.getTitulo() + " creado con éxito");
-			return redirect(routes.Examenes.index());
+			return redirect(routes.ExamenController.index());
 		} catch (ExamenForm.Exception e) {
 			flash("error", e.getMessage());
-			return redirect(routes.Examenes.index());
+			return redirect(routes.ExamenController.index());
 		}
 	}
 	public static Result guardarExamen(Integer id) {
@@ -96,10 +96,10 @@ public class Examenes extends Controller {
 			e = form.get().modificarExamen(e);
 			examenService.modificar(e);
 			flash("success", e.getTitulo() + " modificado con éxito");
-			return redirect(routes.Examenes.index());
+			return redirect(routes.ExamenController.index());
 		} catch (ExamenForm.Exception e) {
 			flash("error", e.getMessage());
-			return redirect(routes.Examenes.index());
+			return redirect(routes.ExamenController.index());
 		}
 	}
 

@@ -22,7 +22,7 @@
     }
     
     // Generate the link
-    routes.GruposExpertos.list(newPage, sortBy, order, currentFilter)
+    routes.GrupoExpertoController.list(newPage, sortBy, order, currentFilter)
     
 }
 
@@ -57,7 +57,7 @@
         </div>
         
         <div class="pull-right">
-        	<a class="pull-rigth btn btn btn-success" id="add" href="@routes.GruposExpertos.interfazNuevo()">Nuevo Grupo Experto</a>
+        	<a class="pull-rigth btn btn btn-success" id="add" href="@routes.GrupoExpertoController.interfazNuevo()">Nuevo Grupo Experto</a>
         </div>       
         
     </div>
@@ -86,10 +86,10 @@
                 <td>@grupoexperto.getNombre()</td>
                 <td>@grupoexperto.integrantes()</td>
                 <td>
-                	<a href="@routes.GruposExpertos.interfazAsignar(grupoexperto.getId())">Editar integrantes</a> 
+                	<a href="@routes.GrupoExpertoController.interfazAsignar(grupoexperto.getId())">Editar integrantes</a> 
                 </td>
                 <td>
-                	<a href="@routes.GruposExpertos.interfazEditar(grupoexperto.getId())">
+                	<a href="@routes.GrupoExpertoController.interfazEditar(grupoexperto.getId())">
                 		<span class="glyphicon glyphicon-pencil">
                 	</a>
                 </td>

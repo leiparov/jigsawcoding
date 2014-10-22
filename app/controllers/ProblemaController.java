@@ -20,7 +20,7 @@ import views.html.problemas.nuevoProblema;
 import com.fasterxml.jackson.databind.JsonNode;
 
 @Login.Requiere
-public class Problemas extends Controller {
+public class ProblemaController extends Controller {
 
 	private static UsuarioService usuarioService = new UsuarioService();
 	private static ProblemaService problemaService = new ProblemaService();
@@ -29,7 +29,7 @@ public class Problemas extends Controller {
 		return usuarioService.obtener(Login.obtener(ctx()).getDNI(),
 				Docente.class);
 	}
-	public static Result GO_HOME_PROBLEMAS = redirect(routes.Problemas.list(0,
+	public static Result GO_HOME_PROBLEMAS = redirect(routes.ProblemaController.list(0,
 			"id", "asc", ""));
 
 	public static Result list(int page, String sortBy, String order,
@@ -62,7 +62,7 @@ public class Problemas extends Controller {
 		} catch (Exception e) {
 			e.printStackTrace();
 			flash("error", "No se pudo guardar el Problema");
-			return redirect(routes.Problemas.index());
+			return redirect(routes.ProblemaController.index());
 		}
 	}
 
@@ -89,7 +89,7 @@ public class Problemas extends Controller {
 		} catch (Exception e) {
 			e.printStackTrace();
 			flash("error", "No se pudo actualizar el Problema");
-			return redirect(routes.Problemas.index());
+			return redirect(routes.ProblemaController.index());
 		}
 	}
 

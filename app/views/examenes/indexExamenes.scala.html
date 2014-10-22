@@ -22,7 +22,7 @@
     }
     
     // Generate the link
-    routes.Examenes.list(newPage, sortBy, order, currentFilter)
+    routes.ExamenController.list(newPage, sortBy, order, currentFilter)
 }
 @**********************************
 * Helper generating table headers *
@@ -51,7 +51,7 @@
         </div>
         
         <div class="pull-right">
-        	<a class="pull-rigth btn btn btn-success" id="add" href="@routes.Examenes.interfazNuevo()">Nuevo Examen</a>
+        	<a class="pull-rigth btn btn btn-success" id="add" href="@routes.ExamenController.interfazNuevo()">Nuevo Examen</a>
         </div> 
     </div>
     <br>
@@ -83,8 +83,8 @@
 	                    <td>@formatDate(examen.getTiempoCreacion, FormatoFechaHora.dateFormat)</td>
 	                    <td>@examen.getDuracion() min</td>
     					<td>
-	                    	<a href="@routes.Examenes.interfazDefinirHorario(examen.getId)">Definir horario</a> /  
-	                        <a href="@routes.Examenes.interfazEditar(examen.getId)">Editar</a>
+	                    	<a href="@routes.ExamenController.interfazDefinirHorario(examen.getId)">Definir horario</a> /  
+	                        <a href="@routes.ExamenController.interfazEditar(examen.getId)">Editar</a>
 	                    </td>
     				</tr>
     			}

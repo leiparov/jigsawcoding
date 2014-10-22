@@ -3,6 +3,7 @@ package models.services;
 import java.util.LinkedList;
 import java.util.List;
 
+import play.Logger;
 import models.daos.AlumnoDAO;
 import models.daos.GrupoExpertoDAO;
 import models.daos.UsuarioDAO;
@@ -70,6 +71,7 @@ public class GrupoExpertoService  {
             alumnosFuturos.add(alumnoDAO.obtener(dniAlumno));
         }        
         grupo.setAlumnos(alumnosFuturos);
+        Logger.info(grupo.getAlumnos().get(0).toString());
         grupoExpertoDAO.guardarAlumnos(grupo);
     }
 

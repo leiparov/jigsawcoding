@@ -18,7 +18,7 @@ import play.mvc.Result;
 import views.html.gruposexpertos.*;
 
 @Login.Requiere
-public class GruposExpertos extends Controller {
+public class GrupoExpertoController extends Controller {
 
 	private static UsuarioService usuarioService = new UsuarioService();
 	private static GrupoExpertoService grupoExpertoService = new GrupoExpertoService();
@@ -28,7 +28,7 @@ public class GruposExpertos extends Controller {
 				Docente.class);
 	}
 
-	public static Result GO_HOME = redirect(routes.GruposExpertos.list(0,
+	public static Result GO_HOME = redirect(routes.GrupoExpertoController.list(0,
 			"id", "asc", ""));
 
 	public static Result list(int page, String sortBy, String order,
@@ -52,22 +52,21 @@ public class GruposExpertos extends Controller {
     }
 	
 	public static Result definirAlumnos(Integer id){
-		//return TODO;
         try {
             return tryDefinirAlumnos(id);
         } catch (DAOException.NoEncontradoException nee) {
             if(nee.esClase(GrupoExperto.class)){
                 flash("error", "El grupo experto no existe");
-                return redirect(routes.GruposExpertos.index());
+                return redirect(routes.GrupoExpertoController.index());
             }else if(nee.esClase(Alumno.class)){
                 flash("error", "Un alumno no existe");
-                return redirect(routes.GruposExpertos.interfazAsignar(id));
+                return redirect(routes.GrupoExpertoController.interfazAsignar(id));
             }else{
                 throw nee;
             }
         } catch (Exception e) {
             flash("error", "Error desconocido: " + e.getMessage());
-            return redirect(routes.GruposExpertos.interfazAsignar(id));
+            return redirect(routes.GrupoExpertoController.interfazAsignar(id));
         }
     }
 	private static Result tryDefinirAlumnos(Integer id) {
@@ -76,11 +75,11 @@ public class GruposExpertos extends Controller {
         List<Integer> dnialumnos = form.get().alumnos;
         if(grupo.getMaximoAlumnos() < dnialumnos.size()){
         	flash("error", "El grupo experto debe tener " + grupo.getMaximoAlumnos() + " integrantes");
-        	return redirect(routes.GruposExpertos.interfazAsignar(id));
+        	return redirect(routes.GrupoExpertoController.interfazAsignar(id));
         }	
         grupoExpertoService.actualizarAlumnos(grupo, dnialumnos);
         flash("success", "Alumnos asignados con éxito");
-        return redirect(routes.GruposExpertos.index());
+        return redirect(routes.GrupoExpertoController.index());
     }
 
 	public static Result registrarGrupoExperto() {

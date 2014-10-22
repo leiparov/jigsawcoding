@@ -2,7 +2,7 @@
 @(id: Integer, problemaForm: play.data.Form[models.entities.Problema])
 @main(menuDocente()){
 	@inputs.panel("EDITAR PROBLEMA", true){
-		@helper.form(routes.Problemas.actualizarProblema(id), 'class -> "form-horizontal"){
+		@helper.form(routes.ProblemaController.actualizarProblema(id), 'class -> "form-horizontal"){
 			<fieldset>				
 				<div class="form-group">
                    	<label class="col-sm-2 control-label" for="titulo">Titulo</label>
@@ -28,7 +28,7 @@
 			</fieldset>
 		}
 		
-		    @helper.form(routes.Problemas.eliminarProblema(id), 'class -> "form-horizontal") {
+		    @helper.form(routes.ProblemaController.eliminarProblema(id), 'class -> "form-horizontal") {
 		        <input type="submit" value="Borrar problema" class="btn btn-danger">
 		    }
 	    

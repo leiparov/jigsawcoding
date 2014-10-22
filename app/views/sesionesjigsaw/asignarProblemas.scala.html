@@ -6,7 +6,7 @@
 		@inputs.flashSuccessError()
 		<p class="bg-info">Seleccione el Grupo Experto y asigne el problema que dicho grupo deberá desarrollar</p>
 		
-		@helper.form(routes.SesionesJigsaw.guardarProblemas(id)){
+		@helper.form(routes.SesionJigsawController.guardarProblemas(id)){
 			@for( i<-1 to sesionJigsaw.getTotalGruposExpertos()){
 				<table class="table">
 					<tr>
@@ -42,7 +42,7 @@
 			<div class="form-group">
             	<div class="col-sm-offset-5 col-sm-7">
 	                <button type="submit" class="btn btn-primary">Guardar</button>
-	                <a class="btn btn-default" href="@routes.SesionesJigsaw.index">Cancelar</a>
+	                <a class="btn btn-default" href="@routes.SesionJigsawController.index">Cancelar</a>
                 </div>
             </div>
 		}		

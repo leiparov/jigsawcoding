@@ -19,7 +19,7 @@
 		} 
 		
 		<div class="col-md-6">
-			@helper.form(routes.GruposExpertos.registrarGrupoExperto, 'class -> "form-horizontal"){
+			@helper.form(routes.GrupoExpertoController.registrarGrupoExperto, 'class -> "form-horizontal"){
 				<div class="col-md-12">					
 					<div class="form-group">
                     	<label class="col-sm-4 control-label" for="nombre">Nombre</label>
@@ -44,7 +44,7 @@
                   	<div class="form-group">
 					    <div class="col-sm-offset-4 col-sm-8">
 					      <button type="submit" class="btn btn-primary">Guardar</button>
-					      <a class="btn btn-default" href="@routes.GruposExpertos.index">Cancelar</a>
+					      <a class="btn btn-default" href="@routes.GrupoExpertoController.index">Cancelar</a>
 					    </div>
 				  	</div>					
 				</div>

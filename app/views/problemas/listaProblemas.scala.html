@@ -22,7 +22,7 @@
     }
     
     // Generate the link
-    routes.Problemas.list(newPage, sortBy, order, currentFilter)
+    routes.ProblemaController.list(newPage, sortBy, order, currentFilter)
     
 }
 
@@ -52,7 +52,7 @@
         </div>
         
         <div class="pull-right">
-        	<a class="pull-rigth btn btn btn-success" id="add" href="@routes.Problemas.interfazNuevo()">Nuevo problema</a>
+        	<a class="pull-rigth btn btn btn-success" id="add" href="@routes.ProblemaController.interfazNuevo()">Nuevo problema</a>
         </div>       
         
     </div>
@@ -80,7 +80,7 @@
             	<td>@problema.getId()</td>
                 <td>@problema.getTitulo()</td>
                 <td>@problema.getEnunciado()</td>
-                <td><a href="@routes.Problemas.interfazEditar(problema.getId())">
+                <td><a href="@routes.ProblemaController.interfazEditar(problema.getId())">
                 	<span class="glyphicon glyphicon-pencil"></a>
                 </td>
            	</tr>

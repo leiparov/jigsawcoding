@@ -2,7 +2,7 @@
 @(id: Integer, grupoExpertoForm: play.data.Form[models.entities.GrupoExperto])
 @main(menuDocente()){
 	@inputs.panel("EDITAR PROBLEMA", true){
-		@helper.form(routes.GruposExpertos.actualizarGrupoExperto(id), 'class -> "form-horizontal"){
+		@helper.form(routes.GrupoExpertoController.actualizarGrupoExperto(id), 'class -> "form-horizontal"){
 			<fieldset>				
 				<div class="form-group">
                    	<label class="col-sm-4 control-label" for="nombre">Nombre</label>
@@ -30,13 +30,13 @@
                	<div class="form-group">
 				    <div class="col-sm-offset-4 col-sm-6">
 				      <button type="submit" class="btn btn-primary">Guardar</button>
-				      <a class="btn btn-default" href="@routes.GruposExpertos.index">Cancelar</a>
+				      <a class="btn btn-default" href="@routes.GrupoExpertoController.index">Cancelar</a>
 				    </div>
 			  	</div>
 			</fieldset>
 		}
 		
-		    @helper.form(routes.GruposExpertos.eliminarGrupoExperto(id), 'class -> "form-horizontal") {
+		    @helper.form(routes.GrupoExpertoController.eliminarGrupoExperto(id), 'class -> "form-horizontal") {
 		        <input type="submit" value="Borrar Grupo Experto" class="btn btn-danger">
 		    }
 	    

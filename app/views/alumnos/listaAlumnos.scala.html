@@ -22,7 +22,7 @@
     }
     
     // Generate the link
-    routes.Alumnos.list(newPage, sortBy, order, currentFilter)
+    routes.AlumnoController.list(newPage, sortBy, order, currentFilter)
     
 }
 
@@ -57,7 +57,7 @@
         </div>
         
         <div class="pull-right">
-        	<a class="pull-rigth btn btn btn-success" id="add" href="@routes.Alumnos.interfazNuevo()">Nuevo Alumno</a>
+        	<a class="pull-rigth btn btn btn-success" id="add" href="@routes.AlumnoController.interfazNuevo()">Nuevo Alumno</a>
         </div>       
         
     </div>
@@ -87,7 +87,7 @@
                 <td>@alumno.getApellidoPaterno()</td>
                 <td>@alumno.getApellidoMaterno()</td>
                 <td>@alumno.getNombres()</td>
-                <td><a href="@routes.Alumnos.interfazEditar(alumno.getDNI())">
+                <td><a href="@routes.AlumnoController.interfazEditar(alumno.getDNI())">
                 	<span class="glyphicon glyphicon-pencil"></a>
                 </td>
            	</tr>
