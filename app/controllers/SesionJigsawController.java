@@ -3,6 +3,7 @@ package controllers;
 import java.util.LinkedList;
 import java.util.List;
 
+import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.GrupoExperto;
 import models.entities.GrupoExpertoProblema;
@@ -37,6 +38,7 @@ public class SesionJigsawController extends Controller {
 				Docente.class);
 	}
 
+	/*Módulo DOCENTE*/
 	public static Result GO_HOME = redirect(routes.SesionJigsawController.list(0, "id",
 			"asc", ""));
 
@@ -238,6 +240,25 @@ public class SesionJigsawController extends Controller {
 		private GrupoExperto getGrupoExperto(int i){
 			return grupoExpertoService.obtenerGrupoExperto(grupos.get(i));
 		}
+	}
+	
+	/*Módulo ALUMNO*/
+	private static Alumno getAlumno() {
+		return usuarioService.obtener(Login.obtener(ctx()).getDNI(),
+				Alumno.class);
+	}
+	
+	public static Result GO_HOME_ALUMNO = redirect(routes.SesionJigsawController.listForAlumno(0, "id",
+			"asc", ""));
+	
+	public static Result listForAlumno(int page, String sortBy, String order,
+			String filter) {
+		return ok(views.html.sesionesjigsaw.indexAlumno.render(
+				sesionJigsawService.pageForAlumno(getAlumno(), page, 10, sortBy, order,
+						filter), sortBy, order, filter));
+	}
+	public static Result indexAlumno(){
+		return noContent();
 	}
 }
 

@@ -37,39 +37,28 @@ public class ChatRoom extends UntypedActor {
 				Duration.create(1, SECONDS));
 
 		if ("OK".equals(result)) {
-
 			// For each event received on the socket,
 			in.onMessage(new Callback<JsonNode>() {
 				public void invoke(JsonNode event) {
-
 					// Send a Talk message to the room.
 					defaultRoom.tell(new Talk(username, event.get("text")
 							.asText()), null);
-
 				}
 			});
-
 			// When the socket is closed.
 			in.onClose(new Callback0() {
 				public void invoke() {
-
 					// Send a Quit message to the room.
 					defaultRoom.tell(new Quit(username), null);
-
 				}
 			});
-
 		} else {
-
 			// Cannot connect, create a Json error.
 			ObjectNode error = Json.newObject();
 			error.put("error", result);
-
 			// Send the error to the socket.
 			out.write(error);
-
 		}
-
 	}
 
 	// Members of this room.
@@ -109,7 +98,7 @@ public class ChatRoom extends UntypedActor {
 			event.put("kind", kind);
 			event.put("user", user);
 			event.put("message", text);
-			event.put("icon", user.substring(0,2).toUpperCase());
+			event.put("icon", user.substring(0, 2).toUpperCase());
 			ArrayNode m = event.putArray("members");
 			for (String u : members.keySet()) {
 				m.add(u);

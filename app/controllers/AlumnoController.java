@@ -83,7 +83,7 @@ public class AlumnoController extends Controller {
 			+ "@+{},.-<>;:_[]*^`~";
 	private static final String ruta = "public/photos/";
 
-	/* Metodos para el docente */
+	/* Módulo DOCENTE */
 	public static Result GO_HOME_DOCENTE = redirect(routes.AlumnoController.list(0, "dni",
 			"asc", ""));
 
@@ -93,13 +93,17 @@ public class AlumnoController extends Controller {
 				alumnoService.page(page, 10, sortBy, order, filter), sortBy,
 				order, filter));
 	}
+	
+	public static Result indexDocente(){
+		return GO_HOME_DOCENTE;
+	}
 
 	public static Result index() {
 		Login login = Login.obtener(ctx());
 		if(login.isTipo(Alumno.class)){
-			return homeAlumno();
+			return indexAlumno();
 		}else if (login.isTipo(Docente.class)){
-			return GO_HOME_DOCENTE;
+			return indexDocente();
 		}else{
 			return redirect(routes.Application.interfazLogin());
 		}
@@ -287,11 +291,9 @@ public class AlumnoController extends Controller {
 		return redirect(routes.Application.interfazCambiarContrasenia());
 	}
 
-	/*Métodos para el Alumno*/
+	/*Módulo ALUMNO*/
 	
-	public static Result homeAlumno (){
-		Alumno a = getAlumno();
-		//a.getGruposExpertos()
+	public static Result indexAlumno(){
 		return ok(views.html.indexAlumno.render());
 	}
 }

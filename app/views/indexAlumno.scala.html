@@ -1,10 +1,7 @@
 @* indexAlumno Template File *@
 @main(menuAlumno()){
-	<div class="col-md-12"><br></div>
-	<div class="col-md-12"><br></div>
-	<div class="col-md-12"><br></div>
-	<div class="col-md-12"><br></div>
 	<div class="container">
+		@inputs.flashSuccessError()
 		@interfazChat()
 	</div>
 	<script type="text/javascript" charset="utf-8" src="@routes.ChatController.chatRoomJs("")"></script>

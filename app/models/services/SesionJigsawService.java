@@ -4,6 +4,7 @@ import java.util.List;
 
 import models.daos.SesionJigsawDAO;
 import models.daos.UsuarioDAO;
+import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.GrupoExpertoProblema;
 import models.entities.SesionJigsaw;
@@ -52,6 +53,12 @@ public class SesionJigsawService {
 	public Page<SesionJigsaw> page(Docente docente, int page, int pageSize,
 			String sortBy, String order, String filter) {
 		return sesionJigsawDAO.page(docente, page, pageSize, sortBy, order,
+				filter);
+	}
+	
+	public Page<SesionJigsaw> pageForAlumno(Alumno alumno, int page, int pageSize,
+			String sortBy, String order, String filter) {
+		return sesionJigsawDAO.pageForAlumno(alumno, page, pageSize, sortBy, order,
 				filter);
 	}
 

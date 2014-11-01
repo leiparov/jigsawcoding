@@ -5,6 +5,7 @@ import java.util.List;
 
 import models.daos.AlumnoDAO;
 import models.entities.Alumno;
+import models.entities.SesionJigsaw;
 
 import com.avaje.ebean.Page;
 
@@ -41,5 +42,8 @@ public class AlumnoService {
 		return alumnoDAO.page(page, pageSize, sortBy, order, filter);
 	}
 	
+	public List<SesionJigsaw> sesionesActivas(Alumno alumno){
+		
+	}
 
 }

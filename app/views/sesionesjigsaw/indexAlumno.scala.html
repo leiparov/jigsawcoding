@@ -1,0 +1,133 @@
+@* listaSesionesJigsaw Template File *@
+@(currentPage: com.avaje.ebean.Page[models.entities.SesionJigsaw], 
+	currentSortBy: String, currentOrder: String, currentFilter: String)
+@****************************************
+* Helper generating navigation links    *
+****************************************@
+@link(newPage:Int, newSortBy:String) = @{
+    
+    var sortBy = currentSortBy
+    var order = currentOrder
+    
+    if(newSortBy != null) {
+        sortBy = newSortBy
+        if(currentSortBy == newSortBy) {
+            if(currentOrder == "asc") {
+                order = "desc"
+            } else {
+                order = "asc"
+            }
+        } else {
+            order = "asc"
+        }
+    }    
+    // Generate the link
+    routes.SesionJigsawController.list(newPage, sortBy, order, currentFilter)
+}
+@**********************************
+* Helper generating table headers *
+***********************************@
+@header(key:String, title:String) = {
+    <th class="@key.replace(".","_") header @if(currentSortBy == key) @{if(currentOrder == "asc") "headerSortDown" else "headerSortUp"}">
+        <a href="@link(0, key)">@title</a>
+    </th>
+}
+@main(menuDocente()){
+	<h1 id="homeTitle">@Messages("sesionesJigsaw.list.title", currentPage.getTotalRowCount)</h1>
+	@inputs.flashSuccessError()
+    <div id="actions" class="row">
+        <div class="pull-left">
+	        <form action="@link(0, "id")" method="GET" class="form-inline" role="form">            
+	            <div class="form-group">
+	            	<input class="form-control" type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Buscar...">
+				</div>
+				<button type="submit" class="btn btn-primary" id="searchsubmit">Buscar</button>
+	        </form>
+        </div>        
+        <div class="pull-right">
+        	<a class="pull-rigth btn btn btn-success" id="add" href="@routes.SesionJigsawController.interfazNuevo()">Nueva Sesion Jigsaw</a>
+        </div> 
+    </div>
+    <br>
+    <div class="row">
+    @if(currentPage.getTotalRowCount == 0) {  
+    <div class="col-md-12 ">
+    	<div class="well">
+            <em>Nada para mostrar</em>
+        </div>
+    </div>
+    } else {
+      <div class="col-md-12"><br></div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    @header("id", "ID")                    
+                    @header("tema", "TEMA")
+                    @header("inicioReunionExpertos", "REU_EXPERTOS_INICIO")
+                    @header("duracionReunionExpertos", "REU_EXPERTOS_DURACIÓN")
+                    @header("inicioReunionJigsaw", "REU_JIGSAW_INICIO")
+                    @header("duracionReunionJigsaw", "REU_JIGSAW_DURACIÓN")
+                    @header("totalGruposExpertos", "GRUPOS EXPERTOS")
+                    @header("id", "PROBLEMAS ASIGNADOS A GRUPOS EXPERTOS")
+                </tr>
+            </thead>
+            <tbody>
+            @currentPage.getList.map { sesionJigsaw =>
+           	<tr>
+            	<td>@sesionJigsaw.getId()</td>
+            	
+            	<td>@sesionJigsaw.getTema()</td>	
+
+            	<td>@sesionJigsaw.getInicioReunionExpertos().format(FormatoFechaHora.dateTimeFormat12)</td>
+            	<td>@sesionJigsaw.getDuracionReunionExpertos()</td>
+            	<td>@sesionJigsaw.getInicioReunionJigsaw().format(FormatoFechaHora.dateTimeFormat12)</td>
+            	<td>@sesionJigsaw.getDuracionReunionJigsaw()</td>
+            	<td>@sesionJigsaw.getTotalGruposExpertos()</td>
+            	<td>
+            		@if(sesionJigsaw.getPares().size() <= 0){
+                	<a href="@routes.SesionJigsawController.asignarProblemas(sesionJigsaw.getId())">
+                		<span>Asignar problemas</span>
+                	</a>
+                	}else{
+                		<span>@sesionJigsaw.mostrarPares()</span>
+                	}
+                </td>
+                <td>
+                	<a href="@routes.SesionJigsawController.editarSesionJigsaw(sesionJigsaw.getId())">
+                		<span class="glyphicon glyphicon-pencil">
+                	</a>
+                </td>
+           	</tr>
+           	}      
+            </tbody>
+        </table>
+		
+        <div id="pagination" class="col-md-12">
+            <ul class="pager">
+                @if(currentPage.hasPrev) {
+                    <li class="previous">
+                        <a href="@link(currentPage.getPageIndex - 1, null)">&larr; Anterior</a>
+                    </li>
+                } else {
+                    <li class="previous disabled">
+                        <a>&larr; Anterior</a>
+                    </li>
+                }
+                <li class="active">
+                    <a>Mostrando @currentPage.getDisplayXtoYofZ(" - "," de ")</a>
+                </li>
+                @if(currentPage.hasNext) {
+                    <li class="next">
+                        <a href="@link(currentPage.getPageIndex + 1, null)">Siguiente &rarr;</a>
+                    </li>
+                } else {
+                    <li class="next disabled">
+                        <a>Siguiente &rarr;</a>
+                    </li>
+                }
+            </ul>
+        </div>        
+    }
+    </div> 
+}
+

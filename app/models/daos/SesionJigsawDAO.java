@@ -2,6 +2,7 @@ package models.daos;
 
 import java.util.List;
 
+import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.GrupoExpertoProblema;
 import models.entities.SesionJigsaw;
@@ -43,6 +44,14 @@ public class SesionJigsawDAO {
 	public Page<SesionJigsaw> page(Docente docente, int page, int pageSize,
 			String sortBy, String order, String filter) {
 		return find.where().eq("docente_dni", docente.getDNI())
+				.orderBy(sortBy + " " + order).findPagingList(pageSize)
+				.setFetchAhead(false).getPage(page);
+	}
+	public Page<SesionJigsaw> pageForAlumno(Alumno alumno, int page, int pageSize,
+			String sortBy, String order, String filter) {
+		
+		
+		return find.where().eq("alumno_dni", alumno.getDNI())
 				.orderBy(sortBy + " " + order).findPagingList(pageSize)
 				.setFetchAhead(false).getPage(page);
 	}
