@@ -1,5 +1,6 @@
 package models.daos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import models.entities.Alumno;
@@ -47,11 +48,20 @@ public class SesionJigsawDAO {
 				.orderBy(sortBy + " " + order).findPagingList(pageSize)
 				.setFetchAhead(false).getPage(page);
 	}
-	public Page<SesionJigsaw> pageForAlumno(Alumno alumno, int page, int pageSize,
-			String sortBy, String order, String filter) {
-		
-		
-		return find.where().eq("alumno_dni", alumno.getDNI())
+	public Page<SesionJigsaw> pageForAlumno(Alumno alumno, int page,
+			int pageSize, String sortBy, String order, String filter) {
+		SqlQuery sql = Ebean
+				.createSqlQuery("select sesion_jigsaw_id from grupo_experto_problema"
+						+ " where grupo_experto_id in (select grupo_experto_id"
+						+ " from grupo_experto_usuario where usuario_dni = :dni)");
+		sql.setParameter("dni", alumno.getDNI());
+		List<SqlRow> resultado = sql.findList();
+		List<Integer> listaIDSesionesJigsaw = new ArrayList<Integer>();
+		for (SqlRow row : resultado){
+			listaIDSesionesJigsaw.add(row.getInteger("sesion_jigsaw_id"));
+		}		
+		return find.where().in("id", listaIDSesionesJigsaw)
+				.ilike("tema", "%" + filter + "%")
 				.orderBy(sortBy + " " + order).findPagingList(pageSize)
 				.setFetchAhead(false).getPage(page);
 	}

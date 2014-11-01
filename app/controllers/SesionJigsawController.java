@@ -258,7 +258,7 @@ public class SesionJigsawController extends Controller {
 						filter), sortBy, order, filter));
 	}
 	public static Result indexAlumno(){
-		return noContent();
+		return GO_HOME_ALUMNO;
 	}
 }
 
