@@ -5,6 +5,7 @@ import java.util.List;
 
 import models.entities.Alumno;
 import models.entities.Docente;
+import models.entities.EtapaSesionJigsaw;
 import models.entities.GrupoExperto;
 import models.entities.GrupoExpertoProblema;
 import models.entities.Problema;
@@ -69,7 +70,6 @@ public class SesionJigsawController extends Controller {
 				return interfazNuevo();
 			} else {
 				s = form.get().actualizar(s);				
-				//return ok(views.html.sesionesjigsaw.asignarProblemas(s));
 				sesionJigsawService.guardarSesionJigsaw(getDocente(), s);
 				flash("success", "SesionJigsaw registrada con éxito");
 				return GO_HOME;
@@ -160,6 +160,7 @@ public class SesionJigsawController extends Controller {
 		public SesionJigsaw entidad() {
 			SesionJigsaw s = new SesionJigsaw();
 			s.setDocente(getDocente());
+			s.setEtapa(EtapaSesionJigsaw.REUNIONEXPERTOS);
 			return s;
 		}
 
@@ -167,6 +168,7 @@ public class SesionJigsawController extends Controller {
 
 			s.setTotalGruposExpertos(Integer.parseInt(totalGruposExpertos));
 			s.setTema(tema);
+			s.setEtapa(EtapaSesionJigsaw.REUNIONEXPERTOS);
 
 			ExpresionDuracion expRE = new ExpresionDuracion(duracionREHoras,
 					duracionREMinutos);
@@ -253,7 +255,7 @@ public class SesionJigsawController extends Controller {
 	
 	public static Result listForAlumno(int page, String sortBy, String order,
 			String filter) {
-		return ok(views.html.sesionesjigsaw.indexAlumno.render(
+		return ok(views.html.perfilalumno.listaSesionesJigsaw.render(
 				sesionJigsawService.pageForAlumno(getAlumno(), page, 10, sortBy, order,
 						filter), sortBy, order, filter));
 	}

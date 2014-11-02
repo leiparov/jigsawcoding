@@ -20,14 +20,10 @@ public class Global extends GlobalSettings {
             List<?> lista = (List<?>) Yaml.load("bootstrap-data.yml");
             for(Object o : lista){
                 Ebean.save(o);
-                /*if(o instanceof Docente){
-                    Docente d = (Docente)o;
-                    if(d.getGrupos() != null) for(Grupo g : d.getGrupos())
-                        Ebean.saveManyToManyAssociations(g, "alumnos");
-                }*/
             }
             udao.cambiarPassword(45407679, "1234");
             udao.cambiarPassword(47614910, "1234");
         }
     }
+    
 }

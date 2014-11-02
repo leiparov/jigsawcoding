@@ -17,7 +17,6 @@ public class SesionJigsawService {
 	private static SesionJigsawDAO sesionJigsawDAO = new SesionJigsawDAO();
 
 	public void guardarSesionJigsaw(Docente docente, SesionJigsaw sesionJigsaw) {
-
 		sesionJigsawDAO.guardarSesionJigsaw(sesionJigsaw);
 		int indiceActual = docente.getSesionesJigsaw().indexOf(sesionJigsaw);
 		if (indiceActual == -1) {

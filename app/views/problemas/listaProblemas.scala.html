@@ -69,7 +69,6 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    @header("id", "ID")
                     @header("titulo", "Titulo")
                     @header("enunciado", "Enunciado del problema")
                 </tr>
@@ -77,7 +76,6 @@
             <tbody>
             @currentPage.getList.map { problema =>
            	<tr>
-            	<td>@problema.getId()</td>
                 <td>@problema.getTitulo()</td>
                 <td>@problema.getEnunciado()</td>
                 <td><a href="@routes.ProblemaController.interfazEditar(problema.getId())">

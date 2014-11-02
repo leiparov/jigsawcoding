@@ -56,7 +56,7 @@
     
     function obtenerResultados(){
         if(inputBuscar.val().length == 0) return avisar("Escriba para buscar");
-        var call = jsRoutes.controllers.Problemas.buscarProblemas(inputBuscar.val());
+        var call = jsRoutes.controllers.ProblemaController.buscarProblemas(inputBuscar.val());
         $.ajax({
             url: call.url,
             type: call.type,
@@ -172,7 +172,7 @@
         if(preguntaEnProceso != null) return false;
         var that = $(this);
         if(that.hasClass('inactive')) return false;
-        var call = jsRoutes.controllers.Examenes.renderPreguntaEdicion(that.data('idPregunta'));
+        var call = jsRoutes.controllers.ExamenController.renderPreguntaEdicion(that.data('idPregunta'));
         $.ajax({
             url: call.url,
             type: call.type,

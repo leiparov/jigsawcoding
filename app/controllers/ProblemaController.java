@@ -138,7 +138,7 @@ public class ProblemaController extends Controller {
 	public static Result interfazResolver(Integer id) {
 		try {
 			Problema p = problemaService.obtenerProblema(id);
-			return ok(views.html.problemas.resolverProblema.render(p));
+			return ok(views.html.perfilalumno.resolverProblema.render(p));
 		} catch (NoEncontradoException e) {
 			flash("error", "No existe el problema " + e.getMessage());
 			return indexAlumno();

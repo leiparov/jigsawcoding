@@ -1,8 +1,8 @@
-#Usuarios
+#Alumnos
 
 - &silvana !!models.entities.Alumno
      DNI:       47614910
-     email:     helway.sm@gmail.com
+     email:     smalpicam@gmail.com
      nombres:    Silvana
      password:   1234
      apellidoPaterno:  Malpica
@@ -11,27 +11,70 @@
 
 - &martin !!models.entities.Alumno
      DNI:       12345678
-     email:     alu1@gmail.com
+     email:     martin@gmail.com
      nombres:    Martin
      password:   1234
      apellidoPaterno:  Rojas
      apellidoMaterno: Bustamante
      sexo:      MASCULINO
 
-- &leo !!models.entities.Alumno
-     DNI:       23456789
-     email:     alu2@gmail.com
-     nombres:    Leo
+- &franco !!models.entities.Alumno
+     DNI:       33333333
+     email:     franco@gmail.com
+     nombres:    Franco
      password:   1234
-     apellidoPaterno:  Escribo
-     apellidoMaterno: Hablo
+     apellidoPaterno:  Cano
+     apellidoMaterno: Erazo
      sexo:      MASCULINO     
+
+- &gustavo !!models.entities.Alumno
+     DNI:       11111111
+     email:     rondo@gmail.com
+     nombres:   Gustavo
+     password:   1234
+     apellidoPaterno:  Rondo
+     apellidoMaterno: Gutierrez
+     sexo:      MASCULINO 
+
+- &daniel !!models.entities.Alumno
+     DNI:       22222222
+     email:     erazo@gmail.com
+     nombres:   Daniel
+     password:   1234
+     apellidoPaterno:  Erazo
+     apellidoMaterno: Gonzales
+     sexo:      MASCULINO
+     
 #Docentes
 
-- !!models.entities.Docente
+- &D1 !!models.entities.Docente
      DNI:       45407679
      email:     leiparov@gmail.com
      nombres:    Leibnitz Pavel
      apellidoPaterno:  Rojas
      apellidoMaterno: Bustamante
      sexo:      MASCULINO
+
+#Problemas
+
+- !!models.entities.Problema
+     titulo: Hola mundo
+     enunciado: Elaborar un programa que imprima el mensaje "Hola Mundo"
+     docente: *D1
+
+- !!models.entities.Problema
+     titulo: Fibonacci
+     enunciado: Calcular los n primeros términos de la serie de Fibonacci
+     docente: *D1
+
+- !!models.entities.Problema
+     titulo: Suma
+     enunciado: Determinar un algoritmo que permita determinar la suma de 2 números
+     docente: *D1
+
+- !!models.entities.Problema
+     titulo: Asteriscos
+     enunciado: Diseñar un algoritmo que muestra la siguiente serie
+     docente: *D1
+
+     

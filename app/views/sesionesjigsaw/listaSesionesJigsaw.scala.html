@@ -32,6 +32,27 @@
         <a href="@link(0, key)">@title</a>
     </th>
 }
+@splural(n: Integer) = @{
+	if(n==1) "" else "s"
+}
+@stringDuracionRE(sesionJigsaw: models.entities.SesionJigsaw) = @{
+	val horas = sesionJigsaw.getDuracionReunionExpertos() / 60
+	val minutos = sesionJigsaw.getDuracionReunionExpertos() % 60
+	(horas, minutos) match {
+		case (0, _) => minutos + " minuto" + splural(minutos)
+		case (_, 0) => horas + " hora" + splural(horas)
+		case _ => horas + " hora" + splural(horas) + ", " + minutos + " minuto" + splural(minutos)
+	}
+}
+@stringDuracionRJ(sesionJigsaw: models.entities.SesionJigsaw) = @{
+	val horas = sesionJigsaw.getDuracionReunionJigsaw() / 60
+	val minutos = sesionJigsaw.getDuracionReunionJigsaw() % 60
+	(horas, minutos) match {
+		case (0, _) => minutos + " minuto" + splural(minutos)
+		case (_, 0) => horas + " hora" + splural(horas)
+		case _ => horas + " hora" + splural(horas) + ", " + minutos + " minuto" + splural(minutos)
+	}
+}
 @main(menuDocente()){
 	<h1 id="homeTitle">@Messages("sesionesJigsaw.list.title", currentPage.getTotalRowCount)</h1>
 	@inputs.flashSuccessError()
@@ -58,30 +79,29 @@
     </div>
     } else {
       <div class="col-md-12"><br></div>
+      <div class="table-responsive">
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    @header("id", "ID")                    
                     @header("tema", "TEMA")
-                    @header("inicioReunionExpertos", "REU_EXPERTOS_INICIO")
-                    @header("duracionReunionExpertos", "REU_EXPERTOS_DURACIÓN")
-                    @header("inicioReunionJigsaw", "REU_JIGSAW_INICIO")
-                    @header("duracionReunionJigsaw", "REU_JIGSAW_DURACIÓN")
-                    @header("totalGruposExpertos", "GRUPOS EXPERTOS")
+                    @header("inicioReunionExpertos", "REU_EXPERTOS INICIO")
+                    @header("duracionReunionExpertos", "REU_EXPERTOS DURACIÓN")
+                    @header("inicioReunionJigsaw", "REU_JIGSAW INICIO")
+                    @header("duracionReunionJigsaw", "REU_JIGSAW DURACIÓN")
+                    @header("totalGruposExpertos", "TOTAL GRUPOS EXPERTOS")
                     @header("id", "PROBLEMAS ASIGNADOS A GRUPOS EXPERTOS")
+                    @header("etapa", "ETAPA")
                 </tr>
             </thead>
             <tbody>
             @currentPage.getList.map { sesionJigsaw =>
-           	<tr>
-            	<td>@sesionJigsaw.getId()</td>
-            	
-            	<td>@sesionJigsaw.getTema()</td>	
+           	<tr>            	
+            	<td>@sesionJigsaw.getTema()</td>
 
             	<td>@sesionJigsaw.getInicioReunionExpertos().format(FormatoFechaHora.dateTimeFormat12)</td>
-            	<td>@sesionJigsaw.getDuracionReunionExpertos()</td>
+            	<td>@stringDuracionRE(sesionJigsaw)</td>
             	<td>@sesionJigsaw.getInicioReunionJigsaw().format(FormatoFechaHora.dateTimeFormat12)</td>
-            	<td>@sesionJigsaw.getDuracionReunionJigsaw()</td>
+            	<td>@stringDuracionRJ(sesionJigsaw)</td>
             	<td>@sesionJigsaw.getTotalGruposExpertos()</td>
             	<td>
             		@if(sesionJigsaw.getPares().size() <= 0){
@@ -92,6 +112,7 @@
                 		<span>@sesionJigsaw.mostrarPares()</span>
                 	}
                 </td>
+                <td>@sesionJigsaw.getEtapa()</td>
                 <td>
                 	<a href="@routes.SesionJigsawController.editarSesionJigsaw(sesionJigsaw.getId())">
                 		<span class="glyphicon glyphicon-pencil">
@@ -101,7 +122,7 @@
            	}      
             </tbody>
         </table>
-		
+		</div>
         <div id="pagination" class="col-md-12">
             <ul class="pager">
                 @if(currentPage.hasPrev) {

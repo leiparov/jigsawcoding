@@ -58,8 +58,9 @@ create table sesion_jigsaw (
   inicio_reunion_jigsaw     datetime,
   duracion_reunion_jigsaw   integer,
   total_grupos_expertos     integer,
-  etapa                     varchar(255),
+  etapa                     integer,
   docente_dni               integer,
+  constraint ck_sesion_jigsaw_etapa check (etapa in (0,1,2)),
   constraint pk_sesion_jigsaw primary key (id))
 ;
 

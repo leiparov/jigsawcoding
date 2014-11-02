@@ -25,7 +25,7 @@ public class SesionJigsaw {
 
 	private Integer totalGruposExpertos;
 
-	private String etapa;
+	private EtapaSesionJigsaw etapa;
 
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Docente docente;
@@ -120,12 +120,14 @@ public class SesionJigsaw {
 		return "SesionJigsaw_" + this.id;
 	}
 
-	public String getEtapa() {
+	public EtapaSesionJigsaw getEtapa() {
 		return etapa;
 	}
 
-	public void setEtapa(String etapa) {
+	public void setEtapa(EtapaSesionJigsaw etapa) {
 		this.etapa = etapa;
 	}
+
+	
 
 }

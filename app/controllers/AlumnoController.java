@@ -294,6 +294,6 @@ public class AlumnoController extends Controller {
 	/*Módulo ALUMNO*/
 	
 	public static Result indexAlumno(){
-		return ok(views.html.indexAlumno.render());
+		return ok(views.html.perfilalumno.indexAlumno.render());
 	}
 }
