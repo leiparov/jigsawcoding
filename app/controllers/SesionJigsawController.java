@@ -262,6 +262,18 @@ public class SesionJigsawController extends Controller {
 	public static Result indexAlumno(){
 		return GO_HOME_ALUMNO;
 	}
+	
+	public static Result interfazFaseExpertos(Integer id){
+		SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
+		Problema p = sesionJigsawService.problemaAResolver(getAlumno(), s);
+		if (p != null){
+			return ok(views.html.perfilalumno.faseExpertos.render(p));
+		}else{
+			flash("error", "Ud. no se encuentra asignado a esta sesión jigsaw");
+			return GO_HOME_ALUMNO;
+		}
+		
+	}
 }
 
 

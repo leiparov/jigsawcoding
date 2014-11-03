@@ -14,12 +14,12 @@
 
 .chat li.left .chat-body
 {
-    margin-left: 60px;
+    margin-left: 10px;
 }
 
 .chat li.right .chat-body
 {
-    margin-right: 60px;
+    margin-right: 10px;
 }
 
 .chat li .chat-body p
@@ -58,7 +58,7 @@
 }
 
 #chat-room{
-	position: relative; /* could be absolute */
+	position: absolute; /* could be absolute */
 	top:0px;
 	left:0;
 	width: 350px;

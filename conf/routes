@@ -89,6 +89,7 @@ POST   /alumnos/cambiarContrasenia                     controllers.AlumnoControl
 GET    /alumnos/problemas/:id/resolver                 controllers.ProblemaController.interfazResolver(id:Integer)
 GET    /alumnos/sesionesjigsaw                         controllers.SesionJigsawController.indexAlumno()
 GET    /alumnos/sesiones/lista                         controllers.SesionJigsawController.listForAlumno(p:Integer ?= 0, s ?= "id", o ?= "asc", f ?= "")
+GET    /alumnos/sesiones/:id/faseexpertos              controllers.SesionJigsawController.interfazFaseExpertos(id: Integer)
 
 # Map static resources from the /public folder to the /assets URL path
 GET    /assets/javascripts/routes                      controllers.Application.jsRoutes()

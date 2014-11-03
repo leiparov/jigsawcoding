@@ -6,7 +6,9 @@ import models.daos.SesionJigsawDAO;
 import models.daos.UsuarioDAO;
 import models.entities.Alumno;
 import models.entities.Docente;
+import models.entities.GrupoExperto;
 import models.entities.GrupoExpertoProblema;
+import models.entities.Problema;
 import models.entities.SesionJigsaw;
 
 import com.avaje.ebean.Page;
@@ -72,6 +74,17 @@ public class SesionJigsawService {
 	private void borrarPares(SesionJigsaw s) {
 		List<GrupoExpertoProblema> listaActual = s.getPares();
 		sesionJigsawDAO.borrarListaProblemasActual(listaActual);
+	}
+
+	public Problema problemaAResolver(Alumno alumno, SesionJigsaw s) {
+		List<GrupoExpertoProblema> pares = s.getPares();
+		for (GrupoExpertoProblema gep: pares){
+			GrupoExperto ge = gep.getGrupoExperto();
+			if(ge.getAlumnos().contains(alumno)){
+				return gep.getProblema();
+			}
+		}
+		return null;
 	}
 
 }
