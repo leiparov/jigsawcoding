@@ -133,6 +133,5 @@ public class IdeoneSubmissionDetails {
 				+ (stderr != null ? "stderr=" + stderr + ", " : "")
 				+ (cmpinfo != null ? "cmpinfo=" + cmpinfo : "") + "]";
 	}
-	
-	
+
 }

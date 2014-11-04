@@ -14,12 +14,15 @@ import play.mvc.Result;
 public class Application extends Controller {
 
     private static UsuarioService usuarioService = new UsuarioService();
-
+    private static Alumno getAlumno() {
+		return usuarioService.obtener(Login.obtener(ctx()).getDNI(),
+				Alumno.class);
+	}
     @Login.Requiere
     public static Result index() {
         Login login = Login.obtener(ctx());
         if (login.isTipo(Alumno.class)) {
-            return ok(views.html.perfilalumno.indexAlumno.render());
+            return ok(views.html.perfilalumno.indexAlumno.render(getAlumno()));
         	//return redirect(routes.AlumnoController.index());
         } else {
             return ok(views.html.indexDocente.render());
@@ -97,7 +100,8 @@ public class Application extends Controller {
                     controllers.routes.javascript.AlumnoController.buscarAlumnos(),
                     controllers.routes.javascript.AlumnoController.disponibles(),
                     controllers.routes.javascript.ProblemaController.buscarProblemas(),
-                    controllers.routes.javascript.ExamenController.renderPreguntaEdicion()
+                    controllers.routes.javascript.ExamenController.renderPreguntaEdicion(),
+                    controllers.routes.javascript.ProblemaController.problemaRunJs()
                 ));
     }
 

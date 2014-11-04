@@ -265,15 +265,20 @@ public class SesionJigsawController extends Controller {
 	
 	public static Result interfazFaseExpertos(Integer id){
 		SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
-		Problema p = sesionJigsawService.problemaAResolver(getAlumno(), s);
-		if (p != null){
-			return ok(views.html.perfilalumno.faseExpertos.render(p));
+		GrupoExpertoProblema gep = sesionJigsawService.problemaAResolver(getAlumno(), s);
+		if (gep != null){
+			String firepadID = "sj"+s.getId()+"ge"+gep.getGrupoExperto().getId()+"p"+gep.getProblema().getId();
+			return ok(views.html.perfilalumno.faseExpertos.render(getAlumno(), gep.getProblema(), firepadID));
 		}else{
 			flash("error", "Ud. no se encuentra asignado a esta sesión jigsaw");
 			return GO_HOME_ALUMNO;
 		}
 		
 	}
+	
+	public static Result firepadJs(String firepadid, String userid) {
+        return ok(views.js.perfilalumno.firepad.render(firepadid, userid));
+    }
 }
 
 

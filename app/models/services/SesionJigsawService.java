@@ -76,12 +76,12 @@ public class SesionJigsawService {
 		sesionJigsawDAO.borrarListaProblemasActual(listaActual);
 	}
 
-	public Problema problemaAResolver(Alumno alumno, SesionJigsaw s) {
+	public GrupoExpertoProblema problemaAResolver(Alumno alumno, SesionJigsaw s) {
 		List<GrupoExpertoProblema> pares = s.getPares();
 		for (GrupoExpertoProblema gep: pares){
 			GrupoExperto ge = gep.getGrupoExperto();
 			if(ge.getAlumnos().contains(alumno)){
-				return gep.getProblema();
+				return gep;
 			}
 		}
 		return null;

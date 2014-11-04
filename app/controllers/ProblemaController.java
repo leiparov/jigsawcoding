@@ -1,8 +1,9 @@
 package controllers;
 
-import static play.data.Form.form;
-
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import models.entities.Alumno;
 import models.entities.Docente;
@@ -10,15 +11,14 @@ import models.entities.Problema;
 import models.services.Login;
 import models.services.ProblemaService;
 import models.services.UsuarioService;
+import models.services.ideone.IdeoneRun;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.problemas.editarProblema;
-import views.html.problemas.listaProblemas;
-import views.html.problemas.nuevoProblema;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import exceptions.DAOException.NoEncontradoException;
 
@@ -27,30 +27,31 @@ public class ProblemaController extends Controller {
 
 	private static UsuarioService usuarioService = new UsuarioService();
 	private static ProblemaService problemaService = new ProblemaService();
+	
 
 	private static Docente getDocente() {
 		return usuarioService.obtener(Login.obtener(ctx()).getDNI(),
 				Docente.class);
 	}
-	
+
 	public static Result index() {
 		Login login = Login.obtener(ctx());
-		if(login.isTipo(Alumno.class)){
+		if (login.isTipo(Alumno.class)) {
 			return indexAlumno();
-		}else if (login.isTipo(Docente.class)){
+		} else if (login.isTipo(Docente.class)) {
 			return indexDocente();
-		}else{
+		} else {
 			return redirect(routes.Application.interfazLogin());
-		}		
+		}
 	}
-	
-	//Modulo DOCENTES
+
+	// Modulo DOCENTES
 	public static Result GO_HOME_PROBLEMAS = redirect(routes.ProblemaController
 			.list(0, "id", "asc", ""));
 
 	public static Result list(int page, String sortBy, String order,
 			String filter) {
-		return ok(listaProblemas.render(problemaService.page(getDocente(),
+		return ok(views.html.problemas.listaProblemas.render(problemaService.page(getDocente(),
 				page, 10, sortBy, order, filter), sortBy, order, filter));
 	}
 
@@ -59,14 +60,14 @@ public class ProblemaController extends Controller {
 	}
 
 	public static Result interfazNuevo() {
-		Form<Problema> problemaForm = form(Problema.class).bindFromRequest();
-		return ok(nuevoProblema.render(problemaForm));
+		Form<Problema> problemaForm = Form.form(Problema.class).bindFromRequest();
+		return ok(views.html.problemas.nuevoProblema.render(problemaForm));
 	}
 
 	public static Result registrarProblema() {
-		Form<Problema> problemaForm = form(Problema.class).bindFromRequest();
+		Form<Problema> problemaForm = Form.form(Problema.class).bindFromRequest();
 		if (problemaForm.hasErrors()) {
-			return badRequest(nuevoProblema.render(problemaForm));
+			return badRequest(views.html.problemas.nuevoProblema.render(problemaForm));
 		}
 		try {
 			Problema problema = problemaForm.get();
@@ -83,15 +84,15 @@ public class ProblemaController extends Controller {
 	}
 
 	public static Result interfazEditar(Integer id) {
-		Form<Problema> problemaForm = form(Problema.class).fill(
+		Form<Problema> problemaForm = Form.form(Problema.class).fill(
 				problemaService.obtenerProblema(id));
-		return ok(editarProblema.render(id, problemaForm));
+		return ok(views.html.problemas.editarProblema.render(id, problemaForm));
 	}
 
 	public static Result actualizarProblema(Integer id) {
-		Form<Problema> problemaForm = form(Problema.class).bindFromRequest();
+		Form<Problema> problemaForm = Form.form(Problema.class).bindFromRequest();
 		if (problemaForm.hasErrors()) {
-			return badRequest(editarProblema.render(id, problemaForm));
+			return badRequest(views.html.problemas.editarProblema.render(id, problemaForm));
 		}
 		try {
 			Problema problema = problemaForm.get();
@@ -129,8 +130,8 @@ public class ProblemaController extends Controller {
 		}
 		return Json.toJson(array);
 	}
-	
-	//Módulo ALUMNOS
+
+	// Módulo ALUMNOS
 	public static Result indexAlumno() {
 		return redirect(routes.AlumnoController.indexAlumno());
 	}
@@ -147,6 +148,26 @@ public class ProblemaController extends Controller {
 			flash("error", e.getMessage());
 			return indexAlumno();
 		}
+	}
 
+	public static Result problemaRunJs(String source, String input) {
+			
+        final ExecutorService service;
+        final Future<ObjectNode> task;
+        
+        service = Executors.newFixedThreadPool(1);
+        task = service.submit(new IdeoneRun(source, input));
+        ObjectNode resultado = Json.newObject();
+        
+        try {
+        	resultado = task.get();
+            
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        
+        service.shutdown();
+        return ok(resultado);
+		
 	}
 }

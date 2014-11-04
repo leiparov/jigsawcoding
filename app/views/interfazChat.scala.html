@@ -1,4 +1,5 @@
 @* interfazChat Template File *@
+@(username: String)
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("css/chat-room.css")">
 <div id="chat-room">
     <div class="panel panel-primary">
@@ -31,5 +32,5 @@
 	    </div>
     </div>
 </div>
-
+<script type="text/javascript" charset="utf-8" src="@routes.ChatController.chatRoomJs(username)"></script>
 

@@ -14,12 +14,12 @@
 
 .chat li.left .chat-body
 {
-    margin-left: 10px;
+    margin-left: 60px;
 }
 
 .chat li.right .chat-body
 {
-    margin-right: 10px;
+    margin-right: 60px;
 }
 
 .chat li .chat-body p
@@ -36,7 +36,7 @@
 .panel-body
 {
     overflow-y: scroll;
-    height: 250px;
+    height: 350px;
 }
 
 ::-webkit-scrollbar-track
@@ -58,7 +58,7 @@
 }
 
 #chat-room{
-	position: absolute; /* could be absolute */
+	position: relative; /* could be absolute */
 	top:0px;
 	left:0;
 	width: 350px;
