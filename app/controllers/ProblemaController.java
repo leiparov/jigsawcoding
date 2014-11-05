@@ -29,7 +29,7 @@ public class ProblemaController extends Controller {
 
 	private static UsuarioService usuarioService = new UsuarioService();
 	private static ProblemaService problemaService = new ProblemaService();
-	
+	private static IdeoneService ideoneService = new IdeoneService();
 
 	private static Docente getDocente() {
 		return usuarioService.obtener(Login.obtener(ctx()).getDNI(),
@@ -155,35 +155,41 @@ public class ProblemaController extends Controller {
 	public static Result problemaRunJs(String source, String input) {
 			
         final ExecutorService service;
-        final Future<ObjectNode> task;
+        final Future<String> task;
         
         service = Executors.newFixedThreadPool(1);
         task = service.submit(new IdeoneRun(source, input));
-        ObjectNode resultado = Json.newObject();
-        //resultado = test();
-
+        
+        //ObjectNode resultado = Json.newObject();
+        //resultado = test("hACTit");
+        String link = "";
         try {
-        	resultado = task.get();
+        	link = task.get();
             
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
         
         service.shutdown();
-        return ok(resultado);
+        return verResultadosProblemaRunJs(link);
 		
 	}
 	
 	public static Result verResultadosProblemaRunJs(String link){
-		ObjectNode resultado = Json.newObject();
-		resultado = test(link);
-		return ok(resultado);
+		IdeoneSubmissionDetails isd = ideoneService.getSubmissionDetails(
+				link, true, true, true, true, true);
+		
+		String[] array = new String[1];		
+		array[0] = views.html.perfilalumno.resultadosIdeoneRun.render(isd).body().trim();
+		
+		return ok(Json.toJson(array));
 	}
+	
 	
 	private static ObjectNode test (String link){
 		ObjectNode resultado = Json.newObject();
 		//String link = "9Q7GON";
-        IdeoneService ideoneService = new IdeoneService();
+        
         IdeoneSubmissionDetails details = ideoneService.getSubmissionDetails(
 				link, true, true, true, true, true);
         if(details.getError().equals("OK")){
@@ -196,6 +202,7 @@ public class ProblemaController extends Controller {
     		resultado.put("memory", details.getMemory());
     		resultado.put("error", details.getError());
     		resultado.put("link", link);
+    		resultado.put("cmpinfo", details.getCmpinfo());
         }else{
         	resultado.put("status", "");
     		resultado.put("result", "");
@@ -206,6 +213,7 @@ public class ProblemaController extends Controller {
     		resultado.put("memory", "");
     		resultado.put("error", "");
     		resultado.put("link", link);
+    		resultado.put("cmpinfo", "");
         }
         return resultado;
         

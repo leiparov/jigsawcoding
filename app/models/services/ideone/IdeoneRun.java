@@ -2,11 +2,7 @@ package models.services.ideone;
 
 import java.util.concurrent.Callable;
 
-import play.libs.Json;
-
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
-public class IdeoneRun implements Callable<ObjectNode> {
+public class IdeoneRun implements Callable<String> {
 
 	final static int STATE_DONE = 0;
 	final static int STATE_RUNNING = 1;
@@ -15,25 +11,21 @@ public class IdeoneRun implements Callable<ObjectNode> {
 	protected int status = 0;
 	protected String source = "";
 	protected String input = "";
-	protected int lang = 55; // java7
-	protected ObjectNode resultado;
+	protected int lang = 1; // C++
+	
 	
 	public IdeoneRun(String source, String input) {
 		this.source = source;
 		this.input = input;
 	}
-	
-	public ObjectNode getResultado(){
-		return this.resultado;
-	}
 
 	@Override
-	public ObjectNode call() {
+	public String call() {
 		mState = STATE_RUNNING;
 
 		IdeoneService ideoneService = new IdeoneService();
 
-		String link = ideoneService.createSubmission(source, 55, input, true,
+		String link = ideoneService.createSubmission(source, lang, input, true,
 				false);
 
 		while (mState == STATE_RUNNING) {
@@ -50,21 +42,22 @@ public class IdeoneRun implements Callable<ObjectNode> {
 			}
 		}
 		
-		IdeoneSubmissionDetails details = ideoneService.getSubmissionDetails(
-				link, true, true, true, true, true);
+//		IdeoneSubmissionDetails details = ideoneService.getSubmissionDetails(
+//				link, true, true, true, true, true);
+//		
+//		resultado = Json.newObject();
+//		resultado.put("status", IdeoneService.translateStatus(details.getStatus()));
+//		resultado.put("result", IdeoneService.translateResult(details.getResult()));
+//		resultado.put("input", details.getInput());
+//		resultado.put("output", details.getOutput());
+//		resultado.put("date", details.getDate());
+//		resultado.put("time", details.getTime());
+//		resultado.put("memory", details.getMemory());
+//		resultado.put("error", details.getError());
+//		resultado.put("link", link);
+//		resultado.put("cmpinfo", details.getCmpinfo());
 		
-		resultado = Json.newObject();
-		resultado.put("status", IdeoneService.translateStatus(details.getStatus()));
-		resultado.put("result", IdeoneService.translateResult(details.getResult()));
-		resultado.put("input", details.getInput());
-		resultado.put("output", details.getOutput());
-		resultado.put("date", details.getDate());
-		resultado.put("time", details.getTime());
-		resultado.put("memory", details.getMemory());
-		resultado.put("error", details.getError());
-		resultado.put("link", link);
-		
-		return resultado;
+		return link;
 		
 	}
 

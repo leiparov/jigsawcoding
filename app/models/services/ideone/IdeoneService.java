@@ -171,6 +171,7 @@ public class IdeoneService {
 			ret.setMemory((Integer)data.get("memory"));
 			ret.setSignal((Integer)data.get("signal"));
 			ret.setIsPublic((Boolean) data.get("public"));
+			ret.setLink(link);
 
 			if (withSource.booleanValue()) {
 				ret.setSource((String) data.get("source"));

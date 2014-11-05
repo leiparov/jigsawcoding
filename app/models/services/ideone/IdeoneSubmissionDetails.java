@@ -16,6 +16,7 @@ public class IdeoneSubmissionDetails {
 	private String output;
 	private String stderr;
 	private String cmpinfo;
+	private String link;
 	public String getError() {
 		return error;
 	}
@@ -111,6 +112,12 @@ public class IdeoneSubmissionDetails {
 	}
 	public void setCmpinfo(String cmpinfo) {
 		this.cmpinfo = cmpinfo;
+	}
+	public String getLink() {
+		return link;
+	}
+	public void setLink(String link) {
+		this.link = link;
 	}
 	@Override
 	public String toString() {

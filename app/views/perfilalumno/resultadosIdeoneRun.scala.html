@@ -1,0 +1,24 @@
+@* resultadosIdeoneRun Template File *@
+@(isd: models.services.ideone.IdeoneSubmissionDetails)
+<div class="container col-md-12">
+	<table class="table table-condensed">
+		<tr><td>RESULTADO</td><td>@models.services.ideone.IdeoneService.translateResult(isd.getResult())</td></tr>
+		<tr><td>MEMORIA</td><td>@isd.getMemory() KB</td></tr>
+		<tr><td>TIEMPO</td><td>@isd.getTime()</td></tr>
+		<tr><td>INPUT</td><td>OUTPUT</td></tr>
+		<tr>
+			<td><textarea rows="5" class="form-control">@isd.getInput()</textarea></td>
+			<td><textarea rows="5" class="form-control">@isd.getOutput()</textarea></td>
+		</tr>
+	</table>	
+	<br>
+	@if(!isd.getCmpinfo().isEmpty()){
+		<label class="control-label">Información de compilación</label>
+		<div class="row">
+			<textarea rows="7" class="form-control">@isd.getCmpinfo()</textarea>		
+		</div>
+	}
+	<input type="hidden" id="link" name="link" value="@isd.getLink()">	
+	
+
+</div>

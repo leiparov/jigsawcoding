@@ -5,6 +5,7 @@ $(function(){
 	var firepad;
 	var botonRun = $('#boton-run');
 	var botonVer = $('#boton-ver');
+	var contenedorResultados = $('#ideoneResultados');
 	
 	function init() {
 		// Initialize Firebase.
@@ -23,7 +24,7 @@ $(function(){
 
 		// // Create Firepad.
 		firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, {
-			defaultText : 'Hello, World!'
+			defaultText : '#include <iostream> using namespace std;	int main() { // your code goes here	return 0;}'
 		});
 		firepad.setUserId('@userid');
 	}
@@ -48,29 +49,18 @@ $(function(){
 	}
 	init();
 	
-	/*Ejecutar codigo fuente*/
+	/* Ejecutar codigo fuente */
 	function mostrarIdeoneSubmissionResults(data){
 		console.log(data);
 		console.log(data['status']);
 		
+		contenedorResultados.empty();
+		for(i in data){
+			var elemento = $.parseHTML(data[i]);
+			contenedorResultados.append(elemento);
+		}
 		
-		var myModal = $('#modalResultados');
-		
-		var input = $('#input');
-		var output = $('#output');
-		var result = $('#result');
-		var time = $('#time');
-		var memory = $('#memory');
-		var link = $('#link');
-		
-		
-		input.text(data['input']);
-		output.text(data['output']);
-		result.text(data['result']);
-		time.text(data['time']);
-		memory.text(data['memory'] + 'Kb');
-		link.val(data['link']);
-		
+		var myModal = $('#modalResultados');		
 		myModal.modal('show');
 	}
 	
@@ -89,9 +79,9 @@ $(function(){
 	}
 	function verResultadosProblemaRun (){
 		var link = $('#link');
-		//console.log(link.val());
+		// console.log(link.val());
 		if(link.val() != null){
-			//console.log(link);
+			// console.log(link);
 			var call = jsRoutes.controllers.ProblemaController.verResultadosProblemaRunJs(link.val());
 			$.ajax({
 				url: call.url,
@@ -100,7 +90,7 @@ $(function(){
 			});
 		}
 		else{
-			altert("Ejecute un problema");
+			avisar("Ejecute un problema");
 		}
 		
 		
@@ -114,24 +104,29 @@ $(function(){
 		botonVer.popover('destroy');
 	});
 	
+	function avisar(mensaje){
+        botonVer.attr('data-content', mensaje);
+        botonVer.popover('show');
+    }
+	(function(){
+        var lastTimeout;
+        
+        botonVer.popover({
+            placement: 'top',
+            trigger: 'manual',
+        });
+        
+        botonVer.on('shown.bs.popover', function(){
+            clearTimeout(lastTimeout);
+            lastTimeout = setTimeout(function(){
+            	botonVer.popover('hide');
+            }, 1500);
+        });
+    })();
+	
 	botonVer.on('click', function(e){
 		e.preventDefault();
-		var linkText = $('#link').val();
-		if(linkText == ""){
-			console.log('Nada');
-			//alert('Para ver Resultados debe primero Ejecutar un Programa presionando el botón Run');
-			var options = {
-					trigger: 'focus',
-					title: 'Mensaje',
-					content: 'Para ver resultados debe ejecutar primero un programa presionando el botón Run',
-					placement: 'top'
-			};
-			$(this).popover(options);
-			$(this).popover('show');
-		}else{
-			verResultadosProblemaRun();
-		}
-				
+		verResultadosProblemaRun();
 	});
 })
 

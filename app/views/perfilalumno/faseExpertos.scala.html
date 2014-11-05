@@ -30,7 +30,15 @@
 			<p>@problema.getEnunciado()</p>
 		</div>
 		<div class="col-md-5">
-		
+			<div class="row">
+				<select class="form-control">				  
+				  <option value="1" >C++ 4.8.1 (gcc-4.8.1)</option>
+				  <!-- 
+				  <option value="4">Python (python 2.7.3)</option>
+				  <option value="55">Java7 (sun-jdk-1.7.0_10)</option>
+				   -->
+				</select>
+			</div>
 			<div id="firepad" class="row"></div>
 			<div class="row">
 				<div id="stdin" class="collapse">
@@ -38,6 +46,7 @@
 				</div>
 			</div>
 			<div class="row">
+				
 				<button type="button" class="btn btn-default" data-toggle="collapse"  
 					data-target="#stdin" aria-expanded="true" aria-controls="stdin" 
 					data-placement="top" title ="Ingrese su Input">
@@ -72,22 +81,15 @@
 	        <h4 class="modal-title" id="myModalLabel">RESULTADOS DE EJECUCIÓN</h4>
 	      </div>
 	      <div class="modal-body">
-	        <table class="table" id="tableResultados">
-			<tr><td>Resultado</td><td><p id="result"></p></td></tr>
-			<tr><td>Input</td><td><p id="input"></p></td></tr>
-			<tr><td>Output</td><td><p id="output"></p></td></tr>
-			<tr><td>Tiempo</td><td><p id="time"></p></td></tr>
-			<tr><td>Memoria</td><td><p id="memory"></p></td></tr>
-			 
-			</table>
-			<input type="hidden" id="link" name="link" value="">
-	      </div>
+	        <div id="ideoneResultados">
+	      	</div>
+	      	
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
 	      </div>
 	    </div>
 	  </div>
 	</div><!-- Modal -->
 	<script type="text/javascript" charset="utf-8" src="@routes.SesionJigsawController.firepadJs(firepadid, alumno.getDNI().toString)"></script>
-	<script src="@routes.Assets.at("js/bootstrap.min.js")" type="text/javascript"></script>
+	
 }
