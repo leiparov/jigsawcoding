@@ -12,6 +12,8 @@ import models.services.Login;
 import models.services.ProblemaService;
 import models.services.UsuarioService;
 import models.services.ideone.IdeoneRun;
+import models.services.ideone.IdeoneService;
+import models.services.ideone.IdeoneSubmissionDetails;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -158,7 +160,8 @@ public class ProblemaController extends Controller {
         service = Executors.newFixedThreadPool(1);
         task = service.submit(new IdeoneRun(source, input));
         ObjectNode resultado = Json.newObject();
-        
+        //resultado = test();
+
         try {
         	resultado = task.get();
             
@@ -169,5 +172,43 @@ public class ProblemaController extends Controller {
         service.shutdown();
         return ok(resultado);
 		
+	}
+	
+	public static Result verResultadosProblemaRunJs(String link){
+		ObjectNode resultado = Json.newObject();
+		resultado = test(link);
+		return ok(resultado);
+	}
+	
+	private static ObjectNode test (String link){
+		ObjectNode resultado = Json.newObject();
+		//String link = "9Q7GON";
+        IdeoneService ideoneService = new IdeoneService();
+        IdeoneSubmissionDetails details = ideoneService.getSubmissionDetails(
+				link, true, true, true, true, true);
+        if(details.getError().equals("OK")){
+        	resultado.put("status", IdeoneService.translateStatus(details.getStatus()));
+    		resultado.put("result", IdeoneService.translateResult(details.getResult()));
+    		resultado.put("input", details.getInput());
+    		resultado.put("output", details.getOutput());
+    		resultado.put("date", details.getDate());
+    		resultado.put("time", details.getTime());
+    		resultado.put("memory", details.getMemory());
+    		resultado.put("error", details.getError());
+    		resultado.put("link", link);
+        }else{
+        	resultado.put("status", "");
+    		resultado.put("result", "");
+    		resultado.put("input", "");
+    		resultado.put("output", "");
+    		resultado.put("date", "");
+    		resultado.put("time", "");
+    		resultado.put("memory", "");
+    		resultado.put("error", "");
+    		resultado.put("link", link);
+        }
+        return resultado;
+        
+        
 	}
 }

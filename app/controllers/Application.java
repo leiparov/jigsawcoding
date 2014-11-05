@@ -101,7 +101,8 @@ public class Application extends Controller {
                     controllers.routes.javascript.AlumnoController.disponibles(),
                     controllers.routes.javascript.ProblemaController.buscarProblemas(),
                     controllers.routes.javascript.ExamenController.renderPreguntaEdicion(),
-                    controllers.routes.javascript.ProblemaController.problemaRunJs()
+                    controllers.routes.javascript.ProblemaController.problemaRunJs(),
+                    controllers.routes.javascript.ProblemaController.verResultadosProblemaRunJs()
                 ));
     }
 

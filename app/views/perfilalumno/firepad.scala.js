@@ -4,6 +4,7 @@ $(function(){
 	
 	var firepad;
 	var botonRun = $('#boton-run');
+	var botonVer = $('#boton-ver');
 	
 	function init() {
 		// Initialize Firebase.
@@ -50,6 +51,27 @@ $(function(){
 	/*Ejecutar codigo fuente*/
 	function mostrarIdeoneSubmissionResults(data){
 		console.log(data);
+		console.log(data['status']);
+		
+		
+		var myModal = $('#modalResultados');
+		
+		var input = $('#input');
+		var output = $('#output');
+		var result = $('#result');
+		var time = $('#time');
+		var memory = $('#memory');
+		var link = $('#link');
+		
+		
+		input.text(data['input']);
+		output.text(data['output']);
+		result.text(data['result']);
+		time.text(data['time']);
+		memory.text(data['memory'] + 'Kb');
+		link.val(data['link']);
+		
+		myModal.modal('show');
 	}
 	
 	function problemaRun (){
@@ -63,11 +85,53 @@ $(function(){
 			type: call.type,
 			success: mostrarIdeoneSubmissionResults
 		});
+		
+	}
+	function verResultadosProblemaRun (){
+		var link = $('#link');
+		//console.log(link.val());
+		if(link.val() != null){
+			//console.log(link);
+			var call = jsRoutes.controllers.ProblemaController.verResultadosProblemaRunJs(link.val());
+			$.ajax({
+				url: call.url,
+				type: call.type,
+				success: mostrarIdeoneSubmissionResults
+			});
+		}
+		else{
+			altert("Ejecute un problema");
+		}
+		
+		
 	}
 	
 	botonRun.on('click', function(e){
 		e.preventDefault();
+		var $btn = $(this).button('loading');
 		problemaRun();
+		$btn.button('reset');
+		botonVer.popover('destroy');
+	});
+	
+	botonVer.on('click', function(e){
+		e.preventDefault();
+		var linkText = $('#link').val();
+		if(linkText == ""){
+			console.log('Nada');
+			//alert('Para ver Resultados debe primero Ejecutar un Programa presionando el botón Run');
+			var options = {
+					trigger: 'focus',
+					title: 'Mensaje',
+					content: 'Para ver resultados debe ejecutar primero un programa presionando el botón Run',
+					placement: 'top'
+			};
+			$(this).popover(options);
+			$(this).popover('show');
+		}else{
+			verResultadosProblemaRun();
+		}
+				
 	});
 })
 

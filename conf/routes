@@ -91,8 +91,12 @@ GET    /alumnos/sesionesjigsaw                         controllers.SesionJigsawC
 GET    /alumnos/sesiones/lista                         controllers.SesionJigsawController.listForAlumno(p:Integer ?= 0, s ?= "id", o ?= "asc", f ?= "")
 GET    /alumnos/sesiones/:id/faseexpertos              controllers.SesionJigsawController.interfazFaseExpertos(id: Integer)
 GET    /assets/javascripts/firepad.js                  controllers.SesionJigsawController.firepadJs(firepadid:String, userid: String)
-GET    /assets/javascripts/problemarun.js              controllers.ProblemaController.problemaRunJs(source:String, input: String)
+GET    /alumnos/ideone/run                             controllers.ProblemaController.problemaRunJs(source:String, input: String)
+GET    /alumnos/ideone/verresultados                   controllers.ProblemaController.verResultadosProblemaRunJs(link:String ?= "")
 
 # Map static resources from the /public folder to the /assets URL path
 GET    /assets/javascripts/routes                      controllers.Application.jsRoutes()
 GET    /assets/*file                                   controllers.Assets.at(path="/public", file)
+
+
+
