@@ -71,6 +71,7 @@
                         <th>Fecha de examen</th>
                         <th>Fecha de elaboración</th>
                         <th>Duración</th>
+                        <th>SesionJigsaw</th>
                         <th>Acciones</th>
                     </tr>
     			</thead>
@@ -82,6 +83,7 @@
 	                    <td>@formatDate(examen.getTiempoApertura, FormatoFechaHora.dateFormat)</td>
 	                    <td>@formatDate(examen.getTiempoCreacion, FormatoFechaHora.dateFormat)</td>
 	                    <td>@examen.getDuracion() min</td>
+	                    <td>@examen.getSesionJigsaw().getNombre()</td>
     					<td>
 	                    	<a href="@routes.ExamenController.interfazDefinirHorario(examen.getId)">Definir horario</a> /  
 	                        <a href="@routes.ExamenController.interfazEditar(examen.getId)">Editar</a>
