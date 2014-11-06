@@ -22,8 +22,8 @@ public class Application extends Controller {
     public static Result index() {
         Login login = Login.obtener(ctx());
         if (login.isTipo(Alumno.class)) {
-            return ok(views.html.perfilalumno.indexAlumno.render(getAlumno()));
-        	//return redirect(routes.AlumnoController.index());
+            //return ok(views.html.perfilalumno.indexAlumno.render(getAlumno()));
+        	return redirect(routes.AlumnoController.indexAlumno());
         } else {
             return ok(views.html.indexDocente.render());
         }

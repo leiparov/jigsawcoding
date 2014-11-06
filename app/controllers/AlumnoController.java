@@ -295,6 +295,7 @@ public class AlumnoController extends Controller {
 	
 	public static Result indexAlumno(){
 		Alumno a = getAlumno();
-		return ok(views.html.perfilalumno.indexAlumno.render(a));
+		//return ok(views.html.perfilalumno.indexAlumno.render(a));
+		return redirect(routes.SesionJigsawController.indexAlumno());
 	}
 }
