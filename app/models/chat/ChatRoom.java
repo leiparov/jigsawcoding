@@ -27,8 +27,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 public class ChatRoom extends UntypedActor {
 
 	// Default room.
-//	static ActorRef chatRoom = Akka.system().actorOf(
-//			Props.create(ChatRoom.class));
+	// static ActorRef chatRoom = Akka.system().actorOf(
+	// Props.create(ChatRoom.class));
 
 	// Hashmap to keep references to actors(rooms)
 	public static HashMap<String, ActorRef> openedChats = new HashMap<>();
@@ -39,23 +39,24 @@ public class ChatRoom extends UntypedActor {
 		this.chatId = chatId;
 	}
 
-	//static ActorRef chatRoom;
+	// static ActorRef chatRoom;
 
 	/**
 	 * Join the default room.
 	 */
-	public static void join(final String username, String chatid, 
+	public static void join(final String username, String chatid,
 			WebSocket.In<JsonNode> in, WebSocket.Out<JsonNode> out)
 			throws Exception {
 
 		final ActorRef chatRoom;
 
 		// Find the good room to bind to in the hashmap
-		
+
 		if (openedChats.containsKey(chatid)) {
 			chatRoom = openedChats.get(chatid);
 		} else {
-			chatRoom = Akka.system().actorOf(Props.create(ChatRoom.class, chatid));
+			chatRoom = Akka.system().actorOf(
+					Props.create(ChatRoom.class, chatid));
 			// chatRoom = Akka.system().actorOf(
 			// Props.create(new Creator<ChatRoom>() {
 			//
@@ -67,7 +68,7 @@ public class ChatRoom extends UntypedActor {
 			// }));
 			openedChats.put(chatid, chatRoom);
 		}
-	
+
 		// Send the Join message to the room
 		String result = (String) Await.result(
 				ask(chatRoom, new Join(username, out), 1000),
@@ -77,7 +78,7 @@ public class ChatRoom extends UntypedActor {
 			// For each event received on the socket,
 			in.onMessage(new Callback<JsonNode>() {
 				public void invoke(JsonNode event) {
-					// Send a Talk message to the room.							
+					// Send a Talk message to the room.
 					chatRoom.tell(
 							new Talk(username, event.get("text").asText()),
 							null);
@@ -150,13 +151,13 @@ public class ChatRoom extends UntypedActor {
 	public static class Join {
 
 		final String username;
-		
+
 		final WebSocket.Out<JsonNode> channel;
 
-		public Join(String username,  WebSocket.Out<JsonNode> channel) {
+		public Join(String username, WebSocket.Out<JsonNode> channel) {
 			this.username = username;
 			this.channel = channel;
-			
+
 		}
 
 	}
@@ -164,12 +165,12 @@ public class ChatRoom extends UntypedActor {
 	public static class Talk {
 
 		final String username;
-		
+
 		final String text;
 
 		public Talk(String username, String text) {
 			this.username = username;
-			
+
 			this.text = text;
 		}
 
@@ -178,11 +179,10 @@ public class ChatRoom extends UntypedActor {
 	public static class Quit {
 
 		final String username;
-		
 
 		public Quit(String username) {
 			this.username = username;
-			
+
 		}
 
 	}
