@@ -74,17 +74,11 @@ create table usuario (
   apellido_paterno          varchar(255),
   apellido_materno          varchar(255),
   sexo                      integer,
-  grupo_actual_id           integer,
+  grupo_experto_id          integer,
   constraint ck_usuario_sexo check (sexo in (0,1)),
   constraint pk_usuario primary key (dni))
 ;
 
-
-create table grupo_experto_usuario (
-  grupo_experto_id               integer not null,
-  usuario_dni                    integer not null,
-  constraint pk_grupo_experto_usuario primary key (grupo_experto_id, usuario_dni))
-;
 alter table examen add constraint fk_examen_sesionJigsaw_1 foreign key (sesion_jigsaw_id) references sesion_jigsaw (id) on delete restrict on update restrict;
 create index ix_examen_sesionJigsaw_1 on examen (sesion_jigsaw_id);
 alter table examen add constraint fk_examen_docente_2 foreign key (docente_dni) references usuario (dni) on delete restrict on update restrict;
@@ -105,14 +99,10 @@ alter table problema_examen add constraint fk_problema_examen_examen_9 foreign k
 create index ix_problema_examen_examen_9 on problema_examen (examen_id);
 alter table sesion_jigsaw add constraint fk_sesion_jigsaw_docente_10 foreign key (docente_dni) references usuario (dni) on delete restrict on update restrict;
 create index ix_sesion_jigsaw_docente_10 on sesion_jigsaw (docente_dni);
-alter table usuario add constraint fk_usuario_grupoActual_11 foreign key (grupo_actual_id) references grupo_experto (id) on delete restrict on update restrict;
-create index ix_usuario_grupoActual_11 on usuario (grupo_actual_id);
+alter table usuario add constraint fk_usuario_grupoExperto_11 foreign key (grupo_experto_id) references grupo_experto (id) on delete restrict on update restrict;
+create index ix_usuario_grupoExperto_11 on usuario (grupo_experto_id);
 
 
-
-alter table grupo_experto_usuario add constraint fk_grupo_experto_usuario_grupo_experto_01 foreign key (grupo_experto_id) references grupo_experto (id) on delete restrict on update restrict;
-
-alter table grupo_experto_usuario add constraint fk_grupo_experto_usuario_usuario_02 foreign key (usuario_dni) references usuario (dni) on delete restrict on update restrict;
 
 # --- !Downs
 
@@ -121,8 +111,6 @@ SET FOREIGN_KEY_CHECKS=0;
 drop table examen;
 
 drop table grupo_experto;
-
-drop table grupo_experto_usuario;
 
 drop table grupo_experto_problema;
 

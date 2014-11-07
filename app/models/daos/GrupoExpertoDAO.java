@@ -47,7 +47,8 @@ public class GrupoExpertoDAO {
 	}
 
 	public void guardarAlumnos(GrupoExperto grupo) {
-		Ebean.saveManyToManyAssociations(grupo, "alumnos");		
+		Ebean.update(grupo);
+		Ebean.saveAssociation(grupo, "alumnos");		
 	}
 	
 

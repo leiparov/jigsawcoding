@@ -66,12 +66,23 @@ public class GrupoExpertoService  {
 	}
 	
     public void actualizarAlumnos(GrupoExperto grupo, List<Integer> dnialumnos) {
-        List<Alumno> alumnosFuturos = new LinkedList<Alumno>();        
+        
+        
+        List<Alumno> alumnosAnteriores = grupo.getAlumnos();
+        for (Alumno a : alumnosAnteriores){
+        	a.setGrupoExperto(null);
+        	usuarioDAO.guardar(a);
+        }
+        
+        List<Alumno> alumnosFuturos = new LinkedList<Alumno>();
         for(Integer dniAlumno : dnialumnos){
-            alumnosFuturos.add(alumnoDAO.obtener(dniAlumno));
+        	Alumno a = alumnoDAO.obtener(dniAlumno);
+        	a.setGrupoExperto(grupo);
+        	usuarioDAO.guardar(a);
+            alumnosFuturos.add(a);
         }        
         grupo.setAlumnos(alumnosFuturos);
-        Logger.info(grupo.getAlumnos().get(0).toString());
+        //Logger.info(grupo.getAlumnos().get(0).toString());
         grupoExpertoDAO.guardarAlumnos(grupo);
     }
 

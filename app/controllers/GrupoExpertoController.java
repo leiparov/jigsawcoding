@@ -5,6 +5,8 @@ import static play.data.Form.form;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.sun.media.jfxmedia.logging.Logger;
+
 import exceptions.DAOException;
 import models.entities.Alumno;
 import models.entities.Docente;
@@ -53,7 +55,18 @@ public class GrupoExpertoController extends Controller {
 	
 	public static Result definirAlumnos(Integer id){
         try {
-            return tryDefinirAlumnos(id);
+            //return tryDefinirAlumnos(id);
+        	Form<AsignarAlumnosForm> form = Form.form(AsignarAlumnosForm.class).bindFromRequest();
+            GrupoExperto grupo = grupoExpertoService.obtenerGrupoExperto(id);
+            List<Integer> dnialumnos = form.get().alumnos;
+            if(grupo.getMaximoAlumnos() < dnialumnos.size()){
+            	flash("error", "El grupo experto debe tener " + grupo.getMaximoAlumnos() + " integrantes");
+            	return redirect(routes.GrupoExpertoController.interfazAsignar(id));
+            }	
+            grupoExpertoService.actualizarAlumnos(grupo, dnialumnos);
+            play.Logger.info("tryDefinirAlumnos");
+            flash("success", "Alumnos asignados con éxito");
+            return GO_HOME;
         } catch (DAOException.NoEncontradoException nee) {
             if(nee.esClase(GrupoExperto.class)){
                 flash("error", "El grupo experto no existe");
@@ -78,6 +91,7 @@ public class GrupoExpertoController extends Controller {
         	return redirect(routes.GrupoExpertoController.interfazAsignar(id));
         }	
         grupoExpertoService.actualizarAlumnos(grupo, dnialumnos);
+        play.Logger.info("tryDefinirAlumnos");
         flash("success", "Alumnos asignados con éxito");
         return redirect(routes.GrupoExpertoController.index());
     }

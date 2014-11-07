@@ -39,12 +39,7 @@
     
     <h1 id="homeTitle">@Messages("gruposexpertos.list.title", currentPage.getTotalRowCount)</h1>
 
-    @if(flash.containsKey("success")) {
-    	<div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <span class="glyphicon glyphicon-ok-sign"></span><strong>Listo!</strong>@flash.get("success")
-        </div>
-    } 
+    @inputs.flashSuccessError() 
 
     <div id="actions" class="row">
         <div class="pull-left">

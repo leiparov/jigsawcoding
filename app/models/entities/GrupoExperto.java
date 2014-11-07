@@ -5,8 +5,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class GrupoExperto {
@@ -16,7 +16,7 @@ public class GrupoExperto {
 	private String descripcion;
 	private Integer maximoAlumnos;
 
-	@ManyToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Alumno> alumnos;
 
 	@ManyToOne(cascade = CascadeType.PERSIST)

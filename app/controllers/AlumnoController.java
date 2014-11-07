@@ -205,9 +205,9 @@ public class AlumnoController extends Controller {
 	public static Result disponibles() {
 		/* Alumnos disponibles que aun no han sido asignados a un grupo experto */
 		List<Alumno> alumnos = alumnoService.disponibles();
-		play.Logger.debug("asdasdas");
+		//play.Logger.debug("asdasdas");
 		JsonNode respuesta = convertirListaAlumnosAJson(alumnos);
-		System.out.println(respuesta);
+		//System.out.println(respuesta);
 		play.Logger.debug(respuesta.asText());
 		return ok(respuesta);
 	}
