@@ -69,17 +69,27 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    @header("id", "ID")
-                    @header("nombre", "Grupo Experto")
-                    @header("id", "Integrantes")
+                    
+                    @header("nombre", "Nombre")
+                    @header("descripcion", "Descripcion")
+                    @header("maximoAlumnos", "Máximo N° Integrantes")
+                    <th>Integrantes</th>
                 </tr>
             </thead>
             <tbody> 
             @currentPage.getList.map { grupoexperto =>
            	<tr>
-            	<td>@grupoexperto.getId()</td>
+            	
                 <td>@grupoexperto.getNombre()</td>
-                <td>@grupoexperto.integrantes()</td>
+                <td>@grupoexperto.getDescripcion()</td>
+                <td>@grupoexperto.getMaximoAlumnos()</td>
+                <td> 
+                	<ul class="list-group"> 
+                		@grupoexperto.getAlumnos().map {alumno => 
+                			<li class="list-group-item">@alumno.getNombreCompleto()</li>
+                		}
+                	</ul>
+                </td>
                 <td>
                 	<a href="@routes.GrupoExpertoController.interfazAsignar(grupoexperto.getId())">Editar integrantes</a> 
                 </td>
