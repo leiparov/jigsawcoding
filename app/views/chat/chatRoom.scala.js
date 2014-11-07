@@ -1,8 +1,8 @@
-@(username: String)
+@(username: String, chatid: String)
 
 $(function() {
     var WS = window['MozWebSocket'] ? MozWebSocket : WebSocket
- var chatSocket = new WS("@routes.ChatController.chat(username).webSocketURL(request)")
+ var chatSocket = new WS("@routes.ChatController.chat(username, chatid).webSocketURL(request)")
 
     var sendMessage = function() {
         chatSocket.send(JSON.stringify(

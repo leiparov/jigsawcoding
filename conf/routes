@@ -81,8 +81,8 @@ POST   /docentes/examenes/:id/delete                   controllers.ExamenControl
 #POST   /examenes/:id/finalizarexamen    controllers.ExamenController.finalizarExamen(id: Long)
 GET    /chat                                           controllers.ChatController.index()
 GET    /room                                           controllers.ChatController.chatRoom(username: String ?= null)
-GET    /room/chat                                      controllers.ChatController.chat(username)
-GET    /assets/javascripts/chatroom.js                 controllers.ChatController.chatRoomJs(username)
+GET    /room/chat                                      controllers.ChatController.chat(username:String, chatid: String)
+GET    /assets/javascripts/chatroom.js                 controllers.ChatController.chatRoomJs(username:String, chatid:String)
 
 GET    /alumnos                                        controllers.AlumnoController.indexAlumno()
 POST   /alumnos/cambiarContrasenia                     controllers.AlumnoController.cambiarContrasenia()

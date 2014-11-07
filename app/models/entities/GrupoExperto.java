@@ -79,5 +79,9 @@ public class GrupoExperto {
 		}
 		return cad;
 	}
+	
+	public String getChatId (){
+		return "GE" + id;
+	}
 
 }

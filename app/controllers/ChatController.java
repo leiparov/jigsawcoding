@@ -1,13 +1,11 @@
 package controllers;
 
 import models.chat.ChatRoom;
-import models.services.Login;
-
-import com.fasterxml.jackson.databind.JsonNode;
-
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.WebSocket;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 public class ChatController extends Controller{
 	/**
@@ -27,29 +25,28 @@ public class ChatController extends Controller{
         return ok(views.html.chat.chatRoom.render(username));
     }
 
-    public static Result chatRoomJs(String username) {
-        return ok(views.js.chat.chatRoom.render(username));
+    public static Result chatRoomJs(String username, String chatid) {
+        return ok(views.js.chat.chatRoom.render(username, chatid));
     }
     /**
      * Handle the chat websocket.
      */
-    public static WebSocket<JsonNode> chat(final String username) {
+    public static WebSocket<JsonNode> chat(final String username, final String chatid) {
         return new WebSocket<JsonNode>() {
             
             // Called when the Websocket Handshake is done.
             public void onReady(WebSocket.In<JsonNode> in, WebSocket.Out<JsonNode> out){                
                 // Join the chat room.
                 try { 
-                	String chatId = "";
-                    ChatRoom.join(username, chatId, in, out);
+                	
+                	play.Logger.info("chatid "+chatid);
+                    ChatRoom.join(username, chatid,  in, out);
                 } catch (Exception ex) {
                     ex.printStackTrace();
+                    play.Logger.info(ex.getMessage());
                 }
             }
         };
     }
     
-    private Integer getDNIUsuarioLogueado (){
-    	return Login.obtener(ctx()).getDNI();
-    }
 }
