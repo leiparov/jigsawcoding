@@ -28,7 +28,7 @@ $(function() {
         var el = $('<li><span id="imagen"><img src="" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted"></div><p></p></div></li>')
         $("strong", el).text(data.user)
         $("p", el).text(data.message)
-        //$(el).addClass(data.kind)
+        // $(el).addClass(data.kind)
         if(data.kind == 'join' ){
         	$("img", el).attr("src", "http://placehold.it/50/AAAAAA/fff&text=U")
         	$("li", el).addClass('left clearfix')

@@ -1,20 +1,25 @@
 package models.chat;
 
-import play.mvc.*;
-import play.libs.*;
-import play.libs.F.*;
+import static akka.pattern.Patterns.ask;
+import static java.util.concurrent.TimeUnit.SECONDS;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import play.libs.Akka;
+import play.libs.F.Callback;
+import play.libs.F.Callback0;
+import play.libs.Json;
+import play.mvc.WebSocket;
 import scala.concurrent.Await;
 import scala.concurrent.duration.Duration;
-import akka.actor.*;
-import static akka.pattern.Patterns.ask;
+import akka.actor.ActorRef;
+import akka.actor.Props;
+import akka.actor.UntypedActor;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-
-import java.util.*;
-
-import static java.util.concurrent.TimeUnit.*;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * A chat room is an Actor.
@@ -24,16 +29,37 @@ public class ChatRoom extends UntypedActor {
 	// Default room.
 	static ActorRef defaultRoom = Akka.system().actorOf(
 			Props.create(ChatRoom.class));
-
+	
+	//Hashmap to keep references to actors(rooms)
+	public static HashMap<String, ActorRef> openedChats = new HashMap<>();
+	
+	//added unique identifier to know which room join
+	final String chatId;
+	
+	public ChatRoom(String chatId){
+		this.chatId = chatId;
+	}
+	
+	
 	/**
 	 * Join the default room.
 	 */
-	public static void join(final String username, WebSocket.In<JsonNode> in,
+	public static void join(final String username, final String chatId, WebSocket.In<JsonNode> in,
 			WebSocket.Out<JsonNode> out) throws Exception {
 
+		final ActorRef chatRoom;
+		
+		//Find the good room to bind to in the hashmap
+		if (openedChats.containsKey(chatId)){
+			chatRoom = openedChats.get(chatId);
+		}else{
+			chatRoom = Akka.system().actorOf(Props.create(ChatRoom.class, chatId));
+			openedChats.put(chatId, chatRoom);
+		}
+		
 		// Send the Join message to the room
 		String result = (String) Await.result(
-				ask(defaultRoom, new Join(username, out), 1000),
+				ask(chatRoom, new Join(username, out), 1000),
 				Duration.create(1, SECONDS));
 
 		if ("OK".equals(result)) {
@@ -41,7 +67,7 @@ public class ChatRoom extends UntypedActor {
 			in.onMessage(new Callback<JsonNode>() {
 				public void invoke(JsonNode event) {
 					// Send a Talk message to the room.
-					defaultRoom.tell(new Talk(username, event.get("text")
+					chatRoom.tell(new Talk(username, event.get("text")
 							.asText()), null);
 				}
 			});
@@ -49,7 +75,7 @@ public class ChatRoom extends UntypedActor {
 			in.onClose(new Callback0() {
 				public void invoke() {
 					// Send a Quit message to the room.
-					defaultRoom.tell(new Quit(username), null);
+					chatRoom.tell(new Quit(username), null);
 				}
 			});
 		} else {

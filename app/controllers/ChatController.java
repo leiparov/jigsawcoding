@@ -1,6 +1,7 @@
 package controllers;
 
 import models.chat.ChatRoom;
+import models.services.Login;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -39,11 +40,16 @@ public class ChatController extends Controller{
             public void onReady(WebSocket.In<JsonNode> in, WebSocket.Out<JsonNode> out){                
                 // Join the chat room.
                 try { 
-                    ChatRoom.join(username, in, out);
+                	String chatId = "";
+                    ChatRoom.join(username, chatId, in, out);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
         };
+    }
+    
+    private Integer getDNIUsuarioLogueado (){
+    	return Login.obtener(ctx()).getDNI();
     }
 }

@@ -45,5 +45,7 @@ public class AlumnoService {
 	public List<SesionJigsaw> sesionesActivas(Alumno alumno){
 		return null;
 	}
+	
+	
 
 }
