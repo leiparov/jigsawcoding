@@ -78,12 +78,21 @@
     			<tbody>
     			@currentPage.getList.map { examen =>
     				<tr>
-    					<td>@examen.getTitulo()</td>
-    					<td>@formatDate(examen.getTiempoApertura, FormatoFechaHora.timeFormat12)</td>
+    					<td>@examen.getTitulo()</td>    					
+    					<td>@formatDate(examen.getTiempoApertura, FormatoFechaHora.timeFormat12)</td>	
 	                    <td>@formatDate(examen.getTiempoApertura, FormatoFechaHora.dateFormat)</td>
 	                    <td>@formatDate(examen.getTiempoCreacion, FormatoFechaHora.dateFormat)</td>
-	                    <td>@examen.getDuracion() min</td>
-	                    <td>@examen.getSesionJigsaw().getNombre()</td>
+	                    @if(examen.getDuracion() != null){
+    						<td>@examen.getDuracion() min</td>
+    					}else{
+    						<td>--</td>
+    					}
+	                    @if(examen.getSesionJigsaw() != null){
+	                    	<td>@examen.getSesionJigsaw().getNombre()</td>	
+	                    }else{
+	                    	<td>--</td>
+	                    }
+	                    
     					<td>
 	                    	<a href="@routes.ExamenController.interfazDefinirHorario(examen.getId)">Definir horario</a> /  
 	                        <a href="@routes.ExamenController.interfazEditar(examen.getId)">Editar</a>

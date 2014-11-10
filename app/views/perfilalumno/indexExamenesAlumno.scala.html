@@ -1,0 +1,10 @@
+@* lsitaExamenes Template File *@
+@(examenes: List[models.entities.Examen], alumno: models.entities.Alumno)
+@main(menuAlumno()){
+	<div class="container">
+		@inputs.flashSuccessError()
+		@inputs.panel("Examenes", true){
+			
+		}
+	</div>
+}

@@ -5,6 +5,9 @@ import java.util.List;
 
 import models.daos.AlumnoDAO;
 import models.entities.Alumno;
+import models.entities.Examen;
+import models.entities.GrupoExperto;
+import models.entities.GrupoExpertoProblema;
 import models.entities.SesionJigsaw;
 
 import com.avaje.ebean.Page;
@@ -20,13 +23,20 @@ public class AlumnoService {
 	}
 
 	public List<Alumno> buscarPorTexto(String texto) {
-		if (texto.matches(ESTRUCTURA_DNI)) {
-			List<Alumno> resultado = new LinkedList<Alumno>();
-			resultado.add(alumnoDAO.obtener(Integer.parseInt(texto)));
-			return resultado;
-		} else {
-			return alumnoDAO.buscarAlumno(texto, MAX_BUSQUEDA);
+		if(texto.matches("all")){
+			List<Alumno> all = alumnoDAO.todos();
+			
+			return all;
+		}else{
+			if (texto.matches(ESTRUCTURA_DNI)) {
+				List<Alumno> resultado = new LinkedList<Alumno>();
+				resultado.add(alumnoDAO.obtener(Integer.parseInt(texto)));
+				return resultado;
+			} else {
+				return alumnoDAO.buscarAlumno(texto, MAX_BUSQUEDA);
+			}
 		}
+		
 	}
 	
 	public List<Alumno> disponibles(){
@@ -43,6 +53,13 @@ public class AlumnoService {
 	}
 	
 	public List<SesionJigsaw> sesionesActivas(Alumno alumno){
+		return null;
+	}
+
+	public List<Examen> obtenerExamenes(Alumno a) {
+		GrupoExperto ge = a.getGrupoExperto();
+		List<GrupoExpertoProblema> listagep = ge.getGruposExpertosProblema();
+		
 		return null;
 	}
 	

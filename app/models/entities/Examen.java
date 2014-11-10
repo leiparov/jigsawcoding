@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 @Entity
@@ -20,7 +21,7 @@ public class Examen {
 	private Date tiempoCreacion;
 	private Integer duracion;
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private SesionJigsaw sesionJigsaw;
 
 	@ManyToOne

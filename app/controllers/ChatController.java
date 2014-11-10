@@ -11,19 +11,21 @@ public class ChatController extends Controller{
 	/**
      * Display the home page.
      */
-	public static Result index(){
-		return ok(views.html.chat.index.render());
-	}
+//	public static Result index(){
+//		//return ok(views.html.chat.index.render());
+//		return noContent();
+//	}
 	/**
      * Display the chat room.
      */
-    public static Result chatRoom(String username) {
-        if(username == null || username.trim().equals("")) {
-            flash("error", "Please choose a valid username.");
-            return redirect(routes.ChatController.index());
-        }
-        return ok(views.html.chat.chatRoom.render(username));
-    }
+//    public static Result chatRoom(String username) {
+//        if(username == null || username.trim().equals("")) {
+//            flash("error", "Please choose a valid username.");
+//            return redirect(routes.ChatController.index());
+//        }
+//        //return ok(views.html.chat.chatRoom.render(username));
+//        return noContent();
+//    }
 
     public static Result chatRoomJs(String username, String chatid) {
         return ok(views.js.chat.chatRoom.render(username, chatid));

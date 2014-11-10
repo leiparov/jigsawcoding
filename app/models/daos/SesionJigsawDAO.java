@@ -31,7 +31,7 @@ public class SesionJigsawDAO {
 	}
 
 	public void actualizarSesionJigsaw(SesionJigsaw sesionJigsaw) {
-		Ebean.update(sesionJigsaw);
+		Ebean.update(sesionJigsaw);		
 	}
 
 	public SesionJigsaw obtenerSesionJigsaw(int id) {
@@ -103,6 +103,10 @@ public class SesionJigsawDAO {
 			Ebean.delete(p);
 		}
 
+	}
+	public void guardarAlumnos(SesionJigsaw s) {
+		Ebean.update(s);
+		Ebean.saveManyToManyAssociations(s, "alumnos");
 	}
 
 }

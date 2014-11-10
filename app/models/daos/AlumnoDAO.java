@@ -32,10 +32,10 @@ public class AlumnoDAO {
 				.find(Alumno.class)
 				.where()
 				.disjunction()
-				.add(Expr.like("upper(nombres)", criterio + '%'))
-				.add(Expr.like("upper(nombres)", "% " + criterio + '%'))
-				.add(Expr.like("upper(apellidoPaterno)", criterio + '%'))
-				.add(Expr.like("upper(apellidoMaterno)", "% " + criterio + '%'))
+				.add(Expr.like("upper(nombres)", '%' + criterio + '%'))
+				.add(Expr.like("upper(nombres)", "%" + criterio + '%'))
+				.add(Expr.like("upper(apellidoPaterno)", '%' + criterio + '%'))
+				.add(Expr.like("upper(apellidoMaterno)", "%" + criterio + '%'))
 				.setMaxRows(max);
 		return query.findList();
 	}
@@ -46,8 +46,9 @@ public class AlumnoDAO {
 
 	public List<Alumno> disponibles() {
 		int dni = 0;
-		String sql = "select u.dni from usuario u "
-				+ "where u.grupo_experto_id is null and u.tipo = 'ALUMNO' ";
+//		String sql = "select u.dni from usuario u "
+//				+ "where u.grupo_experto_id is null and u.tipo = 'ALUMNO' ";
+		String sql = "select u.dni from usuario u where u.tipo = 'ALUMNO'";
 		SqlQuery sqlQuery = Ebean.createSqlQuery(sql);
 		List<Alumno> alumnosDisponibles = new ArrayList<>();
 		List<SqlRow> resultado = sqlQuery.findList();
@@ -77,6 +78,10 @@ public class AlumnoDAO {
 				.add(Expr.ilike("apellido_materno", "%" + filter + "%"))
 				.orderBy(sortBy + " " + order).findPagingList(pageSize)
 				.setFetchAhead(false).getPage(page);
+	}
+
+	public List<Alumno> todos() {
+		return find.all();
 	}
 
 }

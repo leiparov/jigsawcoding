@@ -40,7 +40,7 @@ GET    /docentes/alumnos/nuevo                         controllers.AlumnoControl
 POST   /docentes/alumnos/registrar                     controllers.AlumnoController.registrarAlumno()
 GET    /docentes/alumnos/:id                           controllers.AlumnoController.interfazEditar(id:Integer)
 POST   /docentes/alumnos/actualizar                    controllers.AlumnoController.actualizarAlumno(id:Integer)
-GET    /docentes/alumnos/buscar                        controllers.AlumnoController.buscarAlumnos(q: String)
+GET    /docentes/alumnos/ajax/buscar                   controllers.AlumnoController.buscarAlumnos(q: String)
 GET    /docentes/alumnos/ajax/disponibles              controllers.AlumnoController.disponibles()
 
 GET    /docentes/gruposexpertos/index                  controllers.GrupoExpertoController.index()
@@ -60,8 +60,13 @@ POST   /docentes/sesionesjigsaw/registrar              controllers.SesionJigsawC
 GET    /docentes/sesionesjigsaw/:id/editar             controllers.SesionJigsawController.editarSesionJigsaw(id:Integer)
 POST   /docentes/sesionesjigsaw/:id/editar             controllers.SesionJigsawController.actualizarSesionJigsaw(id:Integer)
 POST   /docentes/sesionesjigsaw/:id/delete             controllers.SesionJigsawController.eliminarSesionJigsaw(id:Integer)
+
+GET    /docentes/sesionesjigsaw/:id/asignarAlumnos     controllers.SesionJigsawController.interfazAsignarAlumnos(id: Integer)
+POST   /docentes/sesionesjigsaw/:id/guardarAlumnos     controllers.SesionJigsawController.guardarAlumnos(id: Integer)
+
 GET    /docentes/sesionesjigsaw/:id/asignarProblemas   controllers.SesionJigsawController.asignarProblemas(id: Integer)
 POST   /docentes/sesionesjigsaw/:id/guardarProblemas   controllers.SesionJigsawController.guardarProblemas(id:Integer)
+
 
 GET    /docentes/examenes/index                        controllers.ExamenController.index()
 GET    /docentes/examenes/lista                        controllers.ExamenController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")
@@ -79,8 +84,8 @@ POST   /docentes/examenes/:id/delete                   controllers.ExamenControl
 #POST   /examenes/registrar              controllers.ExamenController.crearExamen()
 
 #POST   /examenes/:id/finalizarexamen    controllers.ExamenController.finalizarExamen(id: Long)
-GET    /chat                                           controllers.ChatController.index()
-GET    /room                                           controllers.ChatController.chatRoom(username: String ?= null)
+#GET    /chat                                           controllers.ChatController.index()
+#GET    /room                                           controllers.ChatController.chatRoom(username: String ?= null)
 GET    /room/chat                                      controllers.ChatController.chat(username:String, chatid: String)
 GET    /assets/javascripts/chatroom.js                 controllers.ChatController.chatRoomJs(username:String, chatid:String)
 
@@ -93,6 +98,8 @@ GET    /alumnos/sesiones/:id/faseexpertos              controllers.SesionJigsawC
 GET    /assets/javascripts/firepad.js                  controllers.SesionJigsawController.firepadJs(firepadid:String, userid: String)
 GET    /alumnos/ideone/run                             controllers.ProblemaController.problemaRunJs(source:String, input: String)
 GET    /alumnos/ideone/verresultados                   controllers.ProblemaController.verResultadosProblemaRunJs(link:String ?= "")
+
+GET    /alumnos/examenes                               controllers.ExamenController.indexAlumno()
 
 # Map static resources from the /public folder to the /assets URL path
 GET    /assets/javascripts/routes                      controllers.Application.jsRoutes()

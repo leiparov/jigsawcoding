@@ -3,11 +3,13 @@ package controllers;
 import java.util.LinkedList;
 import java.util.List;
 
+import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.Examen;
 import models.entities.Problema;
 import models.entities.ProblemaExamen;
 import models.entities.SesionJigsaw;
+import models.services.AlumnoService;
 import models.services.DocenteService;
 import models.services.ExamenService;
 import models.services.Login;
@@ -29,6 +31,7 @@ public class ExamenController extends Controller {
 
 	private static UsuarioService usuarioService = new UsuarioService();
 	private static DocenteService docenteService = new DocenteService();
+	private static AlumnoService alumnoService = new AlumnoService();
 	private static ExamenService examenService = new ExamenService();
 	private static ProblemaService problemaService = new ProblemaService();
 	private static SesionJigsawService sesionJigsawService = new SesionJigsawService();
@@ -46,7 +49,13 @@ public class ExamenController extends Controller {
 				filter));
 	}
 	public static Result index() {
-		return GO_HOME;
+		Login login = Login.obtener(ctx());
+		if(login.isTipo(Alumno.class)){
+			return redirect(routes.ExamenController.indexAlumno());
+		}else{
+			return GO_HOME;
+		}
+		
 	}
 	public static Result interfazNuevo() {
 		return ok(views.html.examenes.nuevoExamen.render(null));
@@ -242,5 +251,17 @@ public class ExamenController extends Controller {
 					&& tiempoApertura != null && tiempoApertura.length() != 0
 					&& tiempoClausura != null && tiempoClausura.length() != 0;
 		}
+	}
+	
+	/*Módulo Alumno*/
+	private static Alumno getAlumno() {
+		return usuarioService.obtener(Login.obtener(ctx()).getDNI(),
+				Alumno.class);
+	}
+	
+	public static Result indexAlumno(){
+		Alumno a = getAlumno();
+		List<Examen> examenes = alumnoService.obtenerExamenes(a);
+		return ok(views.html.perfilalumno.indexExamenesAlumno.render(examenes, a));
 	}
 }

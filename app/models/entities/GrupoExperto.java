@@ -3,51 +3,21 @@ package models.entities;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class GrupoExperto {
-	@Id
-	private Integer id;
-	private String nombre;
-	private String descripcion;
-	private Integer maximoAlumnos;
+@DiscriminatorValue("GRUPOEXPERTO")
+public class GrupoExperto extends Grupo {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Alumno> alumnos;
+	
+	@OneToMany
+	private List<GrupoExpertoProblema> gruposExpertosProblema;
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	private Docente docente;
-
-	/* Getters and Setters */
-
-	public String getNombre() {
-		return nombre.toUpperCase();
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre.toUpperCase();
-	}
-
-	public Integer getMaximoAlumnos() {
-		return maximoAlumnos;
-	}
-
-	public void setMaximoAlumnos(Integer maximoAlumnos) {
-		this.maximoAlumnos = maximoAlumnos;
-	}
-
+	/*Getters and Setters*/
 	public List<Alumno> getAlumnos() {
 		return alumnos;
 	}
@@ -55,33 +25,25 @@ public class GrupoExperto {
 	public void setAlumnos(List<Alumno> alumnos) {
 		this.alumnos = alumnos;
 	}
-
-	public Docente getDocente() {
-		return docente;
+	public List<GrupoExpertoProblema> getGruposExpertosProblema() {
+		return gruposExpertosProblema;
 	}
 
-	public void setDocente(Docente docente) {
-		this.docente = docente;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-	
-	public String integrantes (){
-		String cad = "";
-		for (Alumno alumno: alumnos){
-			cad += "* " + alumno.getNombres() + "\n";			
-		}
-		return cad;
+	public void setGruposExpertosProblema(
+			List<GrupoExpertoProblema> gruposExpertosProblema) {
+		this.gruposExpertosProblema = gruposExpertosProblema;
 	}
 	
 	public String getChatId (){
-		return "GE" + id;
+		return "GE" + getId();
+	}
+	
+	public String integrantes() {
+		String cad = "";
+		for (Alumno alumno : alumnos) {
+			cad += "* " + alumno.getNombres() + "\n";
+		}
+		return cad;
 	}
 
 }

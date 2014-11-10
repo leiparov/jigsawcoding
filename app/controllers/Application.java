@@ -25,7 +25,7 @@ public class Application extends Controller {
             //return ok(views.html.perfilalumno.indexAlumno.render(getAlumno()));
         	return redirect(routes.AlumnoController.indexAlumno());
         } else {
-            return ok(views.html.indexDocente.render());
+            return ok(views.html.perfildocente.indexDocente.render());
         }
     }
 

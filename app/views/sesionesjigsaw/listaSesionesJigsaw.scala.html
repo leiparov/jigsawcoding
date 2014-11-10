@@ -89,8 +89,9 @@
                     @header("inicioReunionJigsaw", "REU_JIGSAW INICIO")
                     @header("duracionReunionJigsaw", "REU_JIGSAW DURACIÓN")
                     @header("totalGruposExpertos", "TOTAL GRUPOS EXPERTOS")
-                    @header("id", "PROBLEMAS ASIGNADOS A GRUPOS EXPERTOS")
                     @header("etapa", "ETAPA")
+                    
+                    
                 </tr>
             </thead>
             <tbody>
@@ -103,17 +104,11 @@
             	<td>@sesionJigsaw.getInicioReunionJigsaw().format(FormatoFechaHora.dateTimeFormat12)</td>
             	<td>@stringDuracionRJ(sesionJigsaw)</td>
             	<td>@sesionJigsaw.getTotalGruposExpertos()</td>
-            	<td>
-            		@if(sesionJigsaw.getPares().size() <= 0){
-                	<a href="@routes.SesionJigsawController.asignarProblemas(sesionJigsaw.getId())">
-                		<span>Asignar problemas</span>
-                	</a>
-                	}else{
-                		<span>@sesionJigsaw.mostrarPares()</span>
-                	}
-                </td>
-                <td>@sesionJigsaw.getEtapa()</td>
+            	<td>@sesionJigsaw.getEtapa()</td>
                 <td>
+                	<a href="@routes.SesionJigsawController.interfazAsignarAlumnos(sesionJigsaw.getId())">
+                		<span>Asignar Alumnos</span>
+                	</a>
                 	<a href="@routes.SesionJigsawController.editarSesionJigsaw(sesionJigsaw.getId())">
                 		<span class="glyphicon glyphicon-pencil">
                 	</a>

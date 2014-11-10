@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.Examen;
 import models.entities.ProblemaExamen;
@@ -75,5 +76,6 @@ public class ExamenDAO {
 				.orderBy(sortBy + " " + order).findPagingList(pageSize)
 				.setFetchAhead(false).getPage(page);
 	}
+	
 
 }

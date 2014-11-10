@@ -5,9 +5,6 @@ import static play.data.Form.form;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.sun.media.jfxmedia.logging.Logger;
-
-import exceptions.DAOException;
 import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.GrupoExperto;
@@ -17,7 +14,10 @@ import models.services.UsuarioService;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.gruposexpertos.*;
+import views.html.gruposexpertos.editarGrupoExperto;
+import views.html.gruposexpertos.listaGruposExpertos;
+import views.html.gruposexpertos.nuevoGrupoExperto;
+import exceptions.DAOException;
 
 @Login.Requiere
 public class GrupoExpertoController extends Controller {
@@ -81,19 +81,6 @@ public class GrupoExpertoController extends Controller {
             flash("error", "Error desconocido: " + e.getMessage());
             return redirect(routes.GrupoExpertoController.interfazAsignar(id));
         }
-    }
-	private static Result tryDefinirAlumnos(Integer id) {
-        Form<AsignarAlumnosForm> form = Form.form(AsignarAlumnosForm.class).bindFromRequest();
-        GrupoExperto grupo = grupoExpertoService.obtenerGrupoExperto(id);
-        List<Integer> dnialumnos = form.get().alumnos;
-        if(grupo.getMaximoAlumnos() < dnialumnos.size()){
-        	flash("error", "El grupo experto debe tener " + grupo.getMaximoAlumnos() + " integrantes");
-        	return redirect(routes.GrupoExpertoController.interfazAsignar(id));
-        }	
-        grupoExpertoService.actualizarAlumnos(grupo, dnialumnos);
-        play.Logger.info("tryDefinirAlumnos");
-        flash("success", "Alumnos asignados con éxito");
-        return redirect(routes.GrupoExpertoController.index());
     }
 
 	public static Result registrarGrupoExperto() {

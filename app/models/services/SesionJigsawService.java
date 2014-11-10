@@ -1,5 +1,6 @@
 package models.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import models.daos.SesionJigsawDAO;
@@ -85,6 +86,16 @@ public class SesionJigsawService {
 			}
 		}
 		return null;
+	}
+
+	public void guardarAlumnos(SesionJigsaw s, List<Integer> dnialumnos) {
+		List<Alumno> alumnos = new ArrayList<>();
+		for (Integer dni: dnialumnos){
+			alumnos.add(usuarioDAO.obtener(dni, Alumno.class));
+		}
+		s.setAlumnos(alumnos);
+		sesionJigsawDAO.guardarAlumnos(s);
+		
 	}
 
 }

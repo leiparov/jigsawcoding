@@ -20,6 +20,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
+import controllers.GrupoExpertoController.AsignarAlumnosForm;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -82,7 +83,29 @@ public class SesionJigsawController extends Controller {
 			return redirect(routes.SesionJigsawController.index());
 		}
 	}
+	/*Asisgnar Alumnos a Sesion Jigsaw*/
+	public static Result interfazAsignarAlumnos(Integer id){
+		SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
+		return ok(views.html.sesionesjigsaw.asignarAlumnos.render(s));
+	}
+	public static Result guardarAlumnos(Integer id){
+		try {
+			Form<AsignarAlumnosForm> form = Form.form(AsignarAlumnosForm.class).bindFromRequest();
+			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
+			List<Integer> dnialumnos = form.get().alumnos;
+			sesionJigsawService.guardarAlumnos(s,dnialumnos);
+			flash("success", "Alumnos asignados con éxito");
+            return GO_HOME;
+		} catch (Exception e) {
+			flash("error", "Error: " + e.getMessage());
+            return interfazAsignarAlumnos(id);
+		}
+	}
+	public static class AsignarAlumnosForm{
+        public List<Integer> alumnos = new LinkedList<Integer>();
+    }
 
+	/*Asignar problemas*/
 	public static Result asignarProblemas(Integer id) {
 		SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
 		return ok(views.html.sesionesjigsaw.asignarProblemas.render(id, s));
@@ -268,7 +291,7 @@ public class SesionJigsawController extends Controller {
 		GrupoExpertoProblema gep = sesionJigsawService.problemaAResolver(getAlumno(), s);
 		if (gep != null){
 			String firepadID = "sj"+s.getId()+"ge"+gep.getGrupoExperto().getId()+"p"+gep.getProblema().getId();
-			return ok(views.html.perfilalumno.faseExpertos.render(getAlumno(), gep.getProblema(), firepadID));
+			return ok(views.html.perfilalumno.faseExpertos.render(getAlumno(), gep.getProblema(), s, firepadID));
 		}else{
 			flash("error", "Ud. no se encuentra asignado a esta sesión jigsaw");
 			return GO_HOME_ALUMNO;

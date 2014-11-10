@@ -6,8 +6,11 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class SesionJigsaw {
@@ -32,6 +35,12 @@ public class SesionJigsaw {
 
 	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<GrupoExpertoProblema> pares;
+	
+	@OneToOne
+	private Examen examen;
+	
+	@ManyToMany( cascade = CascadeType.PERSIST)
+	private List<Alumno> alumnos;;
 
 	/**/
 
@@ -127,6 +136,32 @@ public class SesionJigsaw {
 	public void setEtapa(EtapaSesionJigsaw etapa) {
 		this.etapa = etapa;
 	}
+	
+	
+	public Examen getExamen() {
+		return examen;
+	}
+
+	public void setExamen(Examen examen) {
+		this.examen = examen;
+	}
+
+	public List<Alumno> getAlumnos() {
+		return alumnos;
+	}
+
+	public void setAlumnos(List<Alumno> alumnos) {
+		this.alumnos = alumnos;
+	}
+
+	@Transient
+    public int getDuracionReunionExpertosEnSegundos(){
+        return this.duracionReunionExpertos * 60;
+    }
+	@Transient
+    public int getDuracionReunionJigsawEnSegundos(){
+        return this.duracionReunionJigsaw * 60;
+    }
 
 	
 
