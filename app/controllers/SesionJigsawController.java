@@ -278,7 +278,7 @@ public class SesionJigsawController extends Controller {
 	
 	public static Result listForAlumno(int page, String sortBy, String order,
 			String filter) {
-		return ok(views.html.perfilalumno.listaSesionesJigsaw.render(
+		return ok(views.html.perfilalumno.indexSesionesJigsaw.render(
 				sesionJigsawService.pageForAlumno(getAlumno(), page, 10, sortBy, order,
 						filter), sortBy, order, filter));
 	}
