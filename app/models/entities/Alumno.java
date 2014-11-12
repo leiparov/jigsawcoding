@@ -13,9 +13,6 @@ import javax.persistence.ManyToOne;
 @DiscriminatorValue("ALUMNO")
 public class Alumno extends Usuario {
 
-	@ManyToMany(cascade = CascadeType.PERSIST)
-	private List<GrupoExperto> gruposExpertos;
-
 	@ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "alumnos")
 	private List<SesionJigsaw> sesionesJigsaw = new ArrayList<>();
 
@@ -26,14 +23,6 @@ public class Alumno extends Usuario {
 
 	public List<SesionJigsaw> getSesionesJigsaw() {
 		return sesionesJigsaw;
-	}
-
-	public List<GrupoExperto> getGruposExpertos() {
-		return gruposExpertos;
-	}
-
-	public void setGruposExpertos(List<GrupoExperto> gruposExpertos) {
-		this.gruposExpertos = gruposExpertos;
 	}
 
 	public void setSesionesJigsaw(List<SesionJigsaw> sesionesJigsaw) {

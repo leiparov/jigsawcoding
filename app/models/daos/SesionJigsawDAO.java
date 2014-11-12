@@ -6,7 +6,6 @@ import java.util.List;
 import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.GrupoExperto;
-import models.entities.GrupoExpertoProblema;
 import models.entities.SesionJigsaw;
 import play.db.ebean.Model.Finder;
 
@@ -87,22 +86,22 @@ public class SesionJigsawDAO {
 //		Ebean.update(s);
 //
 //	}
-	private GrupoExpertoProblema buscarEn(List<GrupoExpertoProblema> lista,
-			Integer idGrupo) {
-		for (GrupoExpertoProblema p : lista) {
-			if (p.getGrupoExperto().getId() == idGrupo)
-				return p;
-		}
-		return null;
-	}
-
-	public void borrarListaProblemasActual(
-			List<GrupoExpertoProblema> listaActual) {
-		for (GrupoExpertoProblema p : listaActual) {
-			Ebean.delete(p);
-		}
-
-	}
+//	private GrupoExpertoProblema buscarEn(List<GrupoExpertoProblema> lista,
+//			Integer idGrupo) {
+//		for (GrupoExpertoProblema p : lista) {
+//			if (p.getGrupoExperto().getId() == idGrupo)
+//				return p;
+//		}
+//		return null;
+//	}
+//
+//	public void borrarListaProblemasActual(
+//			List<GrupoExpertoProblema> listaActual) {
+//		for (GrupoExpertoProblema p : listaActual) {
+//			Ebean.delete(p);
+//		}
+//
+//	}
 	public void guardarAlumnos(SesionJigsaw s) {
 		Ebean.update(s);
 		Ebean.saveManyToManyAssociations(s, "alumnos");

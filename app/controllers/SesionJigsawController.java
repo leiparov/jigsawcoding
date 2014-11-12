@@ -8,7 +8,6 @@ import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.EtapaSesionJigsaw;
 import models.entities.GrupoExperto;
-import models.entities.GrupoExpertoProblema;
 import models.entities.Problema;
 import models.entities.SesionJigsaw;
 import models.services.GrupoExpertoService;
