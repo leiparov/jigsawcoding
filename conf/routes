@@ -104,6 +104,13 @@ GET    /alumnos/ideone/verresultados                         controllers.Problem
 
 GET    /alumnos/examenes                                     controllers.ExamenController.indexAlumno()
 
+
+
+# The clock EventSource stream
+GET    /clockindex                                           controllers.ClockController.index()
+GET    /clock                                                controllers.ClockController.liveClock()
+
+
 # Map static resources from the /public folder to the /assets URL path
 GET    /assets/javascripts/routes                            controllers.Application.jsRoutes()
 GET    /assets/*file                                         controllers.Assets.at(path="/public", file)
