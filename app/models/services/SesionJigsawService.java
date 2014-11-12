@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import models.daos.GrupoExpertoDAO;
 import models.daos.SesionJigsawDAO;
 import models.daos.UsuarioDAO;
 import models.entities.Alumno;
@@ -20,6 +21,7 @@ public class SesionJigsawService {
 
 	private static UsuarioDAO usuarioDAO = new UsuarioDAO();
 	private static SesionJigsawDAO sesionJigsawDAO = new SesionJigsawDAO();
+	private static GrupoExpertoDAO grupoExpertoDAO = new GrupoExpertoDAO();
 
 	public void guardarSesionJigsaw(Docente docente, SesionJigsaw sesionJigsaw) {
 		sesionJigsawDAO.guardarSesionJigsaw(sesionJigsaw);
@@ -104,6 +106,9 @@ public class SesionJigsawService {
 	}
 
 	public void generarGrupos(SesionJigsaw s) {
+		//eliminarGruposExpertos(s.getId());
+		
+		/*Generacion de nuevos grupos expertos*/
 		List<Alumno> alumnos = s.getAlumnos();
 		int tge = s.getTotalGruposExpertos();
 		int cantidadAlumnosPorGrupoExperto = alumnos.size()/tge;
@@ -128,7 +133,9 @@ public class SesionJigsawService {
 			g.setAlumnos(a);
 			grupos.add(g);
 		}
-		sesionJigsawDAO.guardarGruposExpertos(grupos);
+		s.setGruposExpertos(grupos);
+		sesionJigsawDAO.guardarGruposExpertos(s);
+		
 	}
 
 	public void guardarProblemas(HashMap<GrupoExperto, Problema> pares) {
@@ -139,6 +146,16 @@ public class SesionJigsawService {
 			g.setProblema(p);
 			Ebean.update(g);
 		}
+		
+	}
+
+	public void eliminarGruposExpertos(Integer id) {
+		SesionJigsaw s = obtenerSesionJigsaw(id);
+		for(GrupoExperto g : s.getGruposExpertos()){
+			g.setAlumnos(null);
+			grupoExpertoDAO.eliminarGrupoExperto(g.getId());
+		}
+		sesionJigsawDAO.eliminarGruposExpertos(s);
 		
 	}
 

@@ -15,7 +15,7 @@ public class GrupoExperto extends Grupo {
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Alumno> alumnos;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private SesionJigsaw sesionJigsaw;
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)

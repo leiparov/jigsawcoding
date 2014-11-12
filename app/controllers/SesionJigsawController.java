@@ -122,6 +122,11 @@ public class SesionJigsawController extends Controller {
 		SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
 		return ok(views.html.sesionesjigsaw.gruposExpertos.render(s));
 	}
+	public static Result eliminarGruposExpertos(Integer id){
+		sesionJigsawService.eliminarGruposExpertos(id);
+		flash("success", "Grupos expertos eliminados correctamente");
+		return GO_HOME;
+	}
 
 	/*Asignar problemas*/
 	public static Result asignarProblemas(Integer id) {

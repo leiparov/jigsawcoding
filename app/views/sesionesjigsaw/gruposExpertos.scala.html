@@ -16,6 +16,14 @@
 				</div>
 			}
 		</div>
-		<a class="btn btn-success" href="@routes.SesionJigsawController.index">Aceptar</a>
+		<div class="row">
+			<div class="col-md-3">
+				<a class="btn btn-success" href="@routes.SesionJigsawController.index">Aceptar</a>
+			</div>			
+			@helper.form(routes.SesionJigsawController.eliminarGruposExpertos(sesionJigsaw.getId()), 'class -> "col-md-3") {
+			    <input type="submit" value="Eliminar Grupos Expertos" class="btn btn-danger">
+			}
+		</div>
+		
 	}
 }

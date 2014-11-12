@@ -7,7 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 
 @Entity
 @DiscriminatorValue("ALUMNO")
@@ -16,8 +15,7 @@ public class Alumno extends Usuario {
 	@ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "alumnos")
 	private List<SesionJigsaw> sesionesJigsaw = new ArrayList<>();
 
-	@ManyToOne
-	private Grupo grupo;
+	
 
 	/* GEtters and Setters */
 
@@ -29,13 +27,7 @@ public class Alumno extends Usuario {
 		this.sesionesJigsaw = sesionesJigsaw;
 	}
 
-	public Grupo getGrupo() {
-		return grupo;
-	}
 
-	public void setGrupo(Grupo grupo) {
-		this.grupo = grupo;
-	}
 
 	public String getIniciales() {
 		return getNombres().toUpperCase().substring(0, 1)

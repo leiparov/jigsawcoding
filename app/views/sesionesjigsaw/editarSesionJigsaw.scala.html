@@ -75,9 +75,12 @@
 				</div>
 			</div>
 		}
-		@helper.form(routes.SesionJigsawController.eliminarSesionJigsaw(id), 'class -> "form-horizontal") {
-		        <input type="submit" value="Eliminar" class="btn btn-danger">
-		}
+		<div class="row">
+			@helper.form(routes.SesionJigsawController.eliminarSesionJigsaw(id), 'class -> "col-md-3") {
+		        <input type="submit" value="Eliminar Sesión Jigsaw" class="btn btn-danger">
+			}
+		</div>
+		
 	    
 		
 	}

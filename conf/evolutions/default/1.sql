@@ -69,7 +69,6 @@ create table usuario (
   apellido_paterno          varchar(255),
   apellido_materno          varchar(255),
   sexo                      integer,
-  grupo_id                  integer,
   constraint ck_usuario_sexo check (sexo in (0,1)),
   constraint pk_usuario primary key (dni))
 ;
@@ -104,8 +103,6 @@ alter table sesion_jigsaw add constraint fk_sesion_jigsaw_docente_8 foreign key 
 create index ix_sesion_jigsaw_docente_8 on sesion_jigsaw (docente_dni);
 alter table sesion_jigsaw add constraint fk_sesion_jigsaw_examen_9 foreign key (examen_id) references examen (id) on delete restrict on update restrict;
 create index ix_sesion_jigsaw_examen_9 on sesion_jigsaw (examen_id);
-alter table usuario add constraint fk_usuario_grupo_10 foreign key (grupo_id) references grupo (id) on delete restrict on update restrict;
-create index ix_usuario_grupo_10 on usuario (grupo_id);
 
 
 

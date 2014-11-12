@@ -53,15 +53,19 @@
 		case _ => horas + " hora" + splural(horas) + ", " + minutos + " minuto" + splural(minutos)
 	}
 }
-@sePuedeGenerarGruposExpertos(sesionJigsaw: models.entities.SesionJigsaw) = @{
-	val tge = sesionJigsaw.getTotalGruposExpertos();
-	val ta = sesionJigsaw.getAlumnos().size();
-	val ge = sesionJigsaw.getGruposExpertos().size();
-	if( ta > 0 && (ta % tge == 0) && ge == 0 ) true else false
-}
+
 @sinAlumnos(sesionJigsaw: models.entities.SesionJigsaw) = @{
 	val ta = sesionJigsaw.getAlumnos().size();
 	if( ta == 0 ) true else false
+}
+@sePuedeGenerarGruposExpertos(sesionJigsaw: models.entities.SesionJigsaw) = @{
+	val tge = sesionJigsaw.getTotalGruposExpertos();
+	val ta = sesionJigsaw.getAlumnos().size();
+	if( ta > 0 && (ta % tge == 0) ) true else false
+}
+@gruposGenerados(sesionJigsaw: models.entities.SesionJigsaw) = @{
+	val ge = sesionJigsaw.getGruposExpertos().size();
+	if(ge > 0) true else false
 }
 @main(menuDocente()){
 	<h1 id="homeTitle">@Messages("sesionesJigsaw.list.title", currentPage.getTotalRowCount)</h1>
@@ -98,8 +102,9 @@
                     @header("duracionReunionExpertos", "REU_EXPERTOS DURACIÓN")
                     @header("inicioReunionJigsaw", "REU_JIGSAW INICIO")
                     @header("duracionReunionJigsaw", "REU_JIGSAW DURACIÓN")
-                    @header("totalGruposExpertos", "TOTAL GRUPOS EXPERTOS")
-                    @header("etapa", "ETAPA")                    
+                    <th>TOTAL DE ALUMNOS</th>
+                    <th>TOTAL DE GRUPOS EXPERTOS</th>
+                                     
                 </tr>
             </thead>
             <tbody>
@@ -111,8 +116,8 @@
             	<td>@stringDuracionRE(sesionJigsaw)</td>
             	<td>@sesionJigsaw.getInicioReunionJigsaw().format(FormatoFechaHora.dateTimeFormat12)</td>
             	<td>@stringDuracionRJ(sesionJigsaw)</td>
+            	<td>@sesionJigsaw.getAlumnos().size()</td>
             	<td>@sesionJigsaw.getTotalGruposExpertos()</td>
-            	<td>@sesionJigsaw.getEtapa()</td>
                 
                 	@if(sinAlumnos(sesionJigsaw)){
                 		<td>
@@ -122,19 +127,24 @@
                 		</td>
                 	}else{
                 		<td>
-		                	<a class="btn btn-info" href="@routes.SesionJigsawController.interfazAsignarAlumnos(sesionJigsaw.getId())">
-		                		<span>Editar Alumnos</span>
-		                	</a>
-	                	</td>
+                		<a class="btn btn-info" href="@routes.SesionJigsawController.interfazAsignarAlumnos(sesionJigsaw.getId())">
+                			<span>Editar Alumnos</span>
+                		</a>
+                		</td>
 	                	<td>
-		                	@if(sePuedeGenerarGruposExpertos(sesionJigsaw)){
-		                		@helper.form(routes.SesionJigsawController.generarGrupos(sesionJigsaw.getId()), 'class -> "form-horizontal"){
-		                			<button type="submit" class="btn btn-warning">Generar Grupos</button>
-		                		}                		
-		                	}else{
+	                		@if(!gruposGenerados(sesionJigsaw)){
+	                			@if(sePuedeGenerarGruposExpertos(sesionJigsaw)){
+			                		@helper.form(routes.SesionJigsawController.generarGrupos(sesionJigsaw.getId()), 'class -> "form-horizontal"){
+			                			<button type="submit" class="btn btn-warning">Generar Grupos</button>
+			                		}                		
+		                		}else{
+		                			<p>Verifique que TOTAL ALUMNOS / TOTAL GRUPOS sea una division exacta</p>
+		                		}
+	                		}else{
 		                		<a class="btn btn-warning" href="@routes.SesionJigsawController.verGruposExpertos(sesionJigsaw.getId())">
 		                			<span>Ver Grupos</span>
 		                		</a>
+		                		<br>
 		                		<a class="btn btn-warning" href="@routes.SesionJigsawController.asignarProblemas(sesionJigsaw.getId())">
 		                			<span>Asignar Problemas</span>
 		                		</a>

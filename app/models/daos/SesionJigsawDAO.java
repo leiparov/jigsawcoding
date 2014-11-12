@@ -1,7 +1,9 @@
 package models.daos;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import models.entities.Alumno;
 import models.entities.Docente;
@@ -31,7 +33,8 @@ public class SesionJigsawDAO {
 	}
 
 	public void actualizarSesionJigsaw(SesionJigsaw sesionJigsaw) {
-		Ebean.update(sesionJigsaw);		
+		Ebean.update(sesionJigsaw);	
+		//Ebean.saveManyToManyAssociations(sesionJigsaw, "alumnos");
 	}
 
 	public SesionJigsaw obtenerSesionJigsaw(int id) {
@@ -106,8 +109,15 @@ public class SesionJigsawDAO {
 		Ebean.update(s);
 		Ebean.saveManyToManyAssociations(s, "alumnos");
 	}
-	public void guardarGruposExpertos(List<GrupoExperto> grupos) {
-		Ebean.save(grupos);	
+	public void guardarGruposExpertos(SesionJigsaw s) {
+		Ebean.saveAssociation(s, "gruposExpertos");
+		//Ebean.save(s);	
+	}
+	public void eliminarGruposExpertos(SesionJigsaw s) {
+		s.setGruposExpertos(null);
+		Ebean.update(s);
+		Ebean.saveAssociation(s, "gruposExpertos");
+		
 	}
 
 }

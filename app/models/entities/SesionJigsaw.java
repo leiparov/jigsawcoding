@@ -33,7 +33,7 @@ public class SesionJigsaw {
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Docente docente;
 
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<GrupoExperto> gruposExpertos;
 	
 	@OneToOne
