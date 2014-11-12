@@ -98,12 +98,12 @@
             <thead>
                 <tr>
                     @header("tema", "TEMA")
-                    @header("inicioReunionExpertos", "REU_EXPERTOS INICIO")
-                    @header("duracionReunionExpertos", "REU_EXPERTOS DURACIÓN")
-                    @header("inicioReunionJigsaw", "REU_JIGSAW INICIO")
-                    @header("duracionReunionJigsaw", "REU_JIGSAW DURACIÓN")
+                    @header("inicioReunionExpertos", "RE INICIO")
+                    @header("duracionReunionExpertos", "RE DURACIÓN")
+                    @header("inicioReunionJigsaw", "RJ INICIO")
+                    @header("duracionReunionJigsaw", "RJ DURACIÓN")
                     <th>TOTAL DE ALUMNOS</th>
-                    <th>TOTAL DE GRUPOS EXPERTOS</th>
+                    <th>TOTAL DE GE</th>
                                      
                 </tr>
             </thead>
@@ -131,8 +131,9 @@
                 			<span>Editar Alumnos</span>
                 		</a>
                 		</td>
-	                	<td>
+	                	
 	                		@if(!gruposGenerados(sesionJigsaw)){
+	                			<td>
 	                			@if(sePuedeGenerarGruposExpertos(sesionJigsaw)){
 			                		@helper.form(routes.SesionJigsawController.generarGrupos(sesionJigsaw.getId()), 'class -> "form-horizontal"){
 			                			<button type="submit" class="btn btn-warning">Generar Grupos</button>
@@ -140,16 +141,25 @@
 		                		}else{
 		                			<p>Verifique que TOTAL ALUMNOS / TOTAL GRUPOS sea una division exacta</p>
 		                		}
+		                		</td>
 	                		}else{
+		                		<td>
 		                		<a class="btn btn-warning" href="@routes.SesionJigsawController.verGruposExpertos(sesionJigsaw.getId())">
 		                			<span>Ver Grupos</span>
 		                		</a>
-		                		<br>
-		                		<a class="btn btn-warning" href="@routes.SesionJigsawController.asignarProblemas(sesionJigsaw.getId())">
+		                		</td>
+		                		<td>
+				                @sesionJigsaw.mostrarPares().map { cad => 
+				                	<li>@cad</li>
+				                }
+				                <a class="btn btn-warning" href="@routes.SesionJigsawController.asignarProblemas(sesionJigsaw.getId())">
 		                			<span>Asignar Problemas</span>
 		                		</a>
+				                </td>
 		                	}
-		                </td>
+		                
+		                
+		                
                 	}
                 
                 

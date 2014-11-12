@@ -20,7 +20,7 @@ import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 //import views.html.usuarios.actualizarDocente;
 import views.html.docentes.nuevoDocente;
-@Login.Requiere
+
 public class DocenteController extends Controller{   
    
    private static DocenteService docenteService = new DocenteService();
@@ -167,7 +167,7 @@ public class DocenteController extends Controller{
       }
       return true;
    }
-   
+   @Login.Requiere
    private static Docente getDocente(){
       return usuarioService.obtener(Login.obtener(ctx()).getDNI(), Docente.class);
    }

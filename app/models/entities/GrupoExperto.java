@@ -1,5 +1,6 @@
 package models.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -52,6 +53,15 @@ public class GrupoExperto extends Grupo {
 
 	public void setProblema(Problema problema) {
 		this.problema = problema;
+	}
+	
+	public String mostrarGrupoExpertoProblema (){
+		if(problema != null){
+			return ("(" + this.getNombre() + " - " + getProblema().getTitulo() + ")");
+		}else{
+			return ("(" + this.getNombre() + " - <asignar problema>)");
+		}
+		
 	}
 
 }

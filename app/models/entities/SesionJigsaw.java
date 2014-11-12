@@ -1,5 +1,6 @@
 package models.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,13 +45,13 @@ public class SesionJigsaw {
 
 	/**/
 
-//	public String mostrarPares() {
-//		String cad = "";
-//		for (GrupoExpertoProblema p : pares) {
-//			cad += p + " ";
-//		}
-//		return cad;
-//	}
+	public List<String> mostrarPares() {
+		List<String> cad = new ArrayList<>();
+		for (GrupoExperto p : gruposExpertos) {
+			cad.add(p.mostrarGrupoExpertoProblema());
+		}
+		return cad;
+	}
 
 	/* Getters and Setters */
 	public Integer getId() {
