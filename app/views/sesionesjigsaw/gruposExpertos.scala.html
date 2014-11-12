@@ -1,0 +1,20 @@
+@* gruposExpertos Template File *@
+@(sesionJigsaw : models.entities.SesionJigsaw)
+@main(menuDocente()){
+	@inputs.flashSuccessError()
+	@inputs.panel("Grupos Expertos"){
+		<div class="row">
+		
+			@sesionJigsaw.getGruposExpertos().map { ge => 
+				<div class="col-md-3">
+					<label>@ge.getNombre()</label>
+					<ul class="list-group">
+						@ge.getAlumnos().map {alumno => 
+							<li class="list-group-item">@alumno.getNombreCompleto()</li>
+						}
+					</ul>
+				</div>
+			}
+		</div>
+	}
+}

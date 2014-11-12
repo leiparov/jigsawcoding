@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -104,6 +106,25 @@ public class SesionJigsawController extends Controller {
 	public static class AsignarAlumnosForm{
         public List<Integer> alumnos = new LinkedList<Integer>();
     }
+	
+	/*Generar Grupos*/
+	public static Result generarGrupos(Integer id){
+		try {
+			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
+			sesionJigsawService.generarGrupos(s);
+			
+			flash("success", "Grupos Expertos generados exitosamente");
+			return verGruposExpertos(id);
+					//views.html.sesionesjigsaw.gruposExpertos.render(s));
+		} catch (Exception e) {
+			flash("error", "Error: " + e.getMessage());
+            return GO_HOME;
+		}		
+	}
+	public static Result verGruposExpertos(Integer id){
+		SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
+		return ok(views.html.sesionesjigsaw.gruposExpertos.render(s));
+	}
 
 	/*Asignar problemas*/
 	public static Result asignarProblemas(Integer id) {
@@ -118,8 +139,8 @@ public class SesionJigsawController extends Controller {
 			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
 			//List<ParGrupoExpertoProblema> lista = form.get().getAsignacionProblemas(id);
 			//s.setPares(lista);
-			s = form.get().definirProblemas(s);
-			sesionJigsawService.guardarProblemas(s);
+			HashMap<GrupoExperto, Problema> pares = form.get().asignacionProblemas();
+			sesionJigsawService.guardarProblemas(pares);
 			//sesionJigsawService.actualizarSesionJigsaw(getDocente(), s);
 			flash("success", "Asignación de Problemas realizada con éxito");
 			return GO_HOME;
@@ -127,7 +148,8 @@ public class SesionJigsawController extends Controller {
 			e.printStackTrace();
 			flash("error", "No se pudo guardar la Asignación de Problemas");
 			return redirect(routes.SesionJigsawController.index());
-		}		
+		}	
+		//return TODO;
 	}
 
 	public static Result editarSesionJigsaw(Integer id) {
@@ -242,20 +264,12 @@ public class SesionJigsawController extends Controller {
 	public static class ParGrupoProblemaForm{
 		/*Lista de IDs de grupos y problemas*/
 		public List<Integer> grupos;
-		public List<Integer> problemas;
+		public List<Integer> problemas;	
 		
-		public SesionJigsaw definirProblemas (SesionJigsaw s){			
-			s.setPares(getParesGruposProblemas());
-			return s;			
-		}
-		
-		private List<GrupoExpertoProblema> getParesGruposProblemas(){
-			List<GrupoExpertoProblema> pares = new LinkedList<GrupoExpertoProblema>();
+		public HashMap<GrupoExperto, Problema> asignacionProblemas(){
+			HashMap<GrupoExperto, Problema> pares = new HashMap<>();
 			for (int i=0; i<grupos.size(); i++){
-				GrupoExpertoProblema par = new GrupoExpertoProblema();
-				par.setGrupoExperto(getGrupoExperto(i));
-				par.setProblema(getProblema(i));
-				pares.add(par);
+				pares.put(getGrupoExperto(i), getProblema(i));
 			}
 			return pares;			
 		}

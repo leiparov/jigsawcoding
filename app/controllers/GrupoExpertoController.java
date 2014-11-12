@@ -90,7 +90,7 @@ public class GrupoExpertoController extends Controller {
 		}
 		try {
 			GrupoExperto grupoExperto = grupoExpertoForm.get();
-			grupoExperto.setDocente(getDocente());
+			//grupoExperto.setDocente(getDocente());
 			grupoExpertoService.guardarGrupoExperto(getDocente(), grupoExperto);
 			flash("success", "GrupoExperto registrado con éxito");
 			return GO_HOME;
@@ -115,7 +115,7 @@ public class GrupoExpertoController extends Controller {
 		}
 		try {
 			GrupoExperto grupoExperto = grupoExpertoForm.get();
-			grupoExperto.setDocente(getDocente());
+			//grupoExperto.setDocente(getDocente());
 			grupoExperto.setId(id);
 			System.out.println(grupoExperto.toString());
 			grupoExpertoService.actualizarGrupoExperto(getDocente(), grupoExperto);

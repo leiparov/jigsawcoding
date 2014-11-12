@@ -4,8 +4,8 @@
 	var botonBuscar = $('#boton-buscar');
 	var botonBuscarAll = $('#boton-buscar-all');
 
-	var dualListbox = $('[name="alumnos[]"]');
-	//var dualListbox = $('.demo');
+	//var dualListbox = $('[name="alumnos[]"]');
+	var dualListbox = $('.demo');
 
 	function avisar(mensaje) {
 		inputBuscar.attr('data-content', mensaje);
@@ -26,11 +26,16 @@
 			return avisar("La búsqueda no retornó resultados");
 
 		var dataMenosPresentes = filtrarAlumnosPresentes(data);
+		console.log(dataMenosPresentes);
 		if (dataMenosPresentes.length == 0)
 			return avisar("La búsqueda no retornó nuevos resultados");
 
+		
 		dualListbox.children(':not(:selected)').remove();
+		//dualListbox.children().remove();
+		console.log(dualListbox.children(':not(:selected)'))
 		for (i in dataMenosPresentes) {
+			console.log(i);
 			dualListbox.append($("<option></option>").val(data[i].dni).text(
 					data[i].nombreCompleto));
 		}

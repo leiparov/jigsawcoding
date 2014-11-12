@@ -77,4 +77,14 @@
      enunciado: Diseñar un algoritmo que muestra la siguiente serie
      docente: *D1
 
+- !!models.entities.SesionJigsaw
+     tema: Ordenamiento
+     inicioReunionExpertos: "2014-11-15 11:00:00"
+     duracionReunionExpertos: 60
+     inicioReunionJigsaw: "2014-11-15 11:00:00"
+     duracionReunionJigsaw: 50
+     totalGruposExpertos: 2
+     etapa: REUNIONEXPERTOS
+     docente: *D1
+
      

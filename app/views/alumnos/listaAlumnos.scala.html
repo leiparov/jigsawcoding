@@ -78,7 +78,7 @@
                     @header("apellidoPaterno", "Apellido Paterno")
                     @header("apellidoMaterno", "Apellido Materno")
                     @header("nombres", "Nombres")
-                    <th>Grupo Experto Actual</th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -88,11 +88,7 @@
                 <td>@alumno.getApellidoPaterno()</td>
                 <td>@alumno.getApellidoMaterno()</td>
                 <td>@alumno.getNombres()</td>
-                @if(alumno.getGrupoExperto() != null){
-                	<td>@alumno.getGrupoExperto().getNombre()</td>	
-                }else{
-                	<td>SIN GRUPO</td>
-                }
+                <td>@alumno.getIniciales()</td>
                 
                 <td><a href="@routes.AlumnoController.interfazEditar(alumno.getDNI())">
                 	<span class="glyphicon glyphicon-pencil"></a>

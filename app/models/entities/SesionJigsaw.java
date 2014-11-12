@@ -34,7 +34,7 @@ public class SesionJigsaw {
 	private Docente docente;
 
 	@OneToMany(cascade = CascadeType.PERSIST)
-	private List<GrupoExpertoProblema> pares;
+	private List<GrupoExperto> gruposExpertos;
 	
 	@OneToOne
 	private Examen examen;
@@ -44,13 +44,13 @@ public class SesionJigsaw {
 
 	/**/
 
-	public String mostrarPares() {
-		String cad = "";
-		for (GrupoExpertoProblema p : pares) {
-			cad += p + " ";
-		}
-		return cad;
-	}
+//	public String mostrarPares() {
+//		String cad = "";
+//		for (GrupoExpertoProblema p : pares) {
+//			cad += p + " ";
+//		}
+//		return cad;
+//	}
 
 	/* Getters and Setters */
 	public Integer getId() {
@@ -117,13 +117,7 @@ public class SesionJigsaw {
 		this.docente = docente;
 	}
 
-	public List<GrupoExpertoProblema> getPares() {
-		return pares;
-	}
-
-	public void setPares(List<GrupoExpertoProblema> pares) {
-		this.pares = pares;
-	}
+	
 
 	public String getNombre() {
 		return "SesionJigsaw_" + this.id;
@@ -162,6 +156,14 @@ public class SesionJigsaw {
     public int getDuracionReunionJigsawEnSegundos(){
         return this.duracionReunionJigsaw * 60;
     }
+
+	public List<GrupoExperto> getGruposExpertos() {
+		return gruposExpertos;
+	}
+
+	public void setGruposExpertos(List<GrupoExperto> gruposExpertos) {
+		this.gruposExpertos = gruposExpertos;
+	}
 
 	
 

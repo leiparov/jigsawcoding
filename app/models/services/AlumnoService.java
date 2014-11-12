@@ -6,8 +6,6 @@ import java.util.List;
 import models.daos.AlumnoDAO;
 import models.entities.Alumno;
 import models.entities.Examen;
-import models.entities.GrupoExperto;
-import models.entities.GrupoExpertoProblema;
 import models.entities.SesionJigsaw;
 
 import com.avaje.ebean.Page;
@@ -57,8 +55,8 @@ public class AlumnoService {
 	}
 
 	public List<Examen> obtenerExamenes(Alumno a) {
-		GrupoExperto ge = a.getGrupoExperto();
-		List<GrupoExpertoProblema> listagep = ge.getGruposExpertosProblema();
+		
+		
 		
 		return null;
 	}

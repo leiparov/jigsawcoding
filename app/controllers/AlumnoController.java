@@ -199,6 +199,7 @@ public class AlumnoController extends Controller {
 	public static Result buscarAlumnos(String q) {
 		List<Alumno> alumnos = alumnoService.buscarPorTexto(q);
 		JsonNode respuesta = convertirListaAlumnosAJson(alumnos);
+		play.Logger.debug("BuscarAlumnos -> " + respuesta.asText());
 		return ok(respuesta);
 	}
 

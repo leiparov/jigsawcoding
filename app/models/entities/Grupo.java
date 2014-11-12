@@ -20,9 +20,6 @@ public class Grupo {
 	private String descripcion;
 	private Integer maximoAlumnos;
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	private Docente docente;
-
 	/* Getters and Setters */
 
 	public String getNombre() {
@@ -49,14 +46,6 @@ public class Grupo {
 		this.maximoAlumnos = maximoAlumnos;
 	}
 
-	public Docente getDocente() {
-		return docente;
-	}
-
-	public void setDocente(Docente docente) {
-		this.docente = docente;
-	}
-
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -64,7 +53,9 @@ public class Grupo {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-
+	public String getChatId (){
+		return "GRUPO" + getId();
+	}
 	
 
 }

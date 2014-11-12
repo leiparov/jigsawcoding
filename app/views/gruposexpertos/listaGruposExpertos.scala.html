@@ -50,10 +50,7 @@
 				<button type="submit" class="btn btn-primary" id="searchsubmit">Buscar</button>
 	        </form>
         </div>
-        
-        <div class="pull-right">
-        	<a class="pull-rigth btn btn btn-success" id="add" href="@routes.GrupoExpertoController.interfazNuevo()">Nuevo Grupo Experto</a>
-        </div>       
+            
         
     </div>
     <br>
@@ -90,14 +87,8 @@
                 		}
                 	</ul>
                 </td>
-                <td>
-                	<a href="@routes.GrupoExpertoController.interfazAsignar(grupoexperto.getId())">Editar integrantes</a> 
-                </td>
-                <td>
-                	<a href="@routes.GrupoExpertoController.interfazEditar(grupoexperto.getId())">
-                		<span class="glyphicon glyphicon-pencil">
-                	</a>
-                </td>
+                
+                
            	</tr>
            	}               
             </tbody>

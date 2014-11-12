@@ -15,9 +15,6 @@ public class Docente extends Usuario {
 	private List<Problema> problemas;
 	
 	@OneToMany(cascade = CascadeType.PERSIST)
-	private List<GrupoExperto> gruposExpertos;
-	
-	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<SesionJigsaw> sesionesJigsaw;
     
 	@Override
@@ -32,14 +29,6 @@ public class Docente extends Usuario {
 
 	public void setProblemas(List<Problema> problemas) {
 		this.problemas = problemas;
-	}
-
-	public List<GrupoExperto> getGruposExpertos() {
-		return gruposExpertos;
-	}
-
-	public void setGruposExpertos(List<GrupoExperto> gruposExpertos) {
-		this.gruposExpertos = gruposExpertos;
 	}
 
 	public List<SesionJigsaw> getSesionesJigsaw() {

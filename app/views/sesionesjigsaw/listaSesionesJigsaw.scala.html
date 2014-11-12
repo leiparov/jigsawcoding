@@ -53,6 +53,16 @@
 		case _ => horas + " hora" + splural(horas) + ", " + minutos + " minuto" + splural(minutos)
 	}
 }
+@sePuedeGenerarGruposExpertos(sesionJigsaw: models.entities.SesionJigsaw) = @{
+	val tge = sesionJigsaw.getTotalGruposExpertos();
+	val ta = sesionJigsaw.getAlumnos().size();
+	val ge = sesionJigsaw.getGruposExpertos().size();
+	if( ta > 0 && (ta % tge == 0) && ge == 0 ) true else false
+}
+@sinAlumnos(sesionJigsaw: models.entities.SesionJigsaw) = @{
+	val ta = sesionJigsaw.getAlumnos().size();
+	if( ta == 0 ) true else false
+}
 @main(menuDocente()){
 	<h1 id="homeTitle">@Messages("sesionesJigsaw.list.title", currentPage.getTotalRowCount)</h1>
 	@inputs.flashSuccessError()
@@ -89,9 +99,7 @@
                     @header("inicioReunionJigsaw", "REU_JIGSAW INICIO")
                     @header("duracionReunionJigsaw", "REU_JIGSAW DURACIÓN")
                     @header("totalGruposExpertos", "TOTAL GRUPOS EXPERTOS")
-                    @header("etapa", "ETAPA")
-                    
-                    
+                    @header("etapa", "ETAPA")                    
                 </tr>
             </thead>
             <tbody>
@@ -106,9 +114,31 @@
             	<td>@sesionJigsaw.getTotalGruposExpertos()</td>
             	<td>@sesionJigsaw.getEtapa()</td>
                 <td>
-                	<a href="@routes.SesionJigsawController.interfazAsignarAlumnos(sesionJigsaw.getId())">
-                		<span>Asignar Alumnos</span>
-                	</a>
+                	@if(sinAlumnos(sesionJigsaw)){
+                		<a class="btn btn-info" href="@routes.SesionJigsawController.interfazAsignarAlumnos(sesionJigsaw.getId())">
+                			<span>Asignar Alumnos</span>
+                		</a>
+                	}else{
+	                	<a class="btn btn-info" href="@routes.SesionJigsawController.interfazAsignarAlumnos(sesionJigsaw.getId())">
+	                		<span>Editar Alumnos</span>
+	                	</a>
+                	}
+                </td>
+                <td>
+                	@if(sePuedeGenerarGruposExpertos(sesionJigsaw)){
+                		@helper.form(routes.SesionJigsawController.generarGrupos(sesionJigsaw.getId()), 'class -> "form-horizontal"){
+                			<button type="submit" class="btn btn-warning">Generar Grupos</button>
+                		}                		
+                	}else{
+                		<a class="btn btn-warning" href="@routes.SesionJigsawController.verGruposExpertos(sesionJigsaw.getId())">
+                			<span>Ver Grupos</span>
+                		</a>
+                		<a class="btn btn-warning" href="@routes.SesionJigsawController.asignarProblemas(sesionJigsaw.getId())">
+                			<span>Asignar Problemas</span>
+                		</a>
+                	}
+                </td>
+                <td>
                 	<a href="@routes.SesionJigsawController.editarSesionJigsaw(sesionJigsaw.getId())">
                 		<span class="glyphicon glyphicon-pencil">
                 	</a>

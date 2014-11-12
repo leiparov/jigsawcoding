@@ -5,6 +5,7 @@ import java.util.List;
 
 import models.entities.Alumno;
 import models.entities.Docente;
+import models.entities.GrupoExperto;
 import models.entities.GrupoExpertoProblema;
 import models.entities.SesionJigsaw;
 import play.db.ebean.Model.Finder;
@@ -66,28 +67,28 @@ public class SesionJigsawDAO {
 				.setFetchAhead(false).getPage(page);
 	}
 
-	public void guardarProblemas(SesionJigsaw s) {
-		SesionJigsaw sesionExistente = obtenerSesionJigsaw(s.getId());
-		// Modificados
-		for (GrupoExpertoProblema par : s.getPares()) {
-			GrupoExpertoProblema relacionExistente = buscarEn(
-					sesionExistente.getPares(), par.getGrupoExperto().getId());
-			if (relacionExistente != null) {
-				par.setId(relacionExistente.getId());
-				Ebean.update(par);
-			}
-		}
-		// Eliminados
-		for (GrupoExpertoProblema existente : sesionExistente.getPares()) {
-			GrupoExpertoProblema relacionActual = buscarEn(s.getPares(),
-					existente.getGrupoExperto().getId());
-			if (relacionActual == null) {
-				Ebean.delete(existente);
-			}
-		}
-		Ebean.update(s);
-
-	}
+//	public void guardarProblemas(SesionJigsaw s) {
+//		SesionJigsaw sesionExistente = obtenerSesionJigsaw(s.getId());
+//		// Modificados
+//		for (GrupoExpertoProblema par : s.getPares()) {
+//			GrupoExpertoProblema relacionExistente = buscarEn(
+//					sesionExistente.getPares(), par.getGrupoExperto().getId());
+//			if (relacionExistente != null) {
+//				par.setId(relacionExistente.getId());
+//				Ebean.update(par);
+//			}
+//		}
+//		// Eliminados
+//		for (GrupoExpertoProblema existente : sesionExistente.getPares()) {
+//			GrupoExpertoProblema relacionActual = buscarEn(s.getPares(),
+//					existente.getGrupoExperto().getId());
+//			if (relacionActual == null) {
+//				Ebean.delete(existente);
+//			}
+//		}
+//		Ebean.update(s);
+//
+//	}
 	private GrupoExpertoProblema buscarEn(List<GrupoExpertoProblema> lista,
 			Integer idGrupo) {
 		for (GrupoExpertoProblema p : lista) {
@@ -107,6 +108,9 @@ public class SesionJigsawDAO {
 	public void guardarAlumnos(SesionJigsaw s) {
 		Ebean.update(s);
 		Ebean.saveManyToManyAssociations(s, "alumnos");
+	}
+	public void guardarGruposExpertos(List<GrupoExperto> grupos) {
+		Ebean.save(grupos);	
 	}
 
 }

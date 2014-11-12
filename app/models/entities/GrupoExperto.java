@@ -5,17 +5,21 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 @DiscriminatorValue("GRUPOEXPERTO")
 public class GrupoExperto extends Grupo {
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Alumno> alumnos;
 	
-	@OneToMany
-	private List<GrupoExpertoProblema> gruposExpertosProblema;
+	@ManyToOne
+	private SesionJigsaw sesionJigsaw;
+	
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	private Problema problema;
 
 	/*Getters and Setters*/
 	public List<Alumno> getAlumnos() {
@@ -25,18 +29,6 @@ public class GrupoExperto extends Grupo {
 	public void setAlumnos(List<Alumno> alumnos) {
 		this.alumnos = alumnos;
 	}
-	public List<GrupoExpertoProblema> getGruposExpertosProblema() {
-		return gruposExpertosProblema;
-	}
-
-	public void setGruposExpertosProblema(
-			List<GrupoExpertoProblema> gruposExpertosProblema) {
-		this.gruposExpertosProblema = gruposExpertosProblema;
-	}
-	
-	public String getChatId (){
-		return "GE" + getId();
-	}
 	
 	public String integrantes() {
 		String cad = "";
@@ -44,6 +36,22 @@ public class GrupoExperto extends Grupo {
 			cad += "* " + alumno.getNombres() + "\n";
 		}
 		return cad;
+	}
+
+	public SesionJigsaw getSesionJigsaw() {
+		return sesionJigsaw;
+	}
+
+	public void setSesionJigsaw(SesionJigsaw sesionJigsaw) {
+		this.sesionJigsaw = sesionJigsaw;
+	}
+
+	public Problema getProblema() {
+		return problema;
+	}
+
+	public void setProblema(Problema problema) {
+		this.problema = problema;
 	}
 
 }
