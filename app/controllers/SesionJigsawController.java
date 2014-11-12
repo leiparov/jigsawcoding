@@ -1,7 +1,6 @@
 package controllers;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,7 +21,6 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
-import controllers.GrupoExpertoController.AsignarAlumnosForm;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -301,15 +299,19 @@ public class SesionJigsawController extends Controller {
 	}
 	
 	public static Result interfazFaseExpertos(Integer id){
-		SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
-		GrupoExpertoProblema gep = sesionJigsawService.problemaAResolver(getAlumno(), s);
-		if (gep != null){
-			String firepadID = "sj"+s.getId()+"ge"+gep.getGrupoExperto().getId()+"p"+gep.getProblema().getId();
-			return ok(views.html.perfilalumno.faseExpertos.render(getAlumno(), gep.getProblema(), s, firepadID));
-		}else{
-			flash("error", "Ud. no se encuentra asignado a esta sesión jigsaw");
+		try {
+			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
+			GrupoExperto gep = sesionJigsawService.grupoExpertoDelAlumno(getAlumno(), s);
+			play.Logger.info(gep.toString());
+			
+			String firepadID = "sj"+s.getId()+"ge"+gep.getId()+"p"+gep.getProblema().getId();
+			return ok(views.html.perfilalumno.faseExpertos.render(getAlumno(), gep, s, firepadID));
+		} catch (Exception e) {
+			e.printStackTrace();
+			flash("error", "Error: " + e.getMessage());
 			return GO_HOME_ALUMNO;
 		}
+		
 		
 	}
 	

@@ -1,5 +1,5 @@
 @* faseExpertos Template File *@
-@(alumno: models.entities.Alumno, problema : models.entities.Problema, sesionJigsaw: models.entities.SesionJigsaw,  firepadid: String)
+@(alumno: models.entities.Alumno, grupoExperto : models.entities.GrupoExperto, sesionJigsaw: models.entities.SesionJigsaw,  firepadid: String)
 @main(menuAlumno()){
 	<!-- Firebase -->
 	<script src="https://cdn.firebase.com/js/client/1.0.17/firebase.js"></script>
@@ -27,8 +27,8 @@
 	<div class="row">
 		<div class="col-md-3">
 			
-			<h1>@problema.getTitulo()</h1>
-			<p>@problema.getEnunciado()</p>
+			<h1>@grupoExperto.getProblema.getTitulo()</h1>
+			<p>@grupoExperto.getProblema.getEnunciado()</p>
 			
 		</div>
 		<div class="col-md-5">
@@ -69,7 +69,7 @@
 		
 		</div>
 		<div class="col-md-4">			
-			@views.html.chat.interfazChat(alumno)
+			@views.html.chat.interfazChat(alumno, grupoExperto)
 		</div>
 	</div>
 	<!-- Modal -->

@@ -80,15 +80,18 @@ public class SesionJigsawService {
 //		sesionJigsawDAO.borrarListaProblemasActual(listaActual);
 //	}
 //
-	public GrupoExpertoProblema problemaAResolver(Alumno alumno, SesionJigsaw s) {
-//		List<GrupoExpertoProblema> pares = s.getPares();
-//		for (GrupoExpertoProblema gep: pares){
-//			GrupoExperto ge = gep.getGrupoExperto();
-//			if(ge.getAlumnos().contains(alumno)){
-//				return gep;
-//			}
-//		}
-		return null;
+	public GrupoExperto grupoExpertoDelAlumno(Alumno alumno, SesionJigsaw s) throws Exception {
+		List<GrupoExperto> grupos = s.getGruposExpertos();
+		GrupoExperto grupo = null;
+		for (GrupoExperto ge: grupos){
+			if(ge.getAlumnos().contains(alumno)){
+				grupo = ge;
+			}
+		}
+		if(grupo == null){
+			throw new Exception("Alumno no registrado en esta sesion jigsaw");
+		}
+		return grupo;
 	}
 
 	public void guardarAlumnos(SesionJigsaw s, List<Integer> dnialumnos) {

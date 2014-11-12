@@ -52,9 +52,7 @@ public class SesionJigsawDAO {
 	public Page<SesionJigsaw> pageForAlumno(Alumno alumno, int page,
 			int pageSize, String sortBy, String order, String filter) {
 		SqlQuery sql = Ebean
-				.createSqlQuery("select sesion_jigsaw_id from grupo_experto_problema"
-						+ " where grupo_experto_id in (select grupo_experto_id"
-						+ " from usuario where dni = :dni)");
+				.createSqlQuery("select sesion_jigsaw_id from sesion_jigsaw_usuario where usuario_dni = :dni");
 		sql.setParameter("dni", alumno.getDNI());
 		List<SqlRow> resultado = sql.findList();
 		List<Integer> listaIDSesionesJigsaw = new ArrayList<Integer>();
