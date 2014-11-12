@@ -152,7 +152,6 @@ public class SesionJigsawService {
 	public void eliminarGruposExpertos(Integer id) {
 		SesionJigsaw s = obtenerSesionJigsaw(id);
 		for(GrupoExperto g : s.getGruposExpertos()){
-			g.setAlumnos(null);
 			grupoExpertoDAO.eliminarGrupoExperto(g.getId());
 		}
 		sesionJigsawDAO.eliminarGruposExpertos(s);

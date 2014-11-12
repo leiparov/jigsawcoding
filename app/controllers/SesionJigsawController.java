@@ -178,14 +178,22 @@ public class SesionJigsawController extends Controller {
 		} catch (Exception e) {
 			e.printStackTrace();
 			flash("error", "No se pudo guardar la Sesión Jigsaw");
-			return redirect(routes.SesionJigsawController.index());
+			return GO_HOME;
 		}
 	}
 
 	public static Result eliminarSesionJigsaw(Integer id) {
-		sesionJigsawService.eliminarSesionJigsaw(id);
-		flash("success", "Sesión Jigsaw borrada con éxito");
-		return GO_HOME;
+		try {
+			sesionJigsawService.eliminarSesionJigsaw(id);
+			flash("success", "Sesión Jigsaw borrada con éxito");
+			return GO_HOME;
+		} catch (Exception e) {
+			e.printStackTrace();
+			flash("error", "No se pudo eliminar la Sesión Jigsaw - " + e.getMessage());
+			
+			return GO_HOME;
+		}
+		
 	}
 
 	/* Clases estaticas FOrm */
