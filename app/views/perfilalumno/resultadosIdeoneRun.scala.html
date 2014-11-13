@@ -1,6 +1,9 @@
 @* resultadosIdeoneRun Template File *@
 @(isd: models.services.ideone.IdeoneSubmissionDetails)
 <div class="container col-md-12">
+@if(isd == null){
+	<div class="well">Ocurrió un problema al ejecutar su código.</div>
+}else{
 	<table class="table table-condensed">
 		<tr><td>RESULTADO</td><td>@models.services.ideone.IdeoneService.translateResult(isd.getResult())</td></tr>
 		<tr><td>MEMORIA</td><td>@isd.getMemory() KB</td></tr>
@@ -19,5 +22,5 @@
 			<textarea rows="7" class="form-control">@isd.getCmpinfo()</textarea>		
 		</div>
 	}	
-
+}
 </div>

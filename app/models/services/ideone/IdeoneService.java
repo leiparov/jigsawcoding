@@ -89,11 +89,17 @@ public class IdeoneService {
 			data = getData(so);
 			return data.get("link").toString();
 		} catch (IOException e) {
+			System.out.println("CREATE SUBMISSION IOException");
 			e.printStackTrace();
 		} catch (XmlPullParserException e) {
+			System.out.println("CREATE SUBMISSION XmlPullParserException");
+			e.printStackTrace();
+		}catch (Exception e) {
+			
+			System.out.println("CREATE SUBMISSION Exception");
 			e.printStackTrace();
 		}
-		return null;
+		return "";
 	}
 	
 	public IdeoneSubmissionStatus getSubmissionStatus(String link){		
@@ -126,6 +132,7 @@ public class IdeoneService {
 			e.printStackTrace();
 		} catch (XmlPullParserException e) {
 			e.printStackTrace();
+			System.out.println("ISS XML Error");
 		}
 		return ret;
 		

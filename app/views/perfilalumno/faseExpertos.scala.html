@@ -71,19 +71,17 @@
 					data-placement="top" title ="Ingrese su Input">
 				  <span class="glyphicon glyphicon-hdd"></span> stdin
 				</button>
-				
+				<button type="button" id="boton-ver" class="btn btn-primary">
+					<span class="glyphicon glyphicon-cog"></span> Ver resultados									
+				</button>
+				<div style="display:none" id="divajaxloader"><img src="@routes.Assets.at("images/ajax-loader.gif")" /></div>
 				<div class="pull-right">
 					<button type="button" id="boton-run" class="btn btn-success"
 					data-loading-text="Procesando..." autocomplete="off">
 						<span class="glyphicon glyphicon-cog"></span> run									
-					</button>
-										
-				</div>
-				<button type="button" id="boton-ver" class="btn btn-primary">
-						<span class="glyphicon glyphicon-cog"></span> Ver resultados									
-					</button>
-			</div>			
-		
+					</button>										
+				</div>				
+			</div>				
 		</div>
 		<div class="col-md-4">			
 			@views.html.chat.interfazChat(alumno, grupoExperto)

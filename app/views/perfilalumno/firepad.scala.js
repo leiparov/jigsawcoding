@@ -14,7 +14,7 @@ $(function(){
 		url = 'https://vivid-heat-5073.firebaseio.com/firepads/jc_' + '@firepadid';
 		console.log(url);
 		var firepadRef = new Firebase(url);
-
+		console.log(firepadRef);
 		// // Create CodeMirror (with line numbers and the Java mode).
 		var codeMirror = CodeMirror(document.getElementById('firepad'), {
 			lineNumbers : true,
@@ -98,10 +98,12 @@ $(function(){
 	
 	botonRun.on('click', function(e){
 		e.preventDefault();
+		$('#divajaxloader').show();
 		var $btn = $(this).button('loading');
 		problemaRun();
 		$btn.button('reset');
 		botonVer.popover('destroy');
+		$('#divajaxloader').hide();
 	});
 	
 	function avisar(mensaje){

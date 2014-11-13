@@ -156,7 +156,7 @@ public class ProblemaController extends Controller {
 			
         final ExecutorService service;
         final Future<String> task;
-        
+        play.Logger.info("SOURCE" + source);
         service = Executors.newFixedThreadPool(1);
         task = service.submit(new IdeoneRun(source, input));
         
@@ -165,6 +165,7 @@ public class ProblemaController extends Controller {
         String link = "";
         try {
         	link = task.get();
+        	play.Logger.info("IDEONE Link: " + link);
             
 		} catch (Exception e) {
 			e.printStackTrace();
