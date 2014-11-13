@@ -5,10 +5,11 @@
 		<tr><td>RESULTADO</td><td>@models.services.ideone.IdeoneService.translateResult(isd.getResult())</td></tr>
 		<tr><td>MEMORIA</td><td>@isd.getMemory() KB</td></tr>
 		<tr><td>TIEMPO</td><td>@isd.getTime()</td></tr>
+		<tr><td>IDEONE LINK</td><td><span id="link">@isd.getLink()</span></td></tr>
 		<tr><td>INPUT</td><td>OUTPUT</td></tr>
 		<tr>
-			<td><textarea rows="5" class="form-control">@isd.getInput()</textarea></td>
-			<td><textarea rows="5" class="form-control">@isd.getOutput()</textarea></td>
+			<td><textarea rows="5" class="form-control" readonly="readonly">@isd.getInput()</textarea></td>
+			<td><textarea rows="5" class="form-control" readonly="readonly">@isd.getOutput()</textarea></td>
 		</tr>
 	</table>	
 	<br>
@@ -17,8 +18,6 @@
 		<div class="row">
 			<textarea rows="7" class="form-control">@isd.getCmpinfo()</textarea>		
 		</div>
-	}
-	<input type="hidden" id="link" name="link" value="@isd.getLink()">	
-	
+	}	
 
 </div>

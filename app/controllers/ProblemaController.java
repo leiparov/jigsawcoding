@@ -138,19 +138,19 @@ public class ProblemaController extends Controller {
 		return redirect(routes.AlumnoController.indexAlumno());
 	}
 
-	public static Result interfazResolver(Integer id) {
-		try {
-			Problema p = problemaService.obtenerProblema(id);
-			return ok(views.html.perfilalumno.resolverProblema.render(p));
-		} catch (NoEncontradoException e) {
-			flash("error", "No existe el problema " + e.getMessage());
-			return indexAlumno();
-		} catch (Exception e) {
-			e.printStackTrace();
-			flash("error", e.getMessage());
-			return indexAlumno();
-		}
-	}
+//	public static Result interfazResolver(Integer id) {
+//		try {
+//			Problema p = problemaService.obtenerProblema(id);
+//			return ok(views.html.perfilalumno.resolverProblema.render(p));
+//		} catch (NoEncontradoException e) {
+//			flash("error", "No existe el problema " + e.getMessage());
+//			return indexAlumno();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			flash("error", e.getMessage());
+//			return indexAlumno();
+//		}
+//	}
 
 	public static Result problemaRunJs(String source, String input) {
 			

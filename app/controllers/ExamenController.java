@@ -272,7 +272,7 @@ public class ExamenController extends Controller {
 		Alumno a = getAlumno();
 		boolean existeNotaExamen = examenService.existeNotaExamen(a, e);
 		if(!existeNotaExamen){
-			return ok(views.html.examenes.rendirExamen.render(e));
+			return ok(views.html.examenes.rendirExamen.render(e,a));
 		}else{
 			flash("success", "Usted ya rindió este examen.");
             return interfazResultados(id);
@@ -295,4 +295,7 @@ public class ExamenController extends Controller {
 	public static Result finalizarExamen(Integer id){
 		return TODO;
 	}
+	public static Result firepadExamenJs(String firepadid, String userid) {
+        return ok(views.js.examenes.firepadExamen.render(firepadid, userid));
+    }
 }

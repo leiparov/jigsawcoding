@@ -1,0 +1,55 @@
+@* resolverProblema Template File *@
+@(problemaExamen: models.entities.ProblemaExamen, alumno:models.entities.Alumno)
+@p = @{problemaExamen.getProblema()}
+@firepadid = @{"examen_"+problemaExamen.getExamen().getId()+"_problema_"+p.getId()}
+<div class="row">
+	<div class="col-md-3"><p>@p.getEnunciado()</p></div>
+	<div class="col-md-5">
+		<div class="row">
+			<select class="form-control">				  
+			  <option value="1" >C++ 4.8.1 (gcc-4.8.1)</option>
+			  <!-- 
+			  <option value="4">Python (python 2.7.3)</option>
+			  <option value="55">Java7 (sun-jdk-1.7.0_10)</option>
+			   -->
+			</select>
+		</div>
+		
+		<div id="@firepadid" class="row firepad"></div>
+						
+	</div>
+	<div class="col-md-4">
+		<div class="row">
+			<div id="@firepadid-stdin" class="collapse">
+				<textarea id="@firepadid-input-stdin" name="@firepadid-stdin" class="form-control" rows="5" ></textarea>
+			</div>
+		</div>
+		<div class="row"  >
+			<div id="@firepadid-resultados" class="collapse">
+				<h4>RESULTADOS DE EJECUCIÓN</h4>
+				<div id="@firepadid-ideoneResultados"></div>  
+			</div>
+			    
+		</div>
+		<div class="row">			
+			<button type="button" class="btn btn-default" data-toggle="collapse"  
+				data-target="#@firepadid-stdin" aria-expanded="true" aria-controls="@firepadid-stdin" 
+				data-placement="top" title ="Ingrese su Input">
+			  <span class="glyphicon glyphicon-hdd"></span> stdin
+			</button>			
+			<div class="pull-right">
+				<button type="button" id="@firepadid-boton-run" class="btn btn-success"
+				data-loading-text="Procesando..." autocomplete="off">
+					<span class="glyphicon glyphicon-cog"></span> run									
+				</button>									
+			</div>
+			<button type="button" id="@firepadid-boton-ver" class="btn btn-primary" data-toggle="collapse"
+				data-target="#@firepadid-resultados" aria-expanded="true" aria-controls="@firepadid-resultados" 
+				data-placement="top">
+					<span class="glyphicon glyphicon-cog"></span> Ver resultados									
+			</button>
+		</div>	
+	</div>
+	
+	<script type="text/javascript" charset="utf-8" src="@routes.ExamenController.firepadExamenJs(firepadid, alumno.getDNI().toString)"></script>
+</div>

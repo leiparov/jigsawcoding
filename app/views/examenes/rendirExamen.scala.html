@@ -1,5 +1,32 @@
 @* rendirExamen Template File *@
-@(examen: models.entities.Examen)
+@(examen: models.entities.Examen, alumno: models.entities.Alumno)
+
 @main(menuAlumno()){
-	@examen.getTitulo()
+	@inputs.firepadHeader()
+	@inputs.panel("",false){	
+		<div role="tabpanel">			
+		<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+				@examen.getProblemas().map {p=>
+					<li role="presentation" ><a href="#p_@p.getProblema().getId()" 
+					aria-controls="p_@p.getProblema().getId()" role="tab" data-toggle="tab">@p.getProblema().getTitulo()</a></li>	
+				}	
+			  
+			</ul>
+			
+			<!-- Tab panes -->
+			<div class="tab-content">
+				@examen.getProblemas().map {p=>
+					<div role="tabpanel" class="tab-pane" id="p_@p.getProblema().getId()">
+						@problemaExamen(p,alumno)
+					</div>
+				}
+			  
+			</div>
+			
+		</div>
+		
+	}
+	
+	
 }
