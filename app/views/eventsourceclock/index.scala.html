@@ -10,7 +10,7 @@
     <script type="text/javascript" charset="utf-8">
 
        if (!!window.EventSource) {
-         var source = new EventSource("@routes.ClockController.liveClock()");
+         var source = new EventSource("@routes.ClockController.liveClock(1)");
          source.addEventListener('message', function(e) {
             $('#clock').html(e.data.replace(/(\d)/g, '<span>$1</span>'));
          });

@@ -1,16 +1,11 @@
 (function(){
 	var botonFinalizarReunionExpertos = $('#boton-finalizar');
 	var barraProgreso = $('#barra-progreso');
-	var reloj = $('#clock');
-    
-    
+	var reloj = $('#reloj');   
 	
-	botonFinalizarReunionExpertos.click(function(){
-		
+	botonFinalizarReunionExpertos.click(function(){		
 		console.log("FinReunionExpertos");
 	});
-	
-	
 
     //At start
 	var tiempoExamen = reloj.attr('data-duracion');

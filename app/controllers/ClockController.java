@@ -1,30 +1,53 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
-import play.libs.*;
-import play.libs.F.*;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
-import akka.actor.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
-import java.util.*;
-import java.text.*;
+import models.entities.SesionJigsaw;
+import models.services.SesionJigsawService;
+import play.Logger;
+import play.libs.Akka;
+import play.libs.EventSource;
+import play.libs.F.Callback0;
+import play.mvc.Controller;
+import play.mvc.Result;
 import scala.concurrent.duration.Duration;
-
-import static java.util.concurrent.TimeUnit.*;
-
-import views.html.*;
+import akka.actor.ActorRef;
+import akka.actor.Props;
+import akka.actor.UntypedActor;
 
 public class ClockController extends Controller {
     
     final static ActorRef clock = Clock.instance;
-    final static Date inicio = new Date();
+    static Date limite;
+    
+    private static SesionJigsawService sesionJigsawService = new SesionJigsawService();
     
     public static Result index() {
         return ok(views.html.eventsourceclock.index.render());
     }
     
-    public static Result liveClock() {
+    public static Result liveClock(Integer id) {
+    	
+    	SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
+    	Date inicioRE = s.getInicioReunionExpertos();
+    	int duracionRE = s.getDuracionReunionExpertosEnSegundos();
+    	
+    	Calendar cal = Calendar.getInstance();
+    	cal.setTime(inicioRE);
+    	cal.add(Calendar.SECOND, duracionRE);
+    	limite = new Date(cal.getTimeInMillis());
+    	
+		//cal.set(Calendar.YEAR, 2014);
+		//cal.set(Calendar.HOUR_OF_DAY, 15);
+		//cal.set(Calendar.MINUTE, 50);
+		//cal.set(Calendar.SECOND, 0);
+    	
         return ok(new EventSource() {  
             public void onConnected() {
                clock.tell(this, null); 
@@ -40,7 +63,7 @@ public class ClockController extends Controller {
         static {
             Akka.system().scheduler().schedule(
                 Duration.Zero(),
-                Duration.create(100, MILLISECONDS),
+                Duration.create(1000, MILLISECONDS),
                 instance, "TICK",  Akka.system().dispatcher(),
                 null
             );
@@ -79,13 +102,40 @@ public class ClockController extends Controller {
                 // Send the current time to all EventSource sockets
                 List<EventSource> shallowCopy = new ArrayList<EventSource>(sockets); //prevent ConcurrentModificationException
                 for(EventSource es: shallowCopy) {
-                	
-                    es.sendData(dateFormat.format(inicio.getTime()-new Date().getTime()));
+                	Long time = limite.getTime()-new Date().getTime();
+                	//Logger.info("Reloj : " + time.toString());
+                    //es.sendData(dateFormat.format(cronometro(limite)));
+                    es.sendData(cronometro(limite)+"");
                 	
                 }
                 
             }
 
+        }
+        
+        private int cronometro(Date limite){
+        	
+        	Calendar max = Calendar.getInstance();
+        	max.setTime(limite);
+        	Calendar min = Calendar.getInstance();
+        	min.setTime(new Date());
+        	
+        	long milisMax = max.getTimeInMillis();
+        	long milisMin = min.getTimeInMillis();
+        	
+        	long diff = milisMax - milisMin;
+        	
+        	int segundos = (int)(diff / (1000));
+        	
+        	
+        	
+//        	Calendar cal = Calendar.getInstance();
+//    		cal.set(Calendar.HOUR_OF_DAY, horas);
+//    		cal.set(Calendar.MINUTE, minutos);
+//    		cal.set(Calendar.SECOND, segundos);
+        	
+    		return segundos;
+    		
         }
         
     }

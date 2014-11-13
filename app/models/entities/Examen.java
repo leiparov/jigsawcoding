@@ -106,4 +106,18 @@ public class Examen {
 		this.sesionJigsaw = sesionJigsaw;
 	}
 
+	@Override
+	public String toString() {
+		return "Examen ["
+				+ (id != null ? "id=" + id + ", " : "")
+				+ (titulo != null ? "titulo=" + titulo + ", " : "")
+				+ (tiempoApertura != null ? "tiempoApertura=" + tiempoApertura
+						+ ", " : "")
+				+ (tiempoClausura != null ? "tiempoClausura=" + tiempoClausura
+						+ ", " : "")
+				+ (tiempoCreacion != null ? "tiempoCreacion=" + tiempoCreacion
+						+ ", " : "")
+				+ (duracion != null ? "duracion=" + duracion : "") + "]";
+	}
+
 }

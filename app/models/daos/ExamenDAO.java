@@ -8,10 +8,13 @@ import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.Examen;
 import models.entities.ProblemaExamen;
+import models.entities.SesionJigsaw;
 import play.db.ebean.Model.Finder;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Page;
+import com.avaje.ebean.SqlQuery;
+import com.avaje.ebean.SqlRow;
 
 public class ExamenDAO {
 
@@ -29,6 +32,9 @@ public class ExamenDAO {
 		camposHorario.add("sesionJigsaw");
 
 		Ebean.update(examen, camposHorario);
+		SesionJigsaw s = examen.getSesionJigsaw();
+		s.setExamen(examen);
+		Ebean.update(s);
 	}
 
 	public void guardar(Examen e) {
@@ -75,6 +81,17 @@ public class ExamenDAO {
 				.ilike("titulo", "%" + filter + "%")
 				.orderBy(sortBy + " " + order).findPagingList(pageSize)
 				.setFetchAhead(false).getPage(page);
+	}
+	public boolean existeNotaExamen(Alumno a, Examen e) {
+		SqlQuery sql = Ebean.createSqlQuery("select * from nota_alumno where alumno_dni like :dni and examen_id like :examenid");
+        sql.setParameter("dni", a.getDNI());
+        sql.setParameter("examenid", e.getId());
+        SqlRow resultado = sql.findUnique();
+        if (resultado == null)
+            return false;
+        else 
+            return true;
+		
 	}
 	
 

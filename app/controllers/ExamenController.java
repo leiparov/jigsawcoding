@@ -6,8 +6,10 @@ import java.util.List;
 import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.Examen;
+import models.entities.NotaAlumno;
 import models.entities.Problema;
 import models.entities.ProblemaExamen;
+import models.entities.RespuestasAlumno;
 import models.entities.SesionJigsaw;
 import models.services.AlumnoService;
 import models.services.DocenteService;
@@ -263,5 +265,34 @@ public class ExamenController extends Controller {
 		Alumno a = getAlumno();
 		List<Examen> examenes = alumnoService.obtenerExamenes(a);
 		return ok(views.html.perfilalumno.indexExamenesAlumno.render(examenes, a));
+	}
+	
+	public static Result interfazRendir(Integer id){
+		Examen e = examenService.obtener(id);
+		Alumno a = getAlumno();
+		boolean existeNotaExamen = examenService.existeNotaExamen(a, e);
+		if(!existeNotaExamen){
+			return ok(views.html.examenes.rendirExamen.render(e));
+		}else{
+			flash("success", "Usted ya rindió este examen.");
+            return interfazResultados(id);
+		}
+	}
+	
+	public static Result interfazResultados(Integer id){
+		try {
+//            Examen e = examenService.obtener(id);
+//            Alumno a = getAlumno();
+//            NotaAlumno n = examenService.obtenerNotaAlumno(a.getDNI(), e.getId());
+//            List<RespuestasAlumno> respuestas = examenService.obtenerRespuestasExamen(n);
+//            return ok(views.html.examenes.mostrarResultados.render(n, respuestas));
+			return noContent();
+        } catch (Exception e) {
+            flash("error", "Resultados: " + e.getMessage());
+            return indexAlumno();
+        }
+	}
+	public static Result finalizarExamen(Integer id){
+		return TODO;
 	}
 }

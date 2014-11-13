@@ -34,6 +34,8 @@ public class ExamenService {
 			String sortBy, String order, String filter) {
 		return examenDAO.page(docente, page, pageSize, sortBy, order, filter);
 	}
-	
+	public boolean existeNotaExamen(Alumno a, Examen e){
+		return examenDAO.existeNotaExamen(a,e);
+	}
 
 }

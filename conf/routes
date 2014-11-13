@@ -81,10 +81,8 @@ GET    /docentes/examenes/:id/horario                        controllers.ExamenC
 POST   /docentes/examenes/:id/horario                        controllers.ExamenController.definirHorario(id: Integer)
 POST   /docentes/examenes/:id/delete                         controllers.ExamenController.eliminarExamen(id: Integer)
 
-#GET    /examenes/:id/rendir             controllers.ExamenController.interfazRendir(id: Long)
-#GET    /examenes/:id/resultados         controllers.ExamenController.interfazResultados(id: Long)
-#POST   /examenes/:id/horario            controllers.ExamenController.definirHorario(id: Long)
-#POST   /examenes/registrar              controllers.ExamenController.crearExamen()
+GET    /alumnos/examenes/:id/rendir                          controllers.ExamenController.interfazRendir(id: Integer)
+GET    /alumnos/examenes/:id/resultados                      controllers.ExamenController.interfazResultados(id: Integer)
 
 #POST   /examenes/:id/finalizarexamen    controllers.ExamenController.finalizarExamen(id: Long)
 #GET    /chat                                           controllers.ChatController.index()
@@ -108,7 +106,7 @@ GET    /alumnos/examenes                                     controllers.ExamenC
 
 # The clock EventSource stream
 GET    /clockindex                                           controllers.ClockController.index()
-GET    /clock                                                controllers.ClockController.liveClock()
+GET    /clock                                                controllers.ClockController.liveClock(id:Integer)
 
 
 # Map static resources from the /public folder to the /assets URL path

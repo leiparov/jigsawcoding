@@ -1,5 +1,6 @@
 package models.services;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,7 +35,6 @@ public class AlumnoService {
 				return alumnoDAO.buscarAlumno(texto, MAX_BUSQUEDA);
 			}
 		}
-		
 	}
 	
 	public List<Alumno> disponibles(){
@@ -55,10 +55,14 @@ public class AlumnoService {
 	}
 
 	public List<Examen> obtenerExamenes(Alumno a) {
+		List<Examen> examenes = new ArrayList<>();
+		for (SesionJigsaw s: a.getSesionesJigsaw()){
+			examenes.add(s.getExamen());
+			play.Logger.info(s.getExamen().toString());
+		}
+		play.Logger.info("obtenerExamenes : " + examenes.size());
+		return examenes;
 		
-		
-		
-		return null;
 	}
 	
 	

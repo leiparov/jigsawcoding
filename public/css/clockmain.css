@@ -1,4 +1,4 @@
-body {
+/* body {
     font-family: Helvetica, Arial;
     font-weight: lighter;
     text-align: center;
@@ -10,18 +10,18 @@ h1 {
 
 p {
     color: #666;
-}
+} */
 
 #clock {
     display: block;
-    margin: 50px auto;
-    width: 800px;
+    /* margin: 50px auto;
+    width: 800px; */
     text-align: center;
 }
 
 #clock span {
     position: relative;
-    font-size: 64px;
+    font-size: 32px;
     display: inline-block;
     background: #222;
     margin-right: 3px;

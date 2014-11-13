@@ -1,10 +1,73 @@
 @* lsitaExamenes Template File *@
 @(examenes: List[models.entities.Examen], alumno: models.entities.Alumno)
+@formatDate(date: java.util.Date, f: String) = @{
+    if(date != null) date.format(f) else "--"
+}
+@*TODO: Pasarlo a una clase*@
+@stringInicioExamen(examen: models.entities.Examen) = @{
+	if(examen.getTiempoApertura == null) "--"; else {
+    	val inicio = java.util.Calendar.getInstance();
+    	inicio.setTime(examen.getTiempoApertura);
+    	val fin = java.util.Calendar.getInstance();
+    	fin.setTime(examen.getTiempoClausura);
+    	if(inicio.get(Calendar.DAY_OF_MONTH) == fin.get(Calendar.DAY_OF_MONTH)){
+    		formatDate(examen.getTiempoApertura, FormatoFechaHora.dateFormat) + ", " +
+    			formatDate(examen.getTiempoApertura, FormatoFechaHora.timeFormat12) + " hasta " +
+    			formatDate(examen.getTiempoClausura, FormatoFechaHora.timeFormat12)
+    	}else{
+    		formatDate(examen.getTiempoApertura, FormatoFechaHora.dateFormat) + ", " +
+    			formatDate(examen.getTiempoApertura, FormatoFechaHora.timeFormat12) + " hasta " +
+        		formatDate(examen.getTiempoClausura, FormatoFechaHora.dateFormat) + " " +
+    			formatDate(examen.getTiempoClausura, FormatoFechaHora.timeFormat12)
+    	}
+	}
+}
+@splural(n: Integer) = @{
+	if(n==1) "" else "s"
+}
+@stringDuracion(examen: models.entities.Examen) = @{
+	val horas = examen.getDuracion / 60
+	val minutos = examen.getDuracion % 60
+	(horas, minutos) match {
+		case (0, _) => minutos + " minuto" + splural(minutos)
+		case (_, 0) => horas + " hora" + splural(horas)
+		case _ => horas + " hora" + splural(horas) + ", " + minutos + " minuto" + splural(minutos)
+	}
+}
+@dioExamen(examen: models.entities.Examen, alumno: models.entities.Alumno) = @{
+	(new models.services.ExamenService).existeNotaExamen(alumno, examen)
+}
 @main(menuAlumno()){
 	<div class="container">
 		@inputs.flashSuccessError()
 		@inputs.panel("Examenes", true){
-			
+			<table class="table table-bordered">
+				<tr>
+                    <th>Examen</th>
+                    <th>Inicio de examen</th>
+                    <th>Duración</th>
+                    <th>Acciones</th>
+                </tr>
+                @examenes.map{ examen => 
+                	<tr>
+                        <td>@examen.getTitulo</td>
+                        <td>@stringInicioExamen(examen)</td>
+                        <td>@stringDuracion(examen)</td>
+                        <td>
+                        
+                             @if(examen.getTiempoApertura != null){
+                                 @if(dioExamen(examen, alumno) || (new java.util.Date).after(examen.getTiempoClausura)){
+     	                            <a href="@routes.ExamenController.interfazResultados(examen.getId)">Resultados</a> 
+                                 }else{
+                                     @if((new java.util.Date).after(examen.getTiempoApertura)){
+         	                            <a href="@routes.ExamenController.interfazRendir(examen.getId)">Rendir</a>
+                                     }
+                                 }
+                             }
+                        </td>
+                    </tr>
+                }
+			</table>
 		}
 	</div>
 }

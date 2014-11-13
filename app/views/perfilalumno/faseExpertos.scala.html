@@ -14,7 +14,9 @@
 	<link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/1.0.0/firepad.css" />
 	<script src="https://cdn.firebase.com/libs/firepad/1.0.0/firepad.min.js"></script>
 	
-	
+	<!-- Clock -->
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("css/clockmain.css")">        
+	   
 	<style type="text/css">
 	#firepad {
 	  width: 100%;
@@ -26,10 +28,25 @@
 	
 	<div class="row">
 		<div class="col-md-3">
+			<div class="row">
+				<p id="clock"></p>
+				<script type="text/javascript" charset="utf-8">
+			       if (!!window.EventSource) {
+			         var source = new EventSource("@routes.ClockController.liveClock(sesionJigsaw.getId())");
+			         source.addEventListener('message', function(e) {
+			            $('#clock').html(e.data.replace(/(\d)/g, '<span>$1</span>'));
+			         });
+			       } else {
+			         $("#clock").html("Sorry. This browser doesn't seem to support Server sent event. Check <a href='http://html5test.com/compare/feature/communication-eventSource.html'>html5test</a> for browser compatibility."); 
+			       }
+			    </script>
+			</div>
 			
+			<div class="row">
 			<h1>@grupoExperto.getProblema.getTitulo()</h1>
 			<p>@grupoExperto.getProblema.getEnunciado()</p>
-			
+			</div>
+			 
 		</div>
 		<div class="col-md-5">
 			<div class="row">

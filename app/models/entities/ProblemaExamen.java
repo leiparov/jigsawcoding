@@ -18,7 +18,6 @@ public class ProblemaExamen {
 	private int puntajeFavor;
 	private int puntajeContra;
 	
-	
 
 	public int getId() {
 		return id;
