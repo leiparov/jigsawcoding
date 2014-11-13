@@ -99,6 +99,7 @@
             	<td>@sesionJigsaw.getInicioReunionJigsaw().format(FormatoFechaHora.dateTimeFormat12)</td>
             	<td>@stringDuracionRJ(sesionJigsaw)</td>
             	<td>
+            		
             		@if(sesionJigsaw.getEtapa() == models.entities.EtapaSesionJigsaw.REUNIONEXPERTOS ){
             			<a href="@routes.SesionJigsawController.interfazFaseExpertos(sesionJigsaw.getId())">Unirse a reunión de Expertos</a> 
             		}else{

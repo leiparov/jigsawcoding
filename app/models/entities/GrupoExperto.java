@@ -64,4 +64,15 @@ public class GrupoExperto extends Grupo {
 		
 	}
 
+	@Override
+	public String toString() {
+		return "GrupoExperto [alumnos=" + alumnos + ", sesionJigsaw="
+				+ sesionJigsaw + ", problema=" + problema + ", getNombre()="
+				+ getNombre() + ", getId()=" + getId()
+				+ ", getMaximoAlumnos()=" + getMaximoAlumnos()
+				+ ", getDescripcion()=" + getDescripcion() + ", getChatId()="
+				+ getChatId() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
+	}
+
 }

@@ -1,7 +1,7 @@
 @* resolverProblema Template File *@
 @(problemaExamen: models.entities.ProblemaExamen, alumno:models.entities.Alumno)
 @p = @{problemaExamen.getProblema()}
-@firepadid = @{"examen_"+problemaExamen.getExamen().getId()+"_problema_"+p.getId()}
+@firepadid = @{"a"+alumno.getDNI()+"ex"+problemaExamen.getExamen().getId()+"prob"+p.getId()}
 <div class="row">
 	<div class="col-md-3"><p>@p.getEnunciado()</p></div>
 	<div class="col-md-5">

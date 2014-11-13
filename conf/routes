@@ -100,7 +100,7 @@ GET    /assets/javascripts/firepad.js                        controllers.SesionJ
 GET    /alumnos/ideone/run                                   controllers.ProblemaController.problemaRunJs(source:String, input: String)
 GET    /alumnos/ideone/verresultados                         controllers.ProblemaController.verResultadosProblemaRunJs(link:String ?= "")
 
-GET    /alumnos/examenes                                     controllers.ExamenController.indexAlumno()
+GET    /alumnos/examenes/lista                                    controllers.ExamenController.indexAlumno()
 
 
 

@@ -56,10 +56,15 @@ public class AlumnoService {
 
 	public List<Examen> obtenerExamenes(Alumno a) {
 		List<Examen> examenes = new ArrayList<>();
-		for (SesionJigsaw s: a.getSesionesJigsaw()){
-			examenes.add(s.getExamen());
-			play.Logger.info(s.getExamen().toString());
-		}
+		play.Logger.info("a.getSesionesJigsaw : " + a.getSesionesJigsaw().size());
+		
+			for (SesionJigsaw s: a.getSesionesJigsaw()){
+				if(s.getExamen() != null){
+					examenes.add(s.getExamen());
+				}				
+			}
+		
+		
 		play.Logger.info("obtenerExamenes : " + examenes.size());
 		return examenes;
 		

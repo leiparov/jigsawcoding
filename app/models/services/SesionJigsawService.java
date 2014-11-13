@@ -10,6 +10,7 @@ import models.daos.SesionJigsawDAO;
 import models.daos.UsuarioDAO;
 import models.entities.Alumno;
 import models.entities.Docente;
+import models.entities.EtapaSesionJigsaw;
 import models.entities.GrupoExperto;
 import models.entities.Problema;
 import models.entities.SesionJigsaw;
@@ -138,14 +139,18 @@ public class SesionJigsawService {
 		
 	}
 
-	public void guardarProblemas(HashMap<GrupoExperto, Problema> pares) {
+	public void guardarProblemas(SesionJigsaw s, HashMap<GrupoExperto, Problema> pares) {
 		Iterator<GrupoExperto> it = pares.keySet().iterator();
 		while(it.hasNext()){
 			GrupoExperto g = it.next();
 			Problema p = pares.get(g);
 			g.setProblema(p);
-			Ebean.update(g);
+			//Ebean.update(g);
+			grupoExpertoDAO.actualizarGrupoExperto(g);
 		}
+		s.setEtapa(EtapaSesionJigsaw.REUNIONEXPERTOS);
+		sesionJigsawDAO.actualizarSesionJigsaw(s);
+		
 		
 	}
 

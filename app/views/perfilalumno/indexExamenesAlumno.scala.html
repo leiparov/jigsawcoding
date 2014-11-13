@@ -41,32 +41,38 @@
 	<div class="container">
 		@inputs.flashSuccessError()
 		@inputs.panel("Examenes", true){
-			<table class="table table-bordered">
+			@if(examenes.size() ==0 ){
+            	<div class="well">Ud. no tiene examenes</div>
+            }else{
+				<table class="table table-bordered">
 				<tr>
                     <th>Examen</th>
                     <th>Inicio de examen</th>
                     <th>Duración</th>
                     <th>Acciones</th>
                 </tr>
-                @examenes.map{ examen => 
-                	<tr>
-                        <td>@examen.getTitulo</td>
-                        <td>@stringInicioExamen(examen)</td>
-                        <td>@stringDuracion(examen)</td>
-                        <td>
-                        
-                             @if(examen.getTiempoApertura != null){
-                                 @if(dioExamen(examen, alumno) || (new java.util.Date).after(examen.getTiempoClausura)){
-     	                            <a href="@routes.ExamenController.interfazResultados(examen.getId)">Resultados</a> 
-                                 }else{
-                                     @if((new java.util.Date).after(examen.getTiempoApertura)){
-         	                            <a href="@routes.ExamenController.interfazRendir(examen.getId)">Rendir</a>
-                                     }
-                                 }
-                             }
-                        </td>
-                    </tr>
+                
+	                @examenes.map{ examen => 
+	                	<tr>
+	                        <td>@examen.getTitulo</td>
+	                        <td>@stringInicioExamen(examen)</td>
+	                        <td>@stringDuracion(examen)</td>
+	                        <td>
+	                        
+	                             @if(examen.getTiempoApertura != null){
+	                                 @if(dioExamen(examen, alumno) || (new java.util.Date).after(examen.getTiempoClausura)){
+	     	                            <a href="@routes.ExamenController.interfazResultados(examen.getId)">Resultados</a> 
+	                                 }else{
+	                                     @if((new java.util.Date).after(examen.getTiempoApertura)){
+	         	                            <a href="@routes.ExamenController.interfazRendir(examen.getId)">Rendir</a>
+	                                     }
+	                                 }
+	                             }
+	                        </td>
+	                    </tr>
+	                }
                 }
+                
 			</table>
 		}
 	</div>

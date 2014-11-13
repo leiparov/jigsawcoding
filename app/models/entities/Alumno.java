@@ -55,4 +55,13 @@ public class Alumno extends Usuario {
 				+ getApellidoMaterno().toUpperCase().substring(0, 1);
 	}
 
+	@Override
+	public String toString() {
+		return "Alumno [getDNI()="
+				+ getDNI()
+				+ ", "
+				+ (getNombreCompleto() != null ? "getNombreCompleto()="
+						+ getNombreCompleto() : "") + "]";
+	}
+
 }

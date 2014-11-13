@@ -263,6 +263,7 @@ public class ExamenController extends Controller {
 	
 	public static Result indexAlumno(){
 		Alumno a = getAlumno();
+		play.Logger.info(a.toString());
 		List<Examen> examenes = alumnoService.obtenerExamenes(a);
 		return ok(views.html.perfilalumno.indexExamenesAlumno.render(examenes, a));
 	}

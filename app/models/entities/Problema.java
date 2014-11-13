@@ -63,9 +63,16 @@ public class Problema {
 
 	@Override
 	public String toString() {
-		return "Problema [problemaId=" + id + ", titulo=" + titulo
-				+ ", enunciado=" + enunciado + ", fechaCreacion="
-				+ fechaCreacion + ", docente=" + docente.getDNI() + "]";
+		return "Problema ["
+				+ (id != null ? "id=" + id + ", " : "")
+				+ (titulo != null ? "titulo=" + titulo + ", " : "")
+				+ (enunciado != null ? "enunciado=" + enunciado + ", " : "")
+				+ (fechaCreacion != null ? "fechaCreacion=" + fechaCreacion
+						+ ", " : "")
+				+ (docente != null ? "docente=" + docente.getDNI() : "") + "]";
 	}
+
+	
+	
 
 }

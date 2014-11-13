@@ -142,7 +142,7 @@ public class SesionJigsawController extends Controller {
 			//List<ParGrupoExpertoProblema> lista = form.get().getAsignacionProblemas(id);
 			//s.setPares(lista);
 			HashMap<GrupoExperto, Problema> pares = form.get().asignacionProblemas();
-			sesionJigsawService.guardarProblemas(pares);
+			sesionJigsawService.guardarProblemas(s, pares);
 			//sesionJigsawService.actualizarSesionJigsaw(getDocente(), s);
 			flash("success", "Asignación de Problemas realizada con éxito");
 			return GO_HOME;
@@ -215,7 +215,7 @@ public class SesionJigsawController extends Controller {
 		public SesionJigsaw entidad() {
 			SesionJigsaw s = new SesionJigsaw();
 			s.setDocente(getDocente());
-			s.setEtapa(EtapaSesionJigsaw.REUNIONEXPERTOS);
+			s.setEtapa(EtapaSesionJigsaw.CONSTRUCCION);
 			return s;
 		}
 
@@ -223,7 +223,7 @@ public class SesionJigsawController extends Controller {
 
 			s.setTotalGruposExpertos(Integer.parseInt(totalGruposExpertos));
 			s.setTema(tema);
-			s.setEtapa(EtapaSesionJigsaw.REUNIONEXPERTOS);
+			s.setEtapa(EtapaSesionJigsaw.CONSTRUCCION);
 
 			ExpresionDuracion expRE = new ExpresionDuracion(duracionREHoras,
 					duracionREMinutos);
