@@ -58,7 +58,7 @@
 }
 
 #chat-room{
-	position: relative; /* could be absolute */
+	position: absolute; /* could be absolute */
 	top:0px;
 	left:0;
 	width: 350px;

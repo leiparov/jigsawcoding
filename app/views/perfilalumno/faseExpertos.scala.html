@@ -16,17 +16,40 @@
 	
 	<!-- Clock -->
 	<link rel="stylesheet" media="screen" href="@routes.Assets.at("css/clockmain.css")">        
+	
+	<!-- Chat -->
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("css/chat.css")">
 	   
 	<style type="text/css">
-	#firepad {
-	  width: 100%;
-	  height: 400px;
-	  background-color: #f62; /* dark orange background */	  
-	}
+		#firepad {
+		  width: 100%;
+		  height: 400px;
+		  background-color: #f62; /* dark orange background */	  
+		}
 	</style>
+	
+	<div id="dockbottom" class="row">	    	      
+        <div class="dockright-block">
+	        <div id="chat">	
+				<div clas="col-md-3">			
+					@views.html.chat.interfazChat(alumno, grupoExperto)
+				</div>
+			</div>
+			<div class="slider"><a class="toggleup" href="#">CHAT</a></div>	         
+        </div>	      
+  	</div>
+	<script type="text/javascript" charset="utf-8">
+		//toggle chat block on dockright bottom, assuming placed on .dockright-block 
+		$(".toggleup").click(function(){ 
+		  $("#chat").slideToggle("slow"); 
+		  $(this).toggleClass("toggledown"); 
+		  return false; 
+		});
+	</script>
 	
 	
 	<div class="row">
+		
 		<div class="col-md-3">
 			<div class="row">
 				<p id="clock"></p>
@@ -83,9 +106,7 @@
 				</div>				
 			</div>				
 		</div>
-		<div class="col-md-4">			
-			@views.html.chat.interfazChat(alumno, grupoExperto)
-		</div>
+		
 	</div>
 	<!-- Modal -->
 	<div class="modal fade" id="modalResultados" tabindex="-1" role="dialog" 
