@@ -24,7 +24,7 @@
 	<style type="text/css">
 		.firepad {
 		  width: 100%;
-		  height: 450px;
+		  height: 500px;
 		  background-color: #f62; /* dark orange background */	  
 		}
 	</style>
@@ -66,30 +66,30 @@
 			 
 		</div>
 		<div class="col-md-5">
-			<div class="row">
+			<div class="row form-inline">
 				<div class="form-group">
 					<label>Lenguaje de Programación</label>
-					<select  id="language">				  
-					  <option value="1" >C++ 4.8.1 (gcc-4.8.1)</option>					  
-					  <option value="4">Python (python 2.7.3)</option>
-					  <option value="55">Java7 (sun-jdk-1.7.0_10)</option>					  
+					<select  id="language">			
+						<option value="4">Python (python 2.7.3)</option>
+						<option value="1" >C++ 4.8.1 (gcc-4.8.1)</option>
+					  	<option value="55">Java7 (sun-jdk-1.7.0_10)</option>					  
 					</select>
 				</div>
-				
+				<div class="form-group">
+					<button type="button" id="@firepadid-boton-run" class="btn btn-success"
+					data-loading-text="Procesando..." autocomplete="off">
+						<span class="glyphicon glyphicon-cog"></span> run									
+					</button>									
+				</div>
 			</div>
 			<div id="@firepadid" class="row firepad"></div>
-			<div class="pull-right">
-				<button type="button" id="@firepadid-boton-run" class="btn btn-success btn-lg"
-				data-loading-text="Procesando..." autocomplete="off">
-					<span class="glyphicon glyphicon-cog"></span> run									
-				</button>									
-			</div>
+			
 		</div>
 		<div class="col-md-4">
 			<div class="row">
 				<div id="@firepadid-stdin" class="collapse in">
 					<h4 class="text-center">INPUT. Data de prueba</h4>
-					<textarea id="@firepadid-input-stdin" name="@firepadid-stdin" class="form-control" rows="5" ></textarea>
+					<textarea id="@firepadid-input-stdin" name="@firepadid-stdin" class="form-control" rows="5" placeholder="Ingrese su data de prueba y luego presione run" ></textarea>
 				</div>
 			</div>
 			<div class="row"  >
