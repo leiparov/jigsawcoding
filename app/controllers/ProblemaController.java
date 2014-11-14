@@ -152,13 +152,13 @@ public class ProblemaController extends Controller {
 //		}
 //	}
 
-	public static Result problemaRunJs(String source, String input) {
+	public static Result problemaRunJs(String source, String input, Integer languageId) {
 			
         final ExecutorService service;
         final Future<String> task;
         play.Logger.info("SOURCE" + source);
         service = Executors.newFixedThreadPool(1);
-        task = service.submit(new IdeoneRun(source, input));
+        task = service.submit(new IdeoneRun(source, input, languageId));
         
         //ObjectNode resultado = Json.newObject();
         //resultado = test("hACTit");

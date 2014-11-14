@@ -18,6 +18,11 @@ public class IdeoneRun implements Callable<String> {
 		this.source = source;
 		this.input = input;
 	}
+	public IdeoneRun(String source, String input, Integer languageId) {
+		this.source = source;
+		this.input = input;
+		this.lang = languageId;
+	}
 
 	@Override
 	public String call() {

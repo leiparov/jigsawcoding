@@ -9,6 +9,29 @@ $(function(){
 	var contenedorResultados = $('#@firepadid-ideoneResultados');
 	var botonChat = $(".toggleup");
 	var firepadresultados = $('#@firepadid-resultados');
+	var language = $('#language');
+	var codeMirror;
+	
+	language.change(function(){
+		var number = $(this).val();
+		mode = getMode(number);
+		console.log(mode);
+		codeMirror.setOption("mode", mode);
+		console.log(codeMirror);
+	});
+	
+	function getMode(languageid){
+		divfpadid = ''+'@firepadid';
+		var modeLanguage;
+		
+		switch(languageid){
+			case '1': modeLanguage = 'text/x-c++src'; break;
+			case '4': modeLanguage = 'text/x-python'; break;
+			case '55': modeLanguage = 'text/x-java'; break;
+			default: modeLanguage = 'text/x-c++src';
+		}		
+		return modeLanguage;
+	}
 	
 	function init() {
 		// Initialize Firebase.
@@ -17,41 +40,26 @@ $(function(){
 		url = 'https://vivid-heat-5073.firebaseio.com/firepads/jc_' + '@firepadid';
 		console.log(url);
 		var firepadRef = new Firebase(url);
-		//console.log(firepadRef);
-		divfpadid = ''+'@firepadid';
-		console.log(divfpadid);
+		
 		// // Create CodeMirror (with line numbers and the Java mode).
-		var codeMirror = CodeMirror(document.getElementById(divfpadid), {
+		//codeMirror = getCodeMirror(language.val());
+		modeLanguage = getMode(language.val());
+		codeMirror = CodeMirror(document.getElementById(divfpadid), {
 			lineNumbers : true,
 			lineWrapping : true,
-			mode : 'text/x-c++src'
+			styleActiveLine: true,
+			matchBrackets: true,
+			mode : getMode(language.val()),
+			theme: 'monokai'
 		});
 
 		// // Create Firepad.
 		firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, {
-			defaultText : '#include <iostream> using namespace std;	int main() { // your code goes here	return 0;}'
+			defaultText : '// your code goes here'
 		});
 		firepad.setUserId('@userid');
 	}
 
-	// Helper to get hash from end of URL or generate a random one.
-	function getExampleRef() {
-		var ref = new Firebase('https://firepad.firebaseio-demo.com');
-		var hash = window.location.hash.replace(/#/g, '');
-		if (hash) {
-			ref = ref.child(hash);
-		} else {
-			ref = ref.push(); // generate unique location.
-			window.location = window.location + '#' + ref.name(); // add it as
-																	// a
-																	// hash to
-																	// the
-																	// URL.
-		}
-		if (typeof console !== 'undefined')
-			console.log('Firebase data: ', ref.toString());
-		return ref;
-	}
 	init();
 	
 	/* Ejecutar codigo fuente */
@@ -73,9 +81,11 @@ $(function(){
 	function problemaRun (){
 		var firepadText = firepad.getText();
 		var inputStdinText = $('#@firepadid-input-stdin').val();
+		var languageId = language.val();
+		
 		console.log(firepadText);
 		console.log(inputStdinText);
-		var call = jsRoutes.controllers.ProblemaController.problemaRunJs(firepadText, inputStdinText);
+		var call = jsRoutes.controllers.ProblemaController.problemaRunJs(firepadText, inputStdinText, languageId);
 		$.ajax({
 			url: call.url,
 			type: call.type,
@@ -85,6 +95,7 @@ $(function(){
 	}
 	function verResultadosProblemaRun (){
 		var link = $('#link');
+		
 		// console.log(link.val());
 		if(link.val() != null){
 			// console.log(link);
@@ -151,5 +162,7 @@ $(function(){
 	botonStdin.click(function(){
 		$("#chat").hide();
 	});
+	
+	
 })
 

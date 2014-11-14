@@ -6,6 +6,29 @@ $(function(){
 	var botonRun = $('#@firepadid-boton-run');
 	var botonVer = $('#@firepadid-boton-ver');
 	var contenedorResultados = $('#@firepadid-ideoneResultados');
+	var language = $('#language');
+	var codeMirror;
+	
+	language.change(function(){
+		var number = $(this).val();
+		mode = getMode(number);
+		console.log(mode);
+		codeMirror.setOption("mode", mode);
+		console.log(codeMirror);
+	});
+	
+	function getMode(languageid){
+		divfpadid = ''+'@firepadid';
+		var modeLanguage;
+		
+		switch(languageid){
+			case '1': modeLanguage = 'text/x-c++src'; break;
+			case '4': modeLanguage = 'text/x-python'; break;
+			case '55': modeLanguage = 'text/x-java'; break;
+			default: modeLanguage = 'text/x-c++src';
+		}		
+		return modeLanguage;
+	}
 	
 	function init() {
 		// Initialize Firebase.
@@ -19,10 +42,13 @@ $(function(){
 		// // Create CodeMirror (with line numbers and the Java mode).
 		divfpadid = ''+'@firepadid';
 		console.log(divfpadid);
-		var codeMirror = CodeMirror(document.getElementById(divfpadid), {
+		codeMirror = CodeMirror(document.getElementById(divfpadid), {
 			lineNumbers : true,
 			lineWrapping : true,
-			mode : 'text/x-c++src'
+			styleActiveLine: true,
+			matchBrackets: true,
+			mode : getMode(language.val()),
+			theme: 'monokai'
 		});
 
 		// // Create Firepad.
@@ -52,9 +78,11 @@ $(function(){
 	function problemaRun (){
 		var firepadText = firepad.getText();
 		var inputStdinText = $('#@firepadid-input-stdin').val();
+		var languageId = language.val();
+		
 		console.log(firepadText);
 		console.log(inputStdinText);
-		var call = jsRoutes.controllers.ProblemaController.problemaRunJs(firepadText, inputStdinText);
+		var call = jsRoutes.controllers.ProblemaController.problemaRunJs(firepadText, inputStdinText, languageId);
 		$.ajax({
 			url: call.url,
 			type: call.type,
