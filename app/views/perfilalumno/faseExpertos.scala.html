@@ -21,9 +21,9 @@
 	<link rel="stylesheet" media="screen" href="@routes.Assets.at("css/chat.css")">
 	   
 	<style type="text/css">
-		#firepad {
+		.firepad {
 		  width: 100%;
-		  height: 400px;
+		  height: 450px;
 		  background-color: #f62; /* dark orange background */	  
 		}
 	</style>
@@ -38,14 +38,7 @@
 			<div class="slider"><a class="toggleup" href="#">CHAT</a></div>	         
         </div>	      
   	</div>
-	<script type="text/javascript" charset="utf-8">
-		//toggle chat block on dockright bottom, assuming placed on .dockright-block 
-		$(".toggleup").click(function(){ 
-		  $("#chat").slideToggle("slow"); 
-		  $(this).toggleClass("toggledown"); 
-		  return false; 
-		});
-	</script>
+	
 	
 	
 	<div class="row">
@@ -60,7 +53,8 @@
 			            $('#clock').html(e.data.replace(/(\d)/g, '<span>$1</span>'));
 			         });
 			       } else {
-			         $("#clock").html("Sorry. This browser doesn't seem to support Server sent event. Check <a href='http://html5test.com/compare/feature/communication-eventSource.html'>html5test</a> for browser compatibility."); 
+			         $("#clock").html("Sorry. This browser doesn't seem to support Server sent event. 
+			         Check <a href='http://html5test.com/compare/feature/communication-eventSource.html'>html5test</a> for browser compatibility."); 
 			       }
 			    </script>
 			</div>
@@ -81,53 +75,47 @@
 				   -->
 				</select>
 			</div>
-			<div id="firepad" class="row"></div>
+			<div id="@firepadid" class="row firepad"></div>
+			<div class="pull-right">
+				<button type="button" id="@firepadid-boton-run" class="btn btn-success btn-lg"
+				data-loading-text="Procesando..." autocomplete="off">
+					<span class="glyphicon glyphicon-cog"></span> run									
+				</button>									
+			</div>
+		</div>
+		<div class="col-md-4">
 			<div class="row">
-				<div id="stdin" class="collapse">
-					<textarea id="input-stdin" name="stdin" class="form-control" rows="5" ></textarea>
+				<div id="@firepadid-stdin" class="collapse in">
+					<h4 class="text-center">INPUT. Data de prueba</h4>
+					<textarea id="@firepadid-input-stdin" name="@firepadid-stdin" class="form-control" rows="5" ></textarea>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row"  >
+				<div id="@firepadid-resultados" class="collapse in">
+					<h4 class="text-center">RESULTADOS DE EJECUCIÓN</h4>
+					<div id="@firepadid-ideoneResultados">
+						<div class="well">Presione run para ejecutar su código fuente</div>
+					</div>  
+				</div>			    
+			</div>
+			<div class="row">			
+				<button type="button" id="@firepadid-boton-stdin" class="btn btn-default" data-toggle="collapse"  
+					data-target="#@firepadid-stdin" aria-expanded="true" aria-controls="@firepadid-stdin" 
+					data-placement="top">
+				  <span class="glyphicon glyphicon-hdd"></span> Input
+				</button>			
 				
-				<button type="button" class="btn btn-default" data-toggle="collapse"  
-					data-target="#stdin" aria-expanded="true" aria-controls="stdin" 
-					data-placement="top" title ="Ingrese su Input">
-				  <span class="glyphicon glyphicon-hdd"></span> stdin
+				<button type="button" id="@firepadid-boton-ver" class="btn btn-primary" data-toggle="collapse"
+					data-target="#@firepadid-resultados" aria-expanded="true" aria-controls="@firepadid-resultados" 
+					data-placement="top">
+						<span class="glyphicon glyphicon-th-list"></span> Resultados									
 				</button>
-				<button type="button" id="boton-ver" class="btn btn-primary">
-					<span class="glyphicon glyphicon-cog"></span> Ver resultados									
-				</button>
-				<div style="display:none" id="divajaxloader"><img src="@routes.Assets.at("images/ajax-loader.gif")" /></div>
-				<div class="pull-right">
-					<button type="button" id="boton-run" class="btn btn-success"
-					data-loading-text="Procesando..." autocomplete="off">
-						<span class="glyphicon glyphicon-cog"></span> run									
-					</button>										
-				</div>				
 			</div>				
 		</div>
 		
 	</div>
-	<!-- Modal -->
-	<div class="modal fade" id="modalResultados" tabindex="-1" role="dialog" 
-	aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal">
-	        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	        <h4 class="modal-title" id="myModalLabel">RESULTADOS DE EJECUCIÓN</h4>
-	      </div>
-	      <div class="modal-body">
-	        <div id="ideoneResultados">
-	      	</div>
-	      	
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-	      </div>
-	    </div>
-	  </div>
-	</div><!-- Modal -->
+	
+	  
 	<script type="text/javascript" charset="utf-8" src="@routes.SesionJigsawController.firepadJs(firepadid, alumno.getDNI().toString)"></script>
 	
 }

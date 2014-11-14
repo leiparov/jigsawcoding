@@ -3,9 +3,12 @@
 $(function(){
 	
 	var firepad;
-	var botonRun = $('#boton-run');
-	var botonVer = $('#boton-ver');
-	var contenedorResultados = $('#ideoneResultados');
+	var botonRun = $('#@firepadid-boton-run');
+	var botonVer = $('#@firepadid-boton-ver');
+	var firepadstdin = $('#@firepadid-stdin');
+	var contenedorResultados = $('#@firepadid-ideoneResultados');
+	var botonChat = $(".toggleup");
+	var firepadresultados = $('#@firepadid-resultados');
 	
 	function init() {
 		// Initialize Firebase.
@@ -14,9 +17,11 @@ $(function(){
 		url = 'https://vivid-heat-5073.firebaseio.com/firepads/jc_' + '@firepadid';
 		console.log(url);
 		var firepadRef = new Firebase(url);
-		console.log(firepadRef);
+		//console.log(firepadRef);
+		divfpadid = ''+'@firepadid';
+		console.log(divfpadid);
 		// // Create CodeMirror (with line numbers and the Java mode).
-		var codeMirror = CodeMirror(document.getElementById('firepad'), {
+		var codeMirror = CodeMirror(document.getElementById(divfpadid), {
 			lineNumbers : true,
 			lineWrapping : true,
 			mode : 'text/x-c++src'
@@ -60,13 +65,14 @@ $(function(){
 			contenedorResultados.append(elemento);
 		}
 		
-		var myModal = $('#modalResultados');		
-		myModal.modal('show');
+//		var myModal = $('#modalResultados');		
+//		myModal.modal('show');
+		alert('Ejecución de problema exitosa!!!');
 	}
 	
 	function problemaRun (){
 		var firepadText = firepad.getText();
-		var inputStdinText = $('#input-stdin').val();
+		var inputStdinText = $('#@firepadid-input-stdin').val();
 		console.log(firepadText);
 		console.log(inputStdinText);
 		var call = jsRoutes.controllers.ProblemaController.problemaRunJs(firepadText, inputStdinText);
@@ -126,9 +132,24 @@ $(function(){
         });
     })();
 	
-	botonVer.on('click', function(e){
-		e.preventDefault();
-		verResultadosProblemaRun();
+//	botonVer.on('click', function(e){
+//		e.preventDefault();
+//		verResultadosProblemaRun();
+//	});
+	botonChat.click(function(){
+		$("#chat").slideToggle("slow"); 
+		$(this).toggleClass("toggledown");
+		firepadstdin.collapse('hide');
+		firepadresultados.collapse('hide');
+		return false;
+	});
+	
+	botonVer.click(function(){
+		$("#chat").hide(); 		
+	});
+	var botonStdin = $('#@firepadid-boton-stdin');
+	botonStdin.click(function(){
+		$("#chat").hide();
 	});
 })
 
