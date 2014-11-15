@@ -8,6 +8,7 @@ import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.Examen;
 import models.entities.ProblemaExamen;
+import models.entities.RespuestasAlumno;
 import models.entities.SesionJigsaw;
 import play.db.ebean.Model.Finder;
 
@@ -91,6 +92,13 @@ public class ExamenDAO {
             return false;
         else 
             return true;
+		
+	}
+	public ProblemaExamen obtenerProblemaExamen(Integer id) {
+		return Ebean.find(ProblemaExamen.class, id);		
+	}
+	public void guardarRespuestasAlumno(List<RespuestasAlumno> respuestasAlumno) {
+		Ebean.save(respuestasAlumno);
 		
 	}
 	

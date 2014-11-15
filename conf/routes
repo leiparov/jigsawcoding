@@ -82,6 +82,7 @@ POST   /docentes/examenes/:id/horario                        controllers.ExamenC
 POST   /docentes/examenes/:id/delete                         controllers.ExamenController.eliminarExamen(id: Integer)
 
 GET    /alumnos/examenes/:id/rendir                          controllers.ExamenController.interfazRendir(id: Integer)
+POST   /alumnos/examenes/:examenid/finalizar                 controllers.ExamenController.finalizarExamen(examenid: Integer, dnialumno: Integer)
 GET    /alumnos/examenes/:id/resultados                      controllers.ExamenController.interfazResultados(id: Integer)
 GET    /assets/javascripts/firepadExamen.js                  controllers.ExamenController.firepadExamenJs(firepadid:String, userid: String)
 #POST   /examenes/:id/finalizarexamen    controllers.ExamenController.finalizarExamen(id: Long)
@@ -97,10 +98,10 @@ GET    /alumnos/sesionesjigsaw                               controllers.SesionJ
 GET    /alumnos/sesiones/lista                               controllers.SesionJigsawController.listForAlumno(p:Integer ?= 0, s ?= "id", o ?= "asc", f ?= "")
 GET    /alumnos/sesiones/:id/faseexpertos                    controllers.SesionJigsawController.interfazFaseExpertos(id: Integer)
 GET    /assets/javascripts/firepad.js                        controllers.SesionJigsawController.firepadJs(firepadid:String, userid: String)
-GET    /alumnos/ideone/run                                   controllers.ProblemaController.problemaRunJs(source:String, input: String, languageid: Integer)
-GET    /alumnos/ideone/verresultados                         controllers.ProblemaController.verResultadosProblemaRunJs(link:String ?= "")
+GET    /alumnos/ideone/run                                   controllers.ProblemaController.problemaRunJs(source:String, input: String, languageid: Integer, firepadid: String ?= "")
+GET    /alumnos/ideone/verresultados                         controllers.ProblemaController.verResultadosProblemaRunJs(link:String ?= "", firepadid: String ?="")
 
-GET    /alumnos/examenes/lista                                    controllers.ExamenController.indexAlumno()
+GET    /alumnos/examenes/lista                               controllers.ExamenController.indexAlumno()
 
 
 

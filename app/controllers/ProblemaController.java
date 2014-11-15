@@ -152,7 +152,7 @@ public class ProblemaController extends Controller {
 //		}
 //	}
 
-	public static Result problemaRunJs(String source, String input, Integer languageId) {
+	public static Result problemaRunJs(String source, String input, Integer languageId, String firepadid) {
 			
         final ExecutorService service;
         final Future<String> task;
@@ -172,16 +172,16 @@ public class ProblemaController extends Controller {
 		}
         
         service.shutdown();
-        return verResultadosProblemaRunJs(link);
+        return verResultadosProblemaRunJs(link, firepadid);
 		
 	}
 	
-	public static Result verResultadosProblemaRunJs(String link){
+	public static Result verResultadosProblemaRunJs(String link, String firepadid){
 		IdeoneSubmissionDetails isd = ideoneService.getSubmissionDetails(
 				link, true, true, true, true, true);
 		
 		String[] array = new String[1];		
-		array[0] = views.html.perfilalumno.resultadosIdeoneRun.render(isd).body().trim();
+		array[0] = views.html.perfilalumno.resultadosIdeoneRun.render(isd, firepadid).body().trim();
 		
 		return ok(Json.toJson(array));
 	}

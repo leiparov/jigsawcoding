@@ -1,15 +1,14 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.Examen;
-import models.entities.NotaAlumno;
 import models.entities.Problema;
 import models.entities.ProblemaExamen;
-import models.entities.RespuestasAlumno;
 import models.entities.SesionJigsaw;
 import models.services.AlumnoService;
 import models.services.DocenteService;
@@ -28,6 +27,9 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import utils.ExpresionDuracion;
 import utils.FormatoFechaHora;
+import controllers.ExamenController.ExamenForm;
+import controllers.ExamenController.HorarioForm;
+import controllers.ExamenController.RendirExamenForm;
 @Login.Requiere
 public class ExamenController extends Controller {
 
@@ -293,10 +295,28 @@ public class ExamenController extends Controller {
             return indexAlumno();
         }
 	}
-	public static Result finalizarExamen(Integer id){
-		return TODO;
+	public static Result finalizarExamen(Integer examenid, Integer dnialumno){
+		try {
+			Form<RendirExamenForm> form = Form.form(RendirExamenForm.class).bindFromRequest();
+			List<String> respuestas = form.get().getRespuestas();
+			play.Logger.info("FinalizarExamen : " + respuestas.toString());
+			Alumno a = getAlumno();
+			examenService.finalizarExamen(a, respuestas);
+			flash("success", "Su examen ha sido guardado correctamente: ");
+			return indexAlumno();
+		} catch (Exception e) {
+			e.printStackTrace();
+			flash("error", "Error en Finalizar examen: " + e.getMessage());
+            return indexAlumno();
+		}
 	}
 	public static Result firepadExamenJs(String firepadid, String userid) {
         return ok(views.js.examenes.firepadExamen.render(firepadid, userid));
+    }
+	public static class RendirExamenForm {
+		public List<String> respuestas = new ArrayList<>();
+    	public List<String> getRespuestas(){
+    		return respuestas;
+    	}
     }
 }

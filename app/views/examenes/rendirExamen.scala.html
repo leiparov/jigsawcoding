@@ -3,17 +3,25 @@
 
 @main(menuAlumno()){
 	@inputs.firepadHeader()
-	@inputs.panel("",false){	
+	<style type="text/css">
+		.firepad {
+		  width: 100%;
+		  height: 480px;
+		  background-color: #f62; 	  
+		}
+	</style>
+	<div class="row-fluid">	
+	<form class="form" role="form" action="@routes.ExamenController.finalizarExamen(examen.getId(), alumno.getDNI())" method="POST">
 		<div role="tabpanel">			
 		<!-- Nav tabs -->
 			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active" ><a href="#instrucciones" 
+					aria-controls="instrucciones" role="tab" data-toggle="tab">Instrucciones</a></li>
 				@examen.getProblemas().map {p=>
 					<li role="presentation" ><a href="#p_@p.getProblema().getId()" 
 					aria-controls="p_@p.getProblema().getId()" role="tab" data-toggle="tab">@p.getProblema().getTitulo()</a></li>	
-				}	
-			  
-			</ul>
-			
+				}				  
+			</ul>			
 			<!-- Tab panes -->
 			<div class="tab-content">
 				@examen.getProblemas().map {p=>
@@ -21,12 +29,25 @@
 						@problemaExamen(p,alumno)
 					</div>
 				}
-			  
-			</div>
-			
+				<div role="tabpanel" class="tab-pane active" id="instrucciones">
+					<div class="container">
+						<h1>IMPORTANTE</h1>
+						<ul>
+							<li>Desarrolle el problema que se encuentre en cada una de las pestañas</li>
+							<li>La solución a cada problema puede ser presentada en cualquiera de los siguientes lenguajes: Python, Java o C++</li>
+							<li>Si el problema lo requiere, ingrese en el contenedor INPUT la data de prueba necesaria para ejecutar su código fuente</li>
+							<li>Para ejecutar su problema debe presionar el botón <strong>run</strong> </li>
+							<li>Cuando termine de desarrollar sus problemas, regrese a esta pestaña y presione el botón <strong>FINALIZAR EXAMEN</strong> para guardar sus respuestas</li>
+							
+						</ul>
+						<button type="submit"  class="btn btn-danger">FINALIZAR EXAMEN</button>
+					</div>
+				</div>			  
+			</div>			
 		</div>
-		
-	}
+	</form>
+				
+	</div>
 	
 	
 }

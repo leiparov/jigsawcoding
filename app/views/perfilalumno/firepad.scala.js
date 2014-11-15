@@ -64,8 +64,8 @@ $(function(){
 	
 	/* Ejecutar codigo fuente */
 	function mostrarIdeoneSubmissionResults(data){
-		console.log(data);
-		console.log(data['status']);
+//		console.log(data);
+//		console.log(data['status']);
 		
 		contenedorResultados.empty();
 		for(i in data){
@@ -82,10 +82,10 @@ $(function(){
 		var firepadText = firepad.getText();
 		var inputStdinText = $('#@firepadid-input-stdin').val();
 		var languageId = language.val();
-		
+		fpadid = ''+'@firepadid';
 		console.log(firepadText);
 		console.log(inputStdinText);
-		var call = jsRoutes.controllers.ProblemaController.problemaRunJs(firepadText, inputStdinText, languageId);
+		var call = jsRoutes.controllers.ProblemaController.problemaRunJs(firepadText, inputStdinText, languageId, fpadid);
 		$.ajax({
 			url: call.url,
 			type: call.type,

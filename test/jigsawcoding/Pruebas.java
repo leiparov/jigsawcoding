@@ -1,26 +1,17 @@
 package jigsawcoding;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 public class Pruebas {
 	public static void main (String args[]){
+		String cad = "a47614910probex1;uzilJs";		
+		int i = cad.indexOf("probex");
+		System.out.println(i);
+		String x[] = cad.substring(i+6).split(";");
+		for (String s : x){
+			System.out.println(s);
+		}
 		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY MM dd HH mm ss");
 		
-		Date inicio = new Date(11110);
-		
-		
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.YEAR, 2014);
-		cal.set(Calendar.HOUR_OF_DAY, 15);
-		cal.set(Calendar.MINUTE, 50);
-		cal.set(Calendar.SECOND, 0);
-		
-		System.out.println(cal.getTime());
-		cal.add(Calendar.SECOND, 60);
-		System.out.println(cal.getTime());
 		
 	}
 }
