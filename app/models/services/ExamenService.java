@@ -41,6 +41,9 @@ public class ExamenService {
 	public boolean existeNotaExamen(Alumno a, Examen e){
 		return examenDAO.existeNotaExamen(a,e);
 	}
+	public boolean yaRindioExamen(Alumno a, Examen e){
+		return examenDAO.yaRindioExamen(a,e);
+	}
 	
 	public ProblemaExamen obtenerProblemaExamen(Integer id){
 		return examenDAO.obtenerProblemaExamen(id);

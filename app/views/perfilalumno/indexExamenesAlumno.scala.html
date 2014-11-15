@@ -39,8 +39,9 @@
 }
 @main(menuAlumno()){
 	<div class="container">
-		@inputs.flashSuccessError()
+		
 		@inputs.panel("Examenes", true){
+			@inputs.flashSuccessError()
 			@if(examenes.size() ==0 ){
             	<div class="well">Ud. no tiene examenes</div>
             }else{

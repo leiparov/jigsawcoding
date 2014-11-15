@@ -44,8 +44,8 @@ public class ExamenController extends Controller {
 		return usuarioService.obtener(Login.obtener(ctx()).getDNI(),
 				Docente.class);
 	}
-	public static Result GO_HOME = redirect(routes.ExamenController.list(0, "id",
-			"asc", ""));
+	public static Result GO_HOME = redirect(routes.ExamenController.list(0,
+			"id", "asc", ""));
 	public static Result list(int page, String sortBy, String order,
 			String filter) {
 		return ok(views.html.examenes.indexExamenes.render(examenService.page(
@@ -54,12 +54,12 @@ public class ExamenController extends Controller {
 	}
 	public static Result index() {
 		Login login = Login.obtener(ctx());
-		if(login.isTipo(Alumno.class)){
+		if (login.isTipo(Alumno.class)) {
 			return redirect(routes.ExamenController.indexAlumno());
-		}else{
+		} else {
 			return GO_HOME;
 		}
-		
+
 	}
 	public static Result interfazNuevo() {
 		return ok(views.html.examenes.nuevoExamen.render(null));
@@ -256,48 +256,59 @@ public class ExamenController extends Controller {
 					&& tiempoClausura != null && tiempoClausura.length() != 0;
 		}
 	}
-	
-	/*Módulo Alumno*/
+
+	/* Módulo Alumno */
 	private static Alumno getAlumno() {
 		return usuarioService.obtener(Login.obtener(ctx()).getDNI(),
 				Alumno.class);
 	}
-	
-	public static Result indexAlumno(){
+
+	public static Result indexAlumno() {
 		Alumno a = getAlumno();
 		play.Logger.info(a.toString());
 		List<Examen> examenes = alumnoService.obtenerExamenes(a);
-		return ok(views.html.perfilalumno.indexExamenesAlumno.render(examenes, a));
+		return ok(views.html.perfilalumno.indexExamenesAlumno.render(examenes,
+				a));
 	}
-	
-	public static Result interfazRendir(Integer id){
+
+	public static Result interfazRendir(Integer id) {
 		Examen e = examenService.obtener(id);
 		Alumno a = getAlumno();
 		boolean existeNotaExamen = examenService.existeNotaExamen(a, e);
-		if(!existeNotaExamen){
-			return ok(views.html.examenes.rendirExamen.render(e,a));
-		}else{
-			flash("success", "Usted ya rindió este examen.");
-            return interfazResultados(id);
+		boolean rindioExamen = examenService.yaRindioExamen(a, e);
+		if (!rindioExamen) {
+			return ok(views.html.examenes.rendirExamen.render(e, a));
+		} else {
+			if (!existeNotaExamen) {
+				flash("success", "Su examen aún no ha sido evaluado");
+				return redirect(routes.ExamenController.indexAlumno());
+			} else {
+				flash("success", "Usted ya rindió este examen.");
+				return interfazResultados(id);
+			}
 		}
 	}
-	
-	public static Result interfazResultados(Integer id){
+
+	public static Result interfazResultados(Integer id) {
 		try {
-//            Examen e = examenService.obtener(id);
-//            Alumno a = getAlumno();
-//            NotaAlumno n = examenService.obtenerNotaAlumno(a.getDNI(), e.getId());
-//            List<RespuestasAlumno> respuestas = examenService.obtenerRespuestasExamen(n);
-//            return ok(views.html.examenes.mostrarResultados.render(n, respuestas));
-			return noContent();
-        } catch (Exception e) {
-            flash("error", "Resultados: " + e.getMessage());
-            return indexAlumno();
-        }
+			// Examen e = examenService.obtener(id);
+			// Alumno a = getAlumno();
+			// NotaAlumno n = examenService.obtenerNotaAlumno(a.getDNI(),
+			// e.getId());
+			// List<RespuestasAlumno> respuestas =
+			// examenService.obtenerRespuestasExamen(n);
+			// return ok(views.html.examenes.mostrarResultados.render(n,
+			// respuestas));
+			return TODO;
+		} catch (Exception e) {
+			flash("error", "Resultados: " + e.getMessage());
+			return indexAlumno();
+		}
 	}
-	public static Result finalizarExamen(Integer examenid, Integer dnialumno){
+	public static Result finalizarExamen(Integer examenid, Integer dnialumno) {
 		try {
-			Form<RendirExamenForm> form = Form.form(RendirExamenForm.class).bindFromRequest();
+			Form<RendirExamenForm> form = Form.form(RendirExamenForm.class)
+					.bindFromRequest();
 			List<String> respuestas = form.get().getRespuestas();
 			play.Logger.info("FinalizarExamen : " + respuestas.toString());
 			Alumno a = getAlumno();
@@ -307,16 +318,16 @@ public class ExamenController extends Controller {
 		} catch (Exception e) {
 			e.printStackTrace();
 			flash("error", "Error en Finalizar examen: " + e.getMessage());
-            return indexAlumno();
+			return indexAlumno();
 		}
 	}
 	public static Result firepadExamenJs(String firepadid, String userid) {
-        return ok(views.js.examenes.firepadExamen.render(firepadid, userid));
-    }
+		return ok(views.js.examenes.firepadExamen.render(firepadid, userid));
+	}
 	public static class RendirExamenForm {
 		public List<String> respuestas = new ArrayList<>();
-    	public List<String> getRespuestas(){
-    		return respuestas;
-    	}
-    }
+		public List<String> getRespuestas() {
+			return respuestas;
+		}
+	}
 }

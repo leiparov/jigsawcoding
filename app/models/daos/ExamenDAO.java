@@ -84,23 +84,36 @@ public class ExamenDAO {
 				.setFetchAhead(false).getPage(page);
 	}
 	public boolean existeNotaExamen(Alumno a, Examen e) {
-		SqlQuery sql = Ebean.createSqlQuery("select * from nota_alumno where alumno_dni like :dni and examen_id like :examenid");
-        sql.setParameter("dni", a.getDNI());
-        sql.setParameter("examenid", e.getId());
-        SqlRow resultado = sql.findUnique();
-        if (resultado == null)
-            return false;
-        else 
-            return true;
-		
+		SqlQuery sql = Ebean
+				.createSqlQuery("select * from nota_alumno where alumno_dni like :dni and examen_id like :examenid");
+		sql.setParameter("dni", a.getDNI());
+		sql.setParameter("examenid", e.getId());
+		SqlRow resultado = sql.findUnique();
+		if (resultado == null)
+			return false;
+		else
+			return true;
+
 	}
 	public ProblemaExamen obtenerProblemaExamen(Integer id) {
-		return Ebean.find(ProblemaExamen.class, id);		
+		return Ebean.find(ProblemaExamen.class, id);
 	}
 	public void guardarRespuestasAlumno(List<RespuestasAlumno> respuestasAlumno) {
 		Ebean.save(respuestasAlumno);
-		
+
 	}
-	
+	public boolean yaRindioExamen(Alumno a, Examen e) {
+		SqlQuery sql = Ebean
+				.createSqlQuery("select pe.examen_id from respuestas_alumno ra "
+						+ "left join problema_examen pe on ra.problema_examen_id = pe.id "
+						+ "where pe.examen_id = :examenid and ra.alumno_dni = :dni group by pe.examen_id");
+		sql.setParameter("dni", a.getDNI());
+		sql.setParameter("examenid", e.getId());
+		SqlRow resultado = sql.findUnique();
+		if (resultado == null)
+			return false;
+		else
+			return true;
+	}
 
 }
