@@ -98,6 +98,12 @@ create table grupo_usuario (
   constraint pk_grupo_usuario primary key (grupo_id, usuario_dni))
 ;
 
+create table grupo_problema (
+  grupo_id                       integer not null,
+  problema_id                    integer not null,
+  constraint pk_grupo_problema primary key (grupo_id, problema_id))
+;
+
 create table sesion_jigsaw_usuario (
   sesion_jigsaw_id               integer not null,
   usuario_dni                    integer not null,
@@ -107,32 +113,38 @@ alter table examen add constraint fk_examen_docente_1 foreign key (docente_dni) 
 create index ix_examen_docente_1 on examen (docente_dni);
 alter table grupo add constraint fk_grupo_sesionJigsaw_2 foreign key (sesion_jigsaw_id) references sesion_jigsaw (id) on delete restrict on update restrict;
 create index ix_grupo_sesionJigsaw_2 on grupo (sesion_jigsaw_id);
-alter table grupo add constraint fk_grupo_problema_3 foreign key (problema_id) references problema (id) on delete restrict on update restrict;
-create index ix_grupo_problema_3 on grupo (problema_id);
-alter table nota_alumno add constraint fk_nota_alumno_alumno_4 foreign key (alumno_dni) references usuario (dni) on delete restrict on update restrict;
-create index ix_nota_alumno_alumno_4 on nota_alumno (alumno_dni);
-alter table nota_alumno add constraint fk_nota_alumno_examen_5 foreign key (examen_id) references examen (id) on delete restrict on update restrict;
-create index ix_nota_alumno_examen_5 on nota_alumno (examen_id);
-alter table problema add constraint fk_problema_docente_6 foreign key (docente_dni) references usuario (dni) on delete restrict on update restrict;
-create index ix_problema_docente_6 on problema (docente_dni);
-alter table problema_examen add constraint fk_problema_examen_problema_7 foreign key (problema_id) references problema (id) on delete restrict on update restrict;
-create index ix_problema_examen_problema_7 on problema_examen (problema_id);
-alter table problema_examen add constraint fk_problema_examen_examen_8 foreign key (examen_id) references examen (id) on delete restrict on update restrict;
-create index ix_problema_examen_examen_8 on problema_examen (examen_id);
-alter table respuestas_alumno add constraint fk_respuestas_alumno_problemaExamen_9 foreign key (problema_examen_id) references problema_examen (id) on delete restrict on update restrict;
-create index ix_respuestas_alumno_problemaExamen_9 on respuestas_alumno (problema_examen_id);
-alter table respuestas_alumno add constraint fk_respuestas_alumno_alumno_10 foreign key (alumno_dni) references usuario (dni) on delete restrict on update restrict;
-create index ix_respuestas_alumno_alumno_10 on respuestas_alumno (alumno_dni);
-alter table sesion_jigsaw add constraint fk_sesion_jigsaw_docente_11 foreign key (docente_dni) references usuario (dni) on delete restrict on update restrict;
-create index ix_sesion_jigsaw_docente_11 on sesion_jigsaw (docente_dni);
-alter table sesion_jigsaw add constraint fk_sesion_jigsaw_examen_12 foreign key (examen_id) references examen (id) on delete restrict on update restrict;
-create index ix_sesion_jigsaw_examen_12 on sesion_jigsaw (examen_id);
+alter table grupo add constraint fk_grupo_sesionJigsaw_3 foreign key (sesion_jigsaw_id) references sesion_jigsaw (id) on delete restrict on update restrict;
+create index ix_grupo_sesionJigsaw_3 on grupo (sesion_jigsaw_id);
+alter table grupo add constraint fk_grupo_problema_4 foreign key (problema_id) references problema (id) on delete restrict on update restrict;
+create index ix_grupo_problema_4 on grupo (problema_id);
+alter table nota_alumno add constraint fk_nota_alumno_alumno_5 foreign key (alumno_dni) references usuario (dni) on delete restrict on update restrict;
+create index ix_nota_alumno_alumno_5 on nota_alumno (alumno_dni);
+alter table nota_alumno add constraint fk_nota_alumno_examen_6 foreign key (examen_id) references examen (id) on delete restrict on update restrict;
+create index ix_nota_alumno_examen_6 on nota_alumno (examen_id);
+alter table problema add constraint fk_problema_docente_7 foreign key (docente_dni) references usuario (dni) on delete restrict on update restrict;
+create index ix_problema_docente_7 on problema (docente_dni);
+alter table problema_examen add constraint fk_problema_examen_problema_8 foreign key (problema_id) references problema (id) on delete restrict on update restrict;
+create index ix_problema_examen_problema_8 on problema_examen (problema_id);
+alter table problema_examen add constraint fk_problema_examen_examen_9 foreign key (examen_id) references examen (id) on delete restrict on update restrict;
+create index ix_problema_examen_examen_9 on problema_examen (examen_id);
+alter table respuestas_alumno add constraint fk_respuestas_alumno_problemaExamen_10 foreign key (problema_examen_id) references problema_examen (id) on delete restrict on update restrict;
+create index ix_respuestas_alumno_problemaExamen_10 on respuestas_alumno (problema_examen_id);
+alter table respuestas_alumno add constraint fk_respuestas_alumno_alumno_11 foreign key (alumno_dni) references usuario (dni) on delete restrict on update restrict;
+create index ix_respuestas_alumno_alumno_11 on respuestas_alumno (alumno_dni);
+alter table sesion_jigsaw add constraint fk_sesion_jigsaw_docente_12 foreign key (docente_dni) references usuario (dni) on delete restrict on update restrict;
+create index ix_sesion_jigsaw_docente_12 on sesion_jigsaw (docente_dni);
+alter table sesion_jigsaw add constraint fk_sesion_jigsaw_examen_13 foreign key (examen_id) references examen (id) on delete restrict on update restrict;
+create index ix_sesion_jigsaw_examen_13 on sesion_jigsaw (examen_id);
 
 
 
 alter table grupo_usuario add constraint fk_grupo_usuario_grupo_01 foreign key (grupo_id) references grupo (id) on delete restrict on update restrict;
 
 alter table grupo_usuario add constraint fk_grupo_usuario_usuario_02 foreign key (usuario_dni) references usuario (dni) on delete restrict on update restrict;
+
+alter table grupo_problema add constraint fk_grupo_problema_grupo_01 foreign key (grupo_id) references grupo (id) on delete restrict on update restrict;
+
+alter table grupo_problema add constraint fk_grupo_problema_problema_02 foreign key (problema_id) references problema (id) on delete restrict on update restrict;
 
 alter table sesion_jigsaw_usuario add constraint fk_sesion_jigsaw_usuario_sesion_jigsaw_01 foreign key (sesion_jigsaw_id) references sesion_jigsaw (id) on delete restrict on update restrict;
 

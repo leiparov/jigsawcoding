@@ -42,6 +42,9 @@ public class SesionJigsaw {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<GrupoExperto> gruposExpertos;
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<GrupoJigsaw> gruposJigsaw;
+	
 	@ManyToOne
 	private Examen examen;
 	
@@ -193,6 +196,14 @@ public class SesionJigsaw {
 
 	public void setDuracionExamen(Integer duracionExamen) {
 		this.duracionExamen = duracionExamen;
+	}
+
+	public List<GrupoJigsaw> getGruposJigsaw() {
+		return gruposJigsaw;
+	}
+
+	public void setGruposJigsaw(List<GrupoJigsaw> gruposJigsaw) {
+		this.gruposJigsaw = gruposJigsaw;
 	}
 
 	

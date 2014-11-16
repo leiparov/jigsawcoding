@@ -2,12 +2,13 @@ package models.daos;
 
 import models.entities.Docente;
 import models.entities.GrupoExperto;
+import models.entities.GrupoJigsaw;
 import play.db.ebean.Model.Finder;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Page;
 
-public class GrupoExpertoDAO {
+public class GrupoDAO {
 
 	public static Finder<Integer, GrupoExperto> find = new Finder<Integer, GrupoExperto>(
 			Integer.class, GrupoExperto.class);
@@ -20,11 +21,13 @@ public class GrupoExpertoDAO {
 
 	public void actualizarGrupoExperto(GrupoExperto grupoExperto) {
 		Ebean.update(grupoExperto);
-
 	}
 
 	public GrupoExperto obtenerGrupoExperto(Integer id) {
 		return EbeanUtils.findOrException(GrupoExperto.class, id);
+	}
+	public GrupoJigsaw obtenerGrupoJigsaw(Integer id) {
+		return EbeanUtils.findOrException(GrupoJigsaw.class, id);
 	}
 
 	public Page<GrupoExperto> page(int page, int pageSize, String sortBy,
@@ -52,6 +55,15 @@ public class GrupoExpertoDAO {
 	public void guardarAlumnos(GrupoExperto grupo) {
 		Ebean.update(grupo);
 		Ebean.saveAssociation(grupo, "alumnos");
+	}
+
+	public void eliminarGrupoJigsaw(Integer id) {
+		Ebean.delete(obtenerGrupoJigsaw(id));
+	}
+
+	public void actualizarGrupoJigsaw(GrupoJigsaw gj) {
+		Ebean.update(gj);
+		Ebean.saveAssociation(gj, "problemas");
 	}
 
 }

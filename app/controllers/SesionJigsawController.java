@@ -108,21 +108,22 @@ public class SesionJigsawController extends Controller {
 			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
 			sesionJigsawService.generarGrupos(s);
 
-			flash("success", "Grupos Expertos generados exitosamente");
-			return verGruposExpertos(id);
+			flash("success", "Grupos generados exitosamente");
+			return verGrupos(id);
 			// views.html.sesionesjigsaw.gruposExpertos.render(s));
 		} catch (Exception e) {
 			flash("error", "Error: " + e.getMessage());
 			return GO_HOME;
 		}
 	}
-	public static Result verGruposExpertos(Integer id) {
+	public static Result verGrupos(Integer id) {
 		SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
-		return ok(views.html.sesionesjigsaw.gruposExpertos.render(s));
+		return ok(views.html.sesionesjigsaw.grupos.render(s));
 	}
-	public static Result eliminarGruposExpertos(Integer id) {
+	public static Result eliminarGrupos(Integer id) {
 		sesionJigsawService.eliminarGruposExpertos(id);
-		flash("success", "Grupos expertos eliminados correctamente");
+		sesionJigsawService.eliminarGruposJigsaw(id);
+		flash("success", "Grupos eliminados correctamente");
 		return GO_HOME;
 	}
 

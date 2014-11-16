@@ -5,13 +5,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import models.daos.GrupoExpertoDAO;
+import models.daos.GrupoDAO;
 import models.daos.SesionJigsawDAO;
 import models.daos.UsuarioDAO;
 import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.EtapaSesionJigsaw;
 import models.entities.GrupoExperto;
+import models.entities.GrupoJigsaw;
 import models.entities.Problema;
 import models.entities.SesionJigsaw;
 
@@ -22,7 +23,7 @@ public class SesionJigsawService {
 
 	private static UsuarioDAO usuarioDAO = new UsuarioDAO();
 	private static SesionJigsawDAO sesionJigsawDAO = new SesionJigsawDAO();
-	private static GrupoExpertoDAO grupoExpertoDAO = new GrupoExpertoDAO();
+	private static GrupoDAO grupoDAO = new GrupoDAO();
 
 	public void guardarSesionJigsaw(Docente docente, SesionJigsaw sesionJigsaw) {
 		sesionJigsawDAO.guardarSesionJigsaw(sesionJigsaw);
@@ -113,7 +114,7 @@ public class SesionJigsawService {
 		List<Alumno> alumnos = s.getAlumnos();
 		int tge = s.getTotalGruposExpertos();
 		int cantidadAlumnosPorGrupoExperto = alumnos.size()/tge;
-		List<GrupoExperto> grupos = new ArrayList<>();
+		List<GrupoExperto> gruposExpertos = new ArrayList<>();
 		for (int i = 0; i<tge; i++){
 			GrupoExperto g = new GrupoExperto();
 			List<Alumno> a = new ArrayList<>();
@@ -132,34 +133,67 @@ public class SesionJigsawService {
 			g.setNombre(nombre);
 			g.setSesionJigsaw(s);
 			g.setAlumnos(a);
-			grupos.add(g);
+			gruposExpertos.add(g);
 		}
-		s.setGruposExpertos(grupos);
+		s.setGruposExpertos(gruposExpertos);
+		/*Generacion de nuevos grupos jigsaw*/
+		List<GrupoJigsaw> gruposJigsaw = new ArrayList<>();
+		for (int i=0; i< cantidadAlumnosPorGrupoExperto; i++){
+			GrupoJigsaw gj = new GrupoJigsaw();
+			List<Alumno> agj = new ArrayList<>();
+			String nombre = "GJ_";
+			for(int j = 0; j < tge; j++){
+				GrupoExperto ge = gruposExpertos.get(j);
+				Alumno alu = ge.getAlumnos().get(i);
+				agj.add(alu);
+				if(j == tge-1){
+					nombre += alu.getIniciales();
+				}else{
+					nombre += alu.getIniciales() + "_";
+				}
+			}
+			gj.setNombre(nombre);
+			gj.setSesionJigsaw(s);
+			gj.setAlumnos(agj);
+			gruposJigsaw.add(gj);
+		}
+		s.setGruposJigsaw(gruposJigsaw);
 		sesionJigsawDAO.guardarGruposExpertos(s);
-		
+		sesionJigsawDAO.guardarGruposJigsaw(s);
 	}
 
 	public void guardarProblemas(SesionJigsaw s, HashMap<GrupoExperto, Problema> pares) {
 		Iterator<GrupoExperto> it = pares.keySet().iterator();
+		List<Problema> problemas = new ArrayList<>();
 		while(it.hasNext()){
 			GrupoExperto g = it.next();
 			Problema p = pares.get(g);
 			g.setProblema(p);
+			problemas.add(p);
 			//Ebean.update(g);
-			grupoExpertoDAO.actualizarGrupoExperto(g);
+			grupoDAO.actualizarGrupoExperto(g);
+		}
+		for (GrupoJigsaw gj : s.getGruposJigsaw()){
+			gj.setProblemas(problemas);
+			grupoDAO.actualizarGrupoJigsaw(gj);
 		}
 		s.setEtapa(EtapaSesionJigsaw.REUNIONEXPERTOS);
 		sesionJigsawDAO.actualizarSesionJigsaw(s);
-		
-		
 	}
 
 	public void eliminarGruposExpertos(Integer id) {
 		SesionJigsaw s = obtenerSesionJigsaw(id);
 		for(GrupoExperto g : s.getGruposExpertos()){
-			grupoExpertoDAO.eliminarGrupoExperto(g.getId());
+			grupoDAO.eliminarGrupoExperto(g.getId());
 		}
 		sesionJigsawDAO.eliminarGruposExpertos(s);
+	}
+	public void eliminarGruposJigsaw(Integer id) {
+		SesionJigsaw s = obtenerSesionJigsaw(id);
+		for(GrupoJigsaw g : s.getGruposJigsaw()){
+			grupoDAO.eliminarGrupoJigsaw(g.getId());
+		}
+		sesionJigsawDAO.eliminarGruposJigsaw(s);
 		
 	}
 

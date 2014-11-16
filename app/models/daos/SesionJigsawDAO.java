@@ -117,7 +117,15 @@ public class SesionJigsawDAO {
 	public void eliminarGruposExpertos(SesionJigsaw s) {
 		s.setGruposExpertos(null);
 		Ebean.update(s);
-		Ebean.saveAssociation(s, "gruposExpertos");
+		Ebean.saveAssociation(s, "gruposExpertos");		
+	}
+	public void guardarGruposJigsaw(SesionJigsaw s) {
+		Ebean.saveAssociation(s, "gruposJigsaw");
+	}
+	public void eliminarGruposJigsaw(SesionJigsaw s) {
+		s.setGruposJigsaw(null);
+		Ebean.update(s);
+		Ebean.saveAssociation(s, "gruposJigsaw");
 		
 	}
 

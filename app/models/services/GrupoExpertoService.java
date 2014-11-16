@@ -3,7 +3,7 @@ package models.services;
 import java.util.List;
 
 import models.daos.AlumnoDAO;
-import models.daos.GrupoExpertoDAO;
+import models.daos.GrupoDAO;
 import models.daos.UsuarioDAO;
 import models.entities.Docente;
 import models.entities.GrupoExperto;
@@ -12,7 +12,7 @@ import com.avaje.ebean.Page;
 
 public class GrupoExpertoService  {
 
-	private static GrupoExpertoDAO grupoExpertoDAO = new GrupoExpertoDAO();
+	private static GrupoDAO grupoDAO = new GrupoDAO();
 	private static UsuarioDAO usuarioDAO = new UsuarioDAO();
 	private static AlumnoDAO alumnoDAO = new AlumnoDAO();
 
@@ -43,23 +43,23 @@ public class GrupoExpertoService  {
 
 	
 	public GrupoExperto obtenerGrupoExperto(Integer id) {
-		return grupoExpertoDAO.obtenerGrupoExperto(id);
+		return grupoDAO.obtenerGrupoExperto(id);
 	}
 
 	
 	public Page<GrupoExperto> page(int page, int pageSize, String sortBy,
 			String order, String filter) {
-		return grupoExpertoDAO.page(page, pageSize, sortBy, order, filter);
+		return grupoDAO.page(page, pageSize, sortBy, order, filter);
 	}
 
 	
 	public Page<GrupoExperto> page(Docente docente, int page, int pageSize,
 			String sortBy, String order, String filter) {
-		return grupoExpertoDAO.page(docente, page, pageSize, sortBy, order, filter);
+		return grupoDAO.page(docente, page, pageSize, sortBy, order, filter);
 	}
 	
 	public void eliminarGrupoExperto(Integer id) {
-		grupoExpertoDAO.eliminarGrupoExperto(id);
+		grupoDAO.eliminarGrupoExperto(id);
 	}
 	
     public void actualizarAlumnos(GrupoExperto grupo, List<Integer> dnialumnos) {

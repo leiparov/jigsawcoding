@@ -2,9 +2,8 @@
 @(sesionJigsaw : models.entities.SesionJigsaw)
 @main(menuDocente()){
 	@inputs.flashSuccessError()
-	@inputs.panel("Grupos Expertos"){
-		<div class="row">
-		
+	@inputs.panel("Grupos EXPERTOS"){
+		<div class="row">		
 			@sesionJigsaw.getGruposExpertos().map { ge => 
 				<div class="col-md-3">
 					<label>@ge.getNombre()</label>
@@ -15,12 +14,26 @@
 					</ul>
 				</div>
 			}
+		</div>		
+	}
+	@inputs.panel("Grupos JIGSAW"){
+		<div class="row">		
+			@sesionJigsaw.getGruposJigsaw().map { gj => 
+				<div class="col-md-3">
+					<label>@gj.getNombre()</label>
+					<ul class="list-group">
+						@gj.getAlumnos().map {alumno => 
+							<li class="list-group-item">@alumno.getNombreCompleto()</li>
+						}
+					</ul>
+				</div>
+			}
 		</div>
 		<div class="row">
 			<div class="col-md-3">
 				<a class="btn btn-success" href="@routes.SesionJigsawController.index">Aceptar</a>
 			</div>			
-			@helper.form(routes.SesionJigsawController.eliminarGruposExpertos(sesionJigsaw.getId()), 'class -> "col-md-3") {
+			@helper.form(routes.SesionJigsawController.eliminarGrupos(sesionJigsaw.getId()), 'class -> "col-md-3") {
 			    <input type="submit" value="Eliminar Grupos Expertos" class="btn btn-danger">
 			}
 		</div>

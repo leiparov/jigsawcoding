@@ -72,7 +72,4 @@ public class Problema {
 				+ (docente != null ? "docente=" + docente.getDNI() : "") + "]";
 	}
 
-	
-	
-
 }
