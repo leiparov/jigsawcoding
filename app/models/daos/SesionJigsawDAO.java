@@ -48,6 +48,7 @@ public class SesionJigsawDAO {
 	public Page<SesionJigsaw> page(Docente docente, int page, int pageSize,
 			String sortBy, String order, String filter) {
 		return find.where().eq("docente_dni", docente.getDNI())
+				.ilike("tema", "%" + filter + "%")
 				.orderBy(sortBy + " " + order).findPagingList(pageSize)
 				.setFetchAhead(false).getPage(page);
 	}

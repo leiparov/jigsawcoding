@@ -65,5 +65,9 @@ public class ExamenService {
 		}
 		examenDAO.guardarRespuestasAlumno(respuestasAlumno);		
 	}
+	public List<Examen> obtenerExamenes() {
+		
+		return examenDAO.obtenerExamenes();
+	}
 
 }

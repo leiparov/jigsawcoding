@@ -1,4 +1,4 @@
-@(examen: models.entities.Examen, sesionesJigsaw: List[models.entities.SesionJigsaw])
+@(s: models.entities.SesionJigsaw)
 
 @main(menuDocente()) {
 	<div class="container">
@@ -7,33 +7,30 @@
 			<div class="panel-heading">Definir horario de Examen</div>
 		  	<div class="panel-body">
 			    <div class="col-md-12">
-			    	@helper.form(action=routes.ExamenController.definirHorario(examen.getId()), 'id -> "mainForm"){
+			    	@helper.form(action=routes.SesionJigsawController.guardarHorarioExamen(s.getId()), 'id -> "mainForm"){
 						<div class="form-group">
 							<label>Fecha del examen</label>    
-							@inputs.datepicker(name="fecha", value=examen.getTiempoApertura)
+							@inputs.datepicker(name="fecha", value=s.getTiempoAperturaExamen)
 							<span></span>
 						</div>
 						<div class="form-group">
 							<label>Rango de tiempo para iniciar el examen</label>
 							<div class="row">
 								<div class="col-xs-5">
-								@inputs.hourinput(name="tiempoApertura", value=examen.getTiempoApertura)
+								@inputs.hourinput(name="tiempoApertura", value=s.getTiempoAperturaExamen)
 								</div>
 								<div class="col-xs-2">
 								<p>hasta</p>
 								</div>
 								<div class="col-xs-5">
-								@inputs.hourinput(name="tiempoClausura", value=examen.getTiempoClausura)
+								@inputs.hourinput(name="tiempoClausura", value=s.getTiempoClausuraExamen)
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
 							<label>Duración</label>
-							@inputs.durationinput(name="duracion", value=examen.getDuracion)
+							@inputs.durationinput(name="duracion", value=s.getDuracionExamen)
 						</div>
-						
-						
-						
 						
 						<div class="form-group">
 						<button type="submit" class="btn btn-primary" >Guardar</button>

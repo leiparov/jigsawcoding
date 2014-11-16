@@ -1,6 +1,9 @@
 package controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -82,7 +85,7 @@ public class ExamenController extends Controller {
 		Examen e = examenService.obtener(id);
 		examenService.actualizarHorario(form.get().actualizar(e));
 		flash("success", "Cambios guardados con éxito");
-		return GO_HOME;
+		return SesionJigsawController.GO_HOME;
 	}
 
 	public static Result crearExamen() {
@@ -146,6 +149,8 @@ public class ExamenController extends Controller {
 		}
 		public Examen obtenerExamen() {
 			Examen e = new Examen();
+			String newstring = new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date());
+			titulo = "Examen "+ newstring;
 			e.setTitulo(getTitulo());
 			e.setProblemas(getProblemas());
 			return e;
@@ -238,15 +243,6 @@ public class ExamenController extends Controller {
 			} else {
 				e.setDuracion(null);
 			}
-
-			if (sesionJigsaw != -1) {
-				SesionJigsaw s = sesionJigsawService
-						.obtenerSesionJigsaw(sesionJigsaw);
-				e.setSesionJigsaw(s);
-			} else {
-				e.setSesionJigsaw(null);
-			}
-
 			return e;
 		}
 

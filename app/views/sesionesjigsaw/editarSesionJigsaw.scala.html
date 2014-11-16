@@ -1,5 +1,5 @@
 @* nuevaSesionJigsaw Template File *@
-@(id:Integer, sesionJigsaw: models.entities.SesionJigsaw)
+@(id:Integer, sesionJigsaw: models.entities.SesionJigsaw, examenes: List[models.entities.Examen])
 @main(menuDocente()){
 	<div class="row">
 	@inputs.flashSuccessError()
@@ -9,7 +9,7 @@
 		@helper.form(routes.SesionJigsawController.actualizarSesionJigsaw(id), 'class -> "form-horizontal"){
 			<div class="col-md-12">            	
             	<div class="col-md-6">
-	            	<div class="form-group">
+            		<div class="form-group">
                     	<label class="col-sm-3 control-label" for="totalGruposExpertos">Total Grupos Expertos</label>
                      	<div class="col-sm-3">
                             <input type="number" class="form-control" id="totalGruposExpertos"
@@ -17,54 +17,30 @@
                                name="totalGruposExpertos" required>                            
                     	</div>
                   	</div>
-            		<h2>Reunión Expertos</h2>
-            		<div class="form-group">
-	                   	<label class="col-sm-3 control-label" for="fechaInicioRE">Fecha Inicio</label>
-	                    <div class="col-sm-6">
-	                    @inputs.datepicker(name="fechaInicioRE", value=sesionJigsaw.getInicioReunionExpertos())
-	                   	</div>
-            		</div>
-            		<div class="form-group">
-	                   	<label class="col-sm-3 control-label" for="horaInicioRE">Hora Inicio</label>
-	                    <div class="col-sm-6">
-	                    @inputs.hourinput(name="horaInicioRE", value=sesionJigsaw.getInicioReunionExpertos())
-	                   	</div>
-            		</div>
-            		<div class="form-group">
-	                   	<label class="col-sm-3 control-label" for="duracionRE">Duración</label>
-	                    <div class="col-sm-6">
-	                    @inputs.durationinput(name="duracionRE", value=sesionJigsaw.getDuracionReunionExpertos())
-	                   	</div>                   	
-	            	</div>
-	            	
-            	</div>
-            	<div class="col-md-6">
 	            	<div class="form-group">
 	                   	<label class="col-sm-3 control-label" for="tema">Tema</label>
 	                    	<div class="col-sm-6">
-	                       	<input type="text" class="form-control" id="tema" value="@sesionJigsaw.getTema()"
-	                              name="tema" required>
-	                   	</div>
+		                       	<input type="text" class="form-control" id="tema" value="@sesionJigsaw.getTema()"
+		                              name="tema" required>
+		                   	</div>
 	            	</div>
-            		<h2>Reunión Jigsaw</h2>
-            		<div class="form-group">
-	                   	<label class="col-sm-3 control-label" for="fechaInicioRJ">Fecha Inicio</label>
-	                    <div class="col-sm-6">
-	                    @inputs.datepicker(name="fechaInicioRJ", value=sesionJigsaw.getInicioReunionJigsaw())
-	                   	</div>
-            		</div>
-            		<div class="form-group">
-	                   	<label class="col-sm-3 control-label" for="horaInicioRJ">Hora Inicio</label>
-	                    <div class="col-sm-6">
-	                    @inputs.hourinput(name="horaInicioRJ", value=sesionJigsaw.getInicioReunionJigsaw())
-	                   	</div>
-            		</div>
-            		<div class="form-group">
-	                   	<label class="col-sm-3 control-label" for="duracionRJ">Duración</label>
-	                    <div class="col-sm-6">
-	                    @inputs.durationinput(name="duracionRJ", value=sesionJigsaw.getDuracionReunionJigsaw())
-                   	</div>
-            	</div>
+	            	<div class="form-group">
+						<label class="col-sm-3 control-label" for="examen">Examen</label>
+						<div class="col-sm-6"> 
+							<select class="form-control" name="examenid" id="examen">
+								@defining(if(sesionJigsaw.getExamen() == null) -1 else sesionJigsaw.getExamen().getId()){ currentId =>
+									<option
+								  		@if(currentId == -1){selected="selected"}  
+										value="-1">Ninguno seleccionado</option>
+									@examenes.map { examen =>
+										<option 
+									  		@if(currentId == examen.getId()){selected="selected"}  
+									  		value="@examen.getId()">@examen.getTitulo()</option>								  	
+									}
+								}
+							</select>
+						</div>
+					</div>
             	
             	<div class="form-group">
 				    <div class="col-sm-offset-4 col-sm-8">
@@ -74,8 +50,9 @@
 					    
 				</div>
 			</div>
+		</div>
 		}
-		<div class="row">
+		<div class="pull-rigth">
 			@helper.form(routes.SesionJigsawController.eliminarSesionJigsaw(id), 'class -> "col-md-3") {
 		        <input type="submit" value="Eliminar Sesión Jigsaw" class="btn btn-danger">
 			}

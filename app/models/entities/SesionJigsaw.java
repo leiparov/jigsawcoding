@@ -27,6 +27,11 @@ public class SesionJigsaw {
 	private Date inicioReunionJigsaw;
 	private Integer duracionReunionJigsaw;
 
+	/*Evaluacion*/
+	private Date tiempoAperturaExamen;
+	private Date tiempoClausuraExamen;
+	private Integer duracionExamen;
+	
 	private Integer totalGruposExpertos;
 
 	private EtapaSesionJigsaw etapa;
@@ -37,7 +42,7 @@ public class SesionJigsaw {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<GrupoExperto> gruposExpertos;
 	
-	@OneToOne
+	@ManyToOne
 	private Examen examen;
 	
 	@ManyToMany( cascade = CascadeType.PERSIST)
@@ -164,6 +169,30 @@ public class SesionJigsaw {
 
 	public void setGruposExpertos(List<GrupoExperto> gruposExpertos) {
 		this.gruposExpertos = gruposExpertos;
+	}
+
+	public Date getTiempoAperturaExamen() {
+		return tiempoAperturaExamen;
+	}
+
+	public void setTiempoAperturaExamen(Date tiempoAperturaExamen) {
+		this.tiempoAperturaExamen = tiempoAperturaExamen;
+	}
+
+	public Date getTiempoClausuraExamen() {
+		return tiempoClausuraExamen;
+	}
+
+	public void setTiempoClausuraExamen(Date tiempoClausuraExamen) {
+		this.tiempoClausuraExamen = tiempoClausuraExamen;
+	}
+
+	public Integer getDuracionExamen() {
+		return duracionExamen;
+	}
+
+	public void setDuracionExamen(Integer duracionExamen) {
+		this.duracionExamen = duracionExamen;
 	}
 
 	

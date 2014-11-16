@@ -33,9 +33,6 @@ public class ExamenDAO {
 		camposHorario.add("sesionJigsaw");
 
 		Ebean.update(examen, camposHorario);
-		SesionJigsaw s = examen.getSesionJigsaw();
-		s.setExamen(examen);
-		Ebean.update(s);
 	}
 
 	public void guardar(Examen e) {
@@ -62,6 +59,7 @@ public class ExamenDAO {
 				Ebean.delete(existente);
 			}
 		}
+		Ebean.update(e);
 	}
 	private ProblemaExamen buscarEn(List<ProblemaExamen> lista,
 			Integer idPregunta) {
@@ -114,6 +112,9 @@ public class ExamenDAO {
 			return false;
 		else
 			return true;
+	}
+	public List<Examen> obtenerExamenes() {
+		return find.all();
 	}
 
 }

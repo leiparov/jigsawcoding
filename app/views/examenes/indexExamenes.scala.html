@@ -66,35 +66,30 @@
     		<table class="table table-bordered">
     			<thead>
     				<tr>
-                        <th>Examen</th>
-                        <th>Hora de examen</th>
-                        <th>Fecha de examen</th>
-                        <th>Fecha de elaboración</th>
-                        <th>Duración</th>
-                        <th>SesionJigsaw</th>
+                        <th>Examen</th>                        
+                        <th>Preguntas</th>
                         <th>Acciones</th>
                     </tr>
     			</thead>
     			<tbody>
     			@currentPage.getList.map { examen =>
     				<tr>
-    					<td>@examen.getTitulo()</td>    					
-    					<td>@formatDate(examen.getTiempoApertura, FormatoFechaHora.timeFormat12)</td>	
-	                    <td>@formatDate(examen.getTiempoApertura, FormatoFechaHora.dateFormat)</td>
-	                    <td>@formatDate(examen.getTiempoCreacion, FormatoFechaHora.dateFormat)</td>
-	                    @if(examen.getDuracion() != null){
-    						<td>@examen.getDuracion() min</td>
-    					}else{
-    						<td>--</td>
-    					}
-	                    @if(examen.getSesionJigsaw() != null){
-	                    	<td>@examen.getSesionJigsaw().getNombre()</td>	
-	                    }else{
-	                    	<td>--</td>
-	                    }
+    					<td>@examen.getTitulo()</td>   				
+	                    
+	                    <td>
+	                    	@if(examen.getProblemas() != null){
+	                    		<ul class="list-group">
+	                    			@examen.getProblemas().map { problema => 
+	                    				<li class="list-group-item">@problema.getProblema().getTitulo()</li>
+	                    			}	                    			
+	                    		</ul>
+	                    	}else{
+	                    		--
+	                    	}
+	                    </td>
+	                    
 	                    
     					<td>
-	                    	<a href="@routes.ExamenController.interfazDefinirHorario(examen.getId)">Definir horario</a> /  
 	                        <a href="@routes.ExamenController.interfazEditar(examen.getId)">Editar</a>
 	                    </td>
     				</tr>

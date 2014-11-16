@@ -7,9 +7,11 @@ import java.util.List;
 import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.EtapaSesionJigsaw;
+import models.entities.Examen;
 import models.entities.GrupoExperto;
 import models.entities.Problema;
 import models.entities.SesionJigsaw;
+import models.services.ExamenService;
 import models.services.GrupoExpertoService;
 import models.services.Login;
 import models.services.ProblemaService;
@@ -32,16 +34,17 @@ public class SesionJigsawController extends Controller {
 	private static UsuarioService usuarioService = new UsuarioService();
 	private static SesionJigsawService sesionJigsawService = new SesionJigsawService();
 	private static GrupoExpertoService grupoExpertoService = new GrupoExpertoService();
-	private static ProblemaService problemaService =  new ProblemaService();
+	private static ProblemaService problemaService = new ProblemaService();
+	private static ExamenService examenService = new ExamenService();
 
 	private static Docente getDocente() {
 		return usuarioService.obtener(Login.obtener(ctx()).getDNI(),
 				Docente.class);
 	}
 
-	/*Módulo DOCENTE*/
-	public static Result GO_HOME = redirect(routes.SesionJigsawController.list(0, "id",
-			"asc", ""));
+	/* Módulo DOCENTE */
+	public static Result GO_HOME = redirect(routes.SesionJigsawController.list(
+			0, "id", "asc", ""));
 
 	public static Result list(int page, String sortBy, String order,
 			String filter) {
@@ -64,17 +67,11 @@ public class SesionJigsawController extends Controller {
 				.bindFromRequest();
 		try {
 			SesionJigsaw s = form.get().entidad();
-			if (form.get().actualizar(s) == null) {
-				flash("error",
-						"No se puede guardar la sesión jigsaw. Complete todos los campos");
-				return interfazNuevo();
-			} else {
-				s = form.get().actualizar(s);				
-				sesionJigsawService.guardarSesionJigsaw(getDocente(), s);
-				flash("success", "SesionJigsaw registrada con éxito");
-				return GO_HOME;
-				// return asignarProblemas(id)
-			}
+
+			sesionJigsawService.guardarSesionJigsaw(getDocente(), s);
+			flash("success", "SesionJigsaw registrada con éxito");
+			return GO_HOME;
+			// return asignarProblemas(id)
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -82,81 +79,103 @@ public class SesionJigsawController extends Controller {
 			return redirect(routes.SesionJigsawController.index());
 		}
 	}
-	/*Asisgnar Alumnos a Sesion Jigsaw*/
-	public static Result interfazAsignarAlumnos(Integer id){
+	/* Asisgnar Alumnos a Sesion Jigsaw */
+	public static Result interfazAsignarAlumnos(Integer id) {
 		SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
 		return ok(views.html.sesionesjigsaw.asignarAlumnos.render(s));
 	}
-	public static Result guardarAlumnos(Integer id){
+	public static Result guardarAlumnos(Integer id) {
 		try {
-			Form<AsignarAlumnosForm> form = Form.form(AsignarAlumnosForm.class).bindFromRequest();
+			Form<AsignarAlumnosForm> form = Form.form(AsignarAlumnosForm.class)
+					.bindFromRequest();
 			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
 			List<Integer> dnialumnos = form.get().alumnos;
-			sesionJigsawService.guardarAlumnos(s,dnialumnos);
+			sesionJigsawService.guardarAlumnos(s, dnialumnos);
 			flash("success", "Alumnos asignados con éxito");
-            return GO_HOME;
+			return GO_HOME;
 		} catch (Exception e) {
 			flash("error", "Error: " + e.getMessage());
-            return interfazAsignarAlumnos(id);
+			return interfazAsignarAlumnos(id);
 		}
 	}
-	public static class AsignarAlumnosForm{
-        public List<Integer> alumnos = new LinkedList<Integer>();
-    }
-	
-	/*Generar Grupos*/
-	public static Result generarGrupos(Integer id){
+	public static class AsignarAlumnosForm {
+		public List<Integer> alumnos = new LinkedList<Integer>();
+	}
+
+	/* Generar Grupos */
+	public static Result generarGrupos(Integer id) {
 		try {
 			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
 			sesionJigsawService.generarGrupos(s);
-			
+
 			flash("success", "Grupos Expertos generados exitosamente");
 			return verGruposExpertos(id);
-					//views.html.sesionesjigsaw.gruposExpertos.render(s));
+			// views.html.sesionesjigsaw.gruposExpertos.render(s));
 		} catch (Exception e) {
 			flash("error", "Error: " + e.getMessage());
-            return GO_HOME;
-		}		
+			return GO_HOME;
+		}
 	}
-	public static Result verGruposExpertos(Integer id){
+	public static Result verGruposExpertos(Integer id) {
 		SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
 		return ok(views.html.sesionesjigsaw.gruposExpertos.render(s));
 	}
-	public static Result eliminarGruposExpertos(Integer id){
+	public static Result eliminarGruposExpertos(Integer id) {
 		sesionJigsawService.eliminarGruposExpertos(id);
 		flash("success", "Grupos expertos eliminados correctamente");
 		return GO_HOME;
 	}
 
-	/*Asignar problemas*/
+	/* Asignar problemas */
 	public static Result asignarProblemas(Integer id) {
 		SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
 		return ok(views.html.sesionesjigsaw.asignarProblemas.render(id, s));
 	}
 
 	public static Result guardarProblemas(Integer id) {
-		
-		Form<ParGrupoProblemaForm> form = Form.form(ParGrupoProblemaForm.class).bindFromRequest();
+
+		Form<ParGrupoProblemaForm> form = Form.form(ParGrupoProblemaForm.class)
+				.bindFromRequest();
 		try {
 			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
-			//List<ParGrupoExpertoProblema> lista = form.get().getAsignacionProblemas(id);
-			//s.setPares(lista);
-			HashMap<GrupoExperto, Problema> pares = form.get().asignacionProblemas();
+			// List<ParGrupoExpertoProblema> lista =
+			// form.get().getAsignacionProblemas(id);
+			// s.setPares(lista);
+			HashMap<GrupoExperto, Problema> pares = form.get()
+					.asignacionProblemas();
 			sesionJigsawService.guardarProblemas(s, pares);
-			//sesionJigsawService.actualizarSesionJigsaw(getDocente(), s);
+			// sesionJigsawService.actualizarSesionJigsaw(getDocente(), s);
 			flash("success", "Asignación de Problemas realizada con éxito");
 			return GO_HOME;
 		} catch (Exception e) {
 			e.printStackTrace();
 			flash("error", "No se pudo guardar la Asignación de Problemas");
 			return redirect(routes.SesionJigsawController.index());
-		}	
-		//return TODO;
+		}
+		// return TODO;
 	}
 
 	public static Result editarSesionJigsaw(Integer id) {
 		SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
-		return ok(views.html.sesionesjigsaw.editarSesionJigsaw.render(id, s));
+		List<Examen> examenes = examenService.obtenerExamenes();
+		play.Logger.info("Editar sesion jigsaw - examenes " + examenes.size());
+		return ok(views.html.sesionesjigsaw.editarSesionJigsaw.render(id, s,
+				examenes));
+	}
+
+	public static Result definirHorarioReunionExpertos(Integer id) {
+		SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
+		return ok(views.html.sesionesjigsaw.definirHorarioReunionExpertos
+				.render(s));
+	}
+	public static Result definirHorarioReunionJigsaw(Integer id) {
+		SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
+		return ok(views.html.sesionesjigsaw.definirHorarioReunionJigsaw
+				.render(s));
+	}
+	public static Result definirHorarioExamen(Integer id) {
+		SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
+		return ok(views.html.sesionesjigsaw.definirHorarioExamen.render(s));
 	}
 
 	public static Result actualizarSesionJigsaw(Integer id) {
@@ -164,16 +183,58 @@ public class SesionJigsawController extends Controller {
 				.bindFromRequest();
 		try {
 			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
-			if (form.get().actualizar(s) == null) {
-				flash("error",
-						"No se puede actualizar la sesión jigsaw. Complete todos los campos");
-				return editarSesionJigsaw(id);
-			} else {
-				s = form.get().actualizar(s);
-				sesionJigsawService.actualizarSesionJigsaw(getDocente(), s);
-				flash("success", "SesionJigsaw actualizada con éxito");
-				return GO_HOME;
-			}
+			s = form.get().editar(s);
+			sesionJigsawService.actualizarSesionJigsaw(getDocente(), s);
+			flash("success", "SesionJigsaw actualizada con éxito");
+			return GO_HOME;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			flash("error", "No se pudo guardar la Sesión Jigsaw");
+			return GO_HOME;
+		}
+	}
+	public static Result guardarHorarioReunionExpertos(Integer id) {
+		Form<SesionJigsawForm> form = Form.form(SesionJigsawForm.class)
+				.bindFromRequest();
+		try {
+			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
+			s = form.get().definirHorarioReunionExpertos(s);
+			sesionJigsawService.actualizarSesionJigsaw(getDocente(), s);
+			flash("success", "SesionJigsaw actualizada con éxito");
+			return GO_HOME;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			flash("error", "No se pudo guardar la Sesión Jigsaw");
+			return GO_HOME;
+		}
+	}
+	public static Result guardarHorarioReunionJigsaw(Integer id) {
+		Form<SesionJigsawForm> form = Form.form(SesionJigsawForm.class)
+				.bindFromRequest();
+		try {
+			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
+			s = form.get().definirHorarioReunionJigsaw(s);
+			sesionJigsawService.actualizarSesionJigsaw(getDocente(), s);
+			flash("success", "SesionJigsaw actualizada con éxito");
+			return GO_HOME;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			flash("error", "No se pudo guardar la Sesión Jigsaw");
+			return GO_HOME;
+		}
+	}
+	public static Result guardarHorarioExamen(Integer id) {
+		Form<SesionJigsawForm> form = Form.form(SesionJigsawForm.class)
+				.bindFromRequest();
+		try {
+			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
+			s = form.get().definirHorarioExamen(s);
+			sesionJigsawService.actualizarSesionJigsaw(getDocente(), s);
+			flash("success", "SesionJigsaw actualizada con éxito");
+			return GO_HOME;
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -189,16 +250,18 @@ public class SesionJigsawController extends Controller {
 			return GO_HOME;
 		} catch (Exception e) {
 			e.printStackTrace();
-			flash("error", "No se pudo eliminar la Sesión Jigsaw - " + e.getMessage());
-			
+			flash("error",
+					"No se pudo eliminar la Sesión Jigsaw - " + e.getMessage());
+
 			return GO_HOME;
 		}
-		
+
 	}
 
 	/* Clases estaticas FOrm */
 	public static class SesionJigsawForm {
 		public String tema;
+		public String totalGruposExpertos;
 
 		public String fechaInicioRE;
 		public String horaInicioRE;
@@ -210,28 +273,26 @@ public class SesionJigsawController extends Controller {
 		public String duracionRJHoras;
 		public String duracionRJMinutos;
 
-		public String totalGruposExpertos;
+		public String examenid;
+		public String fecha;
+		public String tiempoApertura;
+		public String tiempoClausura;
+		public String duracionHoras;
+		public String duracionMinutos;
 
 		public SesionJigsaw entidad() {
 			SesionJigsaw s = new SesionJigsaw();
 			s.setDocente(getDocente());
+			s.setTema(tema);
+			s.setTotalGruposExpertos(Integer.parseInt(totalGruposExpertos));
 			s.setEtapa(EtapaSesionJigsaw.CONSTRUCCION);
 			return s;
 		}
 
-		public SesionJigsaw actualizar(SesionJigsaw s) {
-
-			s.setTotalGruposExpertos(Integer.parseInt(totalGruposExpertos));
-			s.setTema(tema);
-			s.setEtapa(EtapaSesionJigsaw.CONSTRUCCION);
-
+		public SesionJigsaw definirHorarioReunionExpertos(SesionJigsaw s) {
 			ExpresionDuracion expRE = new ExpresionDuracion(duracionREHoras,
 					duracionREMinutos);
-			ExpresionDuracion expRJ = new ExpresionDuracion(duracionRJHoras,
-					duracionRJMinutos);
-
-			if (existenDatosFechaRE() && existenDatosFechaRJ()
-					&& expRE.toMinutos() != 0 && expRJ.toMinutos() != 0) {
+			if (existenDatosFechaRE() && expRE.toMinutos() != 0) {
 				LocalDate fechaBase_RE = FormatoFechaHora
 						.obtenerFecha(fechaInicioRE);
 				LocalTime horaInicio_RE = FormatoFechaHora
@@ -240,6 +301,17 @@ public class SesionJigsawController extends Controller {
 						horaInicio_RE, FormatoFechaHora.ZONA_PERU);
 				s.setInicioReunionExpertos(tiempoAbsoluto_RE.toDate());
 				s.setDuracionReunionExpertos(expRE.toMinutos());
+			} else {
+				s.setInicioReunionExpertos(null);
+				s.setDuracionReunionExpertos(null);
+			}
+			return s;
+		}
+
+		public SesionJigsaw definirHorarioReunionJigsaw(SesionJigsaw s) {
+			ExpresionDuracion expRJ = new ExpresionDuracion(duracionRJHoras,
+					duracionRJMinutos);
+			if (existenDatosFechaRJ() && expRJ.toMinutos() != 0) {
 
 				LocalDate fechaBase_RJ = FormatoFechaHora
 						.obtenerFecha(fechaInicioRJ);
@@ -249,15 +321,64 @@ public class SesionJigsawController extends Controller {
 						horaInicio_RJ, FormatoFechaHora.ZONA_PERU);
 				s.setInicioReunionJigsaw(tiempoAbsoluto_RJ.toDate());
 				s.setDuracionReunionJigsaw(expRJ.toMinutos());
-				return s;
 			} else {
-				s.setInicioReunionExpertos(null);
 				s.setInicioReunionJigsaw(null);
-				s.setDuracionReunionExpertos(null);
 				s.setDuracionReunionJigsaw(null);
-				return null;
+			}
+			return s;
+		}
+
+		public SesionJigsaw definirHorarioExamen(SesionJigsaw s) {
+			if (existenDatosFecha()) {
+				LocalDate fechaBase = FormatoFechaHora.obtenerFecha(fecha);
+				LocalTime apertura = FormatoFechaHora
+						.obtenerHora(tiempoApertura);
+				LocalTime clausura = FormatoFechaHora
+						.obtenerHora(tiempoClausura);
+
+				DateTime tiempoAbsolutoApertura = fechaBase.toDateTime(
+						apertura, FormatoFechaHora.ZONA_PERU);
+				DateTime tiempoAbsolutoClausura = fechaBase.toDateTime(
+						clausura, FormatoFechaHora.ZONA_PERU);
+				if (clausura.isBefore(apertura))
+					tiempoAbsolutoClausura = tiempoAbsolutoClausura.plusDays(1);
+
+				s.setTiempoAperturaExamen(tiempoAbsolutoApertura.toDate());
+				s.setTiempoClausuraExamen(tiempoAbsolutoClausura.toDate());
+			} else {
+				s.setTiempoAperturaExamen(null);
+				s.setTiempoClausuraExamen(null);
 			}
 
+			ExpresionDuracion exp = new ExpresionDuracion(duracionHoras,
+					duracionMinutos);
+			if (exp.toMinutos() != 0) {
+				s.setDuracionExamen(exp.toMinutos());
+			} else {
+				s.setDuracionExamen(null);
+			}
+			return s;
+		}
+
+		public SesionJigsaw editar(SesionJigsaw s) {
+			s.setTema(tema);
+			s.setTotalGruposExpertos(Integer.parseInt(totalGruposExpertos));
+			s.setEtapa(EtapaSesionJigsaw.CONSTRUCCION);
+			if (examenid != null && examenid != "") {
+				Integer id = Integer.parseInt(examenid);
+				if (id > 0) {
+					Examen e = examenService.obtener(id);
+					s.setExamen(e);
+				} else {
+					s.setExamen(null);
+				}
+			}
+			return s;
+		}
+		public boolean existenDatosFecha() {
+			return fecha != null && fecha.length() != 0
+					&& tiempoApertura != null && tiempoApertura.length() != 0
+					&& tiempoClausura != null && tiempoClausura.length() != 0;
 		}
 
 		public boolean existenDatosFechaRE() {
@@ -271,73 +392,65 @@ public class SesionJigsawController extends Controller {
 		}
 	}
 
-	public static class ParGrupoProblemaForm{
-		/*Lista de IDs de grupos y problemas*/
+	public static class ParGrupoProblemaForm {
+		/* Lista de IDs de grupos y problemas */
 		public List<Integer> grupos;
-		public List<Integer> problemas;	
-		
-		public HashMap<GrupoExperto, Problema> asignacionProblemas(){
+		public List<Integer> problemas;
+
+		public HashMap<GrupoExperto, Problema> asignacionProblemas() {
 			HashMap<GrupoExperto, Problema> pares = new HashMap<>();
-			for (int i=0; i<grupos.size(); i++){
+			for (int i = 0; i < grupos.size(); i++) {
 				pares.put(getGrupoExperto(i), getProblema(i));
 			}
-			return pares;			
+			return pares;
 		}
-		private Problema getProblema(int i){
+		private Problema getProblema(int i) {
 			return problemaService.obtenerProblema(problemas.get(i));
 		}
-		private GrupoExperto getGrupoExperto(int i){
+		private GrupoExperto getGrupoExperto(int i) {
 			return grupoExpertoService.obtenerGrupoExperto(grupos.get(i));
 		}
 	}
-	
-	/*Módulo ALUMNO*/
+
+	/* Módulo ALUMNO */
 	private static Alumno getAlumno() {
 		return usuarioService.obtener(Login.obtener(ctx()).getDNI(),
 				Alumno.class);
 	}
-	
-	public static Result GO_HOME_ALUMNO = redirect(routes.SesionJigsawController.listForAlumno(0, "id",
-			"asc", ""));
-	
+
+	public static Result GO_HOME_ALUMNO = redirect(routes.SesionJigsawController
+			.listForAlumno(0, "id", "asc", ""));
+
 	public static Result listForAlumno(int page, String sortBy, String order,
 			String filter) {
 		return ok(views.html.perfilalumno.indexSesionesJigsaw.render(
-				sesionJigsawService.pageForAlumno(getAlumno(), page, 10, sortBy, order,
-						filter), sortBy, order, filter));
+				sesionJigsawService.pageForAlumno(getAlumno(), page, 10,
+						sortBy, order, filter), sortBy, order, filter));
 	}
-	public static Result indexAlumno(){
+	public static Result indexAlumno() {
 		return GO_HOME_ALUMNO;
 	}
-	
-	public static Result interfazFaseExpertos(Integer id){
+
+	public static Result interfazFaseExpertos(Integer id) {
 		try {
 			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
-			GrupoExperto gep = sesionJigsawService.grupoExpertoDelAlumno(getAlumno(), s);
+			GrupoExperto gep = sesionJigsawService.grupoExpertoDelAlumno(
+					getAlumno(), s);
 			play.Logger.info(gep.toString());
-			
-			String firepadID = "sj"+s.getId()+"ge"+gep.getId()+"p"+gep.getProblema().getId();
-			return ok(views.html.perfilalumno.faseExpertos.render(getAlumno(), gep, s, firepadID));
+
+			String firepadID = "sj" + s.getId() + "ge" + gep.getId() + "p"
+					+ gep.getProblema().getId();
+			return ok(views.html.perfilalumno.faseExpertos.render(getAlumno(),
+					gep, s, firepadID));
 		} catch (Exception e) {
 			e.printStackTrace();
 			flash("error", "Error: " + e.getMessage());
 			return GO_HOME_ALUMNO;
 		}
-		
-		
+
 	}
-	
+
 	public static Result firepadJs(String firepadid, String userid) {
-        return ok(views.js.perfilalumno.firepad.render(firepadid, userid));
-    }
+		return ok(views.js.perfilalumno.firepad.render(firepadid, userid));
+	}
 }
-
-
-
-
-
-
-
-
-
-

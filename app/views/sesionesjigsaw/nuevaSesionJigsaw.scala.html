@@ -26,58 +26,18 @@
 	                   	</div>
 		            </div>
 	            </div>
-			</div>
-			<div class="col-md-12">            	
-            	<div class="col-md-6">	            	
-            		<h2>Reunión Expertos</h2>
-            		<div class="form-group">
-	                   	<label class="col-sm-4 control-label" for="fechaInicioRE">Fecha Inicio</label>
-	                    <div class="col-sm-6">
-	                    @inputs.datepicker(name="fechaInicioRE", value=sesionJigsaw.getInicioReunionExpertos())
-	                   	</div>
-            		</div>
-            		<div class="form-group">
-	                   	<label class="col-sm-4 control-label" for="horaInicioRE">Hora Inicio</label>
-	                    <div class="col-sm-6">
-	                    @inputs.hourinput(name="horaInicioRE", value=sesionJigsaw.getInicioReunionExpertos())
-	                   	</div>
-            		</div>
-            		<div class="form-group">
-	                   	<label class="col-sm-4 control-label" for="duracionRE">Duración</label>
-	                    <div class="col-sm-6">
-	                    @inputs.durationinput(name="duracionRE", value=sesionJigsaw.getDuracionReunionExpertos())
-	                   	</div>                   	
-	            	</div>	            	
-            	</div>
-            	<div class="col-md-6">	            	
-            		<h2>Reunion Jigsaw</h2>
-            		<div class="form-group">
-	                   	<label class="col-sm-4 control-label" for="fechaInicioRJ">Fecha Inicio</label>
-	                    <div class="col-sm-6">
-	                    @inputs.datepicker(name="fechaInicioRJ", value=sesionJigsaw.getInicioReunionJigsaw())
-	                   	</div>
-            		</div>
-            		<div class="form-group">
-	                   	<label class="col-sm-4 control-label" for="horaInicioRJ">Hora Inicio</label>
-	                    <div class="col-sm-6">
-	                    @inputs.hourinput(name="horaInicioRJ", value=sesionJigsaw.getInicioReunionJigsaw())
-	                   	</div>
-            		</div>
-            		<div class="form-group">
-	                   	<label class="col-sm-4 control-label" for="duracionRJ">Duración</label>
-	                    <div class="col-sm-6">
-	                    @inputs.durationinput(name="duracionRJ", value=sesionJigsaw.getDuracionReunionJigsaw())
-                   	</div>
-            	</div>
-            	
-            	<div class="form-group">
+	            
+	            <div class="form-group">
 				    <div class="col-sm-offset-4 col-sm-8">
 				      <button type="submit" class="btn btn-primary">Guardar y Continuar</button>
 				      <a class="btn btn-default" href="@routes.SesionJigsawController.index">Cancelar</a>
 				    </div>					    
 				</div>
-				
+	            
 			</div>
+			           	
+            	
+            	
 		}
 		
 	}

@@ -1,0 +1,45 @@
+@* nuevaSesionJigsaw Template File *@
+@(sesionJigsaw: models.entities.SesionJigsaw)
+@main(menuDocente()){
+	<div class="row">
+	@inputs.flashSuccessError()
+	
+	</div>
+	@inputs.panel("EDITAR SESIÓN JIGSAW", true){
+		@helper.form(routes.SesionJigsawController.guardarHorarioReunionJigsaw(sesionJigsaw.getId()), 'class -> "form-horizontal"){
+			<div class="col-md-12">            	
+            	<div class="col-md-6">	            	
+            		<h2>Reunión Jigsaw</h2>
+            		<div class="form-group">
+	                   	<label class="col-sm-3 control-label" for="fechaInicioRJ">Fecha Inicio</label>
+	                    <div class="col-sm-6">
+	                    @inputs.datepicker(name="fechaInicioRJ", value=sesionJigsaw.getInicioReunionJigsaw())
+	                   	</div>
+            		</div>
+            		<div class="form-group">
+	                   	<label class="col-sm-3 control-label" for="horaInicioRJ">Hora Inicio</label>
+	                    <div class="col-sm-6">
+	                    @inputs.hourinput(name="horaInicioRJ", value=sesionJigsaw.getInicioReunionJigsaw())
+	                   	</div>
+            		</div>
+            		<div class="form-group">
+	                   	<label class="col-sm-3 control-label" for="duracionRJ">Duración</label>
+		                    <div class="col-sm-6">
+		                    @inputs.durationinput(name="duracionRJ", value=sesionJigsaw.getDuracionReunionJigsaw())
+	                   	</div>
+	            	</div>            	
+	            	<div class="form-group">
+					    <div class="col-sm-offset-4 col-sm-8">
+					      <button type="submit" class="btn btn-primary">Guardar</button>
+					      <a class="btn btn-default" href="@routes.SesionJigsawController.index">Cancelar</a>
+					    </div>
+						    
+					</div>
+				</div>
+			</div>
+		}
+	}
+	<script src="@routes.Assets.at("js/bootstrap-datepicker.js")" type="text/javascript" ></script>
+    <script src="@routes.Assets.at("js/locales/bootstrap-datepicker.es.js")" type="text/javascript" ></script>
+    <script src="@routes.Assets.at("js/bootstrap-timepicker.min.js")" type="text/javascript" ></script>
+}

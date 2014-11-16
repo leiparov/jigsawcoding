@@ -21,9 +21,6 @@ public class Examen {
 	private Date tiempoCreacion;
 	private Integer duracion;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
-	private SesionJigsaw sesionJigsaw;
-
 	@ManyToOne
 	private Docente docente;
 
@@ -96,14 +93,6 @@ public class Examen {
 	@Transient
 	public int getDuracionEnSegundos() {
 		return this.duracion * 60;
-	}
-
-	public SesionJigsaw getSesionJigsaw() {
-		return sesionJigsaw;
-	}
-
-	public void setSesionJigsaw(SesionJigsaw sesionJigsaw) {
-		this.sesionJigsaw = sesionJigsaw;
 	}
 
 	@Override
