@@ -103,7 +103,9 @@ POST   /alumnos/cambiarContrasenia                         controllers.AlumnoCon
 GET    /alumnos/sesionesjigsaw                             controllers.SesionJigsawController.indexAlumno()
 GET    /alumnos/sesiones/lista                             controllers.SesionJigsawController.listForAlumno(p:Integer ?= 0, s ?= "id", o ?= "asc", f ?= "")
 GET    /alumnos/sesiones/:id/faseexpertos                  controllers.SesionJigsawController.interfazFaseExpertos(id: Integer)
+GET    /alumnos/sesiones/:id/fasejigsaw                    controllers.SesionJigsawController.interfazFaseJigsaw(id: Integer)
 GET    /assets/javascripts/firepad.js                      controllers.SesionJigsawController.firepadJs(firepadid:String, userid: String)
+GET    /assets/javascripts/firepadFaseJigsaw.js            controllers.SesionJigsawController.firepadFaseJigsawJs(firepadid:String, userid: String)
 GET    /alumnos/ideone/run                                 controllers.ProblemaController.problemaRunJs(source:String, input: String, languageid: Integer, firepadid: String ?= "")
 GET    /alumnos/ideone/verresultados                       controllers.ProblemaController.verResultadosProblemaRunJs(link:String ?= "", firepadid: String ?="")
 

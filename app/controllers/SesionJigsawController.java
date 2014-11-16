@@ -9,6 +9,7 @@ import models.entities.Docente;
 import models.entities.EtapaSesionJigsaw;
 import models.entities.Examen;
 import models.entities.GrupoExperto;
+import models.entities.GrupoJigsaw;
 import models.entities.Problema;
 import models.entities.SesionJigsaw;
 import models.services.ExamenService;
@@ -453,5 +454,22 @@ public class SesionJigsawController extends Controller {
 
 	public static Result firepadJs(String firepadid, String userid) {
 		return ok(views.js.perfilalumno.firepad.render(firepadid, userid));
+	}
+	public static Result firepadFaseJigsawJs(String firepadid, String userid) {
+		return ok(views.js.perfilalumno.firepadFaseJigsaw.render(firepadid, userid));
+	}
+	
+	public static Result interfazFaseJigsaw (Integer id){
+		try {
+			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
+			GrupoJigsaw gj = sesionJigsawService.grupoJigsawDelAlumno(getAlumno(), s);
+			play.Logger.info(gj.toString());
+			String firepadID = "sj" + s.getId() + "gj" + gj.getId();
+			return ok(views.html.perfilalumno.faseJigsaw.render(getAlumno(), gj, s));
+		} catch (Exception e) {
+			e.printStackTrace();
+			flash("error", "Error: " + e.getMessage());
+			return GO_HOME_ALUMNO;
+		}
 	}
 }

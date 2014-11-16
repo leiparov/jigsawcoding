@@ -1,0 +1,100 @@
+@* faseExpertos Template File *@
+@(alumno: models.entities.Alumno, grupoJigsaw : models.entities.GrupoJigsaw, sesionJigsaw: models.entities.SesionJigsaw)
+@problemas = @{grupoJigsaw.getProblemas()}
+@main(menuAlumno()){
+	@inputs.firepadHeader()
+	
+	<!-- Clock -->
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("css/clockmain.css")">        
+	
+	<!-- Chat -->
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("css/chat.css")">
+	   
+	<style type="text/css">
+		.firepad {
+		  width: 100%;
+		  height: 500px;
+		  background-color: #f62; /* dark orange background */	  
+		}
+	</style>
+	
+	<div id="dockbottom" class="row">	    	      
+        <div class="dockright-block">
+	        <div id="chat">	
+				<div clas="col-md-3">			
+					@views.html.chat.interfazChat(alumno, grupoJigsaw)
+				</div>
+			</div>
+			<div class="slider"><a class="toggleup" href="#">CHAT</a></div>	         
+        </div>	      
+  	</div>
+	
+	<div class="row">		
+		<div class="col-md-12">
+			<div class="row">
+				<p id="clock"></p>
+				<script type="text/javascript" charset="utf-8">
+			       if (!!window.EventSource) {
+			         var source = new EventSource("@routes.ClockController.liveClock(sesionJigsaw.getId())");
+			         source.addEventListener('message', function(e) {
+			            $('#clock').html(e.data.replace(/(\d)/g, '<span>$1</span>'));
+			         });
+			       } else {
+			         $("#clock").html("Sorry. This browser doesn't seem to support Server sent event."); 
+			       }
+			    </script>
+			</div>			 
+		</div>
+					
+	</div>
+	<div class="row-fluid">
+	
+	<div role="tabpanel">			
+		<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active" ><a href="#instrucciones" 
+					aria-controls="instrucciones" role="tab" data-toggle="tab">Instrucciones</a></li>
+				@problemas.map {p=>
+					<li role="presentation" ><a href="#p_@p.getId()" 
+					aria-controls="p_@p.getId()" role="tab" data-toggle="tab">@p.getTitulo()</a></li>	
+				}				  
+			</ul>			
+			<!-- Tab panes -->
+			<div class="tab-content">
+				@problemas.map {p=>
+					<div role="tabpanel" class="tab-pane" id="p_@p.getId()">
+						@problemaFaseJigsaw(sesionJigsaw, grupoJigsaw, p, alumno)
+					</div>
+				}
+				<div role="tabpanel" class="tab-pane active" id="instrucciones">
+					<div class="container">
+						<h1>IMPORTANTE</h1>
+						<ul>
+							<li>Desarrolle el problema que se encuentre en cada una de las pestañas</li>
+							<li>La solución a cada problema puede ser presentada en cualquiera de los siguientes lenguajes: Python, Java o C++</li>
+							<li>Si el problema lo requiere, ingrese en el contenedor INPUT la data de prueba necesaria para ejecutar su código fuente</li>
+							<li>Para ejecutar su problema debe presionar el botón <strong>run</strong> </li>
+							<li>Cuando termine de desarrollar sus problemas, regrese a esta pestaña y presione el botón <strong>FINALIZAR EXAMEN</strong> para guardar sus respuestas</li>
+							
+						</ul>
+						<button type="submit"  class="btn btn-danger">FINALIZAR EXAMEN</button>
+					</div>
+				</div>			  
+			</div>			
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function(){
+			var botonChat = $('.toggleup')
+			botonChat.click(function(){
+				$("#chat").slideToggle("slow"); 
+				$(this).toggleClass("toggledown");
+				return false;
+			});
+		})
+		
+	</script>
+	  
+	
+	
+}

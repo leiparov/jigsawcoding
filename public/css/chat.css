@@ -1,4 +1,5 @@
 /* DOCK - bottom */
+
 #dockbottom {
   bottom: 0;
   position: fixed;
@@ -10,7 +11,7 @@
   padding: 0 0 0 0;
   height: 35px;
   background-color: #fff;
-  /*z-index: 11000; /*Allow layering*/*/
+  z-index: 11000; /*Allow layering*/*/
   
 }
 #dockbottom-inner {
@@ -31,11 +32,13 @@
 
 
 .dockleft-block {
-  float: left;
   display: block;
-  margin-right: 20px;
-  min-width: 30%;
-  width: auto!important
+  width: 200px;
+  position: absolute;
+  left: 10px;
+  bottom: 0;
+  width: auto!important;
+  overflow: visible
 }
 
 
@@ -72,7 +75,7 @@
   width: 350px;
   height: 450px;
   position: relative;
-  /*z-index: 11002; /*value above #dockbottom-inner*/ 
+  z-index: 11002; /*value above #dockbottom-inner*/ 
   display: none; /*hide the widget, let jquery play*/
   padding-top: 8px;
   background-color: #E8E9ED;
@@ -84,7 +87,7 @@
 .slider {
   float: right;
   position: relative;
-  /*z-index: 11003; /*value above #chat*/
+  z-index: 11003; /*value above #chat*/
   width: 175px;
   height: 25px;
   padding: 0 0 0 0;

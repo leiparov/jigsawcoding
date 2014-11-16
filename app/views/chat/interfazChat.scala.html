@@ -1,5 +1,5 @@
 @* interfazChat Template File *@
-@(alumno: models.entities.Alumno, grupoExperto: models.entities.GrupoExperto)
+@(alumno: models.entities.Alumno, grupo: models.entities.Grupo)
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("css/chat-room.css")">
 <div id="chat-room">
     <div class="panel panel-primary">
@@ -35,5 +35,5 @@
     </div>
 </div>
 
-<script type="text/javascript" charset="utf-8" src="@routes.ChatController.chatRoomJs(alumno.getNombreCompleto(), grupoExperto.getChatId())"></script>
+<script type="text/javascript" charset="utf-8" src="@routes.ChatController.chatRoomJs(alumno.getNombreCompleto(), grupo.getChatId())"></script>
 

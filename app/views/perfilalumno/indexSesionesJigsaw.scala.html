@@ -99,20 +99,12 @@
             	<td>@sesionJigsaw.getInicioReunionJigsaw().format(FormatoFechaHora.dateTimeFormat12)</td>
             	<td>@stringDuracionRJ(sesionJigsaw)</td>
             	<td>
+            		<ul>
+            			<li><a href="@routes.SesionJigsawController.interfazFaseExpertos(sesionJigsaw.getId())">Unirse a reunión de Expertos</a></li>
+            			<li><a href="@routes.SesionJigsawController.interfazFaseJigsaw(sesionJigsaw.getId())">Unirse a reunión Jigsaw</a></li>
+            			<li><a href="">Rendir Examen</a></li>
+            		</ul>
             		
-            		@if(sesionJigsaw.getEtapa() == models.entities.EtapaSesionJigsaw.REUNIONEXPERTOS ){
-            			<a href="@routes.SesionJigsawController.interfazFaseExpertos(sesionJigsaw.getId())">Unirse a reunión de Expertos</a> 
-            		}else{
-            			@if(sesionJigsaw.getEtapa() == models.entities.EtapaSesionJigsaw.REUNIONJIGSAW){
-            				<a href="">Unirse a reunión Jigsaw</a>
-            			}else{
-            				@if(sesionJigsaw.getEtapa() == models.entities.EtapaSesionJigsaw.EVALUACION){
-            					<a href="">Rendir examen</a>
-            				}else{
-            					<a href="">--</a>
-            				}
-            			}
-            		}
             	</td>               
            	</tr>
            	}      

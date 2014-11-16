@@ -96,6 +96,19 @@ public class SesionJigsawService {
 		}
 		return grupo;
 	}
+	public GrupoJigsaw grupoJigsawDelAlumno(Alumno alumno, SesionJigsaw s) throws Exception {
+		List<GrupoJigsaw> grupos = s.getGruposJigsaw();
+		GrupoJigsaw grupo = null;
+		for (GrupoJigsaw gj: grupos){
+			if(gj.getAlumnos().contains(alumno)){
+				grupo = gj;
+			}
+		}
+		if(grupo == null){
+			throw new Exception("Alumno no registrado en esta sesion jigsaw");
+		}
+		return grupo;
+	}
 
 	public void guardarAlumnos(SesionJigsaw s, List<Integer> dnialumnos) {
 		List<Alumno> alumnos = new ArrayList<>();
