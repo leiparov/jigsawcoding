@@ -165,6 +165,10 @@ public class SesionJigsaw {
     public int getDuracionReunionJigsawEnSegundos(){
         return this.duracionReunionJigsaw * 60;
     }
+	@Transient
+    public int getDuracionExamenEnSegundos(){
+        return this.duracionExamen * 60;
+    }
 
 	public List<GrupoExperto> getGruposExpertos() {
 		return gruposExpertos;

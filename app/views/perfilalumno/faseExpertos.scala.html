@@ -28,28 +28,46 @@
         </div>	      
   	</div>
 	
-	
-	
+	<style type="text/css">
+		#reloj{
+			position: fixed;
+			bottom: 35px;
+			left: 0px;
+			width: 300px;
+		}
+	</style>
+	<div id="reloj">
+		<p class="text-center">Tiempo restante: </p>
+		<p id="clock"></p>
+		<p class="text-center">segundos</p>
+		<div class="text-center">
+			<a id="terminar" class="btn btn-danger" href="@routes.SesionJigsawController.indexAlumno">FINALIZAR</a>
+		</div>
+			
+		<script type="text/javascript" charset="utf-8">
+	       if (!!window.EventSource) {
+	         var source = new EventSource("@routes.ClockController.clockReunionExpertos(sesionJigsaw.getId())");
+	         source.addEventListener('message', function(e) {
+	            $('#clock').html(e.data.replace(/(\d)/g, '<span>$1</span>'));
+	            var terminar = $('#terminar');
+	            if(e.data == '0'){
+	            	console.log('termino el tiempo');
+	            	terminar[0].click();
+	            }
+	         });
+	       } else {
+	         $("#clock").html("Sorry. This browser doesn't seem to support Server sent event."); 
+	       }
+	    </script>
+	</div>
 	<div class="row">
 		
-		<div class="col-md-3">
-			<div class="row">
-				<p id="clock"></p>
-				<script type="text/javascript" charset="utf-8">
-			       if (!!window.EventSource) {
-			         var source = new EventSource("@routes.ClockController.liveClock(sesionJigsaw.getId())");
-			         source.addEventListener('message', function(e) {
-			            $('#clock').html(e.data.replace(/(\d)/g, '<span>$1</span>'));
-			         });
-			       } else {
-			         $("#clock").html("Sorry. This browser doesn't seem to support Server sent event."); 
-			       }
-			    </script>
-			</div>
+		<div class="col-md-3">		
 			
 			<div class="row">
-			<h1>@grupoExperto.getProblema.getTitulo()</h1>
-			<p>@grupoExperto.getProblema.getEnunciado()</p>
+				<h1>@grupoExperto.getProblema.getTitulo()</h1>
+				<p>@grupoExperto.getProblema.getEnunciado()</p>
+				
 			</div>
 			 
 		</div>

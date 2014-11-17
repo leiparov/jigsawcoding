@@ -1,8 +1,10 @@
 @* rendirExamen Template File *@
-@(examen: models.entities.Examen, alumno: models.entities.Alumno)
+@(sesionJigsaw: models.entities.SesionJigsaw, examen: models.entities.Examen, alumno: models.entities.Alumno)
 
 @main(menuAlumno()){
 	@inputs.firepadHeader()
+	<!-- Clock -->
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("css/clockmain.css")">  
 	<style type="text/css">
 		.firepad {
 		  width: 100%;
@@ -10,6 +12,15 @@
 		  background-color: #f62; 	  
 		}
 	</style>
+	<style type="text/css">
+		#reloj{
+			position: fixed;
+			bottom: 35px;
+			left: 0px;
+			width: 300px;
+		}
+	</style>
+	
 	<div class="row-fluid">	
 	<form class="form" role="form" action="@routes.ExamenController.finalizarExamen(examen.getId(), alumno.getDNI())" method="POST">
 		<div role="tabpanel">			
@@ -40,11 +51,38 @@
 							<li>Cuando termine de desarrollar sus problemas, regrese a esta pestaña y presione el botón <strong>FINALIZAR EXAMEN</strong> para guardar sus respuestas</li>
 							
 						</ul>
-						<button type="submit"  class="btn btn-danger">FINALIZAR EXAMEN</button>
+						
 					</div>
 				</div>			  
 			</div>			
 		</div>
+		
+		<div id="reloj">		
+		<div class="row">
+			<p class="text-center">Tiempo restante: </p>
+			<p id="clock"></p>
+			<p class="text-center">segundos</p>
+			<div class="text-center">
+				<button type="submit" id="terminar" class="btn btn-danger">FINALIZAR EXAMEN</button>
+			</div>
+			<script type="text/javascript" charset="utf-8">
+		       if (!!window.EventSource) {
+		         var source = new EventSource("@routes.ClockController.clockExamen(sesionJigsaw.getId())");
+		         source.addEventListener('message', function(e) {
+		            $('#clock').html(e.data.replace(/(\d)/g, '<span>$1</span>'));
+		            var terminar = $('#terminar');
+		            if(e.data == '0'){
+		            	console.log('termino el tiempo');
+		            	terminar.trigger('click');
+		            }
+		         });
+		       } else {
+		         $("#clock").html("Sorry. This browser doesn't seem to support Server sent event."); 
+		       }
+		    </script>
+		</div>			 
+	</div>
+		
 	</form>
 				
 	</div>

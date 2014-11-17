@@ -274,7 +274,7 @@ public class ExamenController extends Controller {
 			boolean existeNotaExamen = examenService.existeNotaExamen(a, e);
 			boolean rindioExamen = examenService.yaRindioExamen(a, e);
 			if (!rindioExamen) {
-				return ok(views.html.examenes.rendirExamen.render(e, a));
+				return ok(views.html.examenes.rendirExamen.render(new SesionJigsaw(), e, a));
 			} else {
 				if (!existeNotaExamen) {
 					flash("success", "Su examen aún no ha sido evaluado");

@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -433,14 +434,23 @@ public class SesionJigsawController extends Controller {
 	public static Result indexAlumno() {
 		return GO_HOME_ALUMNO;
 	}
+	
+	private static Date sumarSegundos(Date fecha, int segundos){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fecha);
+		calendar.add(Calendar.SECOND, segundos);
+		return calendar.getTime();
+	}
 
 	public static Result interfazFaseExpertos(Integer id) {
 		try {
 			Date fechaActual = new Date();
 			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
+			Date inicio = s.getInicioReunionExpertos();
+			Date fin = sumarSegundos(inicio, s.getDuracionReunionExpertosEnSegundos());
 			
-			if(fechaActual.before(s.getInicioReunionExpertos())){
-				String mensaje = "Ud. aún no puede ingresar a la reunión de Expertos";
+			if(fechaActual.before(inicio) || fechaActual.after(fin)){
+				String mensaje = "Ud. no puede ingresar a la reunión de Expertos. La reunión aún no empieza o ya ha finalizado";
 				return ok(views.html.errors.paginaRestringida.render(mensaje));
 			}
 			
@@ -473,13 +483,15 @@ public class SesionJigsawController extends Controller {
 			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
 			
 			Date fechaActual = new Date();
-			if(fechaActual.before(s.getInicioReunionJigsaw())){
-				String mensaje = "Ud. aún no puede ingresar a la reunión Jigsaw";
+			Date inicio = s.getInicioReunionJigsaw();
+			Date fin = sumarSegundos(inicio, s.getDuracionReunionJigsawEnSegundos());
+			if(fechaActual.before(inicio) || fechaActual.after(fin)){
+				String mensaje = "Ud. no puede ingresar a la reunión Jigsaw. La reunión aún no empieza o ya ha finalizado";
 				return ok(views.html.errors.paginaRestringida.render(mensaje));
 			}
 			GrupoJigsaw gj = sesionJigsawService.grupoJigsawDelAlumno(getAlumno(), s);
 			play.Logger.info(gj.toString());
-			String firepadID = "sj" + s.getId() + "gj" + gj.getId();
+			//String firepadID = "sj" + s.getId() + "gj" + gj.getId();
 			return ok(views.html.perfilalumno.faseJigsaw.render(getAlumno(), gj, s));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -502,7 +514,7 @@ public class SesionJigsawController extends Controller {
 			boolean existeNotaExamen = examenService.existeNotaExamen(a, e);
 			boolean rindioExamen = examenService.yaRindioExamen(a, e);
 			if (!rindioExamen) {
-				return ok(views.html.examenes.rendirExamen.render(e, a));
+				return ok(views.html.examenes.rendirExamen.render(s, e, a));
 			} else {
 				if (!existeNotaExamen) {
 					flash("success", "Su examen aún no ha sido evaluado");

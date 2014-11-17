@@ -115,8 +115,10 @@ GET    /alumnos/examenes/lista                             controllers.ExamenCon
 
 
 # The clock EventSource stream
-GET    /clockindex                                         controllers.ClockController.index()
-GET    /clock                                              controllers.ClockController.liveClock(id:Integer)
+
+GET    /clock/reunionexpertos                              controllers.ClockController.clockReunionExpertos(id:Integer)
+GET    /clock/reunionjigsaw                                controllers.ClockController.clockReunionJigsaw(id:Integer)
+GET    /clock/examen                                       controllers.ClockController.clockExamen(id:Integer)
 
 
 # Map static resources from the /public folder to the /assets URL path
