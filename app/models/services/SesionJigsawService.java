@@ -10,13 +10,11 @@ import models.daos.SesionJigsawDAO;
 import models.daos.UsuarioDAO;
 import models.entities.Alumno;
 import models.entities.Docente;
-import models.entities.EtapaSesionJigsaw;
 import models.entities.GrupoExperto;
 import models.entities.GrupoJigsaw;
 import models.entities.Problema;
 import models.entities.SesionJigsaw;
 
-import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Page;
 
 public class SesionJigsawService {
@@ -190,7 +188,6 @@ public class SesionJigsawService {
 			gj.setProblemas(problemas);
 			grupoDAO.actualizarGrupoJigsaw(gj);
 		}
-		s.setEtapa(EtapaSesionJigsaw.REUNIONEXPERTOS);
 		sesionJigsawDAO.actualizarSesionJigsaw(s);
 	}
 

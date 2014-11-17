@@ -8,7 +8,6 @@ import java.util.List;
 
 import models.entities.Alumno;
 import models.entities.Docente;
-import models.entities.EtapaSesionJigsaw;
 import models.entities.Examen;
 import models.entities.GrupoExperto;
 import models.entities.GrupoJigsaw;
@@ -289,7 +288,6 @@ public class SesionJigsawController extends Controller {
 			s.setDocente(getDocente());
 			s.setTema(tema);
 			s.setTotalGruposExpertos(Integer.parseInt(totalGruposExpertos));
-			s.setEtapa(EtapaSesionJigsaw.CONSTRUCCION);
 			return s;
 		}
 
@@ -367,7 +365,6 @@ public class SesionJigsawController extends Controller {
 		public SesionJigsaw editar(SesionJigsaw s) {
 			s.setTema(tema);
 			s.setTotalGruposExpertos(Integer.parseInt(totalGruposExpertos));
-			s.setEtapa(EtapaSesionJigsaw.CONSTRUCCION);
 			if (examenid != null && examenid != "") {
 				Integer id = Integer.parseInt(examenid);
 				if (id > 0) {

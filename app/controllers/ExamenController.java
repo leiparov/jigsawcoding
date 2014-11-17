@@ -1,6 +1,5 @@
 package controllers;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,9 +29,6 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import utils.ExpresionDuracion;
 import utils.FormatoFechaHora;
-import controllers.ExamenController.ExamenForm;
-import controllers.ExamenController.HorarioForm;
-import controllers.ExamenController.RendirExamenForm;
 @Login.Requiere
 public class ExamenController extends Controller {
 

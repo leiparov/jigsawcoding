@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 @Entity
@@ -27,28 +26,26 @@ public class SesionJigsaw {
 	private Date inicioReunionJigsaw;
 	private Integer duracionReunionJigsaw;
 
-	/*Evaluacion*/
+	/* Evaluacion */
 	private Date tiempoAperturaExamen;
 	private Date tiempoClausuraExamen;
 	private Integer duracionExamen;
-	
-	private Integer totalGruposExpertos;
 
-	private EtapaSesionJigsaw etapa;
+	private Integer totalGruposExpertos;
 
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Docente docente;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<GrupoExperto> gruposExpertos;
-	
+
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<GrupoJigsaw> gruposJigsaw;
-	
+
 	@ManyToOne
 	private Examen examen;
-	
-	@ManyToMany( cascade = CascadeType.PERSIST)
+
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	private List<Alumno> alumnos;;
 
 	/**/
@@ -126,21 +123,10 @@ public class SesionJigsaw {
 		this.docente = docente;
 	}
 
-	
-
 	public String getNombre() {
 		return "SesionJigsaw_" + this.id;
 	}
 
-	public EtapaSesionJigsaw getEtapa() {
-		return etapa;
-	}
-
-	public void setEtapa(EtapaSesionJigsaw etapa) {
-		this.etapa = etapa;
-	}
-	
-	
 	public Examen getExamen() {
 		return examen;
 	}
@@ -158,17 +144,17 @@ public class SesionJigsaw {
 	}
 
 	@Transient
-    public int getDuracionReunionExpertosEnSegundos(){
-        return this.duracionReunionExpertos * 60;
-    }
+	public int getDuracionReunionExpertosEnSegundos() {
+		return this.duracionReunionExpertos * 60;
+	}
 	@Transient
-    public int getDuracionReunionJigsawEnSegundos(){
-        return this.duracionReunionJigsaw * 60;
-    }
+	public int getDuracionReunionJigsawEnSegundos() {
+		return this.duracionReunionJigsaw * 60;
+	}
 	@Transient
-    public int getDuracionExamenEnSegundos(){
-        return this.duracionExamen * 60;
-    }
+	public int getDuracionExamenEnSegundos() {
+		return this.duracionExamen * 60;
+	}
 
 	public List<GrupoExperto> getGruposExpertos() {
 		return gruposExpertos;
@@ -209,7 +195,5 @@ public class SesionJigsaw {
 	public void setGruposJigsaw(List<GrupoJigsaw> gruposJigsaw) {
 		this.gruposJigsaw = gruposJigsaw;
 	}
-
-	
 
 }
