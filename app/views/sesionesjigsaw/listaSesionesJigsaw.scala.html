@@ -164,6 +164,7 @@
             			</li>
             			<li class="list-group-item">
             				<label>Total de grupos: </label>
+            				@if(sesionJigsaw.getGruposJigsaw != null) { @sesionJigsaw.getGruposJigsaw().size()}
             			</li>
             			<li class="list-group-item">
 		            		<a class="btn btn-info" href="@routes.SesionJigsawController.definirHorarioReunionJigsaw(sesionJigsaw.getId())">

@@ -37,24 +37,65 @@
 	if(n==1) "" else "s"
 }
 @stringDuracionRE(sesionJigsaw: models.entities.SesionJigsaw) = @{
-	val horas = sesionJigsaw.getDuracionReunionExpertos() / 60
-	val minutos = sesionJigsaw.getDuracionReunionExpertos() % 60
-	(horas, minutos) match {
-		case (0, _) => minutos + " minuto" + splural(minutos)
-		case (_, 0) => horas + " hora" + splural(horas)
-		case _ => horas + " hora" + splural(horas) + ", " + minutos + " minuto" + splural(minutos)
+	if(sesionJigsaw.getDuracionReunionExpertos() == null){
+		"--"
+	}else{
+		val horas = sesionJigsaw.getDuracionReunionExpertos() / 60
+		val minutos = sesionJigsaw.getDuracionReunionExpertos() % 60
+		(horas, minutos) match {
+			case (0, _) => minutos + " minuto" + splural(minutos)
+			case (_, 0) => horas + " hora" + splural(horas)
+			case _ => horas + " hora" + splural(horas) + ", " + minutos + " minuto" + splural(minutos)
+		}
 	}
 }
 @stringDuracionRJ(sesionJigsaw: models.entities.SesionJigsaw) = @{
-	val horas = sesionJigsaw.getDuracionReunionJigsaw() / 60
-	val minutos = sesionJigsaw.getDuracionReunionJigsaw() % 60
-	(horas, minutos) match {
-		case (0, _) => minutos + " minuto" + splural(minutos)
-		case (_, 0) => horas + " hora" + splural(horas)
-		case _ => horas + " hora" + splural(horas) + ", " + minutos + " minuto" + splural(minutos)
+	if(sesionJigsaw.getDuracionReunionJigsaw() == null){
+		"--"
+	}else{
+		val horas = sesionJigsaw.getDuracionReunionJigsaw() / 60
+		val minutos = sesionJigsaw.getDuracionReunionJigsaw() % 60
+		(horas, minutos) match {
+			case (0, _) => minutos + " minuto" + splural(minutos)
+			case (_, 0) => horas + " hora" + splural(horas)
+			case _ => horas + " hora" + splural(horas) + ", " + minutos + " minuto" + splural(minutos)
+		}
 	}
 }
-
+@stringDuracionEX(sesionJigsaw: models.entities.SesionJigsaw) = @{
+	if(sesionJigsaw.getDuracionExamen() == null){
+		"--"
+	}else{
+		val horas = sesionJigsaw.getDuracionExamen() / 60
+		val minutos = sesionJigsaw.getDuracionExamen() % 60
+		(horas, minutos) match {
+			case (0, _) => minutos + " minuto" + splural(minutos)
+			case (_, 0) => horas + " hora" + splural(horas)
+			case _ => horas + " hora" + splural(horas) + ", " + minutos + " minuto" + splural(minutos)
+		}
+	}
+}
+@formatDate(date: java.util.Date, f: String) = @{
+	if(date != null) date.format(f) else "--"
+}
+@stringInicioExamen(sesionJigsaw: models.entities.SesionJigsaw) = @{
+	if(sesionJigsaw.getTiempoAperturaExamen == null) "--"; else {
+    	val inicio = java.util.Calendar.getInstance();
+    	inicio.setTime(sesionJigsaw.getTiempoAperturaExamen);
+    	val fin = java.util.Calendar.getInstance();
+    	fin.setTime(sesionJigsaw.getTiempoClausuraExamen);
+    	if(inicio.get(Calendar.DAY_OF_MONTH) == fin.get(Calendar.DAY_OF_MONTH)){
+    		formatDate(sesionJigsaw.getTiempoAperturaExamen, FormatoFechaHora.dateFormat) + ", " +
+    			formatDate(sesionJigsaw.getTiempoAperturaExamen, FormatoFechaHora.timeFormat12) + " hasta " +
+    			formatDate(sesionJigsaw.getTiempoClausuraExamen, FormatoFechaHora.timeFormat12)
+    	}else{
+    		formatDate(sesionJigsaw.getTiempoAperturaExamen, FormatoFechaHora.dateFormat) + ", " +
+    			formatDate(sesionJigsaw.getTiempoAperturaExamen, FormatoFechaHora.timeFormat12) + " hasta " +
+        		formatDate(sesionJigsaw.getTiempoClausuraExamen, FormatoFechaHora.dateFormat) + " " +
+    			formatDate(sesionJigsaw.getTiempoClausuraExamen, FormatoFechaHora.timeFormat12)
+    	}
+	}
+}
 @main(menuAlumno()){
 	<h1 id="homeTitle">@Messages("sesionesJigsaw.list.title", currentPage.getTotalRowCount)</h1>
 	@inputs.flashSuccessError()
@@ -82,11 +123,9 @@
             <thead>
                 <tr>
                     @header("tema", "TEMA")
-                    @header("inicioReunionExpertos", "REU_EXPERTOS_INICIO")
-                    @header("duracionReunionExpertos", "REU_EXPERTOS_DURACIÓN")
-                    @header("inicioReunionJigsaw", "REU_JIGSAW_INICIO")
-                    @header("duracionReunionJigsaw", "REU_JIGSAW_DURACIÓN")
-                    @header("etapa", "ETAPA")                    
+                    <th>FASE DE EXPERTOS</th>
+                    <th>FASE JIGSAW</th>
+                    <th>FASE EVALUACIÓN</th>                
                 </tr>
             </thead>
             <tbody>
@@ -94,18 +133,58 @@
            	<tr>            	
             	<td>@sesionJigsaw.getTema()</td>	
 
-            	<td>@sesionJigsaw.getInicioReunionExpertos().format(FormatoFechaHora.dateTimeFormat12)</td>
-            	<td>@stringDuracionRE(sesionJigsaw)</td>
-            	<td>@sesionJigsaw.getInicioReunionJigsaw().format(FormatoFechaHora.dateTimeFormat12)</td>
-            	<td>@stringDuracionRJ(sesionJigsaw)</td>
             	<td>
             		<ul>
-            			<li><a href="@routes.SesionJigsawController.interfazFaseExpertos(sesionJigsaw.getId())">Unirse a reunión de Expertos</a></li>
-            			<li><a href="@routes.SesionJigsawController.interfazFaseJigsaw(sesionJigsaw.getId())">Unirse a reunión Jigsaw</a></li>
-            			<li><a href="">Rendir Examen</a></li>
+            			<li>
+            				<label>Fecha de inicio: </label>
+            				@formatDate(sesionJigsaw.getInicioReunionExpertos(), FormatoFechaHora.dateTimeFormat12)
+            			</li>
+            			<li>
+            				<label>Duración: </label>
+            				@stringDuracionRE(sesionJigsaw)
+            			</li>
+            			
+            			
+            				<a class="btn btn-success" 
+            				href="@routes.SesionJigsawController.interfazFaseExpertos(sesionJigsaw.getId())">
+            				Unirse a reunión de Expertos</a>
+            			
+            			
             		</ul>
-            		
-            	</td>               
+            	</td>
+            	<td>
+            		<ul>
+            			<li>
+            				<label>Fecha de inicio: </label>
+            				@formatDate(sesionJigsaw.getInicioReunionJigsaw(), FormatoFechaHora.dateTimeFormat12)
+            			</li>
+            			<li>
+            				<label>Duración: </label>
+            				@stringDuracionRJ(sesionJigsaw)
+            			</li>
+            			
+            				<a class="btn btn-success"
+            				href="@routes.SesionJigsawController.interfazFaseJigsaw(sesionJigsaw.getId())">
+            				Unirse a reunión Jigsaw</a>
+            			
+            		</ul>
+            	</td>
+            	<td>
+            		<ul>
+            			<li>
+            				<label>Fecha de inicio: </label>
+            				@stringInicioExamen(sesionJigsaw)
+            			</li>
+            			<li>
+            				<label>Duración: </label>
+            				@stringDuracionEX(sesionJigsaw)
+            			</li>
+            			<a class="btn btn-success"href="@routes.SesionJigsawController.interfazEvaluacion(sesionJigsaw.getId())">Rendir Examen</a>
+            		</ul>
+            	</td>
+            	
+            	
+            	               
            	</tr>
            	}      
             </tbody>

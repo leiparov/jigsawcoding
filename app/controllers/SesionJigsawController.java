@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -435,7 +436,15 @@ public class SesionJigsawController extends Controller {
 
 	public static Result interfazFaseExpertos(Integer id) {
 		try {
+			Date fechaActual = new Date();
 			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
+			
+			if(fechaActual.before(s.getInicioReunionExpertos())){
+				String mensaje = "Ud. aún no puede ingresar a la reunión de Expertos";
+				return ok(views.html.errors.paginaRestringida.render(mensaje));
+			}
+			
+			
 			GrupoExperto gep = sesionJigsawService.grupoExpertoDelAlumno(
 					getAlumno(), s);
 			play.Logger.info(gep.toString());
@@ -462,10 +471,48 @@ public class SesionJigsawController extends Controller {
 	public static Result interfazFaseJigsaw (Integer id){
 		try {
 			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
+			
+			Date fechaActual = new Date();
+			if(fechaActual.before(s.getInicioReunionJigsaw())){
+				String mensaje = "Ud. aún no puede ingresar a la reunión Jigsaw";
+				return ok(views.html.errors.paginaRestringida.render(mensaje));
+			}
 			GrupoJigsaw gj = sesionJigsawService.grupoJigsawDelAlumno(getAlumno(), s);
 			play.Logger.info(gj.toString());
 			String firepadID = "sj" + s.getId() + "gj" + gj.getId();
 			return ok(views.html.perfilalumno.faseJigsaw.render(getAlumno(), gj, s));
+		} catch (Exception e) {
+			e.printStackTrace();
+			flash("error", "Error: " + e.getMessage());
+			return GO_HOME_ALUMNO;
+		}
+	}
+	public static Result interfazEvaluacion(Integer id){
+		try {
+			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
+			
+			Date fechaActual = new Date();
+			if(fechaActual.before(s.getTiempoAperturaExamen()) || fechaActual.after(s.getTiempoClausuraExamen())){
+				String mensaje = "Acceso al examen restringido. Verifique el horario permitido para rendir la evaluación";
+				return ok(views.html.errors.paginaRestringida.render(mensaje));
+			}
+			
+			Examen e = s.getExamen();
+			Alumno a = getAlumno();
+			boolean existeNotaExamen = examenService.existeNotaExamen(a, e);
+			boolean rindioExamen = examenService.yaRindioExamen(a, e);
+			if (!rindioExamen) {
+				return ok(views.html.examenes.rendirExamen.render(e, a));
+			} else {
+				if (!existeNotaExamen) {
+					flash("success", "Su examen aún no ha sido evaluado");
+					return GO_HOME_ALUMNO;
+				} else {
+					flash("success", "Usted ya rindió este examen.");
+					return GO_HOME_ALUMNO;
+				}
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			flash("error", "Error: " + e.getMessage());

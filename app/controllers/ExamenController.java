@@ -268,21 +268,26 @@ public class ExamenController extends Controller {
 	}
 
 	public static Result interfazRendir(Integer id) {
-		Examen e = examenService.obtener(id);
-		Alumno a = getAlumno();
-		boolean existeNotaExamen = examenService.existeNotaExamen(a, e);
-		boolean rindioExamen = examenService.yaRindioExamen(a, e);
-		if (!rindioExamen) {
-			return ok(views.html.examenes.rendirExamen.render(e, a));
-		} else {
-			if (!existeNotaExamen) {
-				flash("success", "Su examen aún no ha sido evaluado");
-				return redirect(routes.ExamenController.indexAlumno());
+		try {
+			Examen e = examenService.obtener(id);
+			Alumno a = getAlumno();
+			boolean existeNotaExamen = examenService.existeNotaExamen(a, e);
+			boolean rindioExamen = examenService.yaRindioExamen(a, e);
+			if (!rindioExamen) {
+				return ok(views.html.examenes.rendirExamen.render(e, a));
 			} else {
-				flash("success", "Usted ya rindió este examen.");
-				return interfazResultados(id);
+				if (!existeNotaExamen) {
+					flash("success", "Su examen aún no ha sido evaluado");
+					return redirect(routes.ExamenController.indexAlumno());
+				} else {
+					flash("success", "Usted ya rindió este examen.");
+					return interfazResultados(id);
+				}
 			}
-		}
+		} catch (Exception e) {
+			flash("error", "Resultados: " + e.getMessage());
+			return indexAlumno();
+		}		
 	}
 
 	public static Result interfazResultados(Integer id) {
