@@ -84,7 +84,6 @@
      inicioReunionJigsaw: "2014-11-15 11:00:00"
      duracionReunionJigsaw: 50
      totalGruposExpertos: 2
-     etapa: REUNIONEXPERTOS
      docente: *D1
 
      

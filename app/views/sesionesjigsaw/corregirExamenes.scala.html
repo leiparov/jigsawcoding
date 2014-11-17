@@ -1,0 +1,18 @@
+@* corregirExamenes Template File *@
+@(s: models.entities.SesionJigsaw, alumnos: List[models.entities.Alumno])
+@main(menuDocente()){
+	@inputs.flashSuccessError()
+	@inputs.panel(){
+		<div class="col-md-6">
+			<ul class="list-group">
+				@alumnos.map { a => 
+					<li class="list-group-item">
+					@a.getNombreCompleto()
+					<a href="@routes.SesionJigsawController.corregirExamenAlumno(a.getDNI(), s.getExamen().getId())">Corregir exámen</a>
+					</li>
+				}
+				
+			</ul>
+		</div>
+	}
+}

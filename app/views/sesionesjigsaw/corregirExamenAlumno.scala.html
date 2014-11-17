@@ -1,0 +1,7 @@
+@* corregirExamenAlumno Template File *@
+@(a: models.entities.Alumno, e: models.entities.Examen)
+@main(menuDocente()){
+	@inputs.flashSuccessError()
+	@a.getNombreCompleto()
+	@e.getTitulo()
+}

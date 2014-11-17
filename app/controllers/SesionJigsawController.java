@@ -258,7 +258,33 @@ public class SesionJigsawController extends Controller {
 
 			return GO_HOME;
 		}
-
+	}
+	
+	/*Evaluar examen*/
+	public static Result corregirExamenes(Integer sesionjigsawid){
+		try {
+			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(sesionjigsawid);
+			List<Alumno> alumnos = s.getAlumnos();
+			return ok(views.html.sesionesjigsaw.corregirExamenes.render(s, alumnos));
+		} catch (Exception e) {
+			e.printStackTrace();
+			flash("error", "Error " + e.getMessage());
+			return GO_HOME;
+		}
+		
+	}
+	public static Result corregirExamenAlumno(Integer dni, Integer examenid){
+		try {
+			Alumno a = usuarioService.obtener(dni, Alumno.class);
+			Examen e = examenService.obtener(examenid);
+			
+			return ok(views.html.sesionesjigsaw.corregirExamenAlumno.render(a, e));
+		} catch (Exception e) {
+			e.printStackTrace();
+			flash("error", "Error " + e.getMessage());
+			return GO_HOME;
+		}
+		
 	}
 
 	/* Clases estaticas FOrm */

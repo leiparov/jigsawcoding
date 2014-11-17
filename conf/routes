@@ -76,6 +76,8 @@ POST   /docentes/sesionesjigsaw/:id/guardarAlumnos         controllers.SesionJig
 GET    /docentes/sesionesjigsaw/:id/asignarProblemas       controllers.SesionJigsawController.asignarProblemas(id: Integer)
 POST   /docentes/sesionesjigsaw/:id/guardarProblemas       controllers.SesionJigsawController.guardarProblemas(id:Integer)
 
+GET    /docentes/sesionesjigsaw/:id/corregirExamenes       controllers.SesionJigsawController.corregirExamenes(id: Integer)
+GET    /docentes/sesionesjigsaw/:dni/alumno/:id/examen     controllers.SesionJigsawController.corregirExamenAlumno(dni: Integer, id:Integer)
 
 GET    /docentes/examenes/index                            controllers.ExamenController.index()
 GET    /docentes/examenes/lista                            controllers.ExamenController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")

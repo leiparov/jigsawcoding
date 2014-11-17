@@ -70,10 +70,8 @@ create table sesion_jigsaw (
   tiempo_clausura_examen    datetime,
   duracion_examen           integer,
   total_grupos_expertos     integer,
-  etapa                     integer,
   docente_dni               integer,
   examen_id                 integer,
-  constraint ck_sesion_jigsaw_etapa check (etapa in (0,1,2,3)),
   constraint pk_sesion_jigsaw primary key (id))
 ;
 
