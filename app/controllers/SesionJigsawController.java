@@ -276,13 +276,14 @@ public class SesionJigsawController extends Controller {
 		}		
 	}
 	
-	public static Result corregirExamenAlumno(Integer dni, Integer examenid){
+	public static Result corregirExamenAlumno(Integer sesionid, Integer dni, Integer examenid ){
 		try {
 			Alumno a = usuarioService.obtener(dni, Alumno.class);
 			Examen e = examenService.obtener(examenid);
+			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(sesionid);
 			Map<RespuestasAlumno, IdeoneSubmissionDetails> respuestas = examenService.obtenerRespuestas(a,e);
 			//response().setContentType("application/javascript");
-			return ok(views.html.sesionesjigsaw.corregirExamenAlumno.render(a, e, respuestas));
+			return ok(views.html.sesionesjigsaw.corregirExamenAlumno.render(s, a, e, respuestas));
 		} catch (Exception e) {
 			e.printStackTrace();
 			flash("error", "Error " + e.getMessage());
@@ -300,7 +301,28 @@ public class SesionJigsawController extends Controller {
 			Alumno a = usuarioService.obtener(dni, Alumno.class);
 			Examen e = examenService.obtener(examenid);
 			Map<RespuestasAlumno, IdeoneSubmissionDetails> respuestas = examenService.obtenerRespuestas(a,e);
-			return ok(views.html.sesionesjigsaw.corregirExamenAlumno.render(a, e, respuestas));
+			//return ok(views.html.sesionesjigsaw.corregirExamenAlumno.render(a, e, respuestas));
+			return noContent();
+		} catch (Exception e) {
+			e.printStackTrace();
+			flash("error", "Error " + e.getMessage());
+			return GO_HOME;
+		}		
+	}
+	public static Result calificarExamen(Integer sid, Integer dni, Integer examenid){
+		try {
+			Form<CalificarExamenForm> form = Form.form(CalificarExamenForm.class)
+					.bindFromRequest();
+			Map<String, String> puntajes = form.data();
+			Alumno a = usuarioService.obtener(dni, Alumno.class);
+			Examen e = examenService.obtener(examenid);
+			//SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(sid);
+			play.Logger.info("calificarExamen" + puntajes.toString());
+			examenService.calificarExamen(a, e, puntajes);
+			flash("success", "Examen calificado exitosamente");
+			return redirect(routes.SesionJigsawController.corregirExamenes(sid));
+			//return corregirExamenes(sid);
+			//return ok(views.html.sesionesjigsaw.corregirExamenAlumno.render(a, e, respuestas));
 		} catch (Exception e) {
 			e.printStackTrace();
 			flash("error", "Error " + e.getMessage());
@@ -311,6 +333,9 @@ public class SesionJigsawController extends Controller {
 	/* Clases estaticas FOrm */
 	public static class PuntajeForm{
 		public Integer puntajeObtenido;
+	}
+	public static class CalificarExamenForm{
+		
 	}
 	
 	public static class SesionJigsawForm {

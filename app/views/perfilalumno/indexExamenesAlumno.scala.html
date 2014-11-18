@@ -6,6 +6,18 @@
 @dioExamen(examen: models.entities.Examen, alumno: models.entities.Alumno) = @{
 	(new models.services.ExamenService).existeNotaExamen(alumno, examen)
 }
+@nota(examen: models.entities.Examen, alumno: models.entities.Alumno) = @{
+	if(dioExamen(examen, alumno)){
+		val n = Integer.parseInt(alumno.getNotaExamen(examen.getId()));
+		if( n < 11){
+			<h2><p class="text-danger">{n}</p></h2>
+		}else{
+			<h2><p class="text-primary">{n}</p></h2>
+		}
+	}else{
+		<p>Examen sin corregir</p>
+	}
+}
 @main(menuAlumno()){
 	<div class="container">
 		
@@ -14,31 +26,23 @@
 			@if(examenes.size() ==0 ){
             	<div class="well">Ud. no tiene examenes</div>
             }else{
-				<table class="table table-bordered">
-				<tr>
-                    <th>Examen</th>
-                    
-                    <th>Acciones</th>
-                </tr>
-	                @examenes.map{ examen => 
-	                	<tr>
-	                        <td>@examen.getTitulo</td>	                        
-	                        <td>	                        
-	                             @if(examen.getTiempoApertura != null){
-	                                 @if(dioExamen(examen, alumno) || (new java.util.Date).after(examen.getTiempoClausura)){
-	     	                            <a href="@routes.ExamenController.interfazResultados(examen.getId)">Resultados</a> 
-	                                 }else{
-	                                     @if((new java.util.Date).after(examen.getTiempoApertura)){
-	         	                            <a href="@routes.ExamenController.interfazRendir(examen.getId)">Rendir</a>
-	                                     }
-	                                 }
-	                             }
-	                        </td>
-	                    </tr>
+            <div class="col-md-6 col-md-offset-3">
+            	<table class="table table-bordered">
+					<tr>
+	                    <th>Examen</th>	                    
+	                    <th>NOTA</th>
+	                </tr>
+		                @examenes.map{ examen => 
+		                	<tr>
+		                        <td>@examen.getTitulo</td>	                        
+		                        <td>@nota(examen, alumno)</td>
+		                    </tr>
+		                }
 	                }
-                }
-                
-			</table>
+	                
+				</table>
+            </div>
+				
 		}
 	</div>
 }

@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import models.daos.NotaAlumnoDAO;
+
 @Entity
 @DiscriminatorValue("ALUMNO")
 public class Alumno extends Usuario {
@@ -62,6 +64,15 @@ public class Alumno extends Usuario {
 				+ ", "
 				+ (getNombreCompleto() != null ? "getNombreCompleto()="
 						+ getNombreCompleto() : "") + "]";
+	}
+	
+	public String getNotaExamen(Integer examenId){
+		NotaAlumnoDAO notaAlumnoDAO = new NotaAlumnoDAO();
+		Integer nota = notaAlumnoDAO.buscarNota(examenId, getDNI());
+		if(nota != null)
+			return nota.toString();
+		else 
+			return "";
 	}
 
 }

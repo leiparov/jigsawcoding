@@ -3,16 +3,36 @@
 @main(menuDocente()){
 	@inputs.flashSuccessError()
 	@inputs.panel(){
-		<div class="col-md-6">
-			<ul class="list-group">
-				@alumnos.map { a => 
-					<li class="list-group-item">
-					@a.getNombreCompleto()
-					<a href="@routes.SesionJigsawController.corregirExamenAlumno(a.getDNI(), s.getExamen().getId())">Corregir examen</a>
-					</li>
-				}
-				
-			</ul>
+		<div class="col-md-8 col-md-offset-2">
+			<table class="table">
+				<thead>
+	                <tr>
+	                    <th>DNI</th>
+	                    <th>APELLIDO PATERNO</th>
+	                    <th>APELLIDO MATERNO</th>
+	                    <th>NOMBRES</th>
+	                    <th>NOTA</th>	                                     
+	                </tr>
+	            </thead> 
+	            <tbody>
+	            	@alumnos.map { a => 
+						<tr>
+							<td>@a.getDNI()</td>
+							<td>@a.getApellidoPaterno()</td>
+							<td>@a.getApellidoMaterno()</td>
+							<td>@a.getNombres()</td>
+							@if(a.getNotaExamen(s.getExamen().getId()) == ""){
+								<td>
+								<a href="@routes.SesionJigsawController.corregirExamenAlumno(s.getId(), a.getDNI(), s.getExamen().getId() )">Corregir examen</a>
+								</td>	
+							}else{
+								<td><label>@a.getNotaExamen(s.getExamen().getId())</label></td>
+							}
+						</tr>
+					}
+	            </tbody> 
+			</table>
+			
 		</div>
 	}
 }

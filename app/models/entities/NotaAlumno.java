@@ -14,7 +14,7 @@ public class NotaAlumno {
     @ManyToOne
     private Examen examen;
 
-    private Long nota;
+    private Integer nota;
 
 	public int getId() {
 		return id;
@@ -40,11 +40,11 @@ public class NotaAlumno {
 		this.examen = examen;
 	}
 
-	public Long getNota() {
+	public Integer getNota() {
 		return nota;
 	}
 
-	public void setNota(Long nota) {
+	public void setNota(Integer nota) {
 		this.nota = nota;
 	}
     

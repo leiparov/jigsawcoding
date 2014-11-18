@@ -57,24 +57,28 @@
 
 #Problemas
 
-- !!models.entities.Problema
+- &p1 !!models.entities.Problema
      titulo: Hola mundo
      enunciado: Elaborar un programa que imprima el mensaje "Hola Mundo"
      docente: *D1
 
-- !!models.entities.Problema
+- &p2 !!models.entities.Problema
      titulo: Fibonacci
      enunciado: Calcular los n primeros términos de la serie de Fibonacci
      docente: *D1
 
-- !!models.entities.Problema
+- &p3 !!models.entities.Problema
      titulo: Suma
      enunciado: Determinar un algoritmo que permita determinar la suma de 2 números
      docente: *D1
 
-- !!models.entities.Problema
+- &p4 !!models.entities.Problema
      titulo: Asteriscos
      enunciado: Diseñar un algoritmo que muestra la siguiente serie
+     docente: *D1
+
+- &ex1 !!models.entities.Examen
+     titulo: Examen
      docente: *D1
 
 - !!models.entities.SesionJigsaw

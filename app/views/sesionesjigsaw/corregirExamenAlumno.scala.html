@@ -1,5 +1,5 @@
 @* corregirExamenAlumno Template File *@
-@(a: models.entities.Alumno, e: models.entities.Examen, 
+@(s: models.entities.SesionJigsaw, a: models.entities.Alumno, e: models.entities.Examen, 
 	respuestas: Map[models.entities.RespuestasAlumno, models.services.ideone.IdeoneSubmissionDetails])
 @main(menuDocente()){
 	@inputs.flashSuccessError()	
@@ -10,8 +10,10 @@
 	<link rel="stylesheet" media="all" href="@routes.Assets.at("css/codemirror-theme-monokai.css")">
 	
 	<div class="container">
+	<form method="POST" action="@routes.SesionJigsawController.calificarExamen(s.getId(), a.getDNI(), e.getId())">
 		<label><h1>@a.getNombreCompleto()</h1></label>
 		<label>@e.getTitulo()</label>
+		<div class="pull-right"><button type="submit" class="btn btn-danger">CALIFICAR EXAMEN</button></div>
 		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
   			@respuestas.keySet().map { r => 			
 				<div class="panel panel-default">
@@ -33,6 +35,19 @@
 				    </div>
 			 	</div>
 			} 
-		</div>	
+		</div>
+	</form>	
 	</div>
+	<script>
+		$(function(){
+			//$("iframe").each(function() { 
+		        //var src= $(this).attr('src');
+		        //console.log(src);
+		        //$(this).src = $(this).src
+		        //$(this).attr('src',src);
+				//this.contentWindow.location.reload(true);
+				//$(this).attr( 'src', function ( i, val ) { return val; });
+			//});
+		});
+	</script>
 }

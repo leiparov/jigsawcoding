@@ -4,16 +4,21 @@
 	@if(isd == null){
 		<div class="well">Sin solución</div>
 	}else{
-		<div class="col-md-6" id="ideone_@isd.getLink()">	
+		<div class="col-md-6" id="ideone_@isd.getLink()">
 			<script src="http://ideone.com/e.js/@isd.getLink()" type="text/javascript" ></script>
+			<span class="help-block">
+			Si no visualiza el código, presione click-derecho --> Volver a cargar marco
+			</span>
 		</div>
+		
 		<div class="col-md-6">	
 			<table class="table table-condensed">
 				<tr><td>RESULTADO</td><td>@models.services.ideone.IdeoneService.translateResult(isd.getResult())</td></tr>
 				<tr><td>LENGUAJE</td><td>@isd.getLangVersion()</td></tr>
 				<tr><td>MEMORIA</td><td>@isd.getMemory() KB</td></tr>
 				<tr><td>TIEMPO</td><td>@isd.getTime()</td></tr>
-				<tr><td>IDEONE LINK</td><td><a href="http://www.ideone.com/@isd.getLink()" target="_blank"><span id="link">@isd.getLink()</span></a></td></tr>
+				<tr><td>IDEONE LINK</td><td><a href="http://www.ideone.com/@isd.getLink()" 
+				target="_blank"><span id="link">@isd.getLink()</span></a></td></tr>
 				<tr><td>INPUT</td><td>OUTPUT</td></tr>
 				<tr>
 					<td><textarea rows="5" class="form-control" readonly="readonly">@isd.getInput()</textarea></td>
@@ -27,15 +32,12 @@
 				</div>
 			}
 		</div>
-		<form class="form-inline" method="POST" 
-			action="@routes.SesionJigsawController.guardarPuntaje(r.getAlumno().getDNI(), 
-			r.getProblemaExamen().getExamen().getId(), r.getId())">		
+		<div class="form-inline">		
 	       	<label>Puntaje</label>        
 	        <input type="number" class="form-control" min="0" 
-	        max="@r.getProblemaExamen().getPuntajeFavor()" name="puntajeObtenido"
+	        max="@r.getProblemaExamen().getPuntajeFavor()" name="r_@r.getId()"
 	        placeholder="0-@r.getProblemaExamen().getPuntajeFavor()">  
-	        <button type="submit" class="btn btn-success">Guardar</button>           
-		</form>
+		</div>
 	}
 	
 </div>

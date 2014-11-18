@@ -9,10 +9,12 @@ import java.util.Map;
 import java.util.Set;
 
 import models.daos.ExamenDAO;
+import models.daos.NotaAlumnoDAO;
 import models.daos.RespuestasAlumnoDAO;
 import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.Examen;
+import models.entities.NotaAlumno;
 import models.entities.ProblemaExamen;
 import models.entities.RespuestasAlumno;
 import models.services.ideone.IdeoneService;
@@ -25,6 +27,7 @@ public class ExamenService {
 	private static ExamenDAO examenDAO = new ExamenDAO();
 	private static RespuestasAlumnoDAO respuestasAlumnoDAO = new RespuestasAlumnoDAO();
 	private static IdeoneService ideoneService = new IdeoneService();
+	private static NotaAlumnoDAO notaAlumnoDAO = new NotaAlumnoDAO();
 
 	public Examen obtener(Integer id) {
 		return examenDAO.obtener(id);
@@ -101,6 +104,28 @@ public class ExamenService {
 		r.setPuntajeObtenido(puntajeObtenido);
 		respuestasAlumnoDAO.actualizar(r);
 		
+	}
+	public void calificarExamen(Alumno a, Examen e, Map<String, String> puntajes) {
+		//r_3=10
+		Integer respuestasAlumnoId;
+		Integer puntajeObtenido;
+		Integer nota = 0;
+		Iterator<String> it = puntajes.keySet().iterator();
+		while(it.hasNext()){
+			String r_id = it.next();
+			respuestasAlumnoId = Integer.parseInt(r_id.substring(2));
+			puntajeObtenido = Integer.parseInt(puntajes.get(r_id));
+			guardarPuntaje(respuestasAlumnoId, puntajeObtenido);
+			nota += puntajeObtenido;
+		}
+		guardarNota(a, e, nota);
+	}
+	private void guardarNota(Alumno a, Examen e, Integer nota) {
+		NotaAlumno notaAlumno = new NotaAlumno();
+		notaAlumno.setAlumno(a);
+		notaAlumno.setExamen(e);
+		notaAlumno.setNota(nota);
+		notaAlumnoDAO.guardar(notaAlumno);
 	}
 
 }

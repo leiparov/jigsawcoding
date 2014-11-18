@@ -29,7 +29,7 @@ create table nota_alumno (
   id                        integer auto_increment not null,
   alumno_dni                integer,
   examen_id                 integer,
-  nota                      bigint,
+  nota                      integer,
   constraint pk_nota_alumno primary key (id))
 ;
 
