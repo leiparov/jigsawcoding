@@ -2,22 +2,29 @@ package models.services;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import models.daos.ExamenDAO;
+import models.daos.RespuestasAlumnoDAO;
 import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.Examen;
 import models.entities.ProblemaExamen;
 import models.entities.RespuestasAlumno;
+import models.services.ideone.IdeoneService;
+import models.services.ideone.IdeoneSubmissionDetails;
 
 import com.avaje.ebean.Page;
 
 public class ExamenService {
 
 	private static ExamenDAO examenDAO = new ExamenDAO();
+	private static RespuestasAlumnoDAO respuestasAlumnoDAO = new RespuestasAlumnoDAO();
+	private static IdeoneService ideoneService = new IdeoneService();
 
 	public Examen obtener(Integer id) {
 		return examenDAO.obtener(id);
@@ -71,19 +78,29 @@ public class ExamenService {
 		
 		return examenDAO.obtenerExamenes();
 	}
-	public List<RespuestasAlumno> obtenerRespuestas(Alumno a, Examen e) {
+	public Map<RespuestasAlumno, IdeoneSubmissionDetails> obtenerRespuestas(Alumno a, Examen e) {
 		Set<RespuestasAlumno> respuestasAlumno = a.getRespuestasAlumno();
 		Iterator<RespuestasAlumno> it = respuestasAlumno.iterator();
-		List<RespuestasAlumno> misRespuestas = new ArrayList<>();
+		Map<RespuestasAlumno, IdeoneSubmissionDetails> misRespuestas = new HashMap<RespuestasAlumno, IdeoneSubmissionDetails>();
+		
 		while(it.hasNext()){
 			RespuestasAlumno rpta =  it.next();
 			ProblemaExamen pe = rpta.getProblemaExamen();
 			Examen ex = pe.getExamen();
 			if(e.getId() == ex.getId()){
-				misRespuestas.add(rpta);
+				String link = rpta.getIdeoneLink();
+				IdeoneSubmissionDetails isd = ideoneService.getSubmissionDetails(link, true, true, true, true, true);
+				misRespuestas.put(rpta, isd);
 			}
 		}
 		return misRespuestas;
+	}
+	public void guardarPuntaje(Integer respuestasAlumnoId,
+			Integer puntajeObtenido) {
+		RespuestasAlumno r = respuestasAlumnoDAO.obtener(respuestasAlumnoId);
+		r.setPuntajeObtenido(puntajeObtenido);
+		respuestasAlumnoDAO.actualizar(r);
+		
 	}
 
 }

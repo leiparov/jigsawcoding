@@ -8,7 +8,7 @@
 				@alumnos.map { a => 
 					<li class="list-group-item">
 					@a.getNombreCompleto()
-					<a href="@routes.SesionJigsawController.corregirExamenAlumno(a.getDNI(), s.getExamen().getId())">Corregir exámen</a>
+					<a href="@routes.SesionJigsawController.corregirExamenAlumno(a.getDNI(), s.getExamen().getId())">Corregir examen</a>
 					</li>
 				}
 				

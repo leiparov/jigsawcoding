@@ -56,6 +56,7 @@ create table respuestas_alumno (
   problema_examen_id        integer,
   alumno_dni                integer,
   ideone_link               varchar(255),
+  puntaje_obtenido          integer,
   constraint pk_respuestas_alumno primary key (id))
 ;
 

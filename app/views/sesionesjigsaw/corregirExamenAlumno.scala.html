@@ -1,13 +1,19 @@
 @* corregirExamenAlumno Template File *@
-@(a: models.entities.Alumno, e: models.entities.Examen, respuestas: List[models.entities.RespuestasAlumno])
+@(a: models.entities.Alumno, e: models.entities.Examen, 
+	respuestas: Map[models.entities.RespuestasAlumno, models.services.ideone.IdeoneSubmissionDetails])
 @main(menuDocente()){
 	@inputs.flashSuccessError()	
+	<!-- CodeMirror and its JavaScript mode file -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.5.0/codemirror.js"></script>
+	<script src="@routes.Assets.at("js/codemirror-clike-python.js")" type="text/javascript"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.5.0/codemirror.css" />
+	<link rel="stylesheet" media="all" href="@routes.Assets.at("css/codemirror-theme-monokai.css")">
 	
 	<div class="container">
 		<label><h1>@a.getNombreCompleto()</h1></label>
 		<label>@e.getTitulo()</label>
 		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-  			@respuestas.map { r => 			
+  			@respuestas.keySet().map { r => 			
 				<div class="panel panel-default">
 				    <div class="panel-heading" role="tab" id="heading@r.getProblemaExamen().getProblema().getId()">
 				      <h4 class="panel-title">
@@ -19,10 +25,10 @@
 				      </h4>
 				    </div>
 				    <div id="collapse@r.getProblemaExamen().getProblema().getId()" 
-				    class="panel-collapse collapse in" role="tabpanel" 
+				    class="panel-collapse collapse" role="tabpanel" 
 				    aria-labelledby="heading@r.getProblemaExamen().getProblema().getId()">
 			      		<div class="panel-body">
-			        		@r.getIdeoneLink()
+			        		@corregirProblema(respuestas.get(r), r)
 			      		</div>
 				    </div>
 			 	</div>

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import models.entities.Alumno;
 import models.entities.Docente;
@@ -20,6 +21,7 @@ import models.services.Login;
 import models.services.ProblemaService;
 import models.services.SesionJigsawService;
 import models.services.UsuarioService;
+import models.services.ideone.IdeoneSubmissionDetails;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -278,7 +280,26 @@ public class SesionJigsawController extends Controller {
 		try {
 			Alumno a = usuarioService.obtener(dni, Alumno.class);
 			Examen e = examenService.obtener(examenid);
-			List<RespuestasAlumno> respuestas = examenService.obtenerRespuestas(a,e);
+			Map<RespuestasAlumno, IdeoneSubmissionDetails> respuestas = examenService.obtenerRespuestas(a,e);
+			//response().setContentType("application/javascript");
+			return ok(views.html.sesionesjigsaw.corregirExamenAlumno.render(a, e, respuestas));
+		} catch (Exception e) {
+			e.printStackTrace();
+			flash("error", "Error " + e.getMessage());
+			return GO_HOME;
+		}		
+	}
+	public static Result guardarPuntaje(Integer dni, Integer examenid, Integer respuestasAlumnoId){
+		try {
+			Form<PuntajeForm> form = Form.form(PuntajeForm.class)
+					.bindFromRequest();
+			Integer puntajeObtenido = form.get().puntajeObtenido;
+			
+			examenService.guardarPuntaje(respuestasAlumnoId, puntajeObtenido);
+			
+			Alumno a = usuarioService.obtener(dni, Alumno.class);
+			Examen e = examenService.obtener(examenid);
+			Map<RespuestasAlumno, IdeoneSubmissionDetails> respuestas = examenService.obtenerRespuestas(a,e);
 			return ok(views.html.sesionesjigsaw.corregirExamenAlumno.render(a, e, respuestas));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -288,6 +309,10 @@ public class SesionJigsawController extends Controller {
 	}
 
 	/* Clases estaticas FOrm */
+	public static class PuntajeForm{
+		public Integer puntajeObtenido;
+	}
+	
 	public static class SesionJigsawForm {
 		public String tema;
 		public String totalGruposExpertos;

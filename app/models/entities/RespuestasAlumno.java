@@ -15,6 +15,7 @@ public class RespuestasAlumno {
 	private Alumno alumno;
 
 	private String ideoneLink;
+	private int puntajeObtenido;
 
 	/* GEtters and Setters */
 	public int getId() {
@@ -47,6 +48,14 @@ public class RespuestasAlumno {
 
 	public void setIdeoneLink(String ideoneLink) {
 		this.ideoneLink = ideoneLink;
+	}
+
+	public int getPuntajeObtenido() {
+		return puntajeObtenido;
+	}
+
+	public void setPuntajeObtenido(int puntajeObtenido) {
+		this.puntajeObtenido = puntajeObtenido;
 	}
 
 }
