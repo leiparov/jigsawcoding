@@ -2,7 +2,9 @@ package models.services;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import models.daos.ExamenDAO;
 import models.entities.Alumno;
@@ -68,6 +70,20 @@ public class ExamenService {
 	public List<Examen> obtenerExamenes() {
 		
 		return examenDAO.obtenerExamenes();
+	}
+	public List<RespuestasAlumno> obtenerRespuestas(Alumno a, Examen e) {
+		Set<RespuestasAlumno> respuestasAlumno = a.getRespuestasAlumno();
+		Iterator<RespuestasAlumno> it = respuestasAlumno.iterator();
+		List<RespuestasAlumno> misRespuestas = new ArrayList<>();
+		while(it.hasNext()){
+			RespuestasAlumno rpta =  it.next();
+			ProblemaExamen pe = rpta.getProblemaExamen();
+			Examen ex = pe.getExamen();
+			if(e.getId() == ex.getId()){
+				misRespuestas.add(rpta);
+			}
+		}
+		return misRespuestas;
 	}
 
 }

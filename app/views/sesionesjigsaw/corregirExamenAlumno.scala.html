@@ -1,7 +1,32 @@
 @* corregirExamenAlumno Template File *@
-@(a: models.entities.Alumno, e: models.entities.Examen)
+@(a: models.entities.Alumno, e: models.entities.Examen, respuestas: List[models.entities.RespuestasAlumno])
 @main(menuDocente()){
-	@inputs.flashSuccessError()
-	@a.getNombreCompleto()
-	@e.getTitulo()
+	@inputs.flashSuccessError()	
+	
+	<div class="container">
+		<label><h1>@a.getNombreCompleto()</h1></label>
+		<label>@e.getTitulo()</label>
+		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  			@respuestas.map { r => 			
+				<div class="panel panel-default">
+				    <div class="panel-heading" role="tab" id="heading@r.getProblemaExamen().getProblema().getId()">
+				      <h4 class="panel-title">
+				        <a data-toggle="collapse" data-parent="#accordion" 
+				        href="#collapse@r.getProblemaExamen().getProblema().getId()" aria-expanded="true" 
+				        aria-controls="collapse@r.getProblemaExamen().getProblema().getId()">
+				        @r.getProblemaExamen().getProblema().getTitulo()
+				        </a>
+				      </h4>
+				    </div>
+				    <div id="collapse@r.getProblemaExamen().getProblema().getId()" 
+				    class="panel-collapse collapse in" role="tabpanel" 
+				    aria-labelledby="heading@r.getProblemaExamen().getProblema().getId()">
+			      		<div class="panel-body">
+			        		@r.getIdeoneLink()
+			      		</div>
+				    </div>
+			 	</div>
+			} 
+		</div>	
+	</div>
 }

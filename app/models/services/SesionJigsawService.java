@@ -204,7 +204,6 @@ public class SesionJigsawService {
 			grupoDAO.eliminarGrupoJigsaw(g.getId());
 		}
 		sesionJigsawDAO.eliminarGruposJigsaw(s);
-		
 	}
 
 }
