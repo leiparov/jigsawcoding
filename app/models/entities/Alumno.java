@@ -20,7 +20,7 @@ public class Alumno extends Usuario {
 	private List<SesionJigsaw> sesionesJigsaw = new ArrayList<>();
 
 	@OneToMany(cascade = CascadeType.PERSIST)
-	private Set<RespuestasAlumno> respuestasAlumno;
+	private Set<RespuestaAlumno> respuestasAlumno;
 
 	@OneToMany(cascade = CascadeType.PERSIST)
     private List<NotaAlumno> notas;
@@ -35,12 +35,12 @@ public class Alumno extends Usuario {
 		this.sesionesJigsaw = sesionesJigsaw;
 	}
 
-	public Set<RespuestasAlumno> getRespuestasAlumno() {
+	public Set<RespuestaAlumno> getRespuestasAlumno() {
 		return respuestasAlumno;
 	}
 
-	public void setRespuestasAlumno(Set<RespuestasAlumno> respuestasAlumno) {
-		this.respuestasAlumno = respuestasAlumno;
+	public void setRespuestasAlumno(Set<RespuestaAlumno> respuestaAlumno) {
+		this.respuestasAlumno = respuestaAlumno;
 	}
 
 	public List<NotaAlumno> getNotas() {

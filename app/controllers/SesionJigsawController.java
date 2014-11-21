@@ -13,7 +13,7 @@ import models.entities.Examen;
 import models.entities.GrupoExperto;
 import models.entities.GrupoJigsaw;
 import models.entities.Problema;
-import models.entities.RespuestasAlumno;
+import models.entities.RespuestaAlumno;
 import models.entities.SesionJigsaw;
 import models.services.ExamenService;
 import models.services.GrupoExpertoService;
@@ -281,7 +281,7 @@ public class SesionJigsawController extends Controller {
 			Alumno a = usuarioService.obtener(dni, Alumno.class);
 			Examen e = examenService.obtener(examenid);
 			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(sesionid);
-			Map<RespuestasAlumno, IdeoneSubmissionDetails> respuestas = examenService.obtenerRespuestas(a,e);
+			Map<RespuestaAlumno, IdeoneSubmissionDetails> respuestas = examenService.obtenerRespuestas(a,e);
 			//response().setContentType("application/javascript");
 			return ok(views.html.sesionesjigsaw.corregirExamenAlumno.render(s, a, e, respuestas));
 		} catch (Exception e) {
@@ -300,7 +300,7 @@ public class SesionJigsawController extends Controller {
 			
 			Alumno a = usuarioService.obtener(dni, Alumno.class);
 			Examen e = examenService.obtener(examenid);
-			Map<RespuestasAlumno, IdeoneSubmissionDetails> respuestas = examenService.obtenerRespuestas(a,e);
+			Map<RespuestaAlumno, IdeoneSubmissionDetails> respuestas = examenService.obtenerRespuestas(a,e);
 			//return ok(views.html.sesionesjigsaw.corregirExamenAlumno.render(a, e, respuestas));
 			return noContent();
 		} catch (Exception e) {

@@ -8,7 +8,7 @@ import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.Examen;
 import models.entities.ProblemaExamen;
-import models.entities.RespuestasAlumno;
+import models.entities.RespuestaAlumno;
 import models.entities.SesionJigsaw;
 import play.db.ebean.Model.Finder;
 
@@ -97,13 +97,13 @@ public class ExamenDAO {
 	public ProblemaExamen obtenerProblemaExamen(Integer id) {
 		return Ebean.find(ProblemaExamen.class, id);
 	}
-	public void guardarRespuestasAlumno(List<RespuestasAlumno> respuestasAlumno) {
+	public void guardarRespuestasAlumno(List<RespuestaAlumno> respuestasAlumno) {
 		Ebean.save(respuestasAlumno);
 
 	}
 	public boolean yaRindioExamen(Alumno a, Examen e) {
 		SqlQuery sql = Ebean
-				.createSqlQuery("select pe.examen_id from respuestas_alumno ra "
+				.createSqlQuery("select pe.examen_id from respuesta_alumno ra "
 						+ "left join problema_examen pe on ra.problema_examen_id = pe.id "
 						+ "where pe.examen_id = :examenid and ra.alumno_dni = :dni group by pe.examen_id");
 		sql.setParameter("dni", a.getDNI());
