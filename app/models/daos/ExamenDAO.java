@@ -83,7 +83,7 @@ public class ExamenDAO {
 	}
 	public boolean existeNotaExamen(Alumno a, Examen e) {
 		SqlQuery sql = Ebean
-				.createSqlQuery("select * from nota_alumno where alumno_dni like :dni and examen_id like :examenid");
+				.createSqlQuery("select * from nota_alumno where alumno_dni = :dni and examen_id = :examenid");
 		sql.setParameter("dni", a.getDNI());
 		sql.setParameter("examenid", e.getId());
 		SqlRow resultado = sql.findUnique();

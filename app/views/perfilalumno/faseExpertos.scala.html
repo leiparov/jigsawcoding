@@ -2,7 +2,6 @@
 @(alumno: models.entities.Alumno, grupoExperto : models.entities.GrupoExperto, sesionJigsaw: models.entities.SesionJigsaw,  firepadid: String)
 @main(menuAlumno()){
 	@inputs.firepadHeader()
-	
 	<!-- Clock -->
 	<link rel="stylesheet" media="screen" href="@routes.Assets.at("css/clockmain.css")">        
 	
@@ -17,7 +16,7 @@
 		}
 	</style>
 	
-	<div id="dockbottom" class="row">	    	      
+	    	      
         <div class="dockright-block">
 	        <div id="chat">	
 				<div clas="col-md-3">			
@@ -26,7 +25,7 @@
 			</div>
 			<div class="slider"><a class="toggleup" href="#">CHAT</a></div>	         
         </div>	      
-  	</div>
+  	
 	
 	<style type="text/css">
 		#reloj{
@@ -87,38 +86,46 @@
 						<span class="glyphicon glyphicon-cog"></span> run									
 					</button>									
 				</div>
+				
 			</div>
 			<div id="@firepadid" class="row firepad"></div>
 			
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-4" >
 			<div class="row">
-				<div id="@firepadid-stdin" class="collapse in">
-					<h4 class="text-center">INPUT. Data de prueba</h4>
-					<textarea id="@firepadid-input-stdin" name="@firepadid-stdin" class="form-control" rows="5" placeholder="Ingrese su data de prueba y luego presione run" ></textarea>
+				<div id="ajaxloader" class="col-md-6 col-md-offset-3"></div>
+			</div>
+			<div id="panelResultados">
+				<div class="row">
+					<div id="@firepadid-stdin" class="collapse in">
+						<h4 class="text-center">INPUT. Data de prueba</h4>
+						<textarea id="@firepadid-input-stdin" name="@firepadid-stdin" class="form-control" rows="5" placeholder="Ingrese su data de prueba y luego presione run" ></textarea>
+					</div>
+				</div>
+				<div class="row"  >
+					<div id="@firepadid-resultados" class="collapse in">
+						<h4 class="text-center">RESULTADOS DE EJECUCIÓN</h4>
+						<div id="@firepadid-ideoneResultados">
+							<div class="well">Presione run para ejecutar su código fuente</div>
+							
+						</div>  
+					</div>			    
+				</div>
+				<div class="row">			
+					<button type="button" id="@firepadid-boton-stdin" class="btn btn-default" data-toggle="collapse"  
+						data-target="#@firepadid-stdin" aria-expanded="true" aria-controls="@firepadid-stdin" 
+						data-placement="top">
+					  <span class="glyphicon glyphicon-hdd"></span> Input
+					</button>			
+					
+					<button type="button" id="@firepadid-boton-ver" class="btn btn-primary" data-toggle="collapse"
+						data-target="#@firepadid-resultados" aria-expanded="true" aria-controls="@firepadid-resultados" 
+						data-placement="top">
+							<span class="glyphicon glyphicon-th-list"></span> Resultados									
+					</button>
 				</div>
 			</div>
-			<div class="row"  >
-				<div id="@firepadid-resultados" class="collapse in">
-					<h4 class="text-center">RESULTADOS DE EJECUCIÓN</h4>
-					<div id="@firepadid-ideoneResultados">
-						<div class="well">Presione run para ejecutar su código fuente</div>
-					</div>  
-				</div>			    
-			</div>
-			<div class="row">			
-				<button type="button" id="@firepadid-boton-stdin" class="btn btn-default" data-toggle="collapse"  
-					data-target="#@firepadid-stdin" aria-expanded="true" aria-controls="@firepadid-stdin" 
-					data-placement="top">
-				  <span class="glyphicon glyphicon-hdd"></span> Input
-				</button>			
-				
-				<button type="button" id="@firepadid-boton-ver" class="btn btn-primary" data-toggle="collapse"
-					data-target="#@firepadid-resultados" aria-expanded="true" aria-controls="@firepadid-resultados" 
-					data-placement="top">
-						<span class="glyphicon glyphicon-th-list"></span> Resultados									
-				</button>
-			</div>				
+							
 		</div>		
 	</div>
 	
