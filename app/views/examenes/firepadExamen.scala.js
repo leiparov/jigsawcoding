@@ -59,6 +59,14 @@ $(function(){
 	}
 	init();
 	
+	function mostrarLoading(){
+		$('#ajaxloader@firepadid').html('<img src="@routes.Assets.at("images/loading.gif")"/>');
+		$('#panelResultados@firepadid').hide();
+	}
+	function ocultarLoading(){
+		$('#ajaxloader@firepadid').empty();
+		$('#panelResultados@firepadid').show();
+	}
 	/* Ejecutar codigo fuente */
 	function mostrarIdeoneSubmissionResults(data){
 //		console.log(data);
@@ -72,7 +80,8 @@ $(function(){
 		
 		//var myModal = $('#modalResultados');		
 		//myModal.modal('show');
-		alert('Ejecución de problema exitosa!!!');
+		//alert('Ejecución de problema exitosa!!!');
+		ocultarLoading();
 	}
 	
 	function problemaRun (){
@@ -82,6 +91,7 @@ $(function(){
 		fpadid = ''+'@firepadid';
 		console.log(firepadText);
 		console.log(inputStdinText);
+		mostrarLoading();
 		var call = jsRoutes.controllers.ProblemaController.problemaRunJs(firepadText, inputStdinText, languageId, fpadid);
 		$.ajax({
 			url: call.url,

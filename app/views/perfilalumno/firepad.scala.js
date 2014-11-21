@@ -5,7 +5,7 @@ $(function(){
 	var firepad;
 	var botonRun = $('#@firepadid-boton-run');
 	var botonVer = $('#@firepadid-boton-ver');
-	var firepadstdin = $('#@firepadid-stdin');
+	//var firepadstdin = $('#@firepadid-stdin');
 	var contenedorResultados = $('#@firepadid-ideoneResultados');
 	var botonChat = $(".toggleup");
 	var firepadresultados = $('#@firepadid-resultados');
@@ -75,7 +75,17 @@ $(function(){
 		
 //		var myModal = $('#modalResultados');		
 //		myModal.modal('show');
-		alert('Ejecución de problema exitosa!!!');
+		//alert('Ejecución de problema exitosa!!!');
+		ocultarLoading();
+	}
+	
+	function mostrarLoading(){
+		$('#ajaxloader').html('<img src="@routes.Assets.at("images/loading.gif")"/>');
+		$('#panelResultados').hide();
+	}
+	function ocultarLoading(){
+		$('#ajaxloader').empty();
+		$('#panelResultados').show();
 	}
 	
 	function problemaRun (){
@@ -85,6 +95,9 @@ $(function(){
 		fpadid = ''+'@firepadid';
 		console.log(firepadText);
 		console.log(inputStdinText);
+		
+		mostrarLoading();
+		
 		var call = jsRoutes.controllers.ProblemaController.problemaRunJs(firepadText, inputStdinText, languageId, fpadid);
 		$.ajax({
 			url: call.url,
@@ -115,12 +128,10 @@ $(function(){
 	
 	botonRun.on('click', function(e){
 		e.preventDefault();
-		$('#divajaxloader').show();
 		var $btn = $(this).button('loading');
 		problemaRun();
 		$btn.button('reset');
 		botonVer.popover('destroy');
-		$('#divajaxloader').hide();
 	});
 	
 	function avisar(mensaje){
@@ -150,19 +161,17 @@ $(function(){
 	botonChat.click(function(){
 		$("#chat").slideToggle("slow"); 
 		$(this).toggleClass("toggledown");
-		firepadstdin.collapse('hide');
-		firepadresultados.collapse('hide');
+		//firepadstdin.collapse('hide');
+		//firepadresultados.collapse('hide');
 		return false;
 	});
 	
-	botonVer.click(function(){
-		$("#chat").hide(); 		
-	});
-	var botonStdin = $('#@firepadid-boton-stdin');
-	botonStdin.click(function(){
-		$("#chat").hide();
-	});
-	
-	
+//	botonVer.click(function(){
+//		//$("#chat").hide(); 		
+//	});
+//	var botonStdin = $('#@firepadid-boton-stdin');
+//	botonStdin.click(function(){
+//		$("#chat").hide();
+//	});	
 })
 

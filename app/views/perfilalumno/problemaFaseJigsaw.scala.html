@@ -27,34 +27,40 @@
 	</div>
 	<div class="col-md-4">
 		<div class="row">
-			<div id="@firepadid-stdin" class="collapse in">
-				<h4 class="text-center">INPUT. Data de prueba</h4>
-				<textarea id="@firepadid-input-stdin" name="@firepadid-stdin" class="form-control" rows="5"
-				placeholder="Ingrese su data de prueba y luego presione run" ></textarea>
-			</div>
+			<div id="ajaxloader@firepadid" class="col-md-6 col-md-offset-3"></div>
 		</div>
-		<div class="row"  >
-			<div id="@firepadid-resultados" class="collapse in">
-				<h4 class="text-center">RESULTADOS DE EJECUCIÓN</h4>
-				<div id="@firepadid-ideoneResultados">
-					<div class="well">Presione run para ejecutar su código fuente</div>
+		<div id="panelResultados@firepadid">
+			<div class="row">
+				<div id="@firepadid-stdin" class="collapse in">
+					<h4 class="text-center">INPUT. Data de prueba</h4>
+					<textarea id="@firepadid-input-stdin" name="@firepadid-stdin" class="form-control" rows="5"
+					placeholder="Ingrese su data de prueba y luego presione run" ></textarea>
 				</div>
-				 
-			</div>			    
+			</div>
+			<div class="row"  >
+				<div id="@firepadid-resultados" class="collapse in">
+					<h4 class="text-center">RESULTADOS DE EJECUCIÓN</h4>
+					<div id="@firepadid-ideoneResultados">
+						<div class="well">Presione run para ejecutar su código fuente</div>
+						
+					</div>
+					 
+				</div>			    
+			</div>
+			<div class="row">			
+				<button type="button" class="btn btn-default" data-toggle="collapse"  
+					data-target="#@firepadid-stdin" aria-expanded="true" aria-controls="@firepadid-stdin" 
+					data-placement="top" title ="Ingrese su Input">
+				  <span class="glyphicon glyphicon-hdd"></span> stdin
+				</button>			
+				
+				<button type="button" id="@firepadid-boton-ver" class="btn btn-primary" data-toggle="collapse"
+					data-target="#@firepadid-resultados" aria-expanded="true" aria-controls="@firepadid-resultados" 
+					data-placement="top">
+						<span class="glyphicon glyphicon-cog"></span> Ver resultados									
+				</button>
+			</div>	
 		</div>
-		<div class="row">			
-			<button type="button" class="btn btn-default" data-toggle="collapse"  
-				data-target="#@firepadid-stdin" aria-expanded="true" aria-controls="@firepadid-stdin" 
-				data-placement="top" title ="Ingrese su Input">
-			  <span class="glyphicon glyphicon-hdd"></span> stdin
-			</button>			
-			
-			<button type="button" id="@firepadid-boton-ver" class="btn btn-primary" data-toggle="collapse"
-				data-target="#@firepadid-resultados" aria-expanded="true" aria-controls="@firepadid-resultados" 
-				data-placement="top">
-					<span class="glyphicon glyphicon-cog"></span> Ver resultados									
-			</button>
-		</div>	
 	</div>
 	
 	<script type="text/javascript" charset="utf-8" src="@routes.SesionJigsawController.firepadFaseJigsawJs(firepadid, alumno.getDNI().toString)"></script>

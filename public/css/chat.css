@@ -10,13 +10,13 @@
   /*border-bottom: 0;*/
   padding: 0 0 0 0;
   height: 35px;
-  background-color: #fff;
+  background-color: #999;
   z-index: 11000; /*Allow layering*/*/
   
 }
 #dockbottom-inner {
   text-align: left;
-  width: 100%;
+  width: 200px;
   height: 32px;
   float: left;
   padding: 0 0 0 0;
@@ -38,7 +38,7 @@
   left: 10px;
   bottom: 0;
   width: auto!important;
-  overflow: visible
+  /*overflow: visible*/
 }
 
 
@@ -55,11 +55,12 @@
 .dockright-block {
   display: block;
   width: 200px;
-  position: absolute;
+  position: fixed;
   right: 10px;
   bottom: 0;
   width: auto!important;
-  overflow: visible
+  overflow: visible;
+  z-index: 11001;
 }
 
 
