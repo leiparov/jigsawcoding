@@ -16,7 +16,7 @@ import models.entities.Docente;
 import models.entities.Examen;
 import models.entities.NotaAlumno;
 import models.entities.ProblemaExamen;
-import models.entities.RespuestasAlumno;
+import models.entities.RespuestaAlumno;
 import models.services.ideone.IdeoneService;
 import models.services.ideone.IdeoneSubmissionDetails;
 
@@ -63,9 +63,9 @@ public class ExamenService {
 	
 	public void finalizarExamen(Alumno alumno, List<String> respuestas){
 		
-		List<RespuestasAlumno> respuestasAlumno = new ArrayList<>();
+		List<RespuestaAlumno> respuestasAlumno = new ArrayList<>();
 		for (String rpta : respuestas){
-			RespuestasAlumno ra = new RespuestasAlumno();
+			RespuestaAlumno ra = new RespuestaAlumno();
 			int i = rpta.indexOf("probex");
 			String x[] = rpta.substring(i+6).split(";");
 			int peid = Integer.parseInt(x[0]);
@@ -81,13 +81,13 @@ public class ExamenService {
 		
 		return examenDAO.obtenerExamenes();
 	}
-	public Map<RespuestasAlumno, IdeoneSubmissionDetails> obtenerRespuestas(Alumno a, Examen e) {
-		Set<RespuestasAlumno> respuestasAlumno = a.getRespuestasAlumno();
-		Iterator<RespuestasAlumno> it = respuestasAlumno.iterator();
-		Map<RespuestasAlumno, IdeoneSubmissionDetails> misRespuestas = new HashMap<RespuestasAlumno, IdeoneSubmissionDetails>();
+	public Map<RespuestaAlumno, IdeoneSubmissionDetails> obtenerRespuestas(Alumno a, Examen e) {
+		Set<RespuestaAlumno> respuestasAlumno = a.getRespuestasAlumno();
+		Iterator<RespuestaAlumno> it = respuestasAlumno.iterator();
+		Map<RespuestaAlumno, IdeoneSubmissionDetails> misRespuestas = new HashMap<RespuestaAlumno, IdeoneSubmissionDetails>();
 		
 		while(it.hasNext()){
-			RespuestasAlumno rpta =  it.next();
+			RespuestaAlumno rpta =  it.next();
 			ProblemaExamen pe = rpta.getProblemaExamen();
 			Examen ex = pe.getExamen();
 			if(e.getId() == ex.getId()){
@@ -100,7 +100,7 @@ public class ExamenService {
 	}
 	public void guardarPuntaje(Integer respuestasAlumnoId,
 			Integer puntajeObtenido) {
-		RespuestasAlumno r = respuestasAlumnoDAO.obtener(respuestasAlumnoId);
+		RespuestaAlumno r = respuestasAlumnoDAO.obtener(respuestasAlumnoId);
 		r.setPuntajeObtenido(puntajeObtenido);
 		respuestasAlumnoDAO.actualizar(r);
 		

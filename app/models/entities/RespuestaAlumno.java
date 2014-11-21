@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class RespuestasAlumno {
+public class RespuestaAlumno {
 	@Id
 	private int id;
 	@ManyToOne(cascade = CascadeType.PERSIST)
