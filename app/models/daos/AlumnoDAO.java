@@ -70,9 +70,16 @@ public class AlumnoDAO {
 
 	public Page<Alumno> page(int page, int pageSize, String sortBy,
 			String order, String filter) {
+		Integer dni ;
+		try {
+			dni = Integer.parseInt(filter);
+		} catch (Exception e) {
+			dni = 0;
+		}
+		
 		return find.where()
 				.disjunction()
-				.add(Expr.ilike("dni", "%" + filter + "%"))
+				.add(Expr.eq("dni", dni))
 				.add(Expr.ilike("nombres", "%" + filter + "%"))
 				.add(Expr.ilike("apellido_paterno", "%" + filter + "%"))
 				.add(Expr.ilike("apellido_materno", "%" + filter + "%"))
