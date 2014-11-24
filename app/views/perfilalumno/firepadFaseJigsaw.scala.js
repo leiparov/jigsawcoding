@@ -9,7 +9,7 @@ $(function(){
 	var contenedorResultados = $('#@firepadid-ideoneResultados');
 	//var botonChat = $(".toggleup");
 	var firepadresultados = $('#@firepadid-resultados');
-	var language = $('#language');
+	var language = $('#@firepadid-language');
 	var codeMirror;
 	
 	language.change(function(){
