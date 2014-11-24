@@ -1,6 +1,11 @@
 @(name: String, value: Date)
+@formatDate(date: java.util.Date, f: String) = @{
+	val sdf = new java.text.SimpleDateFormat(f);
+	sdf. setTimeZone(TimeZone.getTimeZone("GMT-0500"));
+	if(date != null) sdf.format(date) else "--"
+}
 <div class="input-group bootstrap-timepicker">
-	<input type="input" @if(value != null){value="@value.format(FormatoFechaHora.timeFormat12)"} 
+	<input type="input" @if(value != null){value="@formatDate(value,FormatoFechaHora.timeFormat12)"} 
 		class="form-control" name="@name" >
 	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
 </div>
