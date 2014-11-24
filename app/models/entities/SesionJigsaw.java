@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+import play.data.format.Formats;
 @Entity
 public class SesionJigsaw {
 
