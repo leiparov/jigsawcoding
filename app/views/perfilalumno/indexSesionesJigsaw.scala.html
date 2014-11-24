@@ -76,7 +76,9 @@
 	}
 }
 @formatDate(date: java.util.Date, f: String) = @{
-	if(date != null) date.format(f) else "--"
+	val sdf = new java.text.SimpleDateFormat(f);
+	sdf. setTimeZone(TimeZone.getTimeZone("GMT-0500"));
+	if(date != null) sdf.format(date) else "--"
 }
 @stringInicioExamen(sesionJigsaw: models.entities.SesionJigsaw) = @{
 	if(sesionJigsaw.getTiempoAperturaExamen == null) "--"; else {
