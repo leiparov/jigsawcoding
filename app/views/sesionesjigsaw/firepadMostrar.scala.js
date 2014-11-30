@@ -1,14 +1,13 @@
-@(firepadid: String, userid: String)
+@(firepadid: String)
 
 $(function(){
 	
 	var firepad;
-	var botonRun = $('#@firepadid-boton-run');
-	var botonVer = $('#@firepadid-boton-ver');
-	//var firepadstdin = $('#@firepadid-stdin');
-	var contenedorResultados = $('#@firepadid-ideoneResultados');
-	var botonChat = $(".toggleup");
-	var firepadresultados = $('#@firepadid-resultados');
+	var botonRun = $('#boton-run');
+	var botonVer = $('#boton-ver');
+	var contenedorResultados = $('#ideoneResultados');
+	var firepadresultados = $('#resultados');
+	
 	var language = $('#language');
 	var codeMirror;
 	
@@ -21,7 +20,7 @@ $(function(){
 	});
 	
 	function getMode(languageid){
-		divfpadid = ''+'@firepadid';
+		
 		var modeLanguage;
 		
 		switch(languageid){
@@ -44,7 +43,7 @@ $(function(){
 		// // Create CodeMirror (with line numbers and the Java mode).
 		//codeMirror = getCodeMirror(language.val());
 		modeLanguage = getMode(language.val());
-		codeMirror = CodeMirror(document.getElementById(divfpadid), {
+		codeMirror = CodeMirror(document.getElementById('firepad'), {
 			lineNumbers : true,
 			lineWrapping : true,
 			styleActiveLine: true,
@@ -57,25 +56,18 @@ $(function(){
 		firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, {
 			defaultText : '// your code goes here'
 		});
-		firepad.setUserId('@userid');
+		firepad.setUserId('Docente');
 	}
 
 	init();
 	
 	/* Ejecutar codigo fuente */
 	function mostrarIdeoneSubmissionResults(data){
-//		console.log(data);
-//		console.log(data['status']);
-		
 		contenedorResultados.empty();
 		for(i in data){
 			var elemento = $.parseHTML(data[i]);
 			contenedorResultados.append(elemento);
 		}
-		
-//		var myModal = $('#modalResultados');		
-//		myModal.modal('show');
-		//alert('Ejecución de problema exitosa!!!');
 		ocultarLoading();
 	}
 	
@@ -87,10 +79,9 @@ $(function(){
 		$('#ajaxloader').empty();
 		$('#panelResultados').show();
 	}
-	
 	function problemaRun (){
 		var firepadText = firepad.getText();
-		var inputStdinText = $('#@firepadid-input-stdin').val();
+		var inputStdinText = $('#input-stdin').val();
 		var languageId = language.val();
 		fpadid = ''+'@firepadid';
 		console.log(firepadText);
@@ -106,25 +97,6 @@ $(function(){
 		});
 		
 	}
-	function verResultadosProblemaRun (){
-		var link = $('#link');
-		
-		// console.log(link.val());
-		if(link.val() != null){
-			// console.log(link);
-			var call = jsRoutes.controllers.ProblemaController.verResultadosProblemaRunJs(link.val());
-			$.ajax({
-				url: call.url,
-				type: call.type,
-				success: mostrarIdeoneSubmissionResults
-			});
-		}
-		else{
-			avisar("Ejecute un problema");
-		}
-		
-		
-	}
 	
 	botonRun.on('click', function(e){
 		e.preventDefault();
@@ -133,45 +105,6 @@ $(function(){
 		$btn.button('reset');
 		botonVer.popover('destroy');
 	});
-	
-	function avisar(mensaje){
-        botonVer.attr('data-content', mensaje);
-        botonVer.popover('show');
-    }
-	(function(){
-        var lastTimeout;
-        
-        botonVer.popover({
-            placement: 'top',
-            trigger: 'manual',
-        });
-        
-        botonVer.on('shown.bs.popover', function(){
-            clearTimeout(lastTimeout);
-            lastTimeout = setTimeout(function(){
-            	botonVer.popover('hide');
-            }, 1500);
-        });
-    })();
-	
-//	botonVer.on('click', function(e){
-//		e.preventDefault();
-//		verResultadosProblemaRun();
-//	});
-	botonChat.click(function(){
-		$("#chat").slideToggle("slow"); 
-		$(this).toggleClass("toggledown");
-		//firepadstdin.collapse('hide');
-		//firepadresultados.collapse('hide');
-		return false;
-	});
-	
-//	botonVer.click(function(){
-//		//$("#chat").hide(); 		
-//	});
-//	var botonStdin = $('#@firepadid-boton-stdin');
-//	botonStdin.click(function(){
-//		$("#chat").hide();
-//	});	
+		
 })
 

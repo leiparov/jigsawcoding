@@ -5,11 +5,11 @@ $(function(){
 	var firepad;
 	var botonRun = $('#@firepadid-boton-run');
 	var botonVer = $('#@firepadid-boton-ver');
-	var firepadstdin = $('#@firepadid-stdin');
+	//var firepadstdin = $('#@firepadid-stdin');
 	var contenedorResultados = $('#@firepadid-ideoneResultados');
-	//var botonChat = $(".toggleup");
+	var botonChat = $(".toggleup");
 	var firepadresultados = $('#@firepadid-resultados');
-	var language = $('#@firepadid-language');
+	var language = $('#language');
 	var codeMirror;
 	
 	language.change(function(){
@@ -63,15 +63,6 @@ $(function(){
 
 	init();
 	
-	function mostrarLoading(){
-		$('#ajaxloader@firepadid').html('<img src="@routes.Assets.at("images/loading.gif")"/>');
-		$('#panelResultados@firepadid').hide();
-	}
-	function ocultarLoading(){
-		$('#ajaxloader@firepadid').empty();
-		$('#panelResultados@firepadid').show();
-	}
-	
 	/* Ejecutar codigo fuente */
 	function mostrarIdeoneSubmissionResults(data){
 //		console.log(data);
@@ -87,6 +78,15 @@ $(function(){
 //		myModal.modal('show');
 		//alert('Ejecución de problema exitosa!!!');
 		ocultarLoading();
+	}
+	
+	function mostrarLoading(){
+		$('#ajaxloader').html('<img src="@routes.Assets.at("images/loading.gif")"/>');
+		$('#panelResultados').hide();
+	}
+	function ocultarLoading(){
+		$('#ajaxloader').empty();
+		$('#panelResultados').show();
 	}
 	
 	function problemaRun (){
@@ -129,12 +129,10 @@ $(function(){
 	
 	botonRun.on('click', function(e){
 		e.preventDefault();
-		$('#divajaxloader').show();
 		var $btn = $(this).button('loading');
 		problemaRun();
 		$btn.button('reset');
 		botonVer.popover('destroy');
-		$('#divajaxloader').hide();
 	});
 	
 	function avisar(mensaje){
@@ -161,22 +159,20 @@ $(function(){
 //		e.preventDefault();
 //		verResultadosProblemaRun();
 //	});
-//	botonChat.click(function(){
-//		$("#chat").slideToggle("slow"); 
-//		$(this).toggleClass("toggledown");
-//		firepadstdin.collapse('hide');
-//		firepadresultados.collapse('hide');
-//		return false;
+	botonChat.click(function(){
+		$("#chat").slideToggle("slow"); 
+		$(this).toggleClass("toggledown");
+		//firepadstdin.collapse('hide');
+		//firepadresultados.collapse('hide');
+		return false;
+	});
+	
+//	botonVer.click(function(){
+//		//$("#chat").hide(); 		
 //	});
-	
-	botonVer.click(function(){
-		$("#chat").hide(); 		
-	});
-	var botonStdin = $('#@firepadid-boton-stdin');
-	botonStdin.click(function(){
-		$("#chat").hide();
-	});
-	
-	
+//	var botonStdin = $('#@firepadid-boton-stdin');
+//	botonStdin.click(function(){
+//		$("#chat").hide();
+//	});	
 })
 

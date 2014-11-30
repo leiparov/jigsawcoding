@@ -62,5 +62,8 @@ public class ProblemaDAO {
 				.like("upper(titulo)", '%' + q + '%').query();
 		return consulta.findList();
 	}
+	public List<Problema> all() {
+		return find.all();
+	}
 
 }

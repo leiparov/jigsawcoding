@@ -60,5 +60,9 @@ public class ProblemaService {
 	public List<Problema> buscarPorTexto(String q) {
 		return problemaDAO.buscarProblema(q, MAX_PREGUNTAS_BUSQUEDA);
 	}
+	
+	public List<Problema> all () {
+		return problemaDAO.all();
+	}
 
 }

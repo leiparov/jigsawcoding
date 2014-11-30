@@ -10,13 +10,14 @@ import java.util.Map;
 import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.Examen;
+import models.entities.Grupo;
 import models.entities.GrupoExperto;
 import models.entities.GrupoJigsaw;
 import models.entities.Problema;
 import models.entities.RespuestaAlumno;
 import models.entities.SesionJigsaw;
 import models.services.ExamenService;
-import models.services.GrupoExpertoService;
+import models.services.GrupoService;
 import models.services.Login;
 import models.services.ProblemaService;
 import models.services.SesionJigsawService;
@@ -38,7 +39,7 @@ public class SesionJigsawController extends Controller {
 
 	private static UsuarioService usuarioService = new UsuarioService();
 	private static SesionJigsawService sesionJigsawService = new SesionJigsawService();
-	private static GrupoExpertoService grupoExpertoService = new GrupoExpertoService();
+	private static GrupoService grupoService = new GrupoService();
 	private static ProblemaService problemaService = new ProblemaService();
 	private static ExamenService examenService = new ExamenService();
 
@@ -485,7 +486,7 @@ public class SesionJigsawController extends Controller {
 			return problemaService.obtenerProblema(problemas.get(i));
 		}
 		private GrupoExperto getGrupoExperto(int i) {
-			return grupoExpertoService.obtenerGrupoExperto(grupos.get(i));
+			return grupoService.obtenerGrupoExperto(grupos.get(i));
 		}
 	}
 
@@ -535,7 +536,7 @@ public class SesionJigsawController extends Controller {
 			String firepadID = "sj" + s.getId() + "ge" + gep.getId() + "p"
 					+ gep.getProblema().getId();
 			return ok(views.html.perfilalumno.faseExpertos.render(getAlumno(),
-					gep, s, firepadID));
+					gep, s));
 		} catch (Exception e) {
 			e.printStackTrace();
 			flash("error", "Error: " + e.getMessage());
@@ -544,8 +545,8 @@ public class SesionJigsawController extends Controller {
 
 	}
 
-	public static Result firepadJs(String firepadid, String userid) {
-		return ok(views.js.perfilalumno.firepad.render(firepadid, userid));
+	public static Result firepadFaseExpertosJs(String firepadid, String userid) {
+		return ok(views.js.perfilalumno.firepadFaseExpertos.render(firepadid, userid));
 	}
 	public static Result firepadFaseJigsawJs(String firepadid, String userid) {
 		return ok(views.js.perfilalumno.firepadFaseJigsaw.render(firepadid, userid));
@@ -603,5 +604,43 @@ public class SesionJigsawController extends Controller {
 			flash("error", "Error: " + e.getMessage());
 			return GO_HOME_ALUMNO;
 		}
+	}
+	
+	public static Result revisarSoluciones(){
+		List<SesionJigsaw> sesionesJigsaw = sesionJigsawService.all();
+		List<Grupo> grupos = grupoService.all();
+		List<Problema> problemas = problemaService.all();
+		return ok(views.html.sesionesjigsaw.revisarSoluciones.render(sesionesJigsaw, grupos, problemas));
+	}
+	public static class SolucionFirepadForm {
+		public Integer sesionjigsawid;
+		public Integer grupoid;
+		public Integer problemaid;
+		
+		public String getFirepadID (){
+			Grupo g = grupoService.obtenerGrupo(grupoid);
+			String firepadid ="";
+			if(g instanceof GrupoExperto){
+				firepadid = "sj"+sesionjigsawid+"ge"+grupoid+"p"+problemaid;
+			}
+			if(g instanceof GrupoJigsaw){
+				firepadid = "sj"+sesionjigsawid+"gj"+grupoid+"p"+problemaid;
+			}
+			return firepadid;
+		}
+	}
+	public static Result mostrarSolucionFirepad(){
+		try {
+			Form<SolucionFirepadForm> form = Form.form(SolucionFirepadForm.class)
+					.bindFromRequest();
+			String firepadid = form.get().getFirepadID();
+			return ok(views.html.sesionesjigsaw.mostrarSolucionFirepad.render(firepadid));
+		} catch (Exception e) {
+			flash("error", "Error");
+			return revisarSoluciones();
+		}
+	}
+	public static Result firepadMostrarJs(String url) {
+		return ok(views.js.sesionesjigsaw.firepadMostrar.render(url));
 	}
 }

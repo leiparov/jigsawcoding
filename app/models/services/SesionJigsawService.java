@@ -55,6 +55,10 @@ public class SesionJigsawService {
 	public SesionJigsaw obtenerSesionJigsaw(int id) {
 		return sesionJigsawDAO.obtenerSesionJigsaw(id);
 	}
+	
+	public List<SesionJigsaw> all (){
+		return sesionJigsawDAO.all();
+	}
 
 	public Page<SesionJigsaw> page(Docente docente, int page, int pageSize,
 			String sortBy, String order, String filter) {

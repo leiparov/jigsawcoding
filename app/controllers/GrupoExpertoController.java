@@ -8,7 +8,7 @@ import java.util.List;
 import models.entities.Alumno;
 import models.entities.Docente;
 import models.entities.GrupoExperto;
-import models.services.GrupoExpertoService;
+import models.services.GrupoService;
 import models.services.Login;
 import models.services.UsuarioService;
 import play.data.Form;
@@ -23,7 +23,7 @@ import exceptions.DAOException;
 public class GrupoExpertoController extends Controller {
 
 	private static UsuarioService usuarioService = new UsuarioService();
-	private static GrupoExpertoService grupoExpertoService = new GrupoExpertoService();
+	private static GrupoService grupoService = new GrupoService();
 
 	private static Docente getDocente() {
 		return usuarioService.obtener(Login.obtener(ctx()).getDNI(),
@@ -35,7 +35,7 @@ public class GrupoExpertoController extends Controller {
 
 	public static Result list(int page, String sortBy, String order,
 			String filter) {
-		return ok(listaGruposExpertos.render(grupoExpertoService.page(getDocente(),
+		return ok(listaGruposExpertos.render(grupoService.page(getDocente(),
 				page, 10, sortBy, order, filter), sortBy, order, filter));
 	}
 
@@ -49,7 +49,7 @@ public class GrupoExpertoController extends Controller {
 	}
 	
 	public static Result interfazAsignar(Integer id) {
-        GrupoExperto grupo = grupoExpertoService.obtenerGrupoExperto(id);        
+        GrupoExperto grupo = grupoService.obtenerGrupoExperto(id);        
         return ok(views.html.gruposexpertos.alumnoToGrupo.render(grupo));
     }
 	
@@ -57,13 +57,13 @@ public class GrupoExpertoController extends Controller {
         try {
             //return tryDefinirAlumnos(id);
         	Form<AsignarAlumnosForm> form = Form.form(AsignarAlumnosForm.class).bindFromRequest();
-            GrupoExperto grupo = grupoExpertoService.obtenerGrupoExperto(id);
+            GrupoExperto grupo = grupoService.obtenerGrupoExperto(id);
             List<Integer> dnialumnos = form.get().alumnos;
             if(grupo.getMaximoAlumnos() < dnialumnos.size()){
             	flash("error", "El grupo experto debe tener " + grupo.getMaximoAlumnos() + " integrantes");
             	return redirect(routes.GrupoExpertoController.interfazAsignar(id));
             }	
-            grupoExpertoService.actualizarAlumnos(grupo, dnialumnos);
+            grupoService.actualizarAlumnos(grupo, dnialumnos);
             play.Logger.info("tryDefinirAlumnos");
             flash("success", "Alumnos asignados con éxito");
             return GO_HOME;
@@ -91,7 +91,7 @@ public class GrupoExpertoController extends Controller {
 		try {
 			GrupoExperto grupoExperto = grupoExpertoForm.get();
 			//grupoExperto.setDocente(getDocente());
-			grupoExpertoService.guardarGrupoExperto(getDocente(), grupoExperto);
+			grupoService.guardarGrupoExperto(getDocente(), grupoExperto);
 			flash("success", "GrupoExperto registrado con éxito");
 			return GO_HOME;
 
@@ -104,7 +104,7 @@ public class GrupoExpertoController extends Controller {
 
 	public static Result interfazEditar(Integer id) {
 		Form<GrupoExperto> grupoExpertoForm = form(GrupoExperto.class).fill(
-				grupoExpertoService.obtenerGrupoExperto(id));
+				grupoService.obtenerGrupoExperto(id));
 		return ok(views.html.gruposexpertos.editarGrupoExperto.render(id, grupoExpertoForm));
 	}
 
@@ -118,7 +118,7 @@ public class GrupoExpertoController extends Controller {
 			//grupoExperto.setDocente(getDocente());
 			grupoExperto.setId(id);
 			System.out.println(grupoExperto.toString());
-			grupoExpertoService.actualizarGrupoExperto(getDocente(), grupoExperto);
+			grupoService.actualizarGrupoExperto(getDocente(), grupoExperto);
 			flash("success", "GrupoExperto actualizado con éxito");
 			return GO_HOME;
 
@@ -130,7 +130,7 @@ public class GrupoExpertoController extends Controller {
 	}
 
 	public static Result eliminarGrupoExperto(Integer id) {
-		grupoExpertoService.eliminarGrupoExperto(id);
+		grupoService.eliminarGrupoExperto(id);
 		flash("success", "GrupoExperto borrado con éxito");
 		return GO_HOME;
 	}

@@ -1,5 +1,6 @@
 @* faseExpertos Template File *@
-@(alumno: models.entities.Alumno, grupoExperto : models.entities.GrupoExperto, sesionJigsaw: models.entities.SesionJigsaw,  firepadid: String)
+@(alumno: models.entities.Alumno, grupoExperto : models.entities.GrupoExperto, sesionJigsaw: models.entities.SesionJigsaw)
+@firepadid = @{"sj"+sesionJigsaw.getId()+"ge"+grupoExperto.getId()+"p"+grupoExperto.getProblema().getId()}
 @main(menuAlumno()){
 	@inputs.firepadHeader()
 	<!-- Clock -->
@@ -130,6 +131,6 @@
 	</div>
 	
 	  
-	<script type="text/javascript" charset="utf-8" src="@routes.SesionJigsawController.firepadJs(firepadid, alumno.getDNI().toString)"></script>
+	<script type="text/javascript" charset="utf-8" src="@routes.SesionJigsawController.firepadFaseExpertosJs(firepadid, alumno.getDNI().toString)"></script>
 	
 }
