@@ -126,8 +126,8 @@
                     <th>REUNIÓN DE EXPERTOS</th>
                     <th>REUNIÓN JIGSAW</th>
                     <th>EVALUACIÓN</th>
-                    <th>TOTAL DE ALUMNOS</th>
-                    <th>TOTAL DE GE</th>
+                    <th>ALUMNOS</th>
+                    <th>GRUPOS EXPERTOS</th>
                                      
                 </tr>
             </thead>
@@ -205,47 +205,61 @@
             		
             	</td>          	
             	
-            	<td>@sesionJigsaw.getAlumnos().size()</td>
-                
+            	
                 	@if(sinAlumnos(sesionJigsaw)){
                 		<td>
 	                		<a class="btn btn-info" href="@routes.SesionJigsawController.interfazAsignarAlumnos(sesionJigsaw.getId())">
 	                			<span>Asignar Alumnos</span>
 	                		</a>
                 		</td>
-                	}else{
+                	}else{                		
                 		<td>
+                			<ul class="list-group">
+                				@sesionJigsaw.getAlumnos().map {alumno => 
+                					<li class="list-group-item">@alumno.getNombreCompleto</li>
+                				}
+                			</ul>
+                			<li class="list-group-item">
 	                		<a class="btn btn-info" href="@routes.SesionJigsawController.interfazAsignarAlumnos(sesionJigsaw.getId())">
 	                			<span>Editar Alumnos</span>
 	                		</a>
-                		
-	                	
+	                		</li>
+	                	</td>
+	                		                	
 	                		@if(!gruposGenerados(sesionJigsaw)){
-	                			
+	                			<td>	                			
 	                			@if(sePuedeGenerarGruposExpertos(sesionJigsaw)){
 			                		@helper.form(routes.SesionJigsawController.generarGrupos(sesionJigsaw.getId()), 'class -> "form-horizontal"){
+			                			<li class="list-group-item">
 			                			<button type="submit" class="btn btn-warning">Generar Grupos</button>
+			                			</li>
 			                		}                		
 		                		}else{
-		                			<p>Verifique que TOTAL ALUMNOS / TOTAL GRUPOS sea una division exacta</p>
+		                		<li class="list-group-item">
+		                			Verifique que <br>TOTAL ALUMNOS / TOTAL GRUPOS EXPERTOS<br> sea una division exacta
+		                		</li>
 		                		}
-		                		</td>
+                				</td>
 	                		}else{
-		                		
-		                		<a class="btn btn-warning" href="@routes.SesionJigsawController.verGrupos(sesionJigsaw.getId())">
-		                			<span>Ver Grupos</span>
-		                		</a>
-		                		</td>
 		                		<td>
-				                @sesionJigsaw.mostrarPares().map { cad => 
-				                	<li>@cad</li>
-				                }
-				                <a class="btn btn-warning" href="@routes.SesionJigsawController.asignarProblemas(sesionJigsaw.getId())">
-		                			<span>Asignar Problemas</span>
-		                		</a>
+		                		<ul class="list-group">
+					                @sesionJigsaw.mostrarPares().map { cad => 
+					                	<li class="list-group-item">@cad</li>
+					                }
+					                <li class="list-group-item">
+						                <a class="btn btn-info" href="@routes.SesionJigsawController.asignarProblemas(sesionJigsaw.getId())">
+				                			<span>Asignar Problemas</span>
+				                		</a>
+			                		</li>
+			                		<li class="list-group-item">
+				                		<a class="btn btn-info" href="@routes.SesionJigsawController.verGrupos(sesionJigsaw.getId())">
+				                			<span>Ver Grupos</span>
+				                		</a>
+			                		</li>
+		                		</ul>
 				                </td>
 		                	}
-		                
+		                </td>
 		                
 		                
                 	}
