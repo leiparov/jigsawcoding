@@ -21,7 +21,7 @@ $(function(){
 	});
 	
 	function getMode(languageid){
-		divfpadid = ''+'@firepadid';
+		
 		var modeLanguage;
 		
 		switch(languageid){
@@ -44,6 +44,7 @@ $(function(){
 		// // Create CodeMirror (with line numbers and the Java mode).
 		//codeMirror = getCodeMirror(language.val());
 		modeLanguage = getMode(language.val());
+		divfpadid = ''+'@firepadid';
 		codeMirror = CodeMirror(document.getElementById(divfpadid), {
 			lineNumbers : true,
 			lineWrapping : true,
