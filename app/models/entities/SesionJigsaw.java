@@ -51,8 +51,8 @@ public class SesionJigsaw {
 
 	/**/
 
-	public List<String> mostrarPares() {
-		List<String> cad = new ArrayList<>();
+	public List<String[]> mostrarPares() {
+		List<String[]> cad = new ArrayList<>();
 		for (GrupoExperto p : gruposExpertos) {
 			cad.add(p.mostrarGrupoExpertoProblema());
 		}

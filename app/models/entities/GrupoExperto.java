@@ -54,13 +54,18 @@ public class GrupoExperto extends Grupo {
 		this.problema = problema;
 	}
 	
-	public String mostrarGrupoExpertoProblema (){
+	public String[] mostrarGrupoExpertoProblema (){
+		String[] x = new String[2];
 		if(problema != null){
-			return ("(" + this.getNombre() + " - " + getProblema().getTitulo() + ")");
+			x[0] = getNombre();
+			x[1] = getProblema().getTitulo();
+			//return (this.getNombre() + " <br> " + getProblema().getTitulo());
 		}else{
-			return ("(" + this.getNombre() + " - <asignar problema>)");
+			x[0] = getNombre();
+			x[1] = "<asignar problema>";
+			//return (this.getNombre() + " <br> <asignar problema>");
 		}
-		
+		return x;
 	}
 
 	@Override

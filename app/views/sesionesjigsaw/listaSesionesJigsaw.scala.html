@@ -244,7 +244,7 @@
 		                		<td>
 		                		<ul class="list-group">
 					                @sesionJigsaw.mostrarPares().map { cad => 
-					                	<li class="list-group-item">@cad</li>
+					                	<li class="list-group-item"><p>@cad(0)</p><p>@cad(1)</p></li>
 					                }
 					                <li class="list-group-item">
 						                <a class="btn btn-info" href="@routes.SesionJigsawController.asignarProblemas(sesionJigsaw.getId())">
@@ -259,12 +259,8 @@
 		                		</ul>
 				                </td>
 		                	}
-		                </td>
-		                
-		                
+		                </td>		                
                 	}
-                
-                
                 <td>
                 	<a href="@routes.SesionJigsawController.editarSesionJigsaw(sesionJigsaw.getId())">
                 		<span class="glyphicon glyphicon-pencil">
