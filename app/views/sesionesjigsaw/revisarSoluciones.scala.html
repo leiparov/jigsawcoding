@@ -1,0 +1,55 @@
+@* revisarSoluciones Template File *@
+@(sesiones: List[models.entities.SesionJigsaw], grupos: List[models.entities.Grupo], problemas: List[models.entities.Problema])
+@main(menuDocente()){
+	<div class="col-md-7">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				@inputs.flashSuccessError()
+		  		<form class="form-horizontal" role="form" action="@routes.SesionJigsawController.mostrarSolucionFirepad" method="get">
+		  		
+		  		<div class="form-group">
+		    		<label for="sesionjigsaw" class="col-sm-3 control-label">Sesion Jigsaw</label>
+				    <div class="col-sm-6">
+					    <select class="form-control" name="sesionjigsawid">
+					    	<option value="0">Seleccione</option>
+					    	@sesiones.map {s => 
+					  			<option value="@s.getId()">@s.getNombre()</option>  	
+					    	}
+					    </select>
+				    </div>
+			  	</div>
+		  		<div class="form-group">
+		    		<label for="sesionjigsaw" class="col-sm-3 control-label">Grupos</label>
+				    <div class="col-sm-6">
+					    <select class="form-control" name="grupoid">
+					    	<option value="0">Seleccione</option>
+					    	@grupos.map {g => 
+					  			<option value="@g.getId()">@g.getNombre()</option>  	
+					    	}
+					    </select>
+				    </div>
+			  	</div>
+			  	<div class="form-group">
+		    		<label for="sesionjigsaw" class="col-sm-3 control-label">Problemas</label>
+				    <div class="col-sm-6">
+					    <select class="form-control" name="problemaid">
+					    	<option value="0">Seleccione</option>
+					    	@problemas.map {p => 
+					  			<option value="@p.getId()">@p.getTitulo()</option>  	
+					    	}
+					    </select>
+				    </div>
+			  	</div>
+			  	<div class="form-group">
+				    <div class="col-sm-offset-3 col-sm-6">
+				    	<button type="submit" class="btn btn-success">Mostrar solución</button>
+				    </div>
+			  	</div>
+			  	
+		  		
+		  		</form>
+		  	</div>
+		</div>
+		
+	</div>
+}

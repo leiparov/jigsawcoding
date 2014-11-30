@@ -69,6 +69,9 @@ POST   /docentes/sesionesjigsaw/:id/delete                               control
 POST   /docentes/sesionesjigsaw/:id/generarGrupos                        controllers.SesionJigsawController.generarGrupos(id:Integer)
 GET    /docentes/sesionesjigsaw/:id/verGrupos                            controllers.SesionJigsawController.verGrupos(id:Integer)
 POST   /docentes/sesionesjigsaw/:id/eliminarGrupos                       controllers.SesionJigsawController.eliminarGrupos(id:Integer)
+GET    /docentes/sesionesjigsaw/revisarsoluciones                        controllers.SesionJigsawController.revisarSoluciones()
+GET   /docentes/sesionesjigsaw/mostrarsolucion                          controllers.SesionJigsawController.mostrarSolucionFirepad()
+GET    /assets/javascripts/firepadMostrar.js                             controllers.SesionJigsawController.firepadMostrarJs(url:String)
 
 GET    /docentes/sesionesjigsaw/:id/asignarAlumnos                       controllers.SesionJigsawController.interfazAsignarAlumnos(id: Integer)
 POST   /docentes/sesionesjigsaw/:id/guardarAlumnos                       controllers.SesionJigsawController.guardarAlumnos(id: Integer)
@@ -109,7 +112,7 @@ GET    /alumnos/sesiones/lista                                           control
 GET    /alumnos/sesiones/:id/faseexpertos                                controllers.SesionJigsawController.interfazFaseExpertos(id: Integer)
 GET    /alumnos/sesiones/:id/fasejigsaw                                  controllers.SesionJigsawController.interfazFaseJigsaw(id: Integer)
 GET    /alumnos/sesiones/:id/evaluacion                                  controllers.SesionJigsawController.interfazEvaluacion(id: Integer)
-GET    /assets/javascripts/firepad.js                                    controllers.SesionJigsawController.firepadJs(firepadid:String, userid: String)
+GET    /assets/javascripts/firepadFaseExpertos.js                        controllers.SesionJigsawController.firepadFaseExpertosJs(firepadid:String, userid: String)
 GET    /assets/javascripts/firepadFaseJigsaw.js                          controllers.SesionJigsawController.firepadFaseJigsawJs(firepadid:String, userid: String)
 GET    /alumnos/ideone/run                                               controllers.ProblemaController.problemaRunJs(source:String, input: String, languageid: Integer, firepadid: String ?= "")
 GET    /alumnos/ideone/verresultados                                     controllers.ProblemaController.verResultadosProblemaRunJs(link:String ?= "", firepadid: String ?="")

@@ -2,5 +2,12 @@
 	<li><a href="@routes.ProblemaController.index">Problemas</a></li>
 	<li><a href="@routes.AlumnoController.index">Alumnos</a></li>
 	<li><a href="@routes.ExamenController.index">Examenes</a></li>
-	<li><a href="@routes.SesionJigsawController.index">Sesiones jigsaw</a></li>
+	
+	<li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Jigsaw<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="@routes.SesionJigsawController.index">Sesiones jigsaw</a></li>
+			<li><a href="@routes.SesionJigsawController.revisarSoluciones">Revisar Soluciones</a></li>
+          </ul>
+        </li>
 </ul>

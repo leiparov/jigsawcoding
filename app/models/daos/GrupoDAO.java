@@ -1,6 +1,9 @@
 package models.daos;
 
+import java.util.List;
+
 import models.entities.Docente;
+import models.entities.Grupo;
 import models.entities.GrupoExperto;
 import models.entities.GrupoJigsaw;
 import play.db.ebean.Model.Finder;
@@ -64,6 +67,16 @@ public class GrupoDAO {
 	public void actualizarGrupoJigsaw(GrupoJigsaw gj) {
 		Ebean.update(gj);
 		Ebean.saveAssociation(gj, "problemas");
+	}
+
+	public static Finder<Integer, Grupo> findGrupo = new Finder<Integer, Grupo>(
+			Integer.class, Grupo.class);
+	public List<Grupo> all() {
+		return findGrupo.all();
+	}
+
+	public Grupo obtenerGrupo(Integer id) {
+		return EbeanUtils.findOrException(Grupo.class, id);
 	}
 
 }

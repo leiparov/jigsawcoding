@@ -6,11 +6,12 @@ import models.daos.AlumnoDAO;
 import models.daos.GrupoDAO;
 import models.daos.UsuarioDAO;
 import models.entities.Docente;
+import models.entities.Grupo;
 import models.entities.GrupoExperto;
 
 import com.avaje.ebean.Page;
 
-public class GrupoExpertoService  {
+public class GrupoService  {
 
 	private static GrupoDAO grupoDAO = new GrupoDAO();
 	private static UsuarioDAO usuarioDAO = new UsuarioDAO();
@@ -45,7 +46,9 @@ public class GrupoExpertoService  {
 	public GrupoExperto obtenerGrupoExperto(Integer id) {
 		return grupoDAO.obtenerGrupoExperto(id);
 	}
-
+	public Grupo obtenerGrupo(Integer id) {
+		return grupoDAO.obtenerGrupo(id);
+	}
 	
 	public Page<GrupoExperto> page(int page, int pageSize, String sortBy,
 			String order, String filter) {
@@ -81,6 +84,10 @@ public class GrupoExpertoService  {
 //        grupo.setAlumnos(alumnosFuturos);
 //        //Logger.info(grupo.getAlumnos().get(0).toString());
 //        grupoExpertoDAO.guardarAlumnos(grupo);
+    }
+    
+    public List<Grupo> all(){
+    	return grupoDAO.all();
     }
 
 }

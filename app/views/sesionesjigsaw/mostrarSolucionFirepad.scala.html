@@ -1,0 +1,81 @@
+@* mostrarSolucionFirepad Template File *@
+@(firepadid: String)
+@main(menuDocente()){
+	@inputs.firepadHeader()
+	<style type="text/css">
+		.firepad {
+		  width: 100%;
+		  height: 490px;
+		  background-color: #f62; /* dark orange background */	  
+		}
+	</style>
+	<div clas="row">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="col-md-7">
+					<div class="row form-inline">
+						<div class="form-group">
+							<label>Lenguaje de Programación</label>
+							<select  id="language">			
+								<option value="4">Python (python 2.7.3)</option>
+								<option value="1" >C++ 4.8.1 (gcc-4.8.1)</option>
+							  	<option value="55">Java7 (sun-jdk-1.7.0_10)</option>					  
+							</select>
+						</div>
+						<div class="form-group">
+							<button type="button" id="boton-run" class="btn btn-success"
+							data-loading-text="Procesando..." autocomplete="off">
+								<span class="glyphicon glyphicon-cog"></span> run									
+							</button>									
+						</div>
+						<div class="form-group">
+							<a class="btn btn-default" href="@routes.SesionJigsawController.revisarSoluciones">Regresar</a>
+						</div>
+					</div>
+					
+			  		<div id="firepad" class="firepad"></div>
+			  	</div>
+			  	
+			  	<div class="col-md-5" >
+					<div class="row">
+						<div id="ajaxloader" class="col-md-6 col-md-offset-3"></div>
+					</div>
+					<div id="panelResultados">
+						<div class="row">
+							<div id="stdin" class="collapse in">
+								<h4 class="text-center">INPUT. Data de prueba</h4>
+								<textarea id="input-stdin" name="stdin" class="form-control" rows="5" 
+								placeholder="Ingrese su data de prueba y luego presione run" ></textarea>
+							</div>
+						</div>
+						<div class="row"  >
+							<div id="resultados" class="collapse in">
+								<h4 class="text-center">RESULTADOS DE EJECUCIÓN</h4>
+								<div id="ideoneResultados">
+									<div class="well">Presione run para ejecutar su código fuente</div>
+									
+								</div>  
+							</div>			    
+						</div>
+						<div class="row">			
+							<button type="button" id="boton-stdin" class="btn btn-default" data-toggle="collapse"  
+								data-target="#stdin" aria-expanded="true" aria-controls="stdin" 
+								data-placement="top">
+							  <span class="glyphicon glyphicon-hdd"></span> Input
+							</button>			
+							
+							<button type="button" id="boton-ver" class="btn btn-primary" data-toggle="collapse"
+								data-target="#resultados" aria-expanded="true" aria-controls="resultados" 
+								data-placement="top">
+									<span class="glyphicon glyphicon-th-list"></span> Resultados									
+							</button>
+						</div>
+					</div>									
+				</div>					  	
+			  	
+		  	</div>
+		</div>
+	</div>
+	<script type="text/javascript" charset="utf-8" src="@routes.SesionJigsawController.firepadMostrarJs(firepadid)"></script>
+	
+}

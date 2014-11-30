@@ -128,5 +128,8 @@ public class SesionJigsawDAO {
 		Ebean.saveAssociation(s, "gruposJigsaw");
 		
 	}
+	public List<SesionJigsaw> all() {
+		return find.all();
+	}
 
 }
