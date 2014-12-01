@@ -74,7 +74,7 @@
 		<div class="col-md-5">
 			<div class="row form-inline">
 				<div class="form-group">
-					<label>Lenguaje de Programación</label>
+					<label>Lenguaje</label>
 					<select  id="language">			
 						<option value="4">Python (python 2.7.3)</option>
 						<option value="1" >C++ 4.8.1 (gcc-4.8.1)</option>
@@ -84,7 +84,7 @@
 				<div class="form-group">
 					<button type="button" id="@firepadid-boton-run" class="btn btn-success"
 					data-loading-text="Procesando..." autocomplete="off">
-						<span class="glyphicon glyphicon-cog"></span> run									
+						<span class="glyphicon glyphicon-cog"></span> Compilar									
 					</button>									
 				</div>
 				
@@ -98,16 +98,17 @@
 			</div>
 			<div id="panelResultados">
 				<div class="row">
-					<div id="@firepadid-stdin" class="collapse in">
+					<div id="@firepadid-stdin" class="collapse">
 						<h4 class="text-center">INPUT. Data de prueba</h4>
-						<textarea id="@firepadid-input-stdin" name="@firepadid-stdin" class="form-control" rows="5" placeholder="Ingrese su data de prueba y luego presione run" ></textarea>
+						<textarea id="@firepadid-input-stdin" name="@firepadid-stdin" class="form-control" rows="5" 
+						placeholder="Ingrese su data de prueba y luego presione Compilar" ></textarea>
 					</div>
 				</div>
 				<div class="row"  >
 					<div id="@firepadid-resultados" class="collapse in">
 						<h4 class="text-center">RESULTADOS DE EJECUCIÓN</h4>
 						<div id="@firepadid-ideoneResultados">
-							<div class="well">Presione run para ejecutar su código fuente</div>
+							<div class="well">Presione Compilar para ejecutar su código fuente</div>
 							
 						</div>  
 					</div>			    
@@ -116,13 +117,13 @@
 					<button type="button" id="@firepadid-boton-stdin" class="btn btn-default" data-toggle="collapse"  
 						data-target="#@firepadid-stdin" aria-expanded="true" aria-controls="@firepadid-stdin" 
 						data-placement="top">
-					  <span class="glyphicon glyphicon-hdd"></span> Input
+					  <span class="glyphicon glyphicon-hdd"></span> Ingresar INPUT
 					</button>			
 					
 					<button type="button" id="@firepadid-boton-ver" class="btn btn-primary" data-toggle="collapse"
 						data-target="#@firepadid-resultados" aria-expanded="true" aria-controls="@firepadid-resultados" 
 						data-placement="top">
-							<span class="glyphicon glyphicon-th-list"></span> Resultados									
+							<span class="glyphicon glyphicon-th-list"></span> Mostrar OUTPUT									
 					</button>
 				</div>
 			</div>
