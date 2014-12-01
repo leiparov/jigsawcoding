@@ -6,7 +6,7 @@ $(function(){
 	var botonRun = $('#@firepadid-boton-run');
 	var botonVer = $('#@firepadid-boton-ver');
 	var contenedorResultados = $('#@firepadid-ideoneResultados');
-	var language = $('#language');
+	var language = $('#@firepadid-language');
 	var codeMirror;
 	
 	language.change(function(){
