@@ -3,6 +3,15 @@
 	<li><a href="@routes.Application.interfazCambiarContrasenia">Cambiar
 			password</a></li>
 	<li class="divider"></li>
-	<li><a href="@routes.Application.logout">Logout</a></li>
+	<!-- <li><a href="@routes.Application.logout">Logout</a></li> -->
+	<li> <a href="#" onclick="signOut();">Sign out</a> </li>
+	<script>
+	  function signOut() {
+	    var auth2 = gapi.auth2.getAuthInstance();
+	    auth2.signOut().then(function () {
+	      console.log('User signed out.');
+	    });
+	  }
+	</script>
 </ul>
 

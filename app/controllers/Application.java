@@ -30,7 +30,7 @@ public class Application extends Controller {
     }
 
     public static Result interfazLogin() {
-        return ok(views.html.login.render());
+        return ok(views.html.loginGoogle.render());
     }
 
     @Login.Requiere
@@ -68,7 +68,7 @@ public class Application extends Controller {
     public static Result autenticar() {
         try {
             Form<Login.Form> loginForm = Form.form(Login.Form.class).bindFromRequest();
-            Usuario logueado = usuarioService.obtenerLogin(loginForm.get().email, loginForm.get().password);
+            Usuario logueado = usuarioService.obtenerLogin(loginForm.get().email);
             Login.obtener(ctx()).logearSesion(logueado);
             return redirect(routes.Application.index());
         } catch (DAOException.FalloLoginException e) {

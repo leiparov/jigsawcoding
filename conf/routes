@@ -15,6 +15,9 @@ GET    /perfil                                                           control
 #GET    /perfil/editar                   controllers.Application.interfazModificarUsuario()
 GET    /perfil/cambiarContrasenia                                        controllers.Application.interfazCambiarContrasenia()
 
+GET    /nuevo/:email                                                     controllers.UsuarioController.interfazNuevo(email:String)
+#POST   /nuevoUsuario/:email                                              controllers.UsuarioController.nuevoUsuario(email:String)
+POST   /registrar                                                        controllers.UsuarioController.registrarUsuario()
 
 #POST   /docentes/nuevo                  controllers.DocenteController.registrarDocente()
 #POST   /docentes/actualizar             controllers.DocenteController.actualizarDocente()
@@ -70,7 +73,7 @@ POST   /docentes/sesionesjigsaw/:id/generarGrupos                        control
 GET    /docentes/sesionesjigsaw/:id/verGrupos                            controllers.SesionJigsawController.verGrupos(id:Integer)
 POST   /docentes/sesionesjigsaw/:id/eliminarGrupos                       controllers.SesionJigsawController.eliminarGrupos(id:Integer)
 GET    /docentes/sesionesjigsaw/revisarsoluciones                        controllers.SesionJigsawController.revisarSoluciones()
-GET   /docentes/sesionesjigsaw/mostrarsolucion                          controllers.SesionJigsawController.mostrarSolucionFirepad()
+GET    /docentes/sesionesjigsaw/mostrarsolucion                          controllers.SesionJigsawController.mostrarSolucionFirepad()
 GET    /assets/javascripts/firepadMostrar.js                             controllers.SesionJigsawController.firepadMostrarJs(url:String)
 
 GET    /docentes/sesionesjigsaw/:id/asignarAlumnos                       controllers.SesionJigsawController.interfazAsignarAlumnos(id: Integer)
