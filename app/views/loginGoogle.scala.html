@@ -55,11 +55,14 @@
 				
 				<div class="col-md-12">
 				
+				<div id="my-signin"></div>
+				
+				@helper.form(routes.Application.loginGoogle) {
 				<p class="navbar-text navbar-right">
 					Aún no tienes una cuenta?
-					
-					<div id="registrar">Sign up with Gmail</div>
+					<button class="btn btn-primary btn-large navbar-btn">Regístrate con Gmail</button>
 				</p>
+				}
 				
 				</div>
 				

@@ -44,9 +44,6 @@ public class UsuarioController extends Controller{
          }else{
         	 usuario = form.get().entidadAlumnoNueva();
          }
-         
-         
-         
          if(!validarNombre(usuario.getNombreCompleto())){
             throw new DAOException("Caracteres inválidos en Nombres y/o Apellidos.");
          }

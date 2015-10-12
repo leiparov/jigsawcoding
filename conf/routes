@@ -11,6 +11,10 @@ GET    /recuperarContrasenia                                             control
 
 # Home page
 GET    /                                                                 controllers.Application.index()
+GET    /google/login                                                     controllers.Application.loginGoogle()
+POST   /google/validate                                                  controllers.Application.validarToken()
+GET    /google/oauth2callback                                            controllers.Application.oauth2callback( code: String)
+
 GET    /perfil                                                           controllers.Application.interfazPerfilUsuario()
 #GET    /perfil/editar                   controllers.Application.interfazModificarUsuario()
 GET    /perfil/cambiarContrasenia                                        controllers.Application.interfazCambiarContrasenia()

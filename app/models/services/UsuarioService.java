@@ -14,7 +14,7 @@ public class UsuarioService {
 		return usuarioDAO.obtenerLogin(email, password);
 	}
 	public Usuario obtenerLogin(String email) {
-		return usuarioDAO.obtenerPorEmail(email);
+		return usuarioDAO.obtenerLogin(email);
 	}
 
 	public <T extends Usuario> T obtener(int dni, Class<T> claseUsuario) {

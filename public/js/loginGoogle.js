@@ -5,14 +5,26 @@ function onSuccess(googleUser) {
 	console.log(email);
 	var nuevaRuta = "http://localhost:9000/nuevo/"+email;
 	console.log(nuevaRuta);
-	  window.location.assign( nuevaRuta );
+	  //window.location.assign( nuevaRuta );
+	
+	var id_token = googleUser.getAuthResponse().id_token;
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', 'http://localhost:9000/google/validate');
+	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	xhr.onload = function() {
+	  console.log('Signed in as: ' + xhr.responseText);
+	  document.write(xhr.responseText);
+	  document.close();
+	};
+	xhr.send('idtoken=' + id_token);
+	
 
 }
 function onFailure(error) {
 	console.log(error);
 }
 function renderButton() {
-	gapi.signin2.render('registrar', {
+	gapi.signin2.render('my-signin', {
 		'scope' : 'email',
 		'width' : 200,
 		'height' : 50,
