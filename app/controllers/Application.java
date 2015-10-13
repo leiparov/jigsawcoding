@@ -1,28 +1,24 @@
 package controllers;
 
-import org.apache.http.HttpRequest;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
-import oauth.signpost.http.HttpResponse;
-import exceptions.DAOException;
 import models.entities.Alumno;
 import models.entities.Usuario;
 import models.services.Login;
 import models.services.UsuarioService;
 import play.Routes;
 import play.data.Form;
+import play.libs.F.Function;
 import play.libs.F.Promise;
 import play.libs.WS;
-import play.libs.WS.*;
+import play.libs.WS.WSRequestHolder;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.libs.F.Function;
 //import views.html.usuarios.*;
 import utils.HttpUtils;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.google.gson.JsonObject;
+
+import exceptions.DAOException;
 
 public class Application extends Controller {
 
@@ -67,31 +63,58 @@ public class Application extends Controller {
 				return redirect(routes.UsuarioController.interfazNuevo(email));
 			} else {
 				Login.obtener(ctx()).logearSesion(logueado);
-				//return index();
+				// return index();
 				return ok("DNI" + logueado.getDNI());
 			}
 
 		}
-
 	}
 
-	public static Result oauth2callback(String code) {
+	// public static Promise<Result> index() {
+	// final Promise<Result> resultPromise = WS.url(feedUrl).get().map(
+	// new Function<WS.Response, Result>() {
+	// public Result apply(WS.Response response) {
+	// return ok("Feed title:" + response.asJson().findPath("title"));
+	// }
+	// }
+	// );
+	// return resultPromise;
+	// }
+
+	public static Promise<Result> oauth2callback(String code) {
 		String postBody = "code=" + code + "&client_id=" + clientId
 				+ "&client_secret=" + clientSecret + "&redirect_uri="
 				+ redirectUrl + "&grant_type=authorization_code";
-		// HttpResponse response =
-		// WS.url("https://accounts.google.com/o/oauth2/token")
-		// .setHeader("Content-Type", "application/x-www-form-urlencoded")
-		// .post(postBody);
 
-		// play.Logger.info(response.get(0).asJson().asText());
+		WSRequestHolder request = WS
+				.url("https://accounts.google.com/o/oauth2/token");
+		request.setHeader("Content-Type", "application/x-www-form-urlencoded");
 
-		// WSRequestHolder request =
-		// WS.url("https://accounts.google.com/o/oauth2/token");
-		// request.setHeader("Content-Type",
-		// "application/x-www-form-urlencoded");
-		//
-		// Promise<WS.Response> response = request.post(postBody);
+		Promise<Result> response1 = request.post(postBody).map(
+				new Function<WS.Response, Result>() {
+					public Result apply(WS.Response response) {
+
+						JsonNode responseJson = response.asJson();
+						play.Logger.info(responseJson.toString());
+						String accessToken = responseJson.get("access_token")
+								.toString().replace("\"", "");
+
+						Promise<String> response2 = WS
+								.url("https://www.googleapis.com/oauth2/v1/userinfo?access_token="
+										+ accessToken).get()
+								.map(new Function<WS.Response, String>() {
+									public String apply(WS.Response res) {
+										JsonNode rj = res.asJson();
+										String user = rj.get("email")
+												.toString();
+										return user;
+									}
+								});
+
+						return ok(response2.toString());
+					}
+				});
+
 		//
 		// response.map(resp -> (Result) ok(resp.asJson()));
 
@@ -106,7 +129,7 @@ public class Application extends Controller {
 		// Usuario user = getOrCreateUser(userJson);
 		// return redirect(routes.Application.index()).withSession("connected",
 		// user.getEmail());
-		return TODO;
+		return response1;
 	}
 
 	/* Fin Login Google */
