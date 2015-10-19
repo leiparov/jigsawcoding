@@ -12,8 +12,9 @@ import play.libs.WS;
 import play.libs.WS.WSRequestHolder;
 import play.mvc.Controller;
 import play.mvc.Result;
-//import views.html.usuarios.*;
 import utils.HttpUtils;
+import securesocial.core.Identity;
+import securesocial.core.java.SecureSocial;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.JsonObject;
@@ -25,7 +26,7 @@ public class Application extends Controller {
 	private static String clientId = "1012976681806-gq056951j0hc78ccv8jopndteng1n57g.apps.googleusercontent.com";
 	private static String clientSecret = "I4BMnyS5UEF7BdoFED_E2IoA";
 	private static String redirectUrl = "http://localhost:9000/google/oauth2callback";
-
+	
 	private static UsuarioService usuarioService = new UsuarioService();
 
 	/* Login Google */
@@ -139,16 +140,19 @@ public class Application extends Controller {
 				Alumno.class);
 	}
 
-	@Login.Requiere
+	//@Login.Requiere
+	@SecureSocial.SecuredAction
 	public static Result index() {
-		Login login = Login.obtener(ctx());
-		if (login.isTipo(Alumno.class)) {
-			// return
-			// ok(views.html.perfilalumno.indexAlumno.render(getAlumno()));
-			return redirect(routes.AlumnoController.indexAlumno());
-		} else {
-			return ok(views.html.perfildocente.indexDocente.render());
-		}
+		Identity user = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+        return ok(user.fullName());
+//		Login login = Login.obtener(ctx());
+//		if (login.isTipo(Alumno.class)) {
+//			// return
+//			// ok(views.html.perfilalumno.indexAlumno.render(getAlumno()));
+//			return redirect(routes.AlumnoController.indexAlumno());
+//		} else {
+//			return ok(views.html.perfildocente.indexDocente.render());
+//		}
 	}
 
 	public static Result interfazLogin() {

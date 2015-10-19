@@ -1,12 +1,22 @@
+#SecureSocial
+# Login page
+GET    /login                                                            securesocial.controllers.LoginPage.login
+GET    /logout                                                           securesocial.controllers.LoginPage.logout
+
+# Providers entry points
+GET    /authenticate/:provider                                           securesocial.controllers.ProviderController.authenticate(provider)
+POST   /authenticate/:provider                                           securesocial.controllers.ProviderController.authenticateByPost(provider)
+GET    /not-authorized                                                   securesocial.controllers.ProviderController.notAuthorized
+
 # Routes
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
 # Login
-GET    /login                                                            controllers.Application.interfazLogin()
-POST   /login                                                            controllers.Application.autenticar()
+GET    /login1                                                           controllers.Application.interfazLogin()
+POST   /login1                                                           controllers.Application.autenticar()
 
-GET    /logout                                                           controllers.Application.logout()
+GET    /logout1                                                          controllers.Application.logout()
 GET    /recuperarContrasenia                                             controllers.Application.recuperarContrasenia()
 
 # Home page
