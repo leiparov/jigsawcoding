@@ -23,7 +23,7 @@ public class NotaAlumnoDAO {
 		Ebean.update(r);
 	}
 
-	public Integer buscarNota(Integer examenid, Integer dni) {
+	public Integer buscarNota(Integer examenid, String dni) {
 		NotaAlumno na = find.where().conjunction()
 				.add(Expr.eq("alumno_dni", dni))
 				.add(Expr.eq("examen_id", examenid)).findUnique();

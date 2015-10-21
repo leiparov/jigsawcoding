@@ -17,12 +17,13 @@ public class UsuarioDAO {
 		Ebean.save(u);
 	}
 
-	public Usuario obtener(int DNI) {
-		Usuario resultado = Ebean.find(Usuario.class, DNI);
+	public Usuario obtener(String id) {
+		Usuario resultado = Ebean.find(Usuario.class, id);
 		if (resultado != null)
 			return resultado;
 		else
-			throw new DAOException("Usuario no encontrado");
+			//throw new DAOException("Usuario no encontrado");
+			return null;
 	}
 //	public Usuario obtenerPorEmail (String email) {
 //		Usuario resultado = Ebean.find(Usuario.class, email);
@@ -35,7 +36,7 @@ public class UsuarioDAO {
 
 	public Usuario obtenerLogin(String email, String password) {
 		SqlQuery sql = Ebean
-				.createSqlQuery("select dni from usuario where email like :email and password like :password");
+				.createSqlQuery("select id from usuario where email like :email and password like :password");
 		sql.setParameter("email", email);
 		sql.setParameter("password", password);
 
@@ -43,12 +44,12 @@ public class UsuarioDAO {
 		if (resultado == null)
 			throw new DAOException.FalloLoginException();
 		else
-			return obtener(resultado.getInteger("dni"));
+			return obtener(resultado.getString("id"));
 	}
 	
 	public Usuario obtenerLogin(String email) {
 		SqlQuery sql = Ebean
-				.createSqlQuery("select dni from usuario where email like :email");
+				.createSqlQuery("select id from usuario where email like :email");
 		sql.setParameter("email", email);
 		
 
@@ -57,13 +58,13 @@ public class UsuarioDAO {
 			//throw new DAOException.FalloLoginException();
 			return null;
 		else
-			return obtener(resultado.getInteger("dni"));
+			return obtener(resultado.getString("id"));
 	}
 
-	public void cambiarPassword(int DNI, String nuevoPass) {
+	public void cambiarPassword(String dni, String nuevoPass) {
 		SqlUpdate sql = Ebean
 				.createSqlUpdate("update usuario set password = :password where dni = :dni");
-		sql.setParameter("dni", DNI);
+		sql.setParameter("dni", dni);
 		sql.setParameter("password", nuevoPass);
 
 		int cuenta = sql.execute();
@@ -72,7 +73,7 @@ public class UsuarioDAO {
 			throw new DAOException("Usuario no encontrado");
 	}
 
-	public <T extends Usuario> T obtener(int dni, Class<T> claseUsuario) {
+	public <T extends Usuario> T obtener(String dni, Class<T> claseUsuario) {
 		T resultado = Ebean.find(claseUsuario, dni);
 		if (resultado != null)
 			return resultado;
@@ -90,8 +91,8 @@ public class UsuarioDAO {
 	}
 	
 
-	public int obtener(String email) {
-		int dni = 0;
+	public String obtenerPorEmail(String email) {
+		String dni = "";
 		SqlQuery sql = Ebean
 				.createSqlQuery("select dni from usuario where email like :email");
 		sql.setParameter("email", email);
@@ -100,7 +101,7 @@ public class UsuarioDAO {
 			throw new DAOException("Email no encontrado");
 		} else {
 			for (SqlRow row : resultado) {
-				dni = row.getInteger("dni");
+				dni = row.getString("dni");
 			}
 		}
 		return dni;

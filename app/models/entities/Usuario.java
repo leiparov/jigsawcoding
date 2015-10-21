@@ -15,8 +15,10 @@ import play.data.validation.Constraints;
 @DiscriminatorValue("USUARIO")
 public class Usuario {
 
+	//@Id
+	//private int DNI;	
 	@Id
-	private int DNI;	
+	private String DNI;
 	@Constraints.Required
 	private String email;	
 	private String password;
@@ -26,11 +28,11 @@ public class Usuario {
 	private String apellidoMaterno;
 	private Sexo sexo;
 
-	public int getDNI() {
+	public String getDNI() {
 		return DNI;
 	}
 
-	public void setDNI(int dNI) {
+	public void setDNI(String dNI) {
 		DNI = dNI;
 	}
 

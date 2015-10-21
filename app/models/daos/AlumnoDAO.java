@@ -22,7 +22,7 @@ public class AlumnoDAO {
 
 	public static UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-	public Alumno obtener(int dni) {
+	public Alumno obtener(String dni) {
 		return usuarioDAO.obtener(dni, Alumno.class);
 	}
 
@@ -45,7 +45,7 @@ public class AlumnoDAO {
 	}
 
 	public List<Alumno> disponibles() {
-		int dni = 0;
+		String dni = "";
 //		String sql = "select u.dni from usuario u "
 //				+ "where u.grupo_experto_id is null and u.tipo = 'ALUMNO' ";
 		String sql = "select u.dni from usuario u where u.tipo = 'ALUMNO'";
@@ -56,7 +56,7 @@ public class AlumnoDAO {
 			throw new DAOException("No existen alumnos disponibles");
 		} else {
 			for (SqlRow row : resultado) {
-				dni = row.getInteger("dni");
+				dni = row.getString("dni");
 				System.out.println(obtener(dni).getNombreCompleto());
 				alumnosDisponibles.add(obtener(dni));
 			}

@@ -302,7 +302,7 @@ public class ExamenController extends Controller {
 			return indexAlumno();
 		}
 	}
-	public static Result finalizarExamen(Integer examenid, Integer dnialumno) {
+	public static Result finalizarExamen(Integer examenid, String dnialumno) {
 		try {
 			Form<RendirExamenForm> form = Form.form(RendirExamenForm.class)
 					.bindFromRequest();

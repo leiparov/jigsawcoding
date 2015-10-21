@@ -52,7 +52,7 @@ public class AlumnoController extends Controller {
 			nuevo.setNombres(nombres);
 			nuevo.setApellidoPaterno(apellidoPaterno);
 			nuevo.setApellidoMaterno(apellidoMaterno);
-			nuevo.setDNI(Integer.parseInt(dni));
+			nuevo.setDNI(dni);
 			nuevo.setSexo(sexo);
 			nuevo.setEmail(email);
 
@@ -71,7 +71,7 @@ public class AlumnoController extends Controller {
 	}
 
 	private static class ResultadoBusqueda {
-		public int dni;
+		public String dni;
 		public String nombreCompleto;
 	}
 
@@ -167,14 +167,14 @@ public class AlumnoController extends Controller {
 		}
 	}
 
-	public static Result interfazEditar(int dni) {
+	public static Result interfazEditar(String dni) {
 		Form<Alumno> alumnoForm = form(Alumno.class).fill(
 				alumnoService.obtener(dni));
 		// return ok(editarAlumno.render(dni, alumnoForm));
 		return TODO;
 	}
 
-	public static Result actualizarAlumno(int dni) {
+	public static Result actualizarAlumno(String dni) {
 		/*
 		 * Form<Alumno> problemaForm = form(Alumno.class).bindFromRequest(); if
 		 * (problemaForm.hasErrors()) { return

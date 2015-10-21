@@ -8,6 +8,7 @@ import javax.persistence.PersistenceException;
 
 import exceptions.DAOException;
 import models.entities.Docente;
+import models.entities.GoogleIdentity;
 import models.entities.Sexo;
 import models.entities.Usuario;
 import models.services.DocenteService;
@@ -18,6 +19,8 @@ import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
+import securesocial.core.Identity;
+import securesocial.core.java.SecureSocial;
 //import views.html.usuarios.actualizarDocente;
 import views.html.docentes.nuevoDocente;
 
@@ -30,7 +33,23 @@ public class DocenteController extends Controller{
    private static final String ruta = "public/photos/";
    
    public static Result interfazNuevo() {
-	   return ok(nuevoDocente.render());
+	   
+	   Form<GoogleIdentity> previousData = (Form) play.cache.Cache.get("df.from.original.request");
+
+	    if (previousData == null) {
+	        return badRequest("No data received from previous request...");
+	    }
+
+	    // Use the data somehow...
+	    String email = previousData.get().getEmail();
+
+	    // Clear cache entry, by setting null for 0 seconds
+	    play.cache.Cache.set("df.from.original.request", null, 0);
+	   
+	   
+	   //Form<Identity> form = Form.form(Identity.class).bindFromRequest();
+	   //Identity user = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+	   return ok(nuevoDocente.render(email));
 	   //return TODO;
    }
    
@@ -197,7 +216,7 @@ public class DocenteController extends Controller{
    
    //clases estaticas para los formularios
    public static class DocenteForm{
-      public int dni;
+      public String dni;
       public String email;
       public String nombre;
       public String apellidoPaterno;

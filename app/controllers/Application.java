@@ -1,6 +1,7 @@
 package controllers;
 
 import models.entities.Alumno;
+import models.entities.GoogleIdentity;
 import models.entities.Usuario;
 import models.services.Login;
 import models.services.UsuarioService;
@@ -15,17 +16,22 @@ import play.mvc.Result;
 import utils.HttpUtils;
 import securesocial.core.Identity;
 import securesocial.core.java.SecureSocial;
+import play.cache.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.JsonObject;
 
 import exceptions.DAOException;
 
+
+import views.html.docentes.nuevoDocente;
+
+
 public class Application extends Controller {
 
 	private static String clientId = "1012976681806-gq056951j0hc78ccv8jopndteng1n57g.apps.googleusercontent.com";
 	private static String clientSecret = "I4BMnyS5UEF7BdoFED_E2IoA";
-	private static String redirectUrl = "http://localhost:9000/google/oauth2callback";
+	private static String redirectUrl = "http://localhost:9000/authenticate/google";
 	
 	private static UsuarioService usuarioService = new UsuarioService();
 
@@ -141,10 +147,20 @@ public class Application extends Controller {
 	}
 
 	//@Login.Requiere
-	@SecureSocial.SecuredAction
+	@SecureSocial.SecuredAction//( authorization = WithProvider.class, params = {"google"})
 	public static Result index() {
 		Identity user = (Identity) ctx().args.get(SecureSocial.USER_KEY);
-        return ok(user.fullName());
+        //return ok(user.fullName());
+        GoogleIdentity g = new GoogleIdentity();
+        g.setEmail(user.email().get());
+        g.setFirstName(user.firstName());
+        g.setLastName(user.lastName());
+        
+        Form form = Form.form(GoogleIdentity.class).fill(g);
+        Cache.set("df.from.original.request", form, 60);
+        return redirect(routes.DocenteController.interfazNuevo());
+        //return ok(nuevoDocente.render(user.email().get()));
+        
 //		Login login = Login.obtener(ctx());
 //		if (login.isTipo(Alumno.class)) {
 //			// return
@@ -196,7 +212,7 @@ public class Application extends Controller {
 				.bindFromRequest();
 		String email = popupForm.get().emailRecuperar;
 		if (email != "") {
-			if (usuarioService.obtener(email) != 0) {
+			if (usuarioService.obtenerPorEmail(email) != null) {
 				usuarioService.recuperarContrasenia(email);
 				flash("successRecuperar",
 						"Su nueva contraseña ha sido enviada a su correo.");
