@@ -1,20 +1,37 @@
+#SecureSocial
+# Login page
+GET    /login                                                            securesocial.controllers.LoginPage.login
+GET    /logout                                                           securesocial.controllers.LoginPage.logout
+
+# Providers entry points
+GET    /authenticate/:provider                                           securesocial.controllers.ProviderController.authenticate(provider)
+POST   /authenticate/:provider                                           securesocial.controllers.ProviderController.authenticateByPost(provider)
+GET    /not-authorized                                                   securesocial.controllers.ProviderController.notAuthorized
+
 # Routes
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
 # Login
-GET    /login                                                            controllers.Application.interfazLogin()
-POST   /login                                                            controllers.Application.autenticar()
+GET    /login1                                                           controllers.Application.interfazLogin()
+POST   /login1                                                           controllers.Application.autenticar()
 
-GET    /logout                                                           controllers.Application.logout()
+GET    /logout1                                                          controllers.Application.logout()
 GET    /recuperarContrasenia                                             controllers.Application.recuperarContrasenia()
 
 # Home page
 GET    /                                                                 controllers.Application.index()
+GET    /google/login                                                     controllers.Application.loginGoogle()
+POST   /google/validate                                                  controllers.Application.validarToken()
+GET    /google/oauth2callback                                            controllers.Application.oauth2callback( code: String)
+
 GET    /perfil                                                           controllers.Application.interfazPerfilUsuario()
 #GET    /perfil/editar                   controllers.Application.interfazModificarUsuario()
 GET    /perfil/cambiarContrasenia                                        controllers.Application.interfazCambiarContrasenia()
 
+GET    /nuevo/:email                                                     controllers.UsuarioController.interfazNuevo(email:String)
+#POST   /nuevoUsuario/:email                                              controllers.UsuarioController.nuevoUsuario(email:String)
+POST   /registrar                                                        controllers.UsuarioController.registrarUsuario()
 
 #POST   /docentes/nuevo                  controllers.DocenteController.registrarDocente()
 #POST   /docentes/actualizar             controllers.DocenteController.actualizarDocente()
@@ -70,7 +87,7 @@ POST   /docentes/sesionesjigsaw/:id/generarGrupos                        control
 GET    /docentes/sesionesjigsaw/:id/verGrupos                            controllers.SesionJigsawController.verGrupos(id:Integer)
 POST   /docentes/sesionesjigsaw/:id/eliminarGrupos                       controllers.SesionJigsawController.eliminarGrupos(id:Integer)
 GET    /docentes/sesionesjigsaw/revisarsoluciones                        controllers.SesionJigsawController.revisarSoluciones()
-GET   /docentes/sesionesjigsaw/mostrarsolucion                          controllers.SesionJigsawController.mostrarSolucionFirepad()
+GET    /docentes/sesionesjigsaw/mostrarsolucion                          controllers.SesionJigsawController.mostrarSolucionFirepad()
 GET    /assets/javascripts/firepadMostrar.js                             controllers.SesionJigsawController.firepadMostrarJs(url:String)
 
 GET    /docentes/sesionesjigsaw/:id/asignarAlumnos                       controllers.SesionJigsawController.interfazAsignarAlumnos(id: Integer)

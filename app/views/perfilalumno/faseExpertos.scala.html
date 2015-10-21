@@ -17,17 +17,19 @@
 		}
 	</style>
 	
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	    	      
-        <div class="dockright-block">
+        <!--<div class="dockright-block">
 	        <div id="chat">	
 				<div clas="col-md-3">			
-					@views.html.chat.interfazChat(alumno, grupoExperto)
+					@*@views.html.chat.interfazChat(alumno, grupoExperto)*@
 				</div>
 			</div>
 			<div class="slider"><a class="toggleup" href="#">CHAT</a></div>	         
-        </div>	      
-  	
-	
+        </div> -->	
+        <div class="dockright-block">      
+  			<g:hangout render="createhangout"></g:hangout>
+		</div>
 	<style type="text/css">
 		#reloj{
 			position: fixed;

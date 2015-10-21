@@ -93,7 +93,7 @@ public class UsuarioController extends Controller{
    
    //clases estaticas para los formularios
    public static class UsuarioForm{
-      public String dni;
+      public int dni;
       public String email;
       public String nombre;
       public String apellidoPaterno;

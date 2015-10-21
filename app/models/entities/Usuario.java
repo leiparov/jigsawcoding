@@ -16,7 +16,7 @@ import play.data.validation.Constraints;
 public class Usuario {
 
 	@Id
-	private int DNI;
+	private int DNI;	
 	@Constraints.Required
 	private String email;	
 	private String password;

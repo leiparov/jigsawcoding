@@ -10,7 +10,6 @@ import securesocial.core.java.Token;
 
 import java.util.*;
 
-import models.entities.Docente;
 import models.entities.Usuario;
 
 /**
@@ -34,10 +33,9 @@ public class MyUserService extends BaseUserService {
     }
 
     private HashMap<String, User> users = new HashMap<String, User>();
-    //private HashMap<String, Token> tokens = new HashMap<String, Token>();
+    private HashMap<String, Token> tokens = new HashMap<String, Token>();
     
     private static UsuarioService usuarioService = new UsuarioService();
-    private static DocenteService docenteService = new DocenteService();
     
     public MyUserService(Application application) {
 		super(application);		
@@ -45,25 +43,13 @@ public class MyUserService extends BaseUserService {
     
     @Override
     public Identity doSave(Identity identity) {
+       
+    	String email = identity.email().get();
+    	Usuario usuario = usuarioService.obtenerLogin(email);
+    	
     	User found = null;
-    	
-    	String id = identity.identityId().userId();
-    	Usuario usuario = usuarioService.obtener(id);
-    	if (usuario == null) {
-    		String email = identity.email().get();
-    		Docente nuevo = new Docente();
-    		nuevo.setDNI(id);
-    		nuevo.setEmail(email);
-    		nuevo.setNombres(identity.firstName());
-    		nuevo.setApellidoPaterno(identity.lastName());
-    		
-    		docenteService.guardar(nuevo);
-    		//found = new User(id, identity);
-    		
-    	}
-    	
-    	
-    	for ( User u : users.values() ) {
+
+        for ( User u : users.values() ) {
             if ( u.identities.contains(identity) ) {
                 found = u;
                 break;
@@ -102,7 +88,7 @@ public class MyUserService extends BaseUserService {
 
     @Override
     public void doSave(Token token) {
-        //tokens.put(token.uuid, token);
+        tokens.put(token.uuid, token);
     }
 
     @Override
@@ -111,7 +97,7 @@ public class MyUserService extends BaseUserService {
             logger.debug("Finding user " + userId);
         }
         Identity found = null;
-        
+
         for ( User u: users.values() ) {
             for ( Identity i : u.identities ) {
                 if ( i.identityId().equals(userId) ) {
@@ -126,42 +112,41 @@ public class MyUserService extends BaseUserService {
 
     @Override
     public Token doFindToken(String tokenId) {
-		return null;
-        //return tokens.get(tokenId);
+        return tokens.get(tokenId);
     }
 
     @Override
     public Identity doFindByEmailAndProvider(String email, String providerId) {
         Identity result = null;
-//        for( User user : users.values() ) {
-//            for ( Identity identity : user.identities ) {
-//            Option<String> optionalEmail = identity.email();
-//            if ( identity.identityId().providerId().equals(providerId) &&
-//                 optionalEmail.isDefined() &&
-//                 optionalEmail.get().equalsIgnoreCase(email))
-//                {
-//                    result = identity;
-//                    break;
-//                }
-//            }
-//        }
+        for( User user : users.values() ) {
+            for ( Identity identity : user.identities ) {
+            Option<String> optionalEmail = identity.email();
+            if ( identity.identityId().providerId().equals(providerId) &&
+                 optionalEmail.isDefined() &&
+                 optionalEmail.get().equalsIgnoreCase(email))
+                {
+                    result = identity;
+                    break;
+                }
+            }
+        }
         return result;
     }
 
     @Override
     public void doDeleteToken(String uuid) {
-        //tokens.remove(uuid);
+        tokens.remove(uuid);
     }
 
     @Override
     public void doDeleteExpiredTokens() {
-//        Iterator<Map.Entry<String,Token>> iterator = tokens.entrySet().iterator();
-//        while ( iterator.hasNext() ) {
-//            Map.Entry<String, Token> entry = iterator.next();
-//            if ( entry.getValue().isExpired() ) {
-//                iterator.remove();
-//            }
-//        }
+        Iterator<Map.Entry<String,Token>> iterator = tokens.entrySet().iterator();
+        while ( iterator.hasNext() ) {
+            Map.Entry<String, Token> entry = iterator.next();
+            if ( entry.getValue().isExpired() ) {
+                iterator.remove();
+            }
+        }
     }
 
     /**
