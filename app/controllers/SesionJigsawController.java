@@ -95,7 +95,7 @@ public class SesionJigsawController extends Controller {
 			Form<AsignarAlumnosForm> form = Form.form(AsignarAlumnosForm.class)
 					.bindFromRequest();
 			SesionJigsaw s = sesionJigsawService.obtenerSesionJigsaw(id);
-			List<String> dnialumnos = form.get().alumnos;
+			List<Integer> dnialumnos = form.get().alumnos;
 			sesionJigsawService.guardarAlumnos(s, dnialumnos);
 			flash("success", "Alumnos asignados con éxito");
 			return GO_HOME;
@@ -105,7 +105,7 @@ public class SesionJigsawController extends Controller {
 		}
 	}
 	public static class AsignarAlumnosForm {
-		public List<String> alumnos = new LinkedList<String>();
+		public List<Integer> alumnos = new LinkedList<Integer>();
 	}
 
 	/* Generar Grupos */
@@ -277,7 +277,7 @@ public class SesionJigsawController extends Controller {
 		}		
 	}
 	
-	public static Result corregirExamenAlumno(Integer sesionid, String dni, Integer examenid ){
+	public static Result corregirExamenAlumno(Integer sesionid, Integer dni, Integer examenid ){
 		try {
 			Alumno a = usuarioService.obtener(dni, Alumno.class);
 			Examen e = examenService.obtener(examenid);
@@ -291,7 +291,7 @@ public class SesionJigsawController extends Controller {
 			return GO_HOME;
 		}		
 	}
-	public static Result guardarPuntaje(String dni, Integer examenid, Integer respuestasAlumnoId){
+	public static Result guardarPuntaje(Integer dni, Integer examenid, Integer respuestasAlumnoId){
 		try {
 			Form<PuntajeForm> form = Form.form(PuntajeForm.class)
 					.bindFromRequest();
@@ -310,7 +310,7 @@ public class SesionJigsawController extends Controller {
 			return GO_HOME;
 		}		
 	}
-	public static Result calificarExamen(Integer sid, String dni, Integer examenid){
+	public static Result calificarExamen(Integer sid, Integer dni, Integer examenid){
 		try {
 			Form<CalificarExamenForm> form = Form.form(CalificarExamenForm.class)
 					.bindFromRequest();

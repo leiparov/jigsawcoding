@@ -7,7 +7,7 @@ public class DocenteService {
 
 	private static DocenteDAO docenteDAO = new DocenteDAO();
 
-	public Docente obtener(String dni) {
+	public Docente obtener(int dni) {
 		return docenteDAO.obtener(dni);
 	}
 

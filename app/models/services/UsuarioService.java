@@ -13,22 +13,19 @@ public class UsuarioService {
 	public Usuario obtenerLogin(String email, String password) {
 		return usuarioDAO.obtenerLogin(email, password);
 	}
-	public Usuario obtenerLogin(String email) {
-		return usuarioDAO.obtenerLogin(email);
-	}
 
-	public <T extends Usuario> T obtener(String dni, Class<T> claseUsuario) {
+	public <T extends Usuario> T obtener(int dni, Class<T> claseUsuario) {
 		return usuarioDAO.obtener(dni, claseUsuario);
 	}
 
 	public void recuperarContrasenia(String email) {
 		String nuevaContrasenia = generarContrasenia();
-		usuarioDAO.cambiarPassword(usuarioDAO.obtenerPorEmail(email), nuevaContrasenia);
+		usuarioDAO.cambiarPassword(usuarioDAO.obtener(email), nuevaContrasenia);
 		mail.enviarContrasenia(email, nuevaContrasenia);
 	}
 
-	public Usuario obtener(String id) {
-		return usuarioDAO.obtener(id);
+	public Usuario obtener(int dni) {
+		return usuarioDAO.obtener(dni);
 	}
 
 	private String generarContrasenia() {
@@ -49,12 +46,12 @@ public class UsuarioService {
 		return nuevocontrasenia;
 	}
 
-	public void cambiarContrasenia(String dni, String nuevo) {
+	public void cambiarContrasenia(int dni, String nuevo) {
 		usuarioDAO.cambiarPassword(dni, nuevo);
 	}
 
-	public String obtenerPorEmail(String email) {
-		return usuarioDAO.obtenerPorEmail(email);
+	public int obtener(String email) {
+		return usuarioDAO.obtener(email);
 	}
 	
 	

@@ -1,42 +1,25 @@
-#SecureSocial
-# Login page
-GET    /login                                                            securesocial.controllers.LoginPage.login
-GET    /logout                                                           securesocial.controllers.LoginPage.logout
-
-# Providers entry points
-GET    /authenticate/:provider                                           securesocial.controllers.ProviderController.authenticate(provider)
-POST   /authenticate/:provider                                           securesocial.controllers.ProviderController.authenticateByPost(provider)
-GET    /not-authorized                                                   securesocial.controllers.ProviderController.notAuthorized
-
 # Routes
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
 # Login
-GET    /login1                                                           controllers.Application.interfazLogin()
-POST   /login1                                                           controllers.Application.autenticar()
+GET    /login                                                            controllers.Application.interfazLogin()
+POST   /login                                                            controllers.Application.autenticar()
 
-GET    /logout1                                                          controllers.Application.logout()
+GET    /logout                                                           controllers.Application.logout()
 GET    /recuperarContrasenia                                             controllers.Application.recuperarContrasenia()
 
 # Home page
 GET    /                                                                 controllers.Application.index()
-GET    /google/login                                                     controllers.Application.loginGoogle()
-POST   /google/validate                                                  controllers.Application.validarToken()
-GET    /google/oauth2callback                                            controllers.Application.oauth2callback( code: String)
-
 GET    /perfil                                                           controllers.Application.interfazPerfilUsuario()
 #GET    /perfil/editar                   controllers.Application.interfazModificarUsuario()
 GET    /perfil/cambiarContrasenia                                        controllers.Application.interfazCambiarContrasenia()
 
-GET    /nuevo/:email                                                     controllers.UsuarioController.interfazNuevo(email:String)
-#POST   /nuevoUsuario/:email                                              controllers.UsuarioController.nuevoUsuario(email:String)
-POST   /registrar                                                        controllers.UsuarioController.registrarUsuario()
 
 #POST   /docentes/nuevo                  controllers.DocenteController.registrarDocente()
 #POST   /docentes/actualizar             controllers.DocenteController.actualizarDocente()
 #GET    /docentes/eliminar               controllers.DocenteController.eliminarDocente()
-GET   /docentes/nuevo                                                   controllers.DocenteController.interfazNuevo()
+GET    /docentes/nuevo                                                   controllers.DocenteController.interfazNuevo()
 POST   /docentes/registrar                                               controllers.DocenteController.registrarDocente()
 POST   /docentes/cambiarContrasenia                                      controllers.DocenteController.cambiarContrasenia()
 
@@ -52,11 +35,11 @@ POST   /docentes/problemas/render/edicion/:id                            control
 
 
 GET    /docentes/alumnos/index                                           controllers.AlumnoController.index()
-GET    /docentes/alumnos/lista                                           controllers.AlumnoController.list(p:Int ?= 0, s ?= "dni", o ?= "asc", f ?= "")
+GET    /docentes/alumnos/lista                                           controllers.AlumnoController.list(p:Integer ?= 0, s ?= "dni", o ?= "asc", f ?= "")
 GET    /docentes/alumnos/nuevo                                           controllers.AlumnoController.interfazNuevo()
 POST   /docentes/alumnos/registrar                                       controllers.AlumnoController.registrarAlumno()
-GET    /docentes/alumnos/:id                                             controllers.AlumnoController.interfazEditar(id:String)
-POST   /docentes/alumnos/actualizar                                      controllers.AlumnoController.actualizarAlumno(id:String)
+GET    /docentes/alumnos/:id                                             controllers.AlumnoController.interfazEditar(id:Integer)
+POST   /docentes/alumnos/actualizar                                      controllers.AlumnoController.actualizarAlumno(id:Integer)
 GET    /docentes/alumnos/ajax/buscar                                     controllers.AlumnoController.buscarAlumnos(q: String)
 GET    /docentes/alumnos/ajax/disponibles                                controllers.AlumnoController.disponibles()
 
@@ -87,7 +70,7 @@ POST   /docentes/sesionesjigsaw/:id/generarGrupos                        control
 GET    /docentes/sesionesjigsaw/:id/verGrupos                            controllers.SesionJigsawController.verGrupos(id:Integer)
 POST   /docentes/sesionesjigsaw/:id/eliminarGrupos                       controllers.SesionJigsawController.eliminarGrupos(id:Integer)
 GET    /docentes/sesionesjigsaw/revisarsoluciones                        controllers.SesionJigsawController.revisarSoluciones()
-GET    /docentes/sesionesjigsaw/mostrarsolucion                          controllers.SesionJigsawController.mostrarSolucionFirepad()
+GET   /docentes/sesionesjigsaw/mostrarsolucion                          controllers.SesionJigsawController.mostrarSolucionFirepad()
 GET    /assets/javascripts/firepadMostrar.js                             controllers.SesionJigsawController.firepadMostrarJs(url:String)
 
 GET    /docentes/sesionesjigsaw/:id/asignarAlumnos                       controllers.SesionJigsawController.interfazAsignarAlumnos(id: Integer)
@@ -97,9 +80,9 @@ GET    /docentes/sesionesjigsaw/:id/asignarProblemas                     control
 POST   /docentes/sesionesjigsaw/:id/guardarProblemas                     controllers.SesionJigsawController.guardarProblemas(id:Integer)
 
 GET    /docentes/sesionesjigsaw/:id/corregirExamenes                     controllers.SesionJigsawController.corregirExamenes(id: Integer)
-GET    /docentes/sesionesjigsaw/:sid/:dni/:id/corregirexamen             controllers.SesionJigsawController.corregirExamenAlumno(sid: Integer, dni: String, id:Integer)
-POST   /docentes/sesionesjigsaw/:sid/:dni/:id/calificar                  controllers.SesionJigsawController.calificarExamen(sid: Integer, dni: String, id:Integer)
-POST   /docentes/sesionesjigsaw/:id1/alumno/:id2/examen/:id3/respuesta   controllers.SesionJigsawController.guardarPuntaje(id1: String, id2:Integer, id3:Integer)
+GET    /docentes/sesionesjigsaw/:sid/:dni/:id/corregirexamen             controllers.SesionJigsawController.corregirExamenAlumno(sid: Integer, dni: Integer, id:Integer)
+POST   /docentes/sesionesjigsaw/:sid/:dni/:id/calificar                  controllers.SesionJigsawController.calificarExamen(sid: Integer, dni: Integer, id:Integer)
+POST   /docentes/sesionesjigsaw/:id1/alumno/:id2/examen/:id3/respuesta   controllers.SesionJigsawController.guardarPuntaje(id1: Integer, id2:Integer, id3:Integer)
 
 GET    /docentes/examenes/index                                          controllers.ExamenController.index()
 GET    /docentes/examenes/lista                                          controllers.ExamenController.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "")
@@ -112,7 +95,7 @@ POST   /docentes/examenes/:id/horario                                    control
 POST   /docentes/examenes/:id/delete                                     controllers.ExamenController.eliminarExamen(id: Integer)
 
 GET    /alumnos/examenes/:id/rendir                                      controllers.ExamenController.interfazRendir(id: Integer)
-POST   /alumnos/examenes/:examenid/finalizar                             controllers.ExamenController.finalizarExamen(examenid: Integer, dnialumno: String)
+POST   /alumnos/examenes/:examenid/finalizar                             controllers.ExamenController.finalizarExamen(examenid: Integer, dnialumno: Integer)
 GET    /alumnos/examenes/:id/resultados                                  controllers.ExamenController.interfazResultados(id: Integer)
 GET    /assets/javascripts/firepadExamen.js                              controllers.ExamenController.firepadExamenJs(firepadid:String, userid: String)
 #POST   /examenes/:id/finalizarexamen    controllers.ExamenController.finalizarExamen(id: Long)

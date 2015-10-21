@@ -112,9 +112,9 @@ public class SesionJigsawService {
 		return grupo;
 	}
 
-	public void guardarAlumnos(SesionJigsaw s, List<String> dnialumnos) {
+	public void guardarAlumnos(SesionJigsaw s, List<Integer> dnialumnos) {
 		List<Alumno> alumnos = new ArrayList<>();
-		for (String dni: dnialumnos){
+		for (Integer dni: dnialumnos){
 			alumnos.add(usuarioDAO.obtener(dni, Alumno.class));
 		}
 		s.setAlumnos(alumnos);

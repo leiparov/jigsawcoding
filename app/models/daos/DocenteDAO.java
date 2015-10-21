@@ -7,7 +7,7 @@ import com.avaje.ebean.Ebean;
 public class DocenteDAO {
 	public static UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-	public Docente obtener(String dni) {
+	public Docente obtener(int dni) {
 		return usuarioDAO.obtener(dni, Docente.class);
 	}
 

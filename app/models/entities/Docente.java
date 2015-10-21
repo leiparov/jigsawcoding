@@ -19,7 +19,7 @@ public class Docente extends Usuario {
     
 	@Override
 	public String toString() {
-		return "Docente [getId()=" + getDNI() + ", getNombreCompleto()="
+		return "Docente [getDNI()=" + getDNI() + ", getNombreCompleto()="
 				+ getNombreCompleto() + "]";
 	}
 

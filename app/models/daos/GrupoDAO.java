@@ -42,7 +42,7 @@ public class GrupoDAO {
 
 	public Page<GrupoExperto> page(Docente docente, int page, int pageSize,
 			String sortBy, String order, String filter) {
-		String dni = docente.getDNI();
+		int dni = docente.getDNI();
 		play.Logger.info("dni" + dni);
 		return find.where()
 				.eq("sesionJigsaw.docente.DNI", dni)

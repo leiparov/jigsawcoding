@@ -21,11 +21,9 @@ public class Global extends GlobalSettings {
             for(Object o : lista){
                 Ebean.save(o);
             }
-            udao.cambiarPassword("45407679", "1234");
-            udao.cambiarPassword("47614910", "1234");
+            udao.cambiarPassword(45407679, "1234");
+            udao.cambiarPassword(47614910, "1234");
         }
     }
-    
-    
     
 }

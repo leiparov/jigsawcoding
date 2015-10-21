@@ -10,7 +10,7 @@ create table examen (
   tiempo_clausura           timestamp,
   tiempo_creacion           timestamp,
   duracion                  integer,
-  docente_dni               varchar(255),
+  docente_dni               integer,
   constraint pk_examen primary key (id))
 ;
 
@@ -27,7 +27,7 @@ create table grupo (
 
 create table nota_alumno (
   id                        integer not null,
-  alumno_dni                varchar(255),
+  alumno_dni                integer,
   examen_id                 integer,
   nota                      integer,
   constraint pk_nota_alumno primary key (id))
@@ -38,7 +38,7 @@ create table problema (
   titulo                    varchar(255),
   enunciado                 varchar(255),
   fecha_creacion            timestamp,
-  docente_dni               varchar(255),
+  docente_dni               integer,
   constraint pk_problema primary key (id))
 ;
 
@@ -54,7 +54,7 @@ create table problema_examen (
 create table respuesta_alumno (
   id                        integer not null,
   problema_examen_id        integer,
-  alumno_dni                varchar(255),
+  alumno_dni                integer,
   ideone_link               varchar(255),
   puntaje_obtenido          integer,
   constraint pk_respuesta_alumno primary key (id))
@@ -71,14 +71,14 @@ create table sesion_jigsaw (
   tiempo_clausura_examen    timestamp,
   duracion_examen           integer,
   total_grupos_expertos     integer,
-  docente_dni               varchar(255),
+  docente_dni               integer,
   examen_id                 integer,
   constraint pk_sesion_jigsaw primary key (id))
 ;
 
 create table usuario (
   tipo                      varchar(31) not null,
-  dni                       varchar(255) not null,
+  dni                       integer not null,
   email                     varchar(255),
   password                  varchar(255),
   inhabilitado              boolean,
@@ -93,7 +93,7 @@ create table usuario (
 
 create table grupo_usuario (
   grupo_id                       integer not null,
-  usuario_dni                    varchar(255) not null,
+  usuario_dni                    integer not null,
   constraint pk_grupo_usuario primary key (grupo_id, usuario_dni))
 ;
 
@@ -105,7 +105,7 @@ create table grupo_problema (
 
 create table sesion_jigsaw_usuario (
   sesion_jigsaw_id               integer not null,
-  usuario_dni                    varchar(255) not null,
+  usuario_dni                    integer not null,
   constraint pk_sesion_jigsaw_usuario primary key (sesion_jigsaw_id, usuario_dni))
 ;
 create sequence examen_seq;
