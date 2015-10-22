@@ -5,7 +5,8 @@
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("css/login.min.css")">
 <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
 
-<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+<!-- <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script> -->
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="1012976681806-gq056951j0hc78ccv8jopndteng1n57g.apps.googleusercontent.com">
 
   
@@ -54,15 +55,9 @@
 				</div>
 				
 				<div class="col-md-12">
+					<div class="g-signin2" data-onsuccess="onSignIn"></div>
 				
-				<div id="my-signin"></div>
-				
-				@helper.form(routes.Application.loginGoogle) {
-				<p class="navbar-text navbar-right">
-					Aún no tienes una cuenta?
-					<button class="btn btn-primary btn-large navbar-btn">Regístrate con Gmail</button>
-				</p>
-				}
+
 				
 				</div>
 				

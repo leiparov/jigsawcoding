@@ -1,27 +1,18 @@
-#SecureSocial
-# Login page
-GET    /login                                                            securesocial.controllers.LoginPage.login
-GET    /logout                                                           securesocial.controllers.LoginPage.logout
-
-# Providers entry points
-GET    /authenticate/:provider                                           securesocial.controllers.ProviderController.authenticate(provider)
-POST   /authenticate/:provider                                           securesocial.controllers.ProviderController.authenticateByPost(provider)
-GET    /not-authorized                                                   securesocial.controllers.ProviderController.notAuthorized
-
 # Routes
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
 # Login
-GET    /login1                                                           controllers.Application.interfazLogin()
-POST   /login1                                                           controllers.Application.autenticar()
+GET    /login                                                            controllers.Application.interfazLogin()
+GET    /loginGoogle                                                      controllers.Application.interfazLoginGoogle()
+POST   /login                                                            controllers.Application.autenticar()
 
-GET    /logout1                                                          controllers.Application.logout()
+GET    /logout                                                           controllers.Application.logout()
 GET    /recuperarContrasenia                                             controllers.Application.recuperarContrasenia()
 
 # Home page
 GET    /                                                                 controllers.Application.index()
-GET    /google/login                                                     controllers.Application.loginGoogle()
+#GET    /loginGoogle                                                      controllers.Application.loginGoogle()
 POST   /google/validate                                                  controllers.Application.validarToken()
 GET    /google/oauth2callback                                            controllers.Application.oauth2callback( code: String)
 

@@ -78,7 +78,7 @@
                     @header("apellidoPaterno", "Apellido Paterno")
                     @header("apellidoMaterno", "Apellido Materno")
                     @header("nombres", "Nombres")
-                    
+                    @header("email", "Email")                    
                 </tr>
             </thead>
             <tbody>
@@ -87,7 +87,8 @@
             	<td>@alumno.getDNI()</td>
                 <td>@alumno.getApellidoPaterno()</td>
                 <td>@alumno.getApellidoMaterno()</td>
-                <td>@alumno.getNombres()</td>
+                <td>@alumno.getNombres()</td>                
+                <td>@alumno.getEmail()</td>
                 <td>@alumno.getIniciales()</td>
                 
                 <td><a href="@routes.AlumnoController.interfazEditar(alumno.getDNI())">

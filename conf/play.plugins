@@ -1,9 +1,0 @@
-9994:securesocial.core.DefaultAuthenticatorStore
-9995:securesocial.core.DefaultIdGenerator
-#9997:securesocial.controllers.DefaultTemplatesPlugin
-9997:views.custom.MyTemplate
-9998:models.services.MyUserService
-#9999:securesocial.core.providers.utils.BCryptPasswordHasher
-#10000:securesocial.core.providers.TwitterProvider
-#10001:securesocial.core.providers.FacebookProvider
-10002:securesocial.core.providers.GoogleProvider

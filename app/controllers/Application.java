@@ -13,8 +13,6 @@ import play.libs.WS.WSRequestHolder;
 import play.mvc.Controller;
 import play.mvc.Result;
 import utils.HttpUtils;
-import securesocial.core.Identity;
-import securesocial.core.java.SecureSocial;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.JsonObject;
@@ -141,10 +139,8 @@ public class Application extends Controller {
 	}
 
 	@Login.Requiere
-	//@SecureSocial.SecuredAction
 	public static Result index() {
-		//Identity user = (Identity) ctx().args.get(SecureSocial.USER_KEY);
-        //return ok(user.fullName());
+		
 		Login login = Login.obtener(ctx());
 		if (login.isTipo(Alumno.class)) {
 			// return
@@ -154,9 +150,15 @@ public class Application extends Controller {
 			return ok(views.html.perfildocente.indexDocente.render());
 		}
 	}
+	
 
 	public static Result interfazLogin() {
 		return ok(views.html.login.render());
+	}
+	
+	public static Result interfazLoginGoogle() {
+		return ok(views.html.loginGoogle.render());
+		//return ok(views.xml.simpleHangoutApp.render());
 	}
 
 	@Login.Requiere
@@ -182,7 +184,7 @@ public class Application extends Controller {
 			Form<Login.Form> loginForm = Form.form(Login.Form.class)
 					.bindFromRequest();
 			Usuario logueado = usuarioService
-					.obtenerLogin(loginForm.get().email);
+					.obtenerLogin(loginForm.get().email, loginForm.get().password);
 			Login.obtener(ctx()).logearSesion(logueado);
 			return redirect(routes.Application.index());
 		} catch (DAOException.FalloLoginException e) {

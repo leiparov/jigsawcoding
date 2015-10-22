@@ -7,7 +7,7 @@ libraryDependencies ++= Seq(
   javaEbean,
   cache,
   "com.google.code.gson" % "gson" % "2.4",
-  "ws.securesocial" % "securesocial_2.10" % "2.1.4"
+  "com.google.api-client" % "google-api-client" % "1.20.0"
 )     
 
 resolvers += Resolver.sonatypeRepo("snapshots")

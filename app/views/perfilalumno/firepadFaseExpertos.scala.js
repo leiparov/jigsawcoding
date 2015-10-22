@@ -174,5 +174,25 @@ $(function(){
 //	botonStdin.click(function(){
 //		$("#chat").hide();
 //	});	
+	
+	//HANGOUT GOOGLE
+	gapi.hangout.render('placeholder-div1', {
+		'render': 'createhangout'		
+	});
+	
+	
+	gapi.hangout.onApiReady.add(function(eventObj){
+		  if (eventObj.isApiReady) {
+		    startMyApp();
+		  }
+		});
+	function startMyApp(){
+		console.log('Ready');
+	};
+	
+	
+	
+	
+	
 })
 
