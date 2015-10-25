@@ -63,6 +63,9 @@ $(function(){
 
 	init();
 	
+	//borrar link firepad
+	$( "a" ).removeClass( "powered-by-firepad" );
+	
 	function mostrarLoading(){
 		$('#ajaxloader@firepadid').html('<img src="@routes.Assets.at("images/loading.gif")"/>');
 		$('#panelResultados@firepadid').hide();
@@ -176,6 +179,7 @@ $(function(){
 	botonStdin.click(function(){
 		$("#chat").hide();
 	});
+	
 	
 	
 })

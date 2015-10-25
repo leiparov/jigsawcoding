@@ -1,6 +1,7 @@
 @* resolverProblema Template File *@
 @(sesionJigsaw: models.entities.SesionJigsaw,  grupoJigsaw : models.entities.GrupoJigsaw, p: models.entities.Problema, alumno:models.entities.Alumno)
 @firepadid = @{"sj"+sesionJigsaw.getId()+"gj"+grupoJigsaw.getId()+"p"+p.getId()}
+@hangoutid = @{firepadid+"hangout"}
 <div class="row">
 	<div class="col-md-3"><p class="bg-success">@p.getEnunciado()</p></div>
 	<div class="col-md-5">

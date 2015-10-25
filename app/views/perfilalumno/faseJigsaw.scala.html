@@ -1,6 +1,8 @@
 @* faseExpertos Template File *@
 @(alumno: models.entities.Alumno, grupoJigsaw : models.entities.GrupoJigsaw, sesionJigsaw: models.entities.SesionJigsaw)
 @problemas = @{grupoJigsaw.getProblemas()}
+@firepadid = @{"sj"+sesionJigsaw.getId()+"gj"+grupoJigsaw.getId()}
+@hangoutid = @{firepadid+"hangout"}
 @main(menuAlumno()){
 	@inputs.firepadHeader()
 	
@@ -16,17 +18,22 @@
 		  height: 500px;
 		  background-color: #f62; /* dark orange background */	  
 		}
+		#hangout .firepad {
+		  width: 100%;
+		  height: 70px;
+		}
 	</style>
-	
-	  	      
-        <div class="dockright-block">
+        
+        <div class="dockright-block">	      
+        <!--  <div class="dockright-block">
 	        <div id="chat">	
 				<div clas="col-md-3">			
-					@views.html.chat.interfazChat(alumno, grupoJigsaw)
+					@* @views.html.chat.interfazChat(alumno, grupoJigsaw) *@
 				</div>
 			</div>
-			<div class="slider"><a class="toggleup" href="#">CHAT</a></div>	         
-        </div>	      
+			<div class="slider"><a class="toggleup" href="#">CHAT</a></div>	-->
+			<div id="placeholder-div1"></div>          
+        </div> 	      
   	
 	<style type="text/css">
 		#reloj{
@@ -92,21 +99,62 @@
 							
 						</ul>
 						
+						<div id="hangout" class="col-md-6">
+							<p>Paste here hangout URL to share it with team</p>
+							<div id="@hangoutid"></div> 
+						</div>
 					</div>
 				</div>			  
 			</div>			
 		</div>
 	</div>
+	
+	<script type="text/javascript" charset="utf-8" src="https://apis.google.com/js/platform.js"></script>  
+	
 	<script type="text/javascript">
-		$(function(){
-			var botonChat = $('.toggleup')
-			botonChat.click(function(){
-				$("#chat").slideToggle("slow"); 
-				$(this).toggleClass("toggledown");
-				return false;
+	$(function(){	
+			//HANGOUT GOOGLE
+		gapi.hangout.render('placeholder-div1', {
+			'render': 'createhangout',
+			'widget_size': 72,
+			'initial_apps': [
+			                 { app_id : '1012976681806-gq056951j0hc78ccv8jopndteng1n57g.apps.googleusercontent.com', 
+			                   app_type : 'LOCAL_APP' }
+			               ]
+		});
+
+		function hangout() {
+			// Initialize Firebase.
+			// var firepadRef = getExampleRef();
+			// TODO: Replace above line with:
+			urlx = 'https://vivid-heat-5073.firebaseio.com/firepads/jc_' + '@hangoutid';
+			console.log(urlx);
+			var firepadRefx = new Firebase(urlx);
+			
+			
+			
+			divfpadid = ''+'@hangoutid';
+			codeMirrorx = CodeMirror(document.getElementById(divfpadid), {
+				lineNumbers : false,
+				lineWrapping : true,
+				styleActiveLine: true,
+				theme: 'monokai'
 			});
-		})
-		
+	
+			// // Create Firepad.
+			firepadx = Firepad.fromCodeMirror(firepadRefx, codeMirrorx, {
+				defaultText : '// hangout url here'
+			});
+			firepadx.on('ready', function() {
+				//firepadx.setHtml('');
+			});
+			firepadx.setUserId('@alumno.getDNI().toString');
+		}
+
+	hangout();
+	//borrar link firepad
+	$( "a" ).removeClass( "powered-by-firepad" );
+	});
 	</script>
 	  
 	

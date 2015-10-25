@@ -83,7 +83,7 @@ $(function(){
 			defaultText : '// paste url de hangout here'
 		});
 		firepad2.on('ready', function() {
-			firepad2.setHtml('');
+			//firepad2.setHtml('');
 		});
 		
 		firepad2.setUserId('@userid');
