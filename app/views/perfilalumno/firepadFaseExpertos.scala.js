@@ -177,18 +177,12 @@ $(function(){
 	
 	//HANGOUT GOOGLE
 	gapi.hangout.render('placeholder-div1', {
-		'render': 'createhangout'		
+		'render': 'createhangout',
+		'initial_apps': [
+		                 { app_id : '1012976681806-gq056951j0hc78ccv8jopndteng1n57g.apps.googleusercontent.com', 
+		                   app_type : 'LOCAL_APP' }
+		               ]
 	});
-	
-	
-	gapi.hangout.onApiReady.add(function(eventObj){
-		  if (eventObj.isApiReady) {
-		    startMyApp();
-		  }
-		});
-	function startMyApp(){
-		console.log('Ready');
-	};
 	
 	
 	
