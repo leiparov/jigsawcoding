@@ -607,9 +607,14 @@ public class SesionJigsawController extends Controller {
 	}
 	
 	public static Result revisarSoluciones(){
-		List<SesionJigsaw> sesionesJigsaw = sesionJigsawService.all();
-		List<Grupo> grupos = grupoService.all();
-		List<Problema> problemas = problemaService.all();
+		Docente docente = getDocente();
+		List<SesionJigsaw> sesionesJigsaw = docente.getSesionesJigsaw();
+		List<Grupo> grupos = docente.getGrupos();
+		List<Problema> problemas = docente.getProblemas();
+		
+//		List<SesionJigsaw> sesionesJigsaw = sesionJigsawService.all();
+//		List<Grupo> grupos = grupoService.all();
+//		List<Problema> problemas = problemaService.all();
 		return ok(views.html.sesionesjigsaw.revisarSoluciones.render(sesionesJigsaw, grupos, problemas));
 	}
 	public static class SolucionFirepadForm {

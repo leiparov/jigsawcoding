@@ -131,5 +131,9 @@ public class SesionJigsawDAO {
 	public List<SesionJigsaw> all() {
 		return find.all();
 	}
+	public List<SesionJigsaw> listaSesiones(Docente docente) {
+		
+		return docente.getSesionesJigsaw();
+	}
 
 }

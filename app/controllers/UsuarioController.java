@@ -23,14 +23,10 @@ public class UsuarioController extends Controller{
    private static final String carInvalidos = "|1234567890'!\"#$%&/()=?\\"
                                              +"@+{},.-<>;:_[]*^`~";
    
-   public static Result interfazNuevo(String email) {
-	   return ok(nuevoUsuario.render(email));	 
-	   //return TODO;
+   public static Result interfazNuevo() {
+	   return ok(views.html.usuarios.nuevoUsuario.render());	 
    }
-   public static Result nuevoUsuario(String email) {	   
-	   return redirect(routes.UsuarioController.interfazNuevo(email));
-	   //return ok(nuevoUsuario.render(email));	   
-   }
+   
    
    public static Result registrarUsuario(){
 	   String email = "";
@@ -62,17 +58,17 @@ public class UsuarioController extends Controller{
          throw new DAOException("Email ya registrado, por favor ingrese otro.");
       }catch(DAOException daoe){
          flash("error", daoe.getMessage());
-         return redirect(routes.UsuarioController.interfazNuevo(email));
+         return redirect(routes.UsuarioController.interfazNuevo());
       }catch(PersistenceException pe){
          flash("error", "Error al registrar: DNI ya existente.");
-         return redirect(routes.UsuarioController.interfazNuevo(email));
+         return redirect(routes.UsuarioController.interfazNuevo());
       }catch(IllegalStateException ise){
          flash("error", "Error en DNI: Por favor ingrese 8 digitos.");
-         return redirect(routes.UsuarioController.interfazNuevo(email));
+         return redirect(routes.UsuarioController.interfazNuevo());
       }catch(Exception e){
          e.printStackTrace();
          flash("error", "Error desconocido: Posiblemente datos no validos.");
-         return redirect(routes.UsuarioController.interfazNuevo(email));
+         return redirect(routes.UsuarioController.interfazNuevo());
       }
    }
    

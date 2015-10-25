@@ -1,5 +1,6 @@
 package models.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -39,6 +40,13 @@ public class Docente extends Usuario {
 		this.sesionesJigsaw = sesionesJigsaw;
 	}
 	
-	
+	public List<Grupo> getGrupos(){
+		List<Grupo> grupos = new ArrayList<>();
+		for (SesionJigsaw s : getSesionesJigsaw()){
+			grupos.addAll(s.getGruposExpertos());
+			grupos.addAll(s.getGruposJigsaw());
+		}
+		return grupos;
+	}
 	
 }

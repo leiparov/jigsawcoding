@@ -20,8 +20,7 @@ GET    /perfil                                                           control
 #GET    /perfil/editar                   controllers.Application.interfazModificarUsuario()
 GET    /perfil/cambiarContrasenia                                        controllers.Application.interfazCambiarContrasenia()
 
-GET    /nuevo/:email                                                     controllers.UsuarioController.interfazNuevo(email:String)
-#POST   /nuevoUsuario/:email                                              controllers.UsuarioController.nuevoUsuario(email:String)
+GET    /signup                                                           controllers.UsuarioController.interfazNuevo()
 POST   /registrar                                                        controllers.UsuarioController.registrarUsuario()
 
 #POST   /docentes/nuevo                  controllers.DocenteController.registrarDocente()

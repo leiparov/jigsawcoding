@@ -8,6 +8,9 @@ $( document ).ready(function() {
     	  console.log('Image URL: ' + profile.getImageUrl());
     	  console.log('Email: ' + profile.getEmail());
     	  console.log('Token: ' + profile.getA)
+    	  
+    	  var email = profile.getEmail();
+    	  
     	}
     
     

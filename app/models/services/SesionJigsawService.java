@@ -210,4 +210,8 @@ public class SesionJigsawService {
 		sesionJigsawDAO.eliminarGruposJigsaw(s);
 	}
 
+	public List<SesionJigsaw> listaSesiones(Docente docente) {
+		return sesionJigsawDAO.listaSesiones(docente);
+	}
+
 }

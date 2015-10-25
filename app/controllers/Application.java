@@ -59,7 +59,8 @@ public class Application extends Controller {
 			// return ok("Hello " + email);
 			Usuario logueado = usuarioService.obtenerLogin(email);
 			if (logueado == null) {
-				return redirect(routes.UsuarioController.interfazNuevo(email));
+				//return redirect(routes.UsuarioController.interfazNuevo(email));
+				return noContent();
 			} else {
 				Login.obtener(ctx()).logearSesion(logueado);
 				// return index();
@@ -160,6 +161,7 @@ public class Application extends Controller {
 		return ok(views.html.loginGoogle.render());
 		//return ok(views.xml.simpleHangoutApp.render());
 	}
+	
 
 	@Login.Requiere
 	public static Result interfazPerfilUsuario() {

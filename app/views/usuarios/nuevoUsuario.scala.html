@@ -1,4 +1,4 @@
-@(email: String)
+
 <!DOCTYPE html>
 <html>
    <head>
@@ -70,8 +70,24 @@
                   	<div class="form-docente row">
                         <label class="col-sm-4" for="emailDocente">Email</label>
                         <div class="col-sm-8">
-                           <input type="email" class="form-control" id="emailDocente" value=@email   
+                           <input type="email" class="form-control" id="emailDocente"   
                               name="email" placeholder="Ingrese su email" disable>
+                        </div>
+                     </div>
+                     <br>
+                     <div class="form-docente row">
+                        <label class="col-sm-4" for="passwordDocente">Contraseña</label>
+                        <div class="col-sm-8">
+                           <input type="password" class="form-control" id="passwordDocente"
+                              name="contrasena" placeholder="Ingrese su contraseña" required>
+                        </div>
+                     </div>
+                     <br>
+                     <div class="form-docente row">
+                        <label class="col-sm-4" for="passwordDocente">Confirmar Contraseña</label>
+                        <div class="col-sm-8">
+                           <input type="password" class="form-control" id="password2Docente"
+                              name="contrasena2" placeholder="Repita su contraseña" required>
                         </div>
                      </div>
                      <br>
