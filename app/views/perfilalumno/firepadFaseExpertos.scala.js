@@ -53,7 +53,7 @@ $(function(){
 			mode : getMode(language.val()),
 			theme: 'monokai'
 		});
-
+		
 		// // Create Firepad.
 		firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, {
 			defaultText : '// your code goes here'
@@ -62,6 +62,36 @@ $(function(){
 	}
 
 	init();
+	
+	
+	function firedpadhangout() {
+		// Initialize Firebase.
+		url2 = 'https://vivid-heat-5073.firebaseio.com/firepads/jc_' + '@firepadid' + 'hangout';
+		console.log(url2);
+		var firepadRef2 = new Firebase(url2);
+		
+		divfpadid2 = ''+'@firepadid'+'hangout';
+		codeMirror2 = CodeMirror(document.getElementById(divfpadid2), {
+			lineNumbers : false,
+			lineWrapping : true,
+			styleActiveLine: true,				
+			theme: 'monokai'
+		});
+
+		// // Create Firepad.
+		firepad2 = Firepad.fromCodeMirror(firepadRef2, codeMirror2, {
+			defaultText : '// paste url de hangout here'
+		});
+		firepad2.on('ready', function() {
+			firepad2.setHtml('');
+		});
+		
+		firepad2.setUserId('@userid');
+	}
+	firedpadhangout();
+	
+	//borrar link firepad
+	$( "a" ).removeClass( "powered-by-firepad" );
 	
 	/* Ejecutar codigo fuente */
 	function mostrarIdeoneSubmissionResults(data){
@@ -178,6 +208,7 @@ $(function(){
 	//HANGOUT GOOGLE
 	gapi.hangout.render('placeholder-div1', {
 		'render': 'createhangout',
+		'widget_size': 72,
 		'initial_apps': [
 		                 { app_id : '1012976681806-gq056951j0hc78ccv8jopndteng1n57g.apps.googleusercontent.com', 
 		                   app_type : 'LOCAL_APP' }

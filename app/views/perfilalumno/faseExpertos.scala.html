@@ -1,6 +1,7 @@
 @* faseExpertos Template File *@
 @(alumno: models.entities.Alumno, grupoExperto : models.entities.GrupoExperto, sesionJigsaw: models.entities.SesionJigsaw)
 @firepadid = @{"sj"+sesionJigsaw.getId()+"ge"+grupoExperto.getId()+"p"+grupoExperto.getProblema().getId()}
+@hangoutid = @{firepadid+"hangout"}
 @main(menuAlumno()){
 	@inputs.firepadHeader()
 	<!-- Clock -->
@@ -15,27 +16,26 @@
 		  height: 500px;
 		  background-color: #f62; /* dark orange background */	  
 		}
+		#hangout .firepad {
+		  width: 100%;
+		  height: 70px;
+		}
 	</style>
 	
-	
-	    	      
-        <!--<div class="dockright-block">
+	<script>
+		
+	</script>
+	    <div class="dockright-block">	      
+        <!--  <div class="dockright-block">
 	        <div id="chat">	
 				<div clas="col-md-3">			
-					@*@views.html.chat.interfazChat(alumno, grupoExperto)*@
+					@* @views.html.chat.interfazChat(alumno, grupoExperto) *@
 				</div>
 			</div>
-			<div class="slider"><a class="toggleup" href="#">CHAT</a></div>	         
-        </div> -->	
-        <div class="dockright-block">      
-  			
-  			<div id="placeholder-div1"></div>
-  			
-  				
-		
-			
-  			
-		</div>
+			<div class="slider"><a class="toggleup" href="#">CHAT</a></div>	-->
+			<div id="placeholder-div1"></div>          
+        </div> 	
+        
 	<style type="text/css">
 		#reloj{
 			position: fixed;
@@ -86,7 +86,12 @@
 				} 
 				</ul>
 			</div>
-			 
+			
+			<div id="hangout">
+				<p>Paste here hangout URL to share it with team</p>
+				<div id="@hangoutid"></div> 
+			</div>
+			
 		</div>
 		<div class="col-md-5">
 			<div class="row form-inline">
@@ -106,7 +111,11 @@
 				</div>
 				
 			</div>
+			
+			
+			
 			<div id="@firepadid" class="row firepad"></div>
+			
 			
 		</div>
 		<div class="col-md-4" >
@@ -143,6 +152,7 @@
 							<span class="glyphicon glyphicon-th-list"></span> Mostrar OUTPUT									
 					</button>
 				</div>
+				
 			</div>
 							
 		</div>		
