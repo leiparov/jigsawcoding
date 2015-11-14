@@ -129,7 +129,9 @@ $(function(){
             }, 1500);
         });
     })();
-	
+
+	//borrar link firepad
+	$( "a" ).removeClass( "powered-by-firepad" );
 	
 })
 

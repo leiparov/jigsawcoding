@@ -123,7 +123,7 @@
             <thead>
                 <tr>
                     @header("tema", "TEMA")
-                    <th>REUNIÓN DE EXPERTOS</th>
+                    <th>REUNIÓN EXPERTOS</th>
                     <th>REUNIÓN JIGSAW</th>
                     <th>EVALUACIÓN</th>
                     <th>ALUMNOS</th>
@@ -217,9 +217,8 @@
                 	}else{                		
                 		<td>
                 			<ul class="list-group">
-                				@sesionJigsaw.getAlumnos().map {alumno => 
-                					<li class="list-group-item">@alumno.getNombreCompleto</li>
-                				}
+								<li class="list-group-item">Total alumnos: @sesionJigsaw.getAlumnos().size() </li>
+
                 			</ul>
                 			<li class="list-group-item">
 	                		<a class="btn btn-info" href="@routes.SesionJigsawController.interfazAsignarAlumnos(sesionJigsaw.getId())">
