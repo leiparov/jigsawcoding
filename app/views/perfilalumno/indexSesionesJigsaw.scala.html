@@ -146,11 +146,11 @@
             				@stringDuracionRE(sesionJigsaw)
             			</li>
             			
-            			
-            				<a class="btn btn-success" 
-            				href="@routes.SesionJigsawController.interfazFaseExpertos(sesionJigsaw.getId())">
-            				Unirse a reunión de Expertos</a>
-            			
+            			@if(sesionJigsaw.getInicioReunionExpertos() != null) {
+							<a class="btn btn-success"
+							href="@routes.SesionJigsawController.interfazFaseExpertos(sesionJigsaw.getId())">
+								Unirse a reunión de Expertos</a>
+						}
             			
             		</ul>
             	</td>
@@ -164,11 +164,11 @@
             				<label>Duración: </label>
             				@stringDuracionRJ(sesionJigsaw)
             			</li>
-            			
-            				<a class="btn btn-success"
-            				href="@routes.SesionJigsawController.interfazFaseJigsaw(sesionJigsaw.getId())">
-            				Unirse a reunión Jigsaw</a>
-            			
+						@if(sesionJigsaw.getInicioReunionJigsaw() != null) {
+							<a class="btn btn-success"
+							href="@routes.SesionJigsawController.interfazFaseJigsaw(sesionJigsaw.getId())">
+								Unirse a reunión Jigsaw</a>
+						}
             		</ul>
             	</td>
             	<td>
@@ -181,8 +181,11 @@
             				<label>Duración: </label>
             				@stringDuracionEX(sesionJigsaw)
             			</li>
-            			<a class="btn btn-success"href="@routes.SesionJigsawController.interfazEvaluacion(sesionJigsaw.getId())">Rendir Examen</a>
-            		</ul>
+						@if(sesionJigsaw.getTiempoAperturaExamen() != null) {
+							<a class="btn btn-success" href="@routes.SesionJigsawController.interfazEvaluacion(sesionJigsaw.getId())">
+								Rendir Examen</a>
+						}
+					</ul>
             	</td>
             	
             	
